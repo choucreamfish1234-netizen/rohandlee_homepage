@@ -239,10 +239,10 @@ export default function CenterPageTemplate({
                 무료 상담 신청하기
               </Link>
               <a
-                href="tel:055-261-8788"
+                href="tel:032-207-8788"
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"
               >
-                <span className="font-display">055-261-8788</span>
+                <span className="font-display">032-207-8788</span>
               </a>
             </div>
           </ScrollReveal>

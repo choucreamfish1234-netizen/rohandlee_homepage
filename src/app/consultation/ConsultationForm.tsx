@@ -54,7 +54,7 @@ export default function ConsultationForm() {
       if (supabaseError) throw supabaseError
       setSubmitted(true)
     } catch {
-      setError('전송에 실패했습니다. 전화(055-261-8788)로 문의해주세요.')
+      setError('전송에 실패했습니다. 전화(032-207-8788)로 문의해주세요.')
     } finally {
       setSubmitting(false)
     }
@@ -76,7 +76,7 @@ export default function ConsultationForm() {
           <h2 className="text-2xl font-bold text-black mb-4">상담 신청이 완료되었습니다</h2>
           <p className="text-gray-500 text-sm leading-relaxed">
             빠른 시간 내에 담당 변호사가 연락드리겠습니다.<br />
-            긴급 상담은 <a href="tel:055-261-8788" className="text-accent font-medium">055-261-8788</a>로 전화주세요.
+            긴급 상담은 <a href="tel:032-207-8788" className="text-accent font-medium">032-207-8788</a>로 전화주세요.
           </p>
         </motion.div>
       </section>

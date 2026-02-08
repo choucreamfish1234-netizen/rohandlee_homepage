@@ -43,7 +43,7 @@ export default function FloatingButtons() {
 
           {/* 전화 상담 */}
           <a
-            href="tel:055-261-8788"
+            href="tel:032-207-8788"
             className="w-14 h-14 bg-black rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
             aria-label="전화 상담"
           >

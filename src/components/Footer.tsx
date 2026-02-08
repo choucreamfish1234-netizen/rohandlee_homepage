@@ -39,8 +39,8 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-black mb-4">연락처</h4>
             <ul className="space-y-2 text-xs text-gray-500">
               <li>
-                <a href="tel:055-261-8788" className="hover:text-black transition-colors">
-                  T. 055-261-8788
+                <a href="tel:032-207-8788" className="hover:text-black transition-colors">
+                  T. 032-207-8788
                 </a>
               </li>
               <li>
