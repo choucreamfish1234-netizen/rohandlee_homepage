@@ -45,15 +45,40 @@ const centersRow2 = [
   },
 ]
 
+function CenterCard({ center, aspectClass, imgW, imgH }: { center: typeof centers[0]; aspectClass: string; imgW: number; imgH: number }) {
+  return (
+    <Link href={center.href} className="group block">
+      <div className={`${aspectClass} bg-gray-50 overflow-hidden mb-5`}>
+        <Image
+          src={center.image}
+          alt={center.alt}
+          width={imgW}
+          height={imgH}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+        />
+      </div>
+      <div className="transition-transform duration-300 group-hover:-translate-y-1">
+        <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors duration-300">
+          {center.title}
+        </h3>
+        <p className="mt-1.5 text-sm text-gray-400">{center.description}</p>
+        <span className="inline-flex items-center mt-3 text-xs text-gray-400 group-hover:text-accent transition-colors duration-300">
+          자세히 보기 <span className="ml-1">&rarr;</span>
+        </span>
+      </div>
+    </Link>
+  )
+}
+
 export default function CentersSection() {
   return (
-    <section id="centers" className="py-28 sm:py-40 bg-white">
+    <section id="centers" className="py-40 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             5 Specialized Centers
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
             5대 전문센터
           </h2>
         </ScrollReveal>
@@ -62,21 +87,7 @@ export default function CentersSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
-              <Link href={center.href} className="group block">
-                <div className="aspect-[4/3] bg-gray-50 overflow-hidden mb-5">
-                  <Image
-                    src={center.image}
-                    alt={center.alt}
-                    width={800}
-                    height={600}
-                    className="w-full h-full object-cover group-hover:scale-[1.04] group-hover:brightness-110 transition-all duration-700 ease-out"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors duration-300">
-                  {center.title}
-                </h3>
-                <p className="mt-1.5 text-sm text-gray-400">{center.description}</p>
-              </Link>
+              <CenterCard center={center} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
             </ScrollReveal>
           ))}
         </div>
@@ -85,21 +96,7 @@ export default function CentersSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
-              <Link href={center.href} className="group block">
-                <div className="aspect-[16/9] bg-gray-50 overflow-hidden mb-5">
-                  <Image
-                    src={center.image}
-                    alt={center.alt}
-                    width={1200}
-                    height={675}
-                    className="w-full h-full object-cover group-hover:scale-[1.04] group-hover:brightness-110 transition-all duration-700 ease-out"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors duration-300">
-                  {center.title}
-                </h3>
-                <p className="mt-1.5 text-sm text-gray-400">{center.description}</p>
-              </Link>
+              <CenterCard center={center} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
             </ScrollReveal>
           ))}
         </div>

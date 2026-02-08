@@ -1,11 +1,68 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
+function useCountUp(end: number, duration = 2000, suffix = '') {
+  const [count, setCount] = useState(0)
+  const [started, setStarted] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started) {
+          setStarted(true)
+        }
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [started])
+
+  useEffect(() => {
+    if (!started) return
+    const startTime = Date.now()
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(eased * end))
+      if (progress >= 1) clearInterval(timer)
+    }, 16)
+    return () => clearInterval(timer)
+  }, [started, end, duration])
+
+  return { count, ref, suffix }
+}
+
+const badges = [
+  { icon: '⭐', text: '로톡 평점 4.9' },
+  { icon: '💬', text: '감사후기 600+' },
+  { icon: '⚖️', text: '피해자 전문' },
+  { icon: '🔒', text: '비밀 보장' },
+]
+
+function StatItem({ label, end, suffix, isDecimal }: { label: string; end: number; suffix: string; isDecimal?: boolean }) {
+  const { count, ref } = useCountUp(end, 2200)
+
+  return (
+    <div className="text-center">
+      <span ref={ref} className="block text-3xl sm:text-4xl md:text-5xl font-bold text-black tracking-tight">
+        {isDecimal ? (count / 10).toFixed(1) : count}
+        {suffix}
+      </span>
+      <span className="block mt-2 text-xs sm:text-sm text-gray-400">{label}</span>
+    </div>
+  )
+}
+
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-white">
+    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-gradient-to-b from-white via-white to-gray-50">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -20,7 +77,8 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-8 text-lg sm:text-xl md:text-2xl text-accent font-serif font-medium tracking-wide"
+          className="mt-8 text-accent font-medium"
+          style={{ fontSize: 'clamp(24px, 6vw, 72px)', lineHeight: 1.15 }}
         >
           &ldquo;오직 피해자만 변호합니다&rdquo;
         </motion.p>
@@ -51,17 +109,52 @@ export default function HeroSection() {
             href="tel:055-261-8788"
             className="inline-flex items-center justify-center px-10 py-4 border border-gray-200 text-sm font-medium rounded-full hover:border-gray-400 transition-all duration-300"
           >
-            <span className="font-display">055-261-8788</span>
+            055-261-8788
           </a>
         </motion.div>
+
+        {/* 신뢰 배지 */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+          className="mt-14 flex flex-wrap justify-center gap-3"
+        >
+          {badges.map((badge) => (
+            <span
+              key={badge.text}
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-xs text-gray-500 rounded-full"
+            >
+              <span>{badge.icon}</span>
+              {badge.text}
+            </span>
+          ))}
+        </motion.div>
       </motion.div>
+
+      {/* 통계 카운트업 */}
+      <div className="absolute bottom-24 left-0 right-0">
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="grid grid-cols-4 gap-6">
+            <StatItem label="의뢰인 수" end={100} suffix="+" />
+            <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
+            <StatItem label="감사 후기" end={600} suffix="+" />
+            <div className="text-center">
+              <span className="block text-3xl sm:text-4xl md:text-5xl font-bold text-black tracking-tight">
+                A-Z
+              </span>
+              <span className="block mt-2 text-xs sm:text-sm text-gray-400">전 과정 변호</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 스크롤 인디케이터 */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

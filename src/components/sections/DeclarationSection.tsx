@@ -4,7 +4,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 
 export default function DeclarationSection() {
   return (
-    <section className="py-28 sm:py-40 bg-white">
+    <section className="py-40 bg-white">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-10">

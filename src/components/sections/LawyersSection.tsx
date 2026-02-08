@@ -24,7 +24,7 @@ const lawyers = [
 
 export default function LawyersSection() {
   return (
-    <section id="lawyers" className="py-28 sm:py-40 bg-gray-50">
+    <section id="lawyers" className="py-40 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">

@@ -46,18 +46,18 @@ export default function TestimonialsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section className="py-28 sm:py-40 bg-gray-50">
+    <section className="py-40 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-16">
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
               Client Reviews
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-black">
-              <span className="font-display text-accent">100</span>명 이상의 의뢰인이 증명합니다.
+            <h2 className="text-3xl sm:text-4xl font-bold text-black">
+              <span className="text-accent">100</span>명 이상의 의뢰인이 증명합니다.
             </h2>
             <p className="mt-5 text-gray-400 text-sm">
-              압도적인 별점 <span className="font-display text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
+              압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
             </p>
           </div>
         </ScrollReveal>
@@ -76,16 +76,16 @@ export default function TestimonialsSection() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="flex-shrink-0 w-[340px] sm:w-[400px] snap-start"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 h-full flex flex-col relative">
+              <div className="bg-white p-8 shadow-sm border border-gray-100 h-full flex flex-col relative">
                 {/* 큰따옴표 장식 */}
-                <span className="absolute top-6 right-8 font-display text-6xl text-gray-100 leading-none select-none">
-                  &rdquo;
+                <span className="absolute top-5 right-6 text-[60px] leading-none text-gray-100 select-none font-serif">
+                  &ldquo;
                 </span>
 
                 {/* 별점 */}
                 <div className="flex gap-1 mb-5">
                   {Array.from({ length: t.rating }).map((_, j) => (
-                    <svg key={j} width="14" height="14" viewBox="0 0 16 16" fill="#1B3B2F">
+                    <svg key={j} width="18" height="18" viewBox="0 0 16 16" fill="#1B3B2F">
                       <path d="M8 0l2.472 4.932L16 5.812l-4 3.78.944 5.408L8 12.616 3.056 15l.944-5.408-4-3.78 5.528-.88z" />
                     </svg>
                   ))}
@@ -115,12 +115,19 @@ export default function TestimonialsSection() {
           ))}
         </div>
 
-        {/* 스크롤 힌트 */}
-        <div className="flex justify-center mt-8 gap-1.5">
-          {testimonials.map((_, i) => (
-            <div key={i} className="w-2 h-2 rounded-full bg-gray-200" />
-          ))}
-        </div>
+        {/* 로톡 링크 */}
+        <ScrollReveal delay={0.2}>
+          <div className="mt-10 text-center">
+            <a
+              href="https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-sm text-black font-medium hover:text-accent transition-colors"
+            >
+              로톡에서 600+개의 후기 보기 <span className="ml-1">&rarr;</span>
+            </a>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 
 export default function CtaSection() {
   return (
-    <section className="py-28 sm:py-40 bg-black text-white">
+    <section className="py-40 bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 text-center">
         <ScrollReveal>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold leading-snug">
