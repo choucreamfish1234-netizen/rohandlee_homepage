@@ -53,23 +53,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* 주소 + 네이버 지도 */}
+          {/* 주소 */}
           <div>
             <h4 className="text-xs font-semibold text-black mb-4">오시는 길</h4>
-            <p className="text-xs text-gray-500 leading-relaxed mb-4">
+            <p className="text-xs text-gray-500 leading-relaxed">
               경기도 부천시 부일로205번길 54, 205호
             </p>
-            <div className="overflow-hidden rounded-xl">
-              <iframe
-                src="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EB%B6%80%EC%9D%BC%EB%A1%9C205%EB%B2%88%EA%B8%B8%2054"
-                width="100%"
-                height="200"
-                style={{ border: 0, borderRadius: '12px' }}
-                allowFullScreen
-                loading="lazy"
-                title="법률사무소 로앤이 위치"
-              />
-            </div>
           </div>
         </div>
 
