@@ -40,6 +40,7 @@ interface CenterPageTemplateProps {
   ctaTitle: string
   ctaDescription: string
   afterServicesContent?: React.ReactNode
+  testimonialContent?: React.ReactNode
 }
 
 export default function CenterPageTemplate({
@@ -54,6 +55,7 @@ export default function CenterPageTemplate({
   ctaTitle,
   ctaDescription,
   afterServicesContent,
+  testimonialContent,
 }: CenterPageTemplateProps) {
   return (
     <>
@@ -168,20 +170,24 @@ export default function CenterPageTemplate({
       </section>
 
       {/* 의뢰인 후기 */}
-      <section className="py-28 sm:py-40 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black">
-                <span className="text-accent font-display">100</span>명 이상의 의뢰인이 증명합니다.
-              </h2>
-              <p className="mt-4 text-gray-500 text-sm">
-                압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {testimonialContent ? (
+        testimonialContent
+      ) : (
+        <section className="py-28 sm:py-40 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black">
+                  <span className="text-accent font-display">100</span>명 이상의 의뢰인이 증명합니다.
+                </h2>
+                <p className="mt-4 text-gray-500 text-sm">
+                  압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* 담당 변호사 */}
       <section className="py-28 sm:py-40 bg-white">
