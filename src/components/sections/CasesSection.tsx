@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 
@@ -11,6 +12,7 @@ const cases = [
     badge: '불송치(무죄)',
     badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     tagColor: 'bg-emerald-50 text-emerald-600',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=500&fit=crop&q=80',
   },
   {
     tag: '성범죄',
@@ -19,6 +21,7 @@ const cases = [
     badge: '징역 8년',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
     tagColor: 'bg-red-50 text-red-600',
+    image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
   },
 ]
 
@@ -38,25 +41,38 @@ export default function CasesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {cases.map((c, i) => (
             <ScrollReveal key={i} delay={i * 0.15}>
-              <div className="bg-white border border-gray-100 p-8 sm:p-10 hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
-                {/* 태그 */}
-                <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tagColor} mb-6`}>
-                  {c.tag}
-                </span>
+              <div className="bg-white border border-gray-100 overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                {/* 이미지 */}
+                <div className="aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={c.image}
+                    alt={c.title}
+                    width={800}
+                    height={500}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-                {/* 제목 */}
-                <h3 className="text-lg sm:text-xl font-bold text-black leading-snug mb-3">
-                  {c.title}
-                </h3>
+                <div className="p-8 sm:p-10 flex flex-col flex-1">
+                  {/* 태그 */}
+                  <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tagColor} mb-5`}>
+                    {c.tag}
+                  </span>
 
-                {/* 설명 */}
-                <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-1">
-                  {c.description}
-                </p>
+                  {/* 제목 */}
+                  <h3 className="text-lg sm:text-xl font-bold text-black leading-snug mb-3">
+                    {c.title}
+                  </h3>
 
-                {/* 결과 뱃지 */}
-                <div className={`self-start inline-flex items-center text-sm font-semibold px-4 py-2 border ${c.badgeColor}`}>
-                  {c.badge}
+                  {/* 설명 */}
+                  <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-1">
+                    {c.description}
+                  </p>
+
+                  {/* 결과 뱃지 */}
+                  <div className={`self-start inline-flex items-center text-sm font-semibold px-4 py-2 border ${c.badgeColor}`}>
+                    {c.badge}
+                  </div>
                 </div>
               </div>
             </ScrollReveal>

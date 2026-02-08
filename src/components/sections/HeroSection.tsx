@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-function useCountUp(end: number, duration = 2000, suffix = '') {
+function useCountUp(end: number, duration = 2000) {
   const [count, setCount] = useState(0)
   const [started, setStarted] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
@@ -36,26 +36,19 @@ function useCountUp(end: number, duration = 2000, suffix = '') {
     return () => clearInterval(timer)
   }, [started, end, duration])
 
-  return { count, ref, suffix }
+  return { count, ref }
 }
-
-const badges = [
-  { icon: '⭐', text: '로톡 평점 4.9' },
-  { icon: '💬', text: '감사후기 600+' },
-  { icon: '⚖️', text: '피해자 전문' },
-  { icon: '🔒', text: '비밀 보장' },
-]
 
 function StatItem({ label, end, suffix, isDecimal }: { label: string; end: number; suffix: string; isDecimal?: boolean }) {
   const { count, ref } = useCountUp(end, 2200)
 
   return (
     <div className="text-center">
-      <span ref={ref} className="block text-3xl sm:text-4xl md:text-5xl font-bold text-black tracking-tight">
+      <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-black tracking-tight">
         {isDecimal ? (count / 10).toFixed(1) : count}
         {suffix}
       </span>
-      <span className="block mt-2 text-xs sm:text-sm text-gray-400">{label}</span>
+      <span className="block mt-2 text-[11px] sm:text-xs text-gray-400">{label}</span>
     </div>
   )
 }
@@ -77,8 +70,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-8 text-accent font-medium"
-          style={{ fontSize: 'clamp(24px, 6vw, 72px)', lineHeight: 1.15 }}
+          className="mt-6 text-xl sm:text-2xl md:text-3xl text-accent font-medium tracking-wide"
         >
           &ldquo;오직 피해자만 변호합니다&rdquo;
         </motion.p>
@@ -87,7 +79,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed"
+          className="mt-5 text-base sm:text-lg text-gray-400 leading-relaxed"
         >
           당신의 잃어버린 일상을 되찾을 때까지,<br />
           로앤이가 끝까지 함께 합니다.
@@ -97,7 +89,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
-          className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
+          className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link
             href="/consultation"
@@ -112,42 +104,29 @@ export default function HeroSection() {
             055-261-8788
           </a>
         </motion.div>
-
-        {/* 신뢰 배지 */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="mt-14 flex flex-wrap justify-center gap-3"
-        >
-          {badges.map((badge) => (
-            <span
-              key={badge.text}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-xs text-gray-500 rounded-full"
-            >
-              <span>{badge.icon}</span>
-              {badge.text}
-            </span>
-          ))}
-        </motion.div>
       </motion.div>
 
       {/* 통계 카운트업 */}
-      <div className="absolute bottom-24 left-0 right-0">
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="grid grid-cols-4 gap-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute bottom-20 left-0 right-0"
+      >
+        <div className="max-w-2xl mx-auto px-4">
+          <div className="grid grid-cols-4 gap-4">
             <StatItem label="의뢰인 수" end={100} suffix="+" />
             <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
             <StatItem label="감사 후기" end={600} suffix="+" />
             <div className="text-center">
-              <span className="block text-3xl sm:text-4xl md:text-5xl font-bold text-black tracking-tight">
+              <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-black tracking-tight">
                 A-Z
               </span>
-              <span className="block mt-2 text-xs sm:text-sm text-gray-400">전 과정 변호</span>
+              <span className="block mt-2 text-[11px] sm:text-xs text-gray-400">전 과정 변호</span>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* 스크롤 인디케이터 */}
       <motion.div

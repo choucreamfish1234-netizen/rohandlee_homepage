@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 
@@ -8,6 +9,7 @@ interface CaseCard {
   title: string
   result: string
   resultColor: 'red' | 'green' | 'blue'
+  image: string
 }
 
 const cases: CaseCard[] = [
@@ -16,12 +18,14 @@ const cases: CaseCard[] = [
     title: '특수강간·감금 등 9개 혐의, 징역 8년 선고',
     result: '징역 8년',
     resultColor: 'red',
+    image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
   },
   {
     tag: '스토킹',
     title: '지속적 스토킹 행위에 대한 접근금지 명령 및 실형 선고',
     result: '실형 선고',
     resultColor: 'red',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop&q=80',
   },
 ]
 
@@ -39,7 +43,7 @@ const tagColorMap = {
 
 export default function CenterCases() {
   return (
-    <section className="py-28 sm:py-40 bg-white">
+    <section className="py-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
@@ -53,20 +57,33 @@ export default function CenterCases() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {cases.map((c, i) => (
             <ScrollReveal key={i} delay={i * 0.15}>
-              <div className="border border-gray-200 p-8 hover:border-gray-400 transition-colors duration-300">
-                {/* 태그 */}
-                <span className={`inline-block text-xs font-medium px-3 py-1 ${tagColorMap[c.resultColor]} mb-5`}>
-                  {c.tag}
-                </span>
+              <div className="border border-gray-200 overflow-hidden hover:border-gray-400 transition-colors duration-300">
+                {/* 이미지 */}
+                <div className="aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={c.image}
+                    alt={c.title}
+                    width={800}
+                    height={500}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-                {/* 제목 */}
-                <h3 className="text-lg font-semibold text-black leading-snug mb-6">
-                  {c.title}
-                </h3>
+                <div className="p-8">
+                  {/* 태그 */}
+                  <span className={`inline-block text-xs font-medium px-3 py-1 ${tagColorMap[c.resultColor]} mb-5`}>
+                    {c.tag}
+                  </span>
 
-                {/* 결과 뱃지 */}
-                <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border ${colorMap[c.resultColor]}`}>
-                  {c.result}
+                  {/* 제목 */}
+                  <h3 className="text-lg font-semibold text-black leading-snug mb-6">
+                    {c.title}
+                  </h3>
+
+                  {/* 결과 뱃지 */}
+                  <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border ${colorMap[c.resultColor]}`}>
+                    {c.result}
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
