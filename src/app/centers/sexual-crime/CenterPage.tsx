@@ -1,6 +1,9 @@
 'use client'
 
 import CenterPageTemplate from '@/components/CenterPageTemplate'
+import ProcessTimeline from './ProcessTimeline'
+import CenterCases from './CenterCases'
+import FAQAccordion from './FAQAccordion'
 
 export default function SexualCrimeCenterPage() {
   return (
@@ -56,6 +59,13 @@ export default function SexualCrimeCenterPage() {
           image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop&q=80',
         },
       ]}
+      afterServicesContent={
+        <>
+          <ProcessTimeline />
+          <CenterCases />
+          <FAQAccordion />
+        </>
+      }
       declaration={{
         title: '가해자는 변호하지 않습니다.\n오로지 피해자만을 변호합니다.',
         description:

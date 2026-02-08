@@ -39,6 +39,7 @@ interface CenterPageTemplateProps {
   lawyers: Lawyer[]
   ctaTitle: string
   ctaDescription: string
+  afterServicesContent?: React.ReactNode
 }
 
 export default function CenterPageTemplate({
@@ -52,6 +53,7 @@ export default function CenterPageTemplate({
   lawyers,
   ctaTitle,
   ctaDescription,
+  afterServicesContent,
 }: CenterPageTemplateProps) {
   return (
     <>
@@ -112,6 +114,9 @@ export default function CenterPageTemplate({
           </div>
         </div>
       </section>
+
+      {/* 커스텀 섹션 (서비스 그리드 다음) */}
+      {afterServicesContent}
 
       {/* 사례 */}
       {caseExamples && caseExamples.length > 0 && (
