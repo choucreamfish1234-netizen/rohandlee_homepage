@@ -1,10 +1,20 @@
 'use client'
 
 import CenterPageTemplate from '@/components/CenterPageTemplate'
+import ProcessTimeline from './ProcessTimeline'
+import CenterCases from './CenterCases'
+import FAQAccordion from './FAQAccordion'
 
 export default function PropertyCrimeCenterPage() {
   return (
     <CenterPageTemplate
+      afterServicesContent={
+        <>
+          <ProcessTimeline />
+          <CenterCases />
+          <FAQAccordion />
+        </>
+      }
       centerName="재산범죄 피해 전문센터"
       subtitle="재산범죄 피해 전문센터"
       ctaLabel="피해금 회복 가능성 진단"
