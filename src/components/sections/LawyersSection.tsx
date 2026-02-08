@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
 
 const lawyers = [
@@ -8,14 +9,16 @@ const lawyers = [
     role: '대표변호사',
     specialty: '성범죄피해자 전문 변호사',
     description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
-    image: '/images/lawyer-lee.jpg',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80',
+    alt: '이유림 대표변호사 프로필',
   },
   {
     name: '노채은',
     role: '대표변호사',
     specialty: '재산범죄피해자 전문 변호사',
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-    image: '/images/lawyer-noh.jpg',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&q=80',
+    alt: '노채은 대표변호사 프로필',
   },
 ]
 
@@ -36,8 +39,14 @@ export default function LawyersSection() {
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.name} delay={i * 0.15}>
               <div className="text-center">
-                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 rounded-xl overflow-hidden mb-6 img-placeholder">
-                  <div className="w-full h-full bg-gradient-to-b from-gray-200 to-gray-300" />
+                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 rounded-xl overflow-hidden mb-6">
+                  <Image
+                    src={lawyer.image}
+                    alt={lawyer.alt}
+                    width={600}
+                    height={800}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-black">{lawyer.name} 대표변호사</h3>
                 <p className="mt-1 text-sm text-accent font-medium">{lawyer.specialty}</p>

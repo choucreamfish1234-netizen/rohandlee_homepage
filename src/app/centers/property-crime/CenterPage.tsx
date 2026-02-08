@@ -31,6 +31,7 @@ export default function PropertyCrimeCenterPage() {
       lawyerRole="대표변호사"
       lawyerSpecialty="재산범죄피해자 전문 변호사"
       lawyerQuote={'무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.'}
+      lawyerImage="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&q=80"
       ctaTitle="재산범죄는 속도가 생명입니다."
       ctaDescription="범인이 돈을 쓰기 전에 막아야 합니다."
     />

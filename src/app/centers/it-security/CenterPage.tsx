@@ -26,6 +26,7 @@ export default function ITSecurityCenterPage() {
       lawyerRole="대표변호사"
       lawyerSpecialty="IT보안 법률 전문 변호사"
       lawyerQuote={'디지털 시대의 새로운 위협에\n법률로 대응하겠습니다.'}
+      lawyerImage="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&q=80"
       ctaTitle="디지털 피해, 혼자 대응하지 마세요."
       ctaDescription="IT보안 법률 전문가의 상담을 받아보세요."
     />

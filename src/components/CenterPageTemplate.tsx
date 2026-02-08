@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
@@ -29,6 +30,7 @@ interface CenterPageTemplateProps {
   lawyerRole: string
   lawyerSpecialty: string
   lawyerQuote: string
+  lawyerImage?: string
   ctaTitle: string
   ctaDescription: string
 }
@@ -45,6 +47,7 @@ export default function CenterPageTemplate({
   lawyerRole,
   lawyerSpecialty,
   lawyerQuote,
+  lawyerImage,
   ctaTitle,
   ctaDescription,
 }: CenterPageTemplateProps) {
@@ -148,8 +151,18 @@ export default function CenterPageTemplate({
             <p className="text-xs tracking-[0.2em] text-gray-400 uppercase mb-8">
               {centerName} 전담 변호사
             </p>
-            <div className="w-full max-w-xs mx-auto aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden mb-6 img-placeholder">
-              <div className="w-full h-full bg-gradient-to-b from-gray-200 to-gray-300" />
+            <div className="w-full max-w-xs mx-auto aspect-[3/4] bg-gray-100 rounded-xl overflow-hidden mb-6">
+              {lawyerImage ? (
+                <Image
+                  src={lawyerImage}
+                  alt={`${lawyerName} ${lawyerRole}`}
+                  width={600}
+                  height={800}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-b from-gray-200 to-gray-300" />
+              )}
             </div>
             <h3 className="text-xl font-bold text-black">{lawyerName} {lawyerRole}</h3>
             <p className="mt-1 text-sm text-accent font-medium">{lawyerSpecialty}</p>

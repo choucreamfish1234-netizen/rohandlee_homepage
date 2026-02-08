@@ -29,6 +29,7 @@ export default function SexualCrimeCenterPage() {
       lawyerRole="대표변호사"
       lawyerSpecialty="성범죄피해자 전문 변호사"
       lawyerQuote={'끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.'}
+      lawyerImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80"
       ctaTitle="혼자 앓지 마세요. 지금 전문가와 이야기하세요."
       ctaDescription="성범죄 전담 10년 변호사의 무료 상담을 지금 바로 받아보세요."
     />

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 
@@ -8,19 +9,22 @@ const centers = [
     title: '성범죄 피해자 전담 센터',
     description: '성범죄 피해자만을 위한 전담 변호 시스템',
     href: '/centers/sexual-crime',
-    image: '/images/center-sexual.jpg',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop&q=80',
+    alt: '명상하는 손 - 힐링과 치유의 이미지',
   },
   {
     title: '재산범죄 피해자 전담 센터',
     description: '사기·횡령·배임 피해 전담 구제 시스템',
     href: '/centers/property-crime',
-    image: '/images/center-property.jpg',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop&q=80',
+    alt: '밀밭 위로 뻗은 손 - 자연과 회복의 이미지',
   },
   {
     title: '회생파산 전담 센터(리셋)',
     description: '새로운 시작을 위한 법적 리셋 시스템',
     href: '/centers/bankruptcy',
-    image: '/images/center-reset.jpg',
+    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop&q=80',
+    alt: '빛나는 크리스탈볼 - 새출발의 이미지',
   },
 ]
 
@@ -29,13 +33,15 @@ const centersRow2 = [
     title: '기업경영 법무센터',
     description: '기업 운영의 법적 리스크를 사전 차단합니다',
     href: '/centers/corporate',
-    image: '/images/center-corporate.jpg',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=675&fit=crop&q=80',
+    alt: '고층 빌딩을 올려다 본 모습 - 기업과 도시의 이미지',
   },
   {
     title: 'IT보안 법률센터',
     description: '디지털 시대의 법적 보호막이 되겠습니다',
     href: '/centers/it-security',
-    image: '/images/center-it.jpg',
+    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=675&fit=crop&q=80',
+    alt: '노트북 키보드 클로즈업 - 테크와 보안의 이미지',
   },
 ]
 
@@ -57,8 +63,14 @@ export default function CentersSection() {
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.1}>
               <Link href={center.href} className="group block">
-                <div className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden mb-4 img-placeholder">
-                  <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 group-hover:scale-105 transition-transform duration-500" />
+                <div className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                  <Image
+                    src={center.image}
+                    alt={center.alt}
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
                 </div>
                 <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors">
                   {center.title}
@@ -74,8 +86,14 @@ export default function CentersSection() {
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.1}>
               <Link href={center.href} className="group block">
-                <div className="aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden mb-4 img-placeholder">
-                  <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 group-hover:scale-105 transition-transform duration-500" />
+                <div className="aspect-[16/9] bg-gray-100 rounded-lg overflow-hidden mb-4">
+                  <Image
+                    src={center.image}
+                    alt={center.alt}
+                    width={1200}
+                    height={675}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
                 </div>
                 <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors">
                   {center.title}

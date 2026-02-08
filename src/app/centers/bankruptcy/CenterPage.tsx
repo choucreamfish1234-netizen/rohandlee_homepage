@@ -26,6 +26,7 @@ export default function BankruptcyCenterPage() {
       lawyerRole="대표변호사"
       lawyerSpecialty="회생·파산 전문 변호사"
       lawyerQuote={'빚에 짓눌린 삶에서 벗어나\n다시 일어설 수 있도록 돕겠습니다.'}
+      lawyerImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80"
       ctaTitle="빚의 무게에서 벗어나세요."
       ctaDescription="무료 회생 가능성 진단을 받아보세요."
     />

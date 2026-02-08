@@ -26,6 +26,7 @@ export default function CorporateCenterPage() {
       lawyerRole="대표변호사"
       lawyerSpecialty="기업법무 전문 변호사"
       lawyerQuote={'기업의 안정적인 성장을 위해\n법적 파트너로서 함께하겠습니다.'}
+      lawyerImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80"
       ctaTitle="기업의 내일을 지키세요."
       ctaDescription="기업경영 법무 전문 상담을 받아보세요."
     />
