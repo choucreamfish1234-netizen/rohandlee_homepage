@@ -52,14 +52,14 @@ export default function CorporateCenterPage() {
           role: '대표변호사',
           specialty: '기업법무 전문 변호사',
           quote: '기업의 안정적인 성장을 위해\n법적 파트너로서 함께하겠습니다.',
-          image: '/images/lawyer-lee.png',
+          image: '/lawyer-lee.jpg',
         },
         {
           name: '노채은',
           role: '대표변호사',
           specialty: '기업법무 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/images/lawyer-noh.png',
+          image: '/lawyer-noh.jpg',
         },
       ]}
       ctaTitle="기업의 내일을 지키세요."
