@@ -7,17 +7,17 @@ const lawyers = [
   {
     name: '이유림',
     role: '대표변호사',
-    specialty: '성범죄피해자 전문 변호사',
+    specialty: '성범죄 피해자 전문 변호사',
     description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&h=800&fit=crop&q=80',
+    image: '/images/lawyer-lee.png',
     alt: '이유림 대표변호사 프로필',
   },
   {
     name: '노채은',
     role: '대표변호사',
-    specialty: '재산범죄피해자 전문 변호사',
+    specialty: '재산범죄 피해자 전문 변호사',
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop&q=80',
+    image: '/images/lawyer-noh.png',
     alt: '노채은 대표변호사 프로필',
   },
 ]

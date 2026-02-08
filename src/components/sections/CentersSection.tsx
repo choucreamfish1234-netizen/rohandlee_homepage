@@ -37,7 +37,7 @@ const centersRow2 = [
     alt: '고층 빌딩을 올려다 본 모습',
   },
   {
-    title: 'IT보안 법률센터',
+    title: 'IT·보안 법률센터',
     description: '디지털 시대의 법적 보호막이 되겠습니다',
     href: '/centers/it-security',
     image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=675&fit=crop&q=80',
