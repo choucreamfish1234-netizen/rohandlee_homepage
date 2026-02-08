@@ -39,16 +39,19 @@ function useCountUp(end: number, duration = 2000) {
   return { count, ref }
 }
 
-function StatItem({ label, end, suffix, isDecimal }: { label: string; end: number; suffix: string; isDecimal?: boolean }) {
+function StatItem({ label, end, suffix, isDecimal, showDivider = true }: { label: string; end: number; suffix: string; isDecimal?: boolean; showDivider?: boolean }) {
   const { count, ref } = useCountUp(end, 2200)
 
   return (
-    <div className="text-center">
+    <div className={`text-center relative ${showDivider ? '' : ''}`}>
       <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
         {isDecimal ? (count / 10).toFixed(1) : count}
         {suffix}
       </span>
       <span className="block mt-2 text-[11px] sm:text-xs text-white/60">{label}</span>
+      {showDivider && (
+        <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-8 bg-white/20" />
+      )}
     </div>
   )
 }
@@ -81,7 +84,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-6 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight"
+          className="mt-6 text-3xl sm:text-4xl md:text-[52px] font-bold tracking-tight leading-[1.2]"
         >
           <span className="text-accent">오직 피해자만</span>{' '}
           <span className="text-black">변호합니다.</span>
@@ -92,10 +95,10 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-5 text-base sm:text-lg text-gray-400 leading-relaxed"
+          className="mt-6 text-base sm:text-lg text-gray-400 leading-relaxed"
         >
-          피해자의 일상을 되찾을 때까지,<br />
-          로앤이가 처음부터 끝까지 함께합니다.
+          가해자의 편에 서지 않습니다.<br />
+          처음부터 끝까지, 피해자만을 위한 법률사무소.
         </motion.p>
 
         {/* CTA 버튼 */}
@@ -129,14 +132,14 @@ export default function HeroSection() {
       >
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="grid grid-cols-4 gap-4">
-            <StatItem label="의뢰인 수" end={100} suffix="+" />
+            <StatItem label="누적 의뢰인" end={100} suffix="+" />
             <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
             <StatItem label="감사 후기" end={600} suffix="+" />
             <div className="text-center">
               <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
                 A-Z
               </span>
-              <span className="block mt-2 text-[11px] sm:text-xs text-white/60">전 과정 변호</span>
+              <span className="block mt-2 text-[11px] sm:text-xs text-white/60">원스톱 변호</span>
             </div>
           </div>
         </div>
