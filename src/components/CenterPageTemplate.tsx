@@ -14,6 +14,7 @@ interface Service {
 interface CaseExample {
   title: string
   description: string
+  image?: string
 }
 
 interface Lawyer {
@@ -121,12 +122,23 @@ export default function CenterPageTemplate({
                 주요 성과 사례
               </h2>
             </ScrollReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {caseExamples.map((c, i) => (
                 <ScrollReveal key={i} delay={i * 0.1}>
-                  <div className="bg-white rounded-xl p-8 border border-gray-100">
+                  <div className="group">
+                    {c.image && (
+                      <div className="aspect-[4/3] bg-gray-100 overflow-hidden mb-5">
+                        <Image
+                          src={c.image}
+                          alt={c.title}
+                          width={800}
+                          height={600}
+                          className="w-full h-full object-cover group-hover:scale-[1.04] group-hover:brightness-110 transition-all duration-700 ease-out"
+                        />
+                      </div>
+                    )}
                     <h3 className="font-semibold text-black">{c.title}</h3>
-                    <p className="mt-3 text-sm text-gray-500 leading-relaxed">{c.description}</p>
+                    <p className="mt-2 text-sm text-gray-500 leading-relaxed">{c.description}</p>
                   </div>
                 </ScrollReveal>
               ))}
