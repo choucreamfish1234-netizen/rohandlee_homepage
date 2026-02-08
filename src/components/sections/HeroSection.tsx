@@ -44,47 +44,61 @@ function StatItem({ label, end, suffix, isDecimal }: { label: string; end: numbe
 
   return (
     <div className="text-center">
-      <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-black tracking-tight">
+      <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
         {isDecimal ? (count / 10).toFixed(1) : count}
         {suffix}
       </span>
-      <span className="block mt-2 text-[11px] sm:text-xs text-gray-400">{label}</span>
+      <span className="block mt-2 text-[11px] sm:text-xs text-white/60">{label}</span>
     </div>
   )
 }
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-gradient-to-b from-white via-white to-gray-50">
+    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-gradient-to-b from-[#f7faf9] via-white to-white">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         className="text-center max-w-4xl mx-auto"
       >
-        <h1 className="font-inter text-[40px] font-bold tracking-[-0.04em] text-black leading-[1.2]">
+        {/* 영문 레이블 */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-[11px] tracking-[0.35em] text-accent/50 uppercase mb-6"
+        >
+          Roh &amp; Lee Law Firm
+        </motion.p>
+
+        <h1 className="font-inter text-[40px] sm:text-[48px] font-bold tracking-[-0.04em] text-black leading-[1.2]">
           법률사무소 로앤이
         </h1>
 
+        {/* 슬로건 — 분리 컬러 */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-6 text-xl sm:text-2xl md:text-3xl text-accent font-medium tracking-wide"
+          className="mt-6 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight"
         >
-          &ldquo;오직 피해자만 변호합니다&rdquo;
+          <span className="text-accent">오직 피해자만</span>{' '}
+          <span className="text-black">변호합니다.</span>
         </motion.p>
 
+        {/* 서브 텍스트 */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-5 text-base sm:text-lg text-gray-400 leading-relaxed"
         >
-          당신의 잃어버린 일상을 되찾을 때까지,<br />
-          로앤이가 끝까지 함께 합니다.
+          피해자의 일상을 되찾을 때까지,<br />
+          로앤이가 처음부터 끝까지 함께합니다.
         </motion.p>
 
+        {/* CTA 버튼 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,55 +107,39 @@ export default function HeroSection() {
         >
           <Link
             href="/consultation"
-            className="inline-flex items-center justify-center px-10 py-4 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-all duration-300 hover:shadow-lg"
+            className="inline-flex items-center justify-center px-10 py-4 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent/90 transition-all duration-300 hover:shadow-lg"
           >
             무료 상담 신청하기
           </Link>
           <a
             href="tel:032-207-8788"
-            className="inline-flex items-center justify-center px-10 py-4 border border-gray-200 text-sm font-medium rounded-full hover:border-gray-400 transition-all duration-300"
+            className="inline-flex items-center justify-center px-10 py-4 border border-accent/20 text-accent text-sm font-medium rounded-full hover:border-accent/50 transition-all duration-300"
           >
             032-207-8788
           </a>
         </motion.div>
       </motion.div>
 
-      {/* 통계 카운트업 */}
+      {/* 통계 바 — 딥그린 배경 */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-20 left-0 right-0"
+        className="absolute bottom-0 left-0 right-0 bg-accent"
       >
-        <div className="max-w-2xl mx-auto px-4">
+        <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="grid grid-cols-4 gap-4">
             <StatItem label="의뢰인 수" end={100} suffix="+" />
             <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
             <StatItem label="감사 후기" end={600} suffix="+" />
             <div className="text-center">
-              <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-black tracking-tight">
+              <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
                 A-Z
               </span>
-              <span className="block mt-2 text-[11px] sm:text-xs text-gray-400">전 과정 변호</span>
+              <span className="block mt-2 text-[11px] sm:text-xs text-white/60">전 과정 변호</span>
             </div>
           </div>
         </div>
-      </motion.div>
-
-      {/* 스크롤 인디케이터 */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-          className="w-6 h-10 border-2 border-gray-300 rounded-full flex items-start justify-center p-1.5"
-        >
-          <div className="w-1 h-2 bg-gray-400 rounded-full" />
-        </motion.div>
       </motion.div>
     </section>
   )
