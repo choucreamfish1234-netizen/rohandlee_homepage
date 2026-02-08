@@ -24,33 +24,35 @@ const lawyers = [
 
 export default function LawyersSection() {
   return (
-    <section id="lawyers" className="py-24 sm:py-32 bg-gray-50">
+    <section id="lawyers" className="py-28 sm:py-40 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-4">
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Our Lawyers
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-20">
             변호사 소개
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.name} delay={i * 0.15}>
               <div className="text-center">
-                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 rounded-xl overflow-hidden mb-6">
+                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 rounded-2xl overflow-hidden mb-8 shadow-sm">
                   <Image
                     src={lawyer.image}
                     alt={lawyer.alt}
                     width={600}
                     height={800}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
-                <h3 className="text-xl font-bold text-black">{lawyer.name} 대표변호사</h3>
+                <h3 className="font-serif text-xl font-bold text-black">
+                  {lawyer.name} <span className="font-sans text-base font-normal text-gray-400">대표변호사</span>
+                </h3>
                 <p className="mt-1 text-sm text-accent font-medium">{lawyer.specialty}</p>
-                <p className="mt-4 text-sm text-gray-500 leading-relaxed whitespace-pre-line">
+                <p className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line">
                   {lawyer.description}
                 </p>
               </div>

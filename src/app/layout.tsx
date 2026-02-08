@@ -101,11 +101,19 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* Pretendard (본문) */}
         <link
           rel="stylesheet"
           as="style"
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        {/* Noto Serif KR (한글 제목) + Playfair Display (영문/숫자) */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
         />
         <script
           type="application/ld+json"

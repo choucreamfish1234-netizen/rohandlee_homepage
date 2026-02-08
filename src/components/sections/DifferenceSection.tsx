@@ -23,26 +23,26 @@ const differences = [
 
 export default function DifferenceSection() {
   return (
-    <section className="py-24 sm:py-32 bg-white">
+    <section className="py-28 sm:py-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.2em] text-gray-400 uppercase text-center mb-4">
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Why Ro&Lee
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-20">
             로앤이가 다른 이유
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {differences.map((diff, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="p-6 border border-gray-100 rounded-xl hover:border-accent/20 transition-colors">
-                <div className="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-accent text-sm font-bold">0{i + 1}</span>
-                </div>
-                <h3 className="text-lg font-semibold text-black">{diff.title}</h3>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed">{diff.description}</p>
+              <div className="p-8 border border-gray-100 rounded-2xl hover:border-accent/20 transition-all duration-300 hover:shadow-sm">
+                <span className="font-display text-4xl font-light text-gray-200">
+                  0{i + 1}
+                </span>
+                <h3 className="mt-4 text-lg font-semibold text-black">{diff.title}</h3>
+                <p className="mt-3 text-sm text-gray-400 leading-relaxed">{diff.description}</p>
               </div>
             </ScrollReveal>
           ))}
