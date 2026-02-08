@@ -17,6 +17,7 @@ const config: Config = {
         sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
         serif: ['"Noto Serif KR"', 'Georgia', 'serif'],
         display: ['"Playfair Display"', 'Georgia', 'serif'],
+        inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
       },
     },
   },

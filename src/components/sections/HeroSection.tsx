@@ -12,7 +12,7 @@ export default function HeroSection() {
         transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         className="text-center max-w-4xl mx-auto"
       >
-        <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-black leading-[1.1]">
+        <h1 className="font-inter text-[40px] font-bold tracking-[-0.04em] text-black leading-[1.2]">
           법률사무소 로앤이
         </h1>
 
