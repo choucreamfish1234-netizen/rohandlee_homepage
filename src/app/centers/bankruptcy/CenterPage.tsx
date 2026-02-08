@@ -1,10 +1,20 @@
 'use client'
 
 import CenterPageTemplate from '@/components/CenterPageTemplate'
+import ProcessTimeline from './ProcessTimeline'
+import CenterCases from './CenterCases'
+import FAQAccordion from './FAQAccordion'
 
 export default function BankruptcyCenterPage() {
   return (
     <CenterPageTemplate
+      afterServicesContent={
+        <>
+          <ProcessTimeline />
+          <CenterCases />
+          <FAQAccordion />
+        </>
+      }
       centerName="회생·파산 전문센터 리셋"
       subtitle="회생·파산 전문센터(리셋)"
       ctaLabel="무료 회생 가능성 진단"
