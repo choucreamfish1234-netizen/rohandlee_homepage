@@ -58,7 +58,15 @@ function StatItem({ label, end, suffix, isDecimal, showDivider = true }: { label
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-gradient-to-b from-[#f7faf9] via-white to-white">
+    <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-white">
+      {/* 딥그린 그라데이션 오버레이 — 상단→중간 페이드 */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(27,59,47,0.10) 0%, rgba(27,59,47,0.04) 35%, transparent 60%)',
+        }}
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -84,7 +92,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
-          className="mt-6 text-3xl sm:text-4xl md:text-[52px] font-bold tracking-tight leading-[1.2]"
+          className="mt-6 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-[1.3]"
         >
           <span className="text-accent">오직 피해자만</span>{' '}
           <span className="text-black">변호합니다.</span>
