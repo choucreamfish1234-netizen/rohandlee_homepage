@@ -5,6 +5,7 @@ import TagsSection from '@/components/sections/TagsSection'
 import ProcessSection from '@/components/sections/ProcessSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import DifferenceSection from '@/components/sections/DifferenceSection'
+import CasesSection from '@/components/sections/CasesSection'
 import LawyersSection from '@/components/sections/LawyersSection'
 import AppSection from '@/components/sections/AppSection'
 import CtaSection from '@/components/sections/CtaSection'
@@ -19,6 +20,7 @@ export default function Home() {
       <ProcessSection />
       <TestimonialsSection />
       <DifferenceSection />
+      <CasesSection />
       <LawyersSection />
       <AppSection />
       <CtaSection />

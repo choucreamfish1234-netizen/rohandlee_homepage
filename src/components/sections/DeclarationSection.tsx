@@ -15,7 +15,7 @@ export default function DeclarationSection() {
         <ScrollReveal delay={0.1}>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-black leading-snug">
             가해자는 변호하지 않습니다.<br />
-            오로지 성범죄 피해자만을 변호합니다.
+            오로지 피해자만을 변호합니다.
           </h2>
         </ScrollReveal>
 

@@ -39,7 +39,7 @@ export default function LawyersSection() {
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.name} delay={i * 0.15}>
               <div className="text-center">
-                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
                   <Image
                     src={lawyer.image}
                     alt={lawyer.alt}

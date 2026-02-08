@@ -63,7 +63,7 @@ export default function CentersSection() {
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <Link href={center.href} className="group block">
-                <div className="aspect-[4/3] bg-gray-50 rounded-xl overflow-hidden mb-5">
+                <div className="aspect-[4/3] bg-gray-50 overflow-hidden mb-5">
                   <Image
                     src={center.image}
                     alt={center.alt}
@@ -86,7 +86,7 @@ export default function CentersSection() {
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <Link href={center.href} className="group block">
-                <div className="aspect-[16/9] bg-gray-50 rounded-xl overflow-hidden mb-5">
+                <div className="aspect-[16/9] bg-gray-50 overflow-hidden mb-5">
                   <Image
                     src={center.image}
                     alt={center.alt}

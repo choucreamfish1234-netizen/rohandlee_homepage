@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navLinks = [
   { href: '/#centers', label: '우리 소개' },
   { href: '/#lawyers', label: '변호사 소개' },
+  { href: '/cases', label: '성공사례' },
   { href: '/#location', label: '오시는 길' },
   { href: '/blog', label: '블로그' },
 ]

@@ -90,7 +90,7 @@ export default function CenterPageTemplate({
             {services.map((service, i) => (
               <ScrollReveal key={i} delay={i * 0.1}>
                 <div className="group">
-                  <div className="aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden mb-5">
+                  <div className="aspect-[4/3] bg-gray-100 overflow-hidden mb-5">
                     {service.image ? (
                       <Image
                         src={service.image}
@@ -182,7 +182,7 @@ export default function CenterPageTemplate({
             {lawyers.map((lawyer, i) => (
               <ScrollReveal key={lawyer.name} delay={i * 0.15}>
                 <div className="text-center">
-                  <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 rounded-2xl overflow-hidden mb-8 shadow-sm">
+                  <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
                     <Image
                       src={lawyer.image}
                       alt={`${lawyer.name} ${lawyer.role}`}
