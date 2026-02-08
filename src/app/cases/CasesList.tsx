@@ -19,7 +19,7 @@ const cases = [
     badge: '불송치(무죄)',
     badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     tagColor: 'bg-emerald-50 text-emerald-600',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const cases = [
     badge: '징역 8년 선고',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
     tagColor: 'bg-red-50 text-red-600',
-    image: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const cases = [
     badge: '전액 회수',
     badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     tagColor: 'bg-emerald-50 text-emerald-600',
-    image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80',
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ const cases = [
     badge: '실형 선고',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
     tagColor: 'bg-red-50 text-red-600',
-    image: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&q=80',
   },
 ]
 

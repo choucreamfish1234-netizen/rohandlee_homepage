@@ -206,11 +206,9 @@ export default function CenterPageTemplate({
               <ScrollReveal key={lawyer.name} delay={i * 0.15}>
                 <div className="text-center">
                   <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
-                    <Image
+                    <img
                       src={lawyer.image}
                       alt={`${lawyer.name} ${lawyer.role}`}
-                      width={600}
-                      height={800}
                       className="w-full h-full object-cover"
                     />
                   </div>

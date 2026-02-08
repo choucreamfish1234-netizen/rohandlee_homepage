@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
 
 const lawyers = [
@@ -40,11 +39,9 @@ export default function LawyersSection() {
             <ScrollReveal key={lawyer.name} delay={i * 0.15}>
               <div className="text-center">
                 <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
-                  <Image
+                  <img
                     src={lawyer.image}
                     alt={lawyer.alt}
-                    width={600}
-                    height={800}
                     className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
