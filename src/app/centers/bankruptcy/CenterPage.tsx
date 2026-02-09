@@ -3,6 +3,9 @@
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import ProcessTimeline from './ProcessTimeline'
+import CenterCases from './CenterCases'
+import FAQAccordion from './FAQAccordion'
 
 const processSteps = [
   {
@@ -363,7 +366,7 @@ export default function BankruptcyCenterPage() {
         description:
           '회생과 파산은 포기가 아니라, 법이 보장하는 새로운 시작입니다.\n로앤이 리셋 센터가 함께합니다.',
       }}
-      customSection={<ReSetSection />}
+      customSection={<><ProcessTimeline /><CenterCases /><FAQAccordion /><ReSetSection /></>}
       lawyers={[
         {
           name: '이유림',

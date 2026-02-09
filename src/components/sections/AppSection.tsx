@@ -1,11 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 
 export default function AppSection() {
   return (
-    <section className="py-28 sm:py-40 bg-white">
+    <section className="py-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-20">
@@ -48,9 +47,9 @@ export default function AppSection() {
                 </div>
               </div>
               <div className="mt-8 text-center">
-                <Link href="#" className="text-sm text-black font-medium hover:text-accent transition-colors">
+                <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" className="text-sm text-black font-medium hover:text-accent transition-colors">
                   자세히 보기 →
-                </Link>
+                </a>
               </div>
             </div>
           </ScrollReveal>
@@ -80,9 +79,9 @@ export default function AppSection() {
                 </div>
               </div>
               <div className="mt-8 text-center">
-                <Link href="#" className="text-sm text-black font-medium hover:text-accent transition-colors">
+                <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" className="text-sm text-black font-medium hover:text-accent transition-colors">
                   자세히 보기 →
-                </Link>
+                </a>
               </div>
             </div>
           </ScrollReveal>

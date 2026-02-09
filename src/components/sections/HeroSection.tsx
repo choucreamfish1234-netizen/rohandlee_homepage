@@ -49,10 +49,10 @@ export default function HeroSection() {
             무료 상담 신청하기
           </button>
           <a
-            href="tel:055-261-8788"
+            href="tel:032-207-8788"
             className="inline-flex items-center justify-center px-10 py-4 border border-gray-200 text-sm font-medium rounded-full hover:border-gray-400 transition-all duration-300"
           >
-            <span className="font-display">055-261-8788</span>
+            <span className="font-display">032-207-8788</span>
           </a>
         </motion.div>
       </motion.div>

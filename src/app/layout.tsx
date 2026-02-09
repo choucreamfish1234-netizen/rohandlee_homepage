@@ -12,10 +12,10 @@ export const metadata: Metadata = {
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '법률사무소 로앤이는 성범죄·재산범죄 피해자 전담, 회생파산, 기업경영 법무, IT보안 법률 전문 법률사무소입니다. 부산 변호사 이유림, 노채은이 끝까지 함께합니다.',
+    '법률사무소 로앤이는 성범죄·재산범죄 피해자 전담, 회생파산, 기업경영 법무, IT보안 법률 전문 법률사무소입니다. 부천 변호사 이유림, 노채은이 끝까지 함께합니다.',
   keywords: [
     '법률사무소 로앤이',
-    '부산 변호사',
+    '부천 변호사',
     '성범죄 피해자 변호사',
     '재산범죄 변호사',
     '회생파산',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: '법률사무소 로앤이',
     title: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
     description:
-      '성범죄·재산범죄 피해자 전담, 회생파산, 기업경영, IT보안 전문 법률사무소. 부산 법원 앞.',
+      '성범죄·재산범죄 피해자 전담, 회생파산, 기업경영, IT보안 전문 법률사무소. 경기도 부천시.',
     images: [
       {
         url: '/images/og-image.jpg',
@@ -69,13 +69,13 @@ const jsonLd = {
   name: '법률사무소 로앤이',
   description: '오직 피해자만 변호합니다. 성범죄·재산범죄 피해자 전담, 회생파산, 기업경영 법무, IT보안 법률 전문.',
   url: 'https://roandlee.com',
-  telephone: '055-261-8788',
+  telephone: '032-207-8788',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '법원로13번길 24 3층',
-    addressLocality: '부산광역시',
-    addressRegion: '연제구',
-    postalCode: '47590',
+    streetAddress: '부일로205번길 54, 205호',
+    addressLocality: '부천시',
+    addressRegion: '경기도',
+    postalCode: '14544',
     addressCountry: 'KR',
   },
   openingHours: 'Mo-Fr 09:00-18:00',
