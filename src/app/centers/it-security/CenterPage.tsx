@@ -252,6 +252,7 @@ export default function ITSecurityCenterPage() {
       subtitle="IT·보안 법률센터"
       ctaLabel="IT보안 법률 상담"
       ctaHref="/consultation"
+      defaultCaseType="IT·보안 법률 상담"
       services={[
         {
           title: '해킹 피해 대응',

@@ -1,8 +1,8 @@
 'use client'
 
-import Link from 'next/link'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 const processSteps = [
   {
@@ -46,6 +46,7 @@ const comparisonRows = [
 ]
 
 function ReSetSection() {
+  const { openConsultation } = useConsultation()
   return (
     <>
       {/* 1. 섹션 헤더 */}
@@ -295,13 +296,13 @@ function ReSetSection() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/consultation"
+              <button
+                onClick={() => openConsultation('회생·파산 상담')}
                 className="inline-flex items-center justify-center px-10 py-4 text-white text-sm font-medium rounded-full hover:opacity-90 transition-opacity"
                 style={{ backgroundColor: '#1B3B2F' }}
               >
                 RE-Set으로 새 출발 준비하기
-              </Link>
+              </button>
               <a
                 href="tel:032-207-8788"
                 className="inline-flex items-center justify-center px-10 py-4 border text-sm font-medium rounded-full hover:bg-gray-50 transition-colors"
@@ -324,6 +325,7 @@ export default function BankruptcyCenterPage() {
       subtitle="회생·파산 전문센터(리셋)"
       ctaLabel="무료 회생 가능성 진단"
       ctaHref="/consultation"
+      defaultCaseType="회생·파산 상담"
       services={[
         {
           title: '개인회생 신청',

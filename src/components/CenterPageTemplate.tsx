@@ -1,9 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 interface Service {
   title: string
@@ -29,7 +29,7 @@ interface CenterPageTemplateProps {
   centerName: string
   subtitle: string
   ctaLabel: string
-  ctaHref: string
+  ctaHref?: string
   services: Service[]
   caseExamples?: CaseExample[]
   declaration: {
@@ -40,13 +40,13 @@ interface CenterPageTemplateProps {
   ctaTitle: string
   ctaDescription: string
   customSection?: React.ReactNode
+  defaultCaseType?: string
 }
 
 export default function CenterPageTemplate({
   centerName,
   subtitle,
   ctaLabel,
-  ctaHref,
   services,
   caseExamples,
   declaration,
@@ -54,7 +54,10 @@ export default function CenterPageTemplate({
   ctaTitle,
   ctaDescription,
   customSection,
+  defaultCaseType,
 }: CenterPageTemplateProps) {
+  const { openConsultation } = useConsultation()
+  const handleCtaClick = () => openConsultation(defaultCaseType)
   return (
     <>
       {/* 히어로 */}
@@ -71,12 +74,12 @@ export default function CenterPageTemplate({
             <span className="text-gray-400">{subtitle}</span>
           </h1>
           <div className="mt-8">
-            <Link
-              href={ctaHref}
+            <button
+              onClick={handleCtaClick}
               className="inline-flex items-center justify-center px-6 py-3 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors"
             >
               {ctaLabel}
-            </Link>
+            </button>
           </div>
         </motion.div>
       </section>
@@ -231,12 +234,12 @@ export default function CenterPageTemplate({
             <h2 className="font-serif text-2xl sm:text-3xl font-bold">{ctaTitle}</h2>
             <p className="mt-4 text-gray-400 text-sm">{ctaDescription}</p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/consultation"
+              <button
+                onClick={handleCtaClick}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-100 transition-colors"
               >
                 무료 상담 신청하기
-              </Link>
+              </button>
               <a
                 href="tel:055-261-8788"
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"

@@ -1,9 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 export default function HeroSection() {
+  const { openConsultation } = useConsultation()
   return (
     <section className="relative min-h-[100vh] flex flex-col items-center justify-center px-4 bg-white">
       <motion.div
@@ -41,12 +42,12 @@ export default function HeroSection() {
           transition={{ delay: 0.9, duration: 0.6 }}
           className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link
-            href="/consultation"
+          <button
+            onClick={() => openConsultation()}
             className="inline-flex items-center justify-center px-10 py-4 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition-all duration-300 hover:shadow-lg"
           >
             무료 상담 신청하기
-          </Link>
+          </button>
           <a
             href="tel:055-261-8788"
             className="inline-flex items-center justify-center px-10 py-4 border border-gray-200 text-sm font-medium rounded-full hover:border-gray-400 transition-all duration-300"

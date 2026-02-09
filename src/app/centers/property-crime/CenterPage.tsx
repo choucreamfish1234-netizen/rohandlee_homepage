@@ -9,6 +9,7 @@ export default function PropertyCrimeCenterPage() {
       subtitle="재산범죄 피해 전문센터"
       ctaLabel="피해금 회복 가능성 진단"
       ctaHref="/consultation"
+      defaultCaseType="재산범죄 피해 상담"
       services={[
         {
           title: '긴급 가압류 신청',

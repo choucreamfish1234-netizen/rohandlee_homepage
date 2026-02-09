@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 /* ── 패키지 데이터 ── */
 const packages = [
@@ -102,6 +102,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 /* ── 커스텀 섹션 ── */
 function CorporateCustomSection() {
+  const { openConsultation } = useConsultation()
   return (
     <>
       {/* 패키지 섹션 */}
@@ -146,16 +147,16 @@ function CorporateCustomSection() {
                     ))}
                   </ul>
                   <div className="mt-8">
-                    <Link
-                      href="/consultation"
-                      className={`block text-center px-6 py-3 text-sm font-medium rounded-full transition-colors ${
+                    <button
+                      onClick={() => openConsultation('기업법무 상담')}
+                      className={`block w-full text-center px-6 py-3 text-sm font-medium rounded-full transition-colors ${
                         pkg.featured
                           ? 'bg-emerald-800 text-white hover:bg-emerald-700'
                           : 'border border-gray-300 text-black hover:border-gray-500'
                       }`}
                     >
                       상담 신청하기
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </ScrollReveal>
@@ -227,6 +228,7 @@ export default function CorporateCenterPage() {
       subtitle="기업경영 법무센터"
       ctaLabel="기업 법무 상담 예약"
       ctaHref="/consultation"
+      defaultCaseType="기업법무 상담"
       services={[
         {
           title: '계약서 검토 및 작성',

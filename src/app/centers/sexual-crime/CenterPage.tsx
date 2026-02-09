@@ -161,6 +161,7 @@ export default function SexualCrimeCenterPage() {
       subtitle="성범죄 피해 전문센터"
       ctaLabel="무료 상담 신청하기"
       ctaHref="/consultation"
+      defaultCaseType="성범죄 피해 상담"
       services={[
         {
           title: '가해자 연락 전면 대리',

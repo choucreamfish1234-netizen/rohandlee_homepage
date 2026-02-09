@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
+import ConsultationProvider from '@/components/ConsultationProvider'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://roandlee.com'),
@@ -114,10 +115,12 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <Header />
-        <main className="pt-16">{children}</main>
-        <Footer />
-        <FloatingButtons />
+        <ConsultationProvider>
+          <Header />
+          <main className="pt-16">{children}</main>
+          <Footer />
+          <FloatingButtons />
+        </ConsultationProvider>
       </body>
     </html>
   )
