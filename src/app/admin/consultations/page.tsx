@@ -196,6 +196,12 @@ export default function AdminConsultationsPage() {
         <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3">
           상담 관리
         </span>
+        <Link
+          href="/admin/seo"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          SEO 관리
+        </Link>
       </div>
 
       {/* Header */}
