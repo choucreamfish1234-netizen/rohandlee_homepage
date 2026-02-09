@@ -23,7 +23,7 @@ const cases = [
       '특수강간, 감금 등 9개 혐의로 기소된 가해자에 대해, 로앤이는 구속 수사를 관철하고 집요한 서면 제출로 징역 8년이라는 엄벌을 이끌어냈습니다.',
     badge: '징역 8년 선고',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168d5c?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 3,

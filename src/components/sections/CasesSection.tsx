@@ -17,7 +17,7 @@ const cases = [
     title: '특수강간·감금 등 9개 혐의, 징역 8년 선고',
     badge: '징역 8년 선고',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
-    image: 'https://images.unsplash.com/photo-1504711434969-e33886168d5c?w=800&h=450&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
   },
   {
     tag: '전세사기',
