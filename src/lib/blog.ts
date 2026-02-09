@@ -131,7 +131,7 @@ export async function getAdjacentPosts(publishedAt: string) {
       .lt('published_at', publishedAt)
       .order('published_at', { ascending: false })
       .limit(1)
-      .single(),
+      .maybeSingle(),
     supabase
       .from('blog_posts')
       .select('title, slug')
@@ -139,7 +139,7 @@ export async function getAdjacentPosts(publishedAt: string) {
       .gt('published_at', publishedAt)
       .order('published_at', { ascending: true })
       .limit(1)
-      .single(),
+      .maybeSingle(),
   ])
 
   return {

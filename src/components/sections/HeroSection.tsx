@@ -10,7 +10,7 @@ export default function HeroSection() {
     <section
       className="relative flex flex-col items-center justify-center px-4 overflow-hidden -mt-16"
       style={{
-        minHeight: '100vh',
+        minHeight: '80vh',
         background: 'linear-gradient(135deg, #0a1f17 0%, #1B3B2F 40%, #2d5a47 70%, #1B3B2F 100%)',
       }}
     >
