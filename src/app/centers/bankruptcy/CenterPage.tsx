@@ -13,12 +13,12 @@ export default function BankruptcyCenterPage() {
         {
           title: '개인회생 신청',
           description: '법원 인가를 통해 채무를 조정하고, 새로운 출발을 돕습니다.',
-          image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '개인파산·면책 신청',
           description: '면책 결정을 받아 모든 채무에서 벗어나는 완전한 리셋을 지원합니다.',
-          image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '법인회생 지원',
