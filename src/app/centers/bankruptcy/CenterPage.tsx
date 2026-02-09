@@ -373,14 +373,14 @@ export default function BankruptcyCenterPage() {
           role: '대표변호사',
           specialty: '회생·파산 전문 변호사',
           quote: '빚에 짓눌린 삶에서 벗어나\n다시 일어설 수 있도록 돕겠습니다.',
-          image: '/lawyer-lee.jpg',
+          image: '/lawyer-lee.svg',
         },
         {
           name: '노채은',
           role: '대표변호사',
           specialty: '회생·파산 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/lawyer-noh.jpg',
+          image: '/lawyer-noh.svg',
         },
       ]}
       ctaTitle="빚의 무게에서 벗어나세요."

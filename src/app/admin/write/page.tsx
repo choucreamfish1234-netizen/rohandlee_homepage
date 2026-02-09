@@ -181,6 +181,7 @@ function AdminWritePage() {
       if (data.excerpt) setExcerpt(data.excerpt)
       if (data.tags) setTags(data.tags)
       if (data.meta_description) setMetaDescription(data.meta_description)
+      if (data.thumbnail_url) setThumbnailUrl(data.thumbnail_url)
       setShowAiPanel(false)
       setAiTopic('')
     } catch {

@@ -12,7 +12,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .from('blog_posts')
     .select('title, excerpt, meta_description')
     .eq('slug', slug)
-    .single()
+    .eq('status', 'published')
+    .maybeSingle()
 
   return {
     title: post?.title || '블로그',

@@ -224,7 +224,7 @@ export default function SexualCrimeCenterPage() {
           role: '대표변호사',
           specialty: '성범죄 피해자 전문 변호사',
           quote: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
-          image: '/lawyer-lee.jpg',
+          image: '/lawyer-lee.svg',
         },
       ]}
       ctaTitle="혼자 앓지 마세요. 지금 전문가와 이야기하세요."

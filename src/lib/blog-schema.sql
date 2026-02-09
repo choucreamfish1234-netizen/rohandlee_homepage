@@ -29,16 +29,27 @@ CREATE INDEX idx_blog_posts_view_count ON blog_posts(view_count DESC);
 -- RLS 활성화
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
 
--- 공개 글 읽기 정책 (published 상태만)
-CREATE POLICY "Public can read published posts" ON blog_posts
+-- 읽기 정책: 모든 글 읽기 허용 (앱 코드에서 status 필터링)
+-- 기존 정책 제거 후 재생성:
+-- DROP POLICY IF EXISTS "Public can read published posts" ON blog_posts;
+-- DROP POLICY IF EXISTS "Admin full access" ON blog_posts;
+CREATE POLICY "Allow read access" ON blog_posts
   FOR SELECT TO anon
-  USING (status = 'published' AND published_at <= now());
+  USING (true);
 
--- 관리자 전체 접근 정책 (INSERT, UPDATE, DELETE)
-CREATE POLICY "Admin full access" ON blog_posts
-  FOR ALL TO anon
+-- 쓰기 정책
+CREATE POLICY "Allow insert access" ON blog_posts
+  FOR INSERT TO anon
+  WITH CHECK (true);
+
+CREATE POLICY "Allow update access" ON blog_posts
+  FOR UPDATE TO anon
   USING (true)
   WITH CHECK (true);
+
+CREATE POLICY "Allow delete access" ON blog_posts
+  FOR DELETE TO anon
+  USING (true);
 
 -- 조회수 증가 함수
 CREATE OR REPLACE FUNCTION increment_view_count(post_id bigint)

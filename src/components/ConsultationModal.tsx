@@ -27,6 +27,7 @@ export default function ConsultationModal({
   const [form, setForm] = useState({
     name: '',
     phone: '',
+    email: '',
     case_type: defaultCaseType,
     content: '',
     privacy_agreed: false,
@@ -76,6 +77,7 @@ export default function ConsultationModal({
         setForm({
           name: '',
           phone: '',
+          email: '',
           case_type: defaultCaseType,
           content: '',
           privacy_agreed: false,
@@ -100,6 +102,7 @@ export default function ConsultationModal({
           {
             name: form.name,
             phone: form.phone,
+            email: form.email || null,
             case_type: form.case_type || null,
             content: form.content || null,
             privacy_agreed: form.privacy_agreed,
@@ -249,6 +252,26 @@ export default function ConsultationModal({
                         }
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors"
                         placeholder="010-0000-0000"
+                      />
+                    </div>
+
+                    {/* 이메일 */}
+                    <div>
+                      <label
+                        htmlFor="modal-email"
+                        className="block text-sm font-medium text-black mb-2"
+                      >
+                        이메일
+                      </label>
+                      <input
+                        id="modal-email"
+                        type="email"
+                        value={form.email}
+                        onChange={(e) =>
+                          setForm({ ...form, email: e.target.value })
+                        }
+                        className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors"
+                        placeholder="답변 받으실 이메일 주소 (선택)"
                       />
                     </div>
 

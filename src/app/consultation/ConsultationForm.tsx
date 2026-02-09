@@ -26,6 +26,7 @@ export default function ConsultationForm() {
   const [form, setForm] = useState({
     name: '',
     phone: '',
+    email: '',
     case_type: '',
     content: '',
   })
@@ -45,6 +46,7 @@ export default function ConsultationForm() {
           {
             name: form.name,
             phone: form.phone,
+            email: form.email || null,
             case_type: form.case_type,
             content: form.content,
             created_at: new Date().toISOString(),
@@ -126,6 +128,20 @@ export default function ConsultationForm() {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors"
                 placeholder="010-0000-0000"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
+                이메일
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors"
+                placeholder="답변 받으실 이메일 주소 (선택)"
               />
             </div>
 

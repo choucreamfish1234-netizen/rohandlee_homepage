@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { CATEGORY_THUMBNAILS } from '@/lib/blog'
 
 export async function POST(req: NextRequest) {
   try {
@@ -95,6 +96,9 @@ export async function POST(req: NextRequest) {
     }
 
     const parsed = JSON.parse(jsonMatch[0])
+    // Auto-assign thumbnail URL based on category
+    const cat = category || '일반'
+    parsed.thumbnail_url = CATEGORY_THUMBNAILS[cat] || CATEGORY_THUMBNAILS['일반']
     return NextResponse.json(parsed)
   } catch (error) {
     console.error('Generate blog error:', error)
