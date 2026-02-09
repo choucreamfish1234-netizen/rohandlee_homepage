@@ -184,8 +184,8 @@ function AdminWritePage() {
       if (data.thumbnail_url) setThumbnailUrl(data.thumbnail_url)
       setShowAiPanel(false)
       setAiTopic('')
-    } catch {
-      alert('AI 생성에 실패했습니다. API 키를 확인해주세요.')
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'AI 생성에 실패했습니다. API 키를 확인해주세요.')
     } finally {
       setGenerating(false)
     }
