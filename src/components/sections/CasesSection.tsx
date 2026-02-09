@@ -23,6 +23,24 @@ const cases = [
     tagColor: 'bg-red-50 text-red-600',
     image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
   },
+  {
+    tag: '전세사기',
+    title: '전세보증금 3억 원 전액 회수 성공',
+    description: '긴급 가압류 신청과 민·형사 병행으로 보증금 전액을 회수했습니다.',
+    badge: '전액 회수',
+    badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
+    tagColor: 'bg-blue-50 text-blue-600',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop&q=80',
+  },
+  {
+    tag: '스토킹',
+    title: '지속적 스토킹 행위, 접근금지 명령 및 실형 선고',
+    description: '피해자 보호명령 신청과 함께 가해자에 대한 엄벌을 이끌어냈습니다.',
+    badge: '실형 선고',
+    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
+    tagColor: 'bg-amber-50 text-amber-600',
+    image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&h=500&fit=crop&q=80',
+  },
 ]
 
 export default function CasesSection() {
