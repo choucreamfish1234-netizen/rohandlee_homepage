@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { type BlogPost, getAllPosts, getAdminStats, deletePost, updatePost, formatDate } from '@/lib/blog'
+import { supabase } from '@/lib/supabase'
 
 export default function AdminDashboardPage() {
   const router = useRouter()
@@ -12,6 +13,7 @@ export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [deleting, setDeleting] = useState<number | null>(null)
+  const [newConsultationCount, setNewConsultationCount] = useState(0)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -31,6 +33,17 @@ export default function AdminDashboardPage() {
       // ignore
     } finally {
       setLoading(false)
+    }
+
+    // Fetch new consultation count
+    try {
+      const { count } = await supabase
+        .from('consultations')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'new')
+      setNewConsultationCount(count || 0)
+    } catch {
+      // ignore
     }
   }
 
@@ -70,6 +83,24 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="py-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Navigation Tabs */}
+      <div className="flex items-center gap-6 mb-6 border-b border-gray-200 pb-3">
+        <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3">
+          블로그 관리
+        </span>
+        <Link
+          href="/admin/consultations"
+          className="relative text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          상담 관리
+          {newConsultationCount > 0 && (
+            <span className="absolute -top-1 -right-5 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold text-white bg-red-500 rounded-full">
+              {newConsultationCount > 99 ? '99+' : newConsultationCount}
+            </span>
+          )}
+        </Link>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
