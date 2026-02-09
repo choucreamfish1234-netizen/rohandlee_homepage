@@ -45,7 +45,7 @@ export default function LawyersSection() {
                     alt={lawyer.alt}
                     width={600}
                     height={800}
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-700 ease-out"
+                    className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-black">
