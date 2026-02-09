@@ -1,4 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection'
+import StatsBar from '@/components/sections/StatsBar'
 import DeclarationSection from '@/components/sections/DeclarationSection'
 import CentersSection from '@/components/sections/CentersSection'
 import TagsSection from '@/components/sections/TagsSection'
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
+      <StatsBar />
       <DeclarationSection />
       <CentersSection />
       <TagsSection />
