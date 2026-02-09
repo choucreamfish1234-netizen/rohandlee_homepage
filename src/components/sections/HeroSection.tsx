@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useConsultation } from '@/components/ConsultationProvider'
+import { EditableText } from '@/components/Editable'
 
 export default function HeroSection() {
   const { openConsultation } = useConsultation()
@@ -13,36 +14,54 @@ export default function HeroSection() {
     >
       <div className="text-center max-w-4xl mx-auto relative z-10 pt-16">
         {/* Main title */}
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          style={{ color: '#111', fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '2rem' }}
         >
-          법률사무소 로앤이
-        </motion.h1>
+          <EditableText
+            page="home"
+            section="hero"
+            fieldKey="title"
+            defaultValue="법률사무소 로앤이"
+            tag="h1"
+            style={{ color: '#111', fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '2rem' }}
+          />
+        </motion.div>
 
         {/* Slogan */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          style={{ color: '#888', fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '1.25rem', marginTop: '16px' }}
+          style={{ marginTop: '16px' }}
         >
-          &ldquo;오직 피해자만 변호합니다&rdquo;
-        </motion.p>
+          <EditableText
+            page="home"
+            section="hero"
+            fieldKey="slogan"
+            defaultValue={'\u201c오직 피해자만 변호합니다\u201d'}
+            tag="p"
+            style={{ color: '#888', fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '1.25rem' }}
+          />
+        </motion.div>
 
         {/* Description */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          style={{ color: '#333', fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '1.5rem', marginTop: '24px', lineHeight: 1.6 }}
+          style={{ marginTop: '24px' }}
         >
-          당신의 잃어버린 일상을 되찾을 때까지,
-          <br />
-          로앤이가 끝까지 함께 합니다.
-        </motion.p>
+          <EditableText
+            page="home"
+            section="hero"
+            fieldKey="description"
+            defaultValue="당신의 잃어버린 일상을 되찾을 때까지, 로앤이가 끝까지 함께 합니다."
+            tag="p"
+            style={{ color: '#333', fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '1.5rem', lineHeight: 1.6 }}
+          />
+        </motion.div>
 
         {/* CTA Buttons */}
         <motion.div
