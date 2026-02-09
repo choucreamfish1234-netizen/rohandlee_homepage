@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import ConsultationProvider from '@/components/ConsultationProvider'
+import AdminMode from '@/components/AdminMode'
 
 const baseUrl = 'https://rohandlee-homepage.vercel.app'
 
@@ -124,12 +125,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ConsultationProvider>
-          <Header />
-          <main className="pt-16">{children}</main>
-          <Footer />
-          <FloatingButtons />
-        </ConsultationProvider>
+        <AdminMode>
+          <ConsultationProvider>
+            <Header />
+            <main className="pt-16">{children}</main>
+            <Footer />
+            <FloatingButtons />
+          </ConsultationProvider>
+        </AdminMode>
       </body>
     </html>
   )

@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { EditableText } from '@/components/Editable'
 
 export default function Footer() {
   return (
@@ -39,9 +42,14 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-black mb-4">연락처</h4>
             <ul className="space-y-2 text-xs text-gray-500">
               <li>
-                <a href="tel:032-207-8788" className="hover:text-black transition-colors">
-                  T. 032-207-8788
-                </a>
+                <EditableText
+                  page="home"
+                  section="footer"
+                  fieldKey="phone"
+                  defaultValue="T. 032-207-8788"
+                  tag="span"
+                  className="hover:text-black transition-colors"
+                />
               </li>
               <li>
                 <a href="mailto:roandlee@roandlee.com" className="hover:text-black transition-colors">
@@ -64,7 +72,15 @@ export default function Footer() {
                   카카오톡 상담
                 </a>
               </li>
-              <li>평일 09:00 - 18:00</li>
+              <li>
+                <EditableText
+                  page="home"
+                  section="footer"
+                  fieldKey="hours"
+                  defaultValue="평일 09:00 - 18:00"
+                  tag="span"
+                />
+              </li>
               <li>토요일·공휴일 예약 상담</li>
             </ul>
           </div>
@@ -72,9 +88,14 @@ export default function Footer() {
           {/* 주소 */}
           <div>
             <h4 className="text-xs font-semibold text-black mb-4">오시는 길</h4>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              경기도 부천시 부일로205번길 54, 205호
-            </p>
+            <EditableText
+              page="home"
+              section="footer"
+              fieldKey="address"
+              defaultValue="경기도 부천시 부일로205번길 54, 205호"
+              tag="p"
+              className="text-xs text-gray-500 leading-relaxed"
+            />
           </div>
         </div>
 
