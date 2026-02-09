@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://roandlee.com/sitemap.xml',
+    sitemap: 'https://rohandlee-homepage.vercel.app/sitemap.xml',
   }
 }

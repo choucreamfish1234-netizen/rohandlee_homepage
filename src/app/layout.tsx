@@ -5,47 +5,40 @@ import Footer from '@/components/Footer'
 import FloatingButtons from '@/components/FloatingButtons'
 import ConsultationProvider from '@/components/ConsultationProvider'
 
+const baseUrl = 'https://rohandlee-homepage.vercel.app'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://roandlee.com'),
+  metadataBase: new URL(baseUrl),
   title: {
     default: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '법률사무소 로앤이는 성범죄·재산범죄 피해자 전담, 회생파산, 기업경영 법무, IT보안 법률 전문 법률사무소입니다. 부천 변호사 이유림, 노채은이 끝까지 함께합니다.',
+    '법률사무소 로앤이는 성범죄·재산범죄 피해자만을 변호합니다. 부천 소재, 이유림·노채은 변호사가 피해자의 권리를 끝까지 지켜드립니다. 무료 상담 032-207-8788',
   keywords: [
-    '법률사무소 로앤이',
-    '부천 변호사',
+    '성범죄 변호사',
     '성범죄 피해자 변호사',
     '재산범죄 변호사',
-    '회생파산',
-    '기업법무',
-    'IT보안 법률',
+    '부천 변호사',
+    '법률사무소 로앤이',
+    '회생파산 변호사',
+    '피해자 전문 변호사',
     '이유림 변호사',
     '노채은 변호사',
-    '피해자 전담',
   ],
+  authors: [{ name: '법률사무소 로앤이' }],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://roandlee.com',
+    url: baseUrl,
     siteName: '법률사무소 로앤이',
     title: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
-    description:
-      '성범죄·재산범죄 피해자 전담, 회생파산, 기업경영, IT보안 전문 법률사무소. 경기도 부천시.',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: '법률사무소 로앤이',
-      },
-    ],
+    description: '성범죄·재산범죄 피해자 전문 법률사무소. 무료 상담 032-207-8788',
   },
   twitter: {
     card: 'summary_large_image',
     title: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
-    description: '성범죄·재산범죄 피해자 전담, 회생파산, 기업경영, IT보안 전문 법률사무소',
+    description: '성범죄·재산범죄 피해자 전문 법률사무소. 무료 상담 032-207-8788',
   },
   robots: {
     index: true,
@@ -53,13 +46,12 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
   },
   alternates: {
-    canonical: 'https://roandlee.com',
+    canonical: baseUrl,
   },
 }
 
@@ -67,9 +59,11 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
   name: '법률사무소 로앤이',
-  description: '오직 피해자만 변호합니다. 성범죄·재산범죄 피해자 전담, 회생파산, 기업경영 법무, IT보안 법률 전문.',
-  url: 'https://roandlee.com',
+  alternateName: 'ROH & LEE LAW FIRM',
+  description: '성범죄·재산범죄 피해자 전문 법률사무소',
+  url: baseUrl,
   telephone: '032-207-8788',
+  email: 'roandlee@roandlee.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '부일로205번길 54, 205호',
@@ -78,8 +72,14 @@ const jsonLd = {
     postalCode: '14544',
     addressCountry: 'KR',
   },
-  openingHours: 'Mo-Fr 09:00-18:00',
-  priceRange: '$$',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '09:00',
+      closes: '18:00',
+    },
+  ],
   employee: [
     {
       '@type': 'Person',
@@ -92,6 +92,16 @@ const jsonLd = {
       jobTitle: '파트너 대표변호사',
     },
   ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '600',
+    bestRating: '5',
+  },
+  sameAs: [
+    'https://www.lawtalk.co.kr/directory/profile/8292-이유림/review',
+    'https://pf.kakao.com/_YxgWxcn',
+  ],
 }
 
 export default function RootLayout({
@@ -102,7 +112,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        {/* Inter (전체 폰트) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
