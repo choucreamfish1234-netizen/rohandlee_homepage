@@ -29,10 +29,15 @@ CREATE INDEX idx_blog_posts_view_count ON blog_posts(view_count DESC);
 -- RLS 활성화
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
 
--- 읽기 정책: 모든 글 읽기 허용 (앱 코드에서 status 필터링)
--- 기존 정책 제거 후 재생성:
--- DROP POLICY IF EXISTS "Public can read published posts" ON blog_posts;
--- DROP POLICY IF EXISTS "Admin full access" ON blog_posts;
+-- !! 중요: 기존 정책 모두 제거 후 재생성 (이 부분 반드시 실행)
+DROP POLICY IF EXISTS "Public can read published posts" ON blog_posts;
+DROP POLICY IF EXISTS "Admin full access" ON blog_posts;
+DROP POLICY IF EXISTS "Allow read access" ON blog_posts;
+DROP POLICY IF EXISTS "Allow insert access" ON blog_posts;
+DROP POLICY IF EXISTS "Allow update access" ON blog_posts;
+DROP POLICY IF EXISTS "Allow delete access" ON blog_posts;
+
+-- 읽기: 모든 글 읽기 허용 (앱 코드에서 status 필터링)
 CREATE POLICY "Allow read access" ON blog_posts
   FOR SELECT TO anon
   USING (true);
