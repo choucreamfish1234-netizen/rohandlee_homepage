@@ -39,13 +39,29 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-black mb-4">연락처</h4>
             <ul className="space-y-2 text-xs text-gray-500">
               <li>
-                <a href="tel:055-261-8788" className="hover:text-black transition-colors">
-                  T. 055-261-8788
+                <a href="tel:032-207-8788" className="hover:text-black transition-colors">
+                  T. 032-207-8788
                 </a>
               </li>
               <li>
                 <a href="mailto:roandlee@roandlee.com" className="hover:text-black transition-colors">
                   E. roandlee@roandlee.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://pf.kakao.com/_YxgWxcn/chat"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 hover:text-black transition-colors"
+                >
+                  <svg width="14" height="14" viewBox="0 0 28 28" fill="none">
+                    <path
+                      d="M14 4C8.477 4 4 7.477 4 11.667c0 2.7 1.737 5.067 4.36 6.433-.14.507-.9 3.267-.933 3.5 0 0-.02.167.087.233.107.067.233.033.233.033.307-.043 3.56-2.327 4.12-2.733.7.1 1.413.2 2.133.2 5.523 0 10-3.477 10-7.667S19.523 4 14 4z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  카카오톡 상담
                 </a>
               </li>
               <li>평일 09:00 - 18:00</li>
