@@ -25,8 +25,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'jpg, png, webp 형식만 지원합니다.' }, { status: 400 })
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: '파일 크기는 5MB 이하여야 합니다.' }, { status: 400 })
+    if (file.size > 20 * 1024 * 1024) {
+      return NextResponse.json({ error: '파일 크기는 20MB 이하여야 합니다.' }, { status: 400 })
     }
 
     const ext = file.name.split('.').pop() || 'jpg'
