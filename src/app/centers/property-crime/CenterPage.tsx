@@ -73,7 +73,7 @@ export default function PropertyCrimeCenterPage() {
           role: '대표변호사',
           specialty: '재산범죄 피해자 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/images/lawyer-noh.png',
+          image: '/lawyer-noh.jpg',
         },
       ]}
       ctaTitle="재산범죄는 속도가 생명입니다."
