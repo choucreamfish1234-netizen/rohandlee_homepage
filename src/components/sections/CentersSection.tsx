@@ -9,22 +9,22 @@ const centers = [
     title: '성범죄 피해자 전담 센터',
     description: '성범죄 피해자만을 위한 전담 변호 시스템',
     href: '/centers/sexual-crime',
-    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop&q=80',
-    alt: '싱잉볼을 치는 손 - 힐링과 치유',
+    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop&q=80',
+    alt: '어두운 방에 창문으로 빛이 들어오는 모습 - 희망과 회복',
   },
   {
     title: '재산범죄 피해자 전담 센터',
     description: '사기·횡령·배임 피해 전담 구제 시스템',
     href: '/centers/property-crime',
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop&q=80',
-    alt: '밀밭에 손을 뻗는 모습 - 자연과 회복',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop&q=80',
+    alt: '서류와 펜이 있는 깔끔한 데스크 - 법률과 계약',
   },
   {
     title: '회생파산 전담 센터(리셋)',
     description: '새로운 시작을 위한 법적 리셋 시스템',
     href: '/centers/bankruptcy',
-    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop&q=80',
-    alt: '빛나는 크리스탈볼 - 새출발',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop&q=80',
+    alt: '새벽 들판의 일출 - 새로운 출발',
   },
 ]
 
@@ -40,8 +40,8 @@ const centersRow2 = [
     title: 'IT·보안 법률센터',
     description: '디지털 시대의 법적 보호막이 되겠습니다',
     href: '/centers/it-security',
-    image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&h=675&fit=crop&q=80',
-    alt: '노트북 키보드 클로즈업',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=675&fit=crop&q=80',
+    alt: '코드가 흐르는 화면 - 디지털과 기술',
   },
 ]
 

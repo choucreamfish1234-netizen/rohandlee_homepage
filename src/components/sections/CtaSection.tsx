@@ -1,9 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 export default function CtaSection() {
+  const { openConsultation } = useConsultation()
   return (
     <section className="py-28 sm:py-40 bg-black text-white">
       <div className="max-w-3xl mx-auto px-4 text-center">
@@ -23,12 +24,12 @@ export default function CtaSection() {
 
         <ScrollReveal delay={0.2}>
           <div className="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/consultation"
+            <button
+              onClick={() => openConsultation()}
               className="inline-flex items-center justify-center px-10 py-4 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-100 transition-all duration-300"
             >
               무료 상담 신청하기
-            </Link>
+            </button>
             <a
               href="tel:055-261-8788"
               className="inline-flex items-center justify-center px-10 py-4 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-all duration-300"

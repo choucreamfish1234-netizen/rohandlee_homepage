@@ -9,7 +9,7 @@ const lawyers = [
     role: '대표변호사',
     specialty: '성범죄 피해자 전문 변호사',
     description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
-    image: '/images/lawyer-lee.png',
+    image: '/lawyer-lee.jpg',
     alt: '이유림 대표변호사 프로필',
   },
   {
@@ -17,7 +17,7 @@ const lawyers = [
     role: '대표변호사',
     specialty: '재산범죄 피해자 전문 변호사',
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-    image: '/images/lawyer-noh.png',
+    image: '/lawyer-noh.jpg',
     alt: '노채은 대표변호사 프로필',
   },
 ]
@@ -45,7 +45,7 @@ export default function LawyersSection() {
                     alt={lawyer.alt}
                     width={600}
                     height={800}
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-[1.03] transition-all duration-700 ease-out"
+                    className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-black">

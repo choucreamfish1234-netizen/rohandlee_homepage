@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useConsultation } from './ConsultationProvider'
 
 const navLinks = [
   { href: '/#centers', label: '우리 소개' },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { openConsultation } = useConsultation()
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
@@ -36,12 +38,12 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link
-              href="/consultation"
+            <button
+              onClick={() => openConsultation()}
               className="bg-black text-white text-xs px-4 py-2 rounded-full hover:bg-gray-800 transition-colors"
             >
               상담 예약
-            </Link>
+            </button>
             <button
               className="md:hidden p-2"
               onClick={() => setMobileOpen(!mobileOpen)}

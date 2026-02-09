@@ -1,9 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import { useConsultation } from '@/components/ConsultationProvider'
 
 interface Service {
   title: string
@@ -29,7 +29,7 @@ interface CenterPageTemplateProps {
   centerName: string
   subtitle: string
   ctaLabel: string
-  ctaHref: string
+  ctaHref?: string
   services: Service[]
   caseExamples?: CaseExample[]
   declaration: {
@@ -39,20 +39,25 @@ interface CenterPageTemplateProps {
   lawyers: Lawyer[]
   ctaTitle: string
   ctaDescription: string
+  customSection?: React.ReactNode
+  defaultCaseType?: string
 }
 
 export default function CenterPageTemplate({
   centerName,
   subtitle,
   ctaLabel,
-  ctaHref,
   services,
   caseExamples,
   declaration,
   lawyers,
   ctaTitle,
   ctaDescription,
+  customSection,
+  defaultCaseType,
 }: CenterPageTemplateProps) {
+  const { openConsultation } = useConsultation()
+  const handleCtaClick = () => openConsultation(defaultCaseType)
   return (
     <>
       {/* 히어로 */}
@@ -69,12 +74,12 @@ export default function CenterPageTemplate({
             <span className="text-gray-400">{subtitle}</span>
           </h1>
           <div className="mt-8">
-            <Link
-              href={ctaHref}
+            <button
+              onClick={handleCtaClick}
               className="inline-flex items-center justify-center px-6 py-3 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors"
             >
               {ctaLabel}
-            </Link>
+            </button>
           </div>
         </motion.div>
       </section>
@@ -162,21 +167,23 @@ export default function CenterPageTemplate({
         </div>
       </section>
 
-      {/* 의뢰인 후기 */}
-      <section className="py-28 sm:py-40 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <div className="text-center mb-16">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black">
-                <span className="text-accent font-display">100</span>명 이상의 의뢰인이 증명합니다.
-              </h2>
-              <p className="mt-4 text-gray-500 text-sm">
-                압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
-              </p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      {/* 의뢰인 후기 또는 커스텀 섹션 */}
+      {customSection ? customSection : (
+        <section className="py-28 sm:py-40 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="text-center mb-16">
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black">
+                  <span className="text-accent font-display">100</span>명 이상의 의뢰인이 증명합니다.
+                </h2>
+                <p className="mt-4 text-gray-500 text-sm">
+                  압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* 담당 변호사 */}
       <section className="py-28 sm:py-40 bg-white">
@@ -227,12 +234,12 @@ export default function CenterPageTemplate({
             <h2 className="font-serif text-2xl sm:text-3xl font-bold">{ctaTitle}</h2>
             <p className="mt-4 text-gray-400 text-sm">{ctaDescription}</p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/consultation"
+              <button
+                onClick={handleCtaClick}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-100 transition-colors"
               >
                 무료 상담 신청하기
-              </Link>
+              </button>
               <a
                 href="tel:055-261-8788"
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"
