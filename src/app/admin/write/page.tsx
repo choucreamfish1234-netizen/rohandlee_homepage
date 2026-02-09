@@ -48,13 +48,13 @@ function AdminWritePage() {
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
   const [thumbnailUrl, setThumbnailUrl] = useState('')
-  const [showPreview, setShowPreview] = useState(false)
   const [saving, setSaving] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [aiTopic, setAiTopic] = useState('')
   const [showAiPanel, setShowAiPanel] = useState(false)
   const [editorTab, setEditorTab] = useState<EditorTab>('homepage')
   const [copied, setCopied] = useState(false)
+  const [showPreview, setShowPreview] = useState(true)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -81,7 +81,6 @@ function AdminWritePage() {
     }
   }
 
-  // Auto-generate slug from title
   useEffect(() => {
     if (!editId && title) {
       setSlug(generateSlug(title))
@@ -107,7 +106,6 @@ function AdminWritePage() {
     }
   }
 
-  // Markdown toolbar actions
   const insertMarkdown = (before: string, after: string = '') => {
     const textarea = document.getElementById('content-editor') as HTMLTextAreaElement
     if (!textarea) return
@@ -171,10 +169,7 @@ function AdminWritePage() {
       const res = await fetch('/api/generate-blog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          topic: aiTopic.trim(),
-          category,
-        }),
+        body: JSON.stringify({ topic: aiTopic.trim(), category }),
       })
       const data = await res.json()
       if (data.error) throw new Error(data.error)
@@ -201,7 +196,6 @@ function AdminWritePage() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Fallback
       const textarea = document.createElement('textarea')
       textarea.value = naverContent
       document.body.appendChild(textarea)
@@ -228,7 +222,7 @@ function AdminWritePage() {
   ]
 
   return (
-    <div className="py-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
@@ -246,9 +240,13 @@ function AdminWritePage() {
           </button>
           <button
             onClick={() => setShowPreview(!showPreview)}
-            className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+            className={`px-4 py-2.5 border text-sm font-medium transition-colors ${
+              showPreview
+                ? 'border-[#1B3B2F] text-[#1B3B2F] bg-[#1B3B2F]/5'
+                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
           >
-            {showPreview ? '에디터' : '미리보기'}
+            {showPreview ? '미리보기 ON' : '미리보기 OFF'}
           </button>
           <button
             onClick={() => handleSave('draft')}
@@ -272,7 +270,7 @@ function AdminWritePage() {
         <div className="mb-6 p-6 border border-purple-200 bg-purple-50/50">
           <h3 className="text-sm font-semibold text-purple-800 mb-3">AI 블로그 생성</h3>
           <p className="text-xs text-purple-600 mb-4">
-            주제를 입력하면 AI가 홈페이지용(마크다운) + 네이버용(HTML) 두 가지 버전을 동시에 생성합니다.
+            주제를 입력하면 AI가 홈페이지용 + 네이버용 두 가지 버전을 동시에 생성합니다.
           </p>
           <div className="flex gap-3">
             <input
@@ -294,40 +292,38 @@ function AdminWritePage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main Editor */}
-        <div className="lg:col-span-3 space-y-4">
-          {/* Title */}
+      {/* Title / Slug / Excerpt */}
+      <div className="space-y-4 mb-6">
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="제목을 입력하세요"
+          className="w-full px-4 py-3 border border-gray-200 text-lg font-bold focus:outline-none focus:border-[#1B3B2F] transition-colors"
+        />
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-400 whitespace-nowrap">/blog/</span>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="제목을 입력하세요"
-            className="w-full px-4 py-3 border border-gray-200 text-lg font-bold focus:outline-none focus:border-[#1B3B2F] transition-colors"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            placeholder="url-slug"
+            className="flex-1 px-3 py-2 border border-gray-200 text-xs text-gray-600 focus:outline-none focus:border-[#1B3B2F] transition-colors"
           />
+        </div>
+        <textarea
+          value={excerpt}
+          onChange={(e) => setExcerpt(e.target.value)}
+          placeholder="요약글 (목록에 표시될 짧은 설명)"
+          rows={2}
+          className="w-full px-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#1B3B2F] transition-colors resize-none"
+        />
+      </div>
 
-          {/* Slug */}
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 whitespace-nowrap">/blog/</span>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              placeholder="url-slug"
-              className="flex-1 px-3 py-2 border border-gray-200 text-xs text-gray-600 focus:outline-none focus:border-[#1B3B2F] transition-colors"
-            />
-          </div>
-
-          {/* Excerpt */}
-          <textarea
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
-            placeholder="요약글 (목록에 표시될 짧은 설명)"
-            rows={2}
-            className="w-full px-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#1B3B2F] transition-colors resize-none"
-          />
-
-          {/* Editor Tabs: 홈페이지용 / 네이버용 */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Main Editor Area */}
+        <div className="lg:col-span-3 space-y-4">
+          {/* Editor Tabs */}
           <div className="flex border-b border-gray-200">
             <button
               onClick={() => setEditorTab('homepage')}
@@ -352,56 +348,65 @@ function AdminWritePage() {
             </button>
           </div>
 
-          {/* Homepage Editor */}
+          {/* Homepage Tab */}
           {editorTab === 'homepage' && (
-            <>
-              {showPreview ? (
-                <div className="border border-gray-200 p-6 min-h-[500px]">
-                  <div className="prose prose-sm max-w-none
-                    prose-headings:text-black prose-headings:font-bold
-                    prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
-                    prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-2
-                    prose-p:text-gray-700 prose-p:leading-relaxed
-                    prose-a:text-[#1B3B2F] prose-a:font-medium
-                    prose-strong:text-black
-                    prose-blockquote:border-[#1B3B2F] prose-blockquote:text-gray-600
-                  ">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {content || '*미리보기할 내용이 없습니다.*'}
-                    </ReactMarkdown>
+            <div>
+              {/* Toolbar */}
+              <div className="flex flex-wrap items-center gap-1 border border-gray-200 border-b-0 bg-gray-50 px-2 py-1.5">
+                {toolbarButtons.map((btn) => (
+                  <button
+                    key={btn.title}
+                    onClick={btn.action}
+                    title={btn.title}
+                    className="px-2.5 py-1.5 text-xs font-medium text-gray-600 hover:bg-white hover:text-black rounded transition-colors"
+                  >
+                    {btn.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Split Editor + Preview */}
+              <div className={`border border-gray-200 ${showPreview ? 'grid grid-cols-2' : ''}`}>
+                {/* Editor */}
+                <textarea
+                  id="content-editor"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="마크다운으로 내용을 작성하세요..."
+                  className={`w-full px-4 py-4 text-sm font-mono leading-relaxed focus:outline-none resize-y min-h-[500px] ${
+                    showPreview ? 'border-r border-gray-200' : ''
+                  }`}
+                />
+                {/* Live Preview */}
+                {showPreview && (
+                  <div className="px-6 py-4 overflow-y-auto min-h-[500px] max-h-[700px] bg-white">
+                    <div className="prose prose-sm max-w-none
+                      prose-headings:text-black prose-headings:font-bold
+                      prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
+                      prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-2
+                      prose-p:text-gray-700 prose-p:leading-relaxed
+                      prose-a:text-[#1B3B2F] prose-a:font-medium
+                      prose-strong:text-black prose-strong:font-bold
+                      prose-em:italic
+                      prose-ul:text-gray-700 prose-ol:text-gray-700
+                      prose-li:my-1
+                      prose-blockquote:border-[#1B3B2F] prose-blockquote:text-gray-600 prose-blockquote:not-italic
+                      prose-hr:border-gray-200
+                      prose-img:rounded-lg
+                    ">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {content || '*왼쪽에 마크다운을 입력하면 여기에 미리보기가 표시됩니다.*'}
+                      </ReactMarkdown>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div>
-                  {/* Toolbar */}
-                  <div className="flex flex-wrap items-center gap-1 border border-gray-200 border-b-0 bg-gray-50 px-2 py-1.5">
-                    {toolbarButtons.map((btn) => (
-                      <button
-                        key={btn.title}
-                        onClick={btn.action}
-                        title={btn.title}
-                        className="px-2.5 py-1.5 text-xs font-medium text-gray-600 hover:bg-white hover:text-black rounded transition-colors"
-                      >
-                        {btn.label}
-                      </button>
-                    ))}
-                  </div>
-                  <textarea
-                    id="content-editor"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="마크다운으로 내용을 작성하세요..."
-                    className="w-full px-4 py-4 border border-gray-200 text-sm font-mono leading-relaxed focus:outline-none focus:border-[#1B3B2F] transition-colors resize-y min-h-[500px]"
-                  />
-                </div>
-              )}
-            </>
+                )}
+              </div>
+            </div>
           )}
 
-          {/* Naver Editor */}
+          {/* Naver Tab */}
           {editorTab === 'naver' && (
             <div className="space-y-4">
-              {/* Copy Button */}
               <div className="flex items-center justify-between">
                 <p className="text-xs text-gray-500">
                   네이버 블로그 에디터의 HTML 모드에 붙여넣기하세요.
@@ -419,29 +424,31 @@ function AdminWritePage() {
                 </button>
               </div>
 
-              {/* Naver Preview / Editor toggle */}
-              {showPreview ? (
-                <div className="border border-gray-200 p-6 min-h-[500px] bg-white">
-                  <div
-                    className="prose prose-sm max-w-none"
-                    dangerouslySetInnerHTML={{ __html: naverContent || '<p style="color:#999">네이버용 콘텐츠가 없습니다. AI 생성을 사용하세요.</p>' }}
-                  />
-                </div>
-              ) : (
+              {/* Split Naver editor + preview */}
+              <div className={`border border-gray-200 ${showPreview ? 'grid grid-cols-2' : ''}`}>
                 <textarea
                   value={naverContent}
                   onChange={(e) => setNaverContent(e.target.value)}
                   placeholder="네이버 블로그용 HTML 콘텐츠... (AI 생성 시 자동 채워집니다)"
-                  className="w-full px-4 py-4 border border-gray-200 text-sm font-mono leading-relaxed focus:outline-none focus:border-green-500 transition-colors resize-y min-h-[500px]"
+                  className={`w-full px-4 py-4 text-sm font-mono leading-relaxed focus:outline-none resize-y min-h-[500px] ${
+                    showPreview ? 'border-r border-gray-200' : ''
+                  }`}
                 />
-              )}
+                {showPreview && (
+                  <div className="px-6 py-4 overflow-y-auto min-h-[500px] max-h-[700px] bg-white">
+                    <div
+                      className="prose prose-sm max-w-none"
+                      dangerouslySetInnerHTML={{ __html: naverContent || '<p style="color:#999">왼쪽에 HTML을 입력하면 여기에 미리보기가 표시됩니다.</p>' }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
 
         {/* Sidebar */}
         <div className="space-y-5">
-          {/* Category */}
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1.5">카테고리</label>
             <select
@@ -455,7 +462,6 @@ function AdminWritePage() {
             </select>
           </div>
 
-          {/* Tags */}
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1.5">태그</label>
             <div className="flex flex-wrap gap-1.5 mb-2">
@@ -481,7 +487,6 @@ function AdminWritePage() {
             />
           </div>
 
-          {/* Thumbnail URL */}
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1.5">썸네일 URL</label>
             <input
@@ -502,7 +507,6 @@ function AdminWritePage() {
             )}
           </div>
 
-          {/* Meta Description */}
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1.5">SEO 설명</label>
             <textarea
@@ -514,7 +518,6 @@ function AdminWritePage() {
             />
           </div>
 
-          {/* Back to Dashboard */}
           <div className="pt-4 border-t border-gray-100">
             <button
               onClick={() => router.push('/admin/dashboard')}
