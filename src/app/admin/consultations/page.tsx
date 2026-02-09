@@ -23,6 +23,7 @@ interface Consultation {
     key_issues?: string[]
     recommended_action?: string
     grade_reason?: string
+    email_subject?: string
   } | null
   email_draft: string | null
   email_sent_at: string | null
@@ -109,12 +110,9 @@ export default function AdminConsultationsPage() {
         return
       }
       await fetchConsultations()
-      // Auto-open detail if this was the selected item
-      const updated = consultations.find((c) => c.id === id)
-      if (updated) {
-        const refreshed = await supabase.from('consultations').select('*').eq('id', id).single()
-        if (refreshed.data) openDetail(refreshed.data as Consultation)
-      }
+      // Auto-open detail with refreshed data
+      const refreshed = await supabase.from('consultations').select('*').eq('id', id).single()
+      if (refreshed.data) openDetail(refreshed.data as Consultation)
     } catch {
       alert('AI 분석에 실패했습니다.')
     } finally {
@@ -124,7 +122,10 @@ export default function AdminConsultationsPage() {
 
   function openDetail(c: Consultation) {
     setSelected(c)
-    setEmailSubject(c.ai_analysis ? `[법률사무소 로앤이] ${c.name}님, 상담 신청 관련 안내드립니다` : '')
+    setEmailSubject(
+      c.ai_analysis?.email_subject ||
+      (c.ai_analysis ? `[법률사무소 로앤이] ${c.name}님, 상담 신청 관련 안내드립니다` : '')
+    )
     setEmailBody(c.email_draft || '')
     setNotes(c.notes || '')
   }
