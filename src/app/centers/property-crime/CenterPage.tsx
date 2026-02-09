@@ -77,7 +77,7 @@ export default function PropertyCrimeCenterPage() {
           role: '대표변호사',
           specialty: '재산범죄 피해자 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/lawyer-noh.jpg',
+          image: '/lawyer-noh.svg',
         },
       ]}
       customSection={<><ProcessTimeline /><FAQAccordion /><Testimonials /></>}
