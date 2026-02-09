@@ -111,7 +111,7 @@ D등급 (수임 불가): 공소시효 만료, 관할 외, 가해자 측, 로앤�
     const { error: updateError } = await supabase
       .from('consultations')
       .update({
-        ai_analysis: parsed.analysis,
+        ai_analysis: { ...parsed.analysis, email_subject: parsed.email_subject },
         grade: parsed.grade,
         email_draft: parsed.email_draft,
         assigned_to: parsed.assigned_to,
