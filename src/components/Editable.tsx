@@ -117,6 +117,33 @@ export function EditableImage({
   const pending = pendingChanges.get(changeKey)
   const displaySrc = pending?.value ?? getValue(section, fieldKey, defaultSrc)
 
+  async function resizeImage(file: File, maxWidth: number, quality: number): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image()
+      img.onload = () => {
+        let w = img.width
+        let h = img.height
+        if (w > maxWidth) {
+          h = Math.round(h * (maxWidth / w))
+          w = maxWidth
+        }
+        const canvas = document.createElement('canvas')
+        canvas.width = w
+        canvas.height = h
+        const ctx = canvas.getContext('2d')
+        if (!ctx) { reject(new Error('Canvas not supported')); return }
+        ctx.drawImage(img, 0, 0, w, h)
+        canvas.toBlob(
+          (blob) => { if (blob) { resolve(blob) } else { reject(new Error('Blob creation failed')) } },
+          'image/jpeg',
+          quality
+        )
+      }
+      img.onerror = reject
+      img.src = URL.createObjectURL(file)
+    })
+  }
+
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -126,15 +153,16 @@ export function EditableImage({
       alert('jpg, png, webp 형식만 지원합니다.')
       return
     }
-    if (file.size > 5 * 1024 * 1024) {
-      alert('파일 크기는 5MB 이하여야 합니다.')
+    if (file.size > 20 * 1024 * 1024) {
+      alert('파일 크기는 20MB 이하여야 합니다.')
       return
     }
 
     setUploading(true)
     try {
+      const resized = await resizeImage(file, 1600, 0.8)
       const formData = new FormData()
-      formData.append('file', file)
+      formData.append('file', resized, file.name.replace(/\.[^.]+$/, '.jpg'))
 
       const res = await fetch('/api/upload-image', { method: 'POST', body: formData })
       const data = await res.json()
