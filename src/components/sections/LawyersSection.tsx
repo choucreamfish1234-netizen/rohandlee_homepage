@@ -1,10 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText, EditableImage } from '@/components/Editable'
 
 const lawyers = [
   {
+    key: 'lee',
     name: '이유림',
     role: '대표변호사',
     specialty: '성범죄 피해자 전문 변호사',
@@ -13,6 +14,7 @@ const lawyers = [
     alt: '이유림 대표변호사 프로필',
   },
   {
+    key: 'noh',
     name: '노채은',
     role: '대표변호사',
     specialty: '재산범죄 피해자 전문 변호사',
@@ -37,11 +39,14 @@ export default function LawyersSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {lawyers.map((lawyer, i) => (
-            <ScrollReveal key={lawyer.name} delay={i * 0.15}>
+            <ScrollReveal key={lawyer.key} delay={i * 0.15}>
               <div className="text-center">
                 <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
-                  <Image
-                    src={lawyer.image}
+                  <EditableImage
+                    page="home"
+                    section="lawyers"
+                    fieldKey={`lawyer-${lawyer.key}-photo`}
+                    defaultSrc={lawyer.image}
                     alt={lawyer.alt}
                     width={600}
                     height={800}
@@ -49,12 +54,32 @@ export default function LawyersSection() {
                   />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-black">
-                  {lawyer.name} <span className="font-sans text-base font-normal text-gray-400">대표변호사</span>
+                  <EditableText
+                    page="home"
+                    section="lawyers"
+                    fieldKey={`lawyer-${lawyer.key}-name`}
+                    defaultValue={lawyer.name}
+                    tag="span"
+                  />
+                  {' '}
+                  <span className="font-sans text-base font-normal text-gray-400">{lawyer.role}</span>
                 </h3>
-                <p className="mt-1 text-sm text-accent font-medium">{lawyer.specialty}</p>
-                <p className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line">
-                  {lawyer.description}
-                </p>
+                <EditableText
+                  page="home"
+                  section="lawyers"
+                  fieldKey={`lawyer-${lawyer.key}-specialty`}
+                  defaultValue={lawyer.specialty}
+                  tag="p"
+                  className="mt-1 text-sm text-accent font-medium"
+                />
+                <EditableText
+                  page="home"
+                  section="lawyers"
+                  fieldKey={`lawyer-${lawyer.key}-description`}
+                  defaultValue={lawyer.description}
+                  tag="p"
+                  className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line"
+                />
               </div>
             </ScrollReveal>
           ))}
