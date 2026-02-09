@@ -34,13 +34,13 @@ export const CATEGORIES = [
 ] as const
 
 export const CATEGORY_THUMBNAILS: Record<string, string> = {
-  '성범죄': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=500&fit=crop&q=80',
-  '재산범죄': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop&q=80',
-  '회생파산': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=500&fit=crop&q=80',
-  '기업법무': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=500&fit=crop&q=80',
-  'IT보안': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=500&fit=crop&q=80',
-  '법률상식': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=500&fit=crop&q=80',
-  '일반': 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=500&fit=crop&q=80',
+  '성범죄': 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
+  '재산범죄': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
+  '회생파산': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=450&fit=crop&q=80',
+  '기업법무': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80',
+  'IT보안': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
+  '법률상식': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
+  '일반': 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
 }
 
 export function getCategoryThumbnail(category: string): string {
@@ -116,7 +116,8 @@ export async function getPostBySlug(slug: string) {
     .from('blog_posts')
     .select('*')
     .eq('slug', slug)
-    .single()
+    .eq('status', 'published')
+    .maybeSingle()
 
   return { post: data as BlogPost | null, error }
 }
