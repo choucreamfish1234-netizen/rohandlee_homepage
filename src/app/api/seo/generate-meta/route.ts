@@ -75,7 +75,7 @@ export async function POST() {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250929',
+        model: 'claude-sonnet-4-5-20250514',
         max_tokens: 4096,
         system: `당신은 법률사무소 SEO 메타태그 최적화 전문가입니다.
 

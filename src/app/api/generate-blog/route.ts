@@ -65,6 +65,9 @@ export async function POST(req: NextRequest) {
 
     const userPrompt = `주제: ${topic}\n카테고리: ${category || '일반'}\n\n위 주제에 대한 법률 블로그 글을 홈페이지용(순수 텍스트)과 네이버용(순수 HTML) 두 가지 버전으로 작성해주세요. 마크다운 문법(**굵은**, ## 제목 등)은 절대 사용하지 마세요.`
 
+    console.log('API Key exists:', !!apiKey)
+    console.log('API Key prefix:', apiKey?.substring(0, 10))
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -73,7 +76,7 @@ export async function POST(req: NextRequest) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250929',
+        model: 'claude-sonnet-4-5-20250514',
         max_tokens: 8192,
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
@@ -111,6 +114,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(parsed)
   } catch (error) {
     console.error('Generate blog error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const message = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${message}` }, { status: 500 })
   }
 }

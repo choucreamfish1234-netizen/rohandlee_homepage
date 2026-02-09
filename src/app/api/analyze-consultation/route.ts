@@ -83,7 +83,7 @@ D등급 (수임 불가): 공소시효 만료, 관할 외, 가해자 측, 로앤�
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250929',
+        model: 'claude-sonnet-4-5-20250514',
         max_tokens: 4096,
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
