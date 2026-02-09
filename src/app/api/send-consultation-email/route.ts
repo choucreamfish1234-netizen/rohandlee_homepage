@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   </div>
   ${htmlBody}
   <div style="border-top:1px solid #eee;padding-top:20px;margin-top:30px;font-size:13px;color:#888;">
-    <p style="margin:0;">법률사무소 로앤이 | 032-207-8788 | roandlee@roandlee.com</p>
+    <p style="margin:0;">법률사무소 로앤이 | 032-207-8788 | roandlee@naver.com</p>
     <p style="margin:4px 0 0 0;">경기도 부천시 부일로205번길 54, 205호</p>
   </div>
 </body>
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     // Send email via Resend
     const resend = new Resend(resendApiKey)
     const { error: sendError } = await resend.emails.send({
-      from: '법률사무소 로앤이 <roandlee@roandlee.com>',
+      from: '법률사무소 로앤이 <onboarding@resend.dev>',
       to: [consultation.email],
       subject: emailSubject,
       html: htmlEmail,
