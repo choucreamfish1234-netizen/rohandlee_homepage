@@ -1,66 +1,185 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { supabase } from '@/lib/supabase'
-
-interface BlogPost {
-  id: number
-  title: string
-  slug: string
-  excerpt: string
-  category: string
-  created_at: string
-  thumbnail_url?: string
-}
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  type BlogPost,
+  CATEGORIES,
+  getPublishedPosts,
+  getFeaturedPosts,
+  getCategoryThumbnail,
+  getReadingTime,
+  formatDate,
+} from '@/lib/blog'
 
 export default function BlogList() {
   const [posts, setPosts] = useState<BlogPost[]>([])
+  const [featured, setFeatured] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
+  const [category, setCategory] = useState('전체')
+  const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalCount, setTotalCount] = useState(0)
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 300)
+    return () => clearTimeout(timer)
+  }, [search])
+
+  // Fetch featured posts on mount
+  useEffect(() => {
+    getFeaturedPosts().then(setFeatured).catch(() => setFeatured([]))
+  }, [])
+
+  // Fetch posts
+  const fetchPosts = useCallback(async () => {
+    setLoading(true)
+    try {
+      const result = await getPublishedPosts({
+        page,
+        category: category === '전체' ? undefined : category,
+        search: debouncedSearch || undefined,
+      })
+      setPosts(result.posts)
+      setTotalPages(result.totalPages)
+      setTotalCount(result.totalCount)
+    } catch {
+      setPosts([])
+    } finally {
+      setLoading(false)
+    }
+  }, [page, category, debouncedSearch])
 
   useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('published', true)
-          .order('created_at', { ascending: false })
-
-        if (error) throw error
-        setPosts(data || [])
-      } catch {
-        // Supabase not configured yet - show placeholder
-        setPosts([])
-      } finally {
-        setLoading(false)
-      }
-    }
     fetchPosts()
-  }, [])
+  }, [fetchPosts])
+
+  // Reset page when category/search changes
+  useEffect(() => {
+    setPage(1)
+  }, [category, debouncedSearch])
 
   return (
     <section className="py-20 sm:py-28">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-black">블로그</h1>
-          <p className="mt-4 text-gray-500 text-sm">
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">Blog</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-black">법률 블로그</h1>
+          <p className="mt-4 text-gray-500 text-sm max-w-lg mx-auto">
             법률 정보와 판례 분석, 로앤이의 이야기를 전합니다.
           </p>
         </motion.div>
 
+        {/* Featured Posts TOP 3 */}
+        {featured.length > 0 && !debouncedSearch && category === '전체' && page === 1 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-16"
+          >
+            <h2 className="text-sm font-semibold text-black mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#1B3B2F] rounded-full" />
+              인기 글
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {featured.map((post) => (
+                <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
+                  <div className="aspect-[16/10] bg-gray-100 overflow-hidden mb-4">
+                    <Image
+                      src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                      alt={post.title}
+                      width={800}
+                      height={500}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <span className="text-xs text-[#1B3B2F] font-medium">{post.category}</span>
+                  <h3 className="mt-1 text-base font-semibold text-black group-hover:text-[#1B3B2F] transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  {post.excerpt && (
+                    <p className="mt-1.5 text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>
+                  )}
+                  <div className="mt-2 flex items-center gap-3 text-xs text-gray-400">
+                    <span>{formatDate(post.published_at || post.created_at)}</span>
+                    <span>·</span>
+                    <span>{getReadingTime(post.content)}분 읽기</span>
+                    <span>·</span>
+                    <span>조회 {post.view_count}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Search & Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-10"
+        >
+          {/* Search */}
+          <div className="relative mb-6">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="제목 또는 내용으로 검색..."
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#1B3B2F] transition-colors"
+            />
+          </div>
+
+          {/* Categories */}
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`px-4 py-2 text-xs font-medium transition-colors ${
+                  category === cat
+                    ? 'bg-[#1B3B2F] text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Results count */}
+        {!loading && (
+          <p className="text-xs text-gray-400 mb-6">
+            총 {totalCount}개의 글
+          </p>
+        )}
+
+        {/* Loading */}
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-[16/10] bg-gray-100 rounded-lg mb-4" />
-                <div className="h-4 bg-gray-100 rounded mb-2 w-3/4" />
-                <div className="h-3 bg-gray-100 rounded w-1/2" />
+                <div className="aspect-[16/10] bg-gray-100 mb-4" />
+                <div className="h-3 bg-gray-100 w-1/4 mb-2" />
+                <div className="h-4 bg-gray-100 w-3/4 mb-2" />
+                <div className="h-3 bg-gray-100 w-1/2" />
               </div>
             ))}
           </div>
@@ -71,52 +190,100 @@ export default function BlogList() {
             className="text-center py-20"
           >
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1.5">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
                 <line x1="16" y1="13" x2="8" y2="13" />
                 <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-black mb-2">아직 게시글이 없습니다</h3>
-            <p className="text-sm text-gray-500">곧 유용한 법률 정보를 전해드리겠습니다.</p>
+            <h3 className="text-lg font-semibold text-black mb-2">
+              {debouncedSearch ? '검색 결과가 없습니다' : '아직 게시글이 없습니다'}
+            </h3>
+            <p className="text-sm text-gray-500">
+              {debouncedSearch
+                ? '다른 키워드로 검색해 보세요.'
+                : '곧 유용한 법률 정보를 전해드리겠습니다.'}
+            </p>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.map((post, i) => (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Link href={`/blog/${post.slug}`} className="group block">
-                  <div className="aspect-[16/10] bg-gray-100 rounded-lg overflow-hidden mb-4 img-placeholder">
-                    {post.thumbnail_url ? (
-                      <img
-                        src={post.thumbnail_url}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 group-hover:scale-105 transition-transform duration-500" />
-                    )}
-                  </div>
-                  {post.category && (
-                    <span className="text-xs text-accent font-medium">{post.category}</span>
-                  )}
-                  <h2 className="mt-1 text-lg font-semibold text-black group-hover:text-accent transition-colors line-clamp-2">
-                    {post.title}
-                  </h2>
-                  <p className="mt-2 text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>
-                  <p className="mt-3 text-xs text-gray-400">
-                    {new Date(post.created_at).toLocaleDateString('ko-KR')}
-                  </p>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+          <>
+            {/* Post Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence mode="wait">
+                {posts.map((post, i) => (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link href={`/blog/${post.slug}`} className="group block h-full">
+                      <div className="bg-white border border-gray-100 hover:border-gray-300 transition-all duration-300 h-full flex flex-col overflow-hidden">
+                        <div className="aspect-[16/10] overflow-hidden">
+                          <Image
+                            src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                            alt={post.title}
+                            width={800}
+                            height={500}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="p-6 flex flex-col flex-1">
+                          <span className="text-xs text-[#1B3B2F] font-medium">{post.category}</span>
+                          <h3 className="mt-1.5 text-base font-semibold text-black group-hover:text-[#1B3B2F] transition-colors line-clamp-2">
+                            {post.title}
+                          </h3>
+                          {post.excerpt && (
+                            <p className="mt-2 text-sm text-gray-500 line-clamp-2 flex-1">{post.excerpt}</p>
+                          )}
+                          <div className="mt-4 flex items-center gap-3 text-xs text-gray-400">
+                            <span>{formatDate(post.published_at || post.created_at)}</span>
+                            <span>·</span>
+                            <span>{getReadingTime(post.content)}분</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex justify-center items-center gap-2">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                >
+                  이전
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p)}
+                    className={`w-9 h-9 text-sm font-medium transition-colors ${
+                      page === p
+                        ? 'bg-[#1B3B2F] text-white'
+                        : 'border border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                >
+                  다음
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

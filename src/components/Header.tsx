@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useConsultation } from './ConsultationProvider'
 
 const navLinks = [
-  { href: '/#centers', label: '우리 소개' },
+  { href: '/#centers', label: '사무실 소개' },
   { href: '/#lawyers', label: '변호사 소개' },
   { href: '/cases', label: '성공사례' },
   { href: '/directions', label: '오시는 길' },
