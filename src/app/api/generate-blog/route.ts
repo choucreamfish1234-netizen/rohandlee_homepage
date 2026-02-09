@@ -82,8 +82,17 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const err = await response.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 생성에 실패했습니다.' }, { status: 500 })
+      console.log('Claude API response status:', response.status)
+      console.log('Claude API error body:', err)
+      console.log('API key exists:', !!apiKey)
+      console.log('API key prefix:', apiKey?.substring(0, 10))
+      if (response.status === 401) {
+        return NextResponse.json({ error: 'API 키가 유효하지 않습니다. 환경변수를 확인해주세요.' }, { status: 401 })
+      }
+      if (response.status === 400) {
+        return NextResponse.json({ error: `API 요청 오류: ${err}` }, { status: 400 })
+      }
+      return NextResponse.json({ error: `AI 생성 실패 (HTTP ${response.status}): ${err.substring(0, 200)}` }, { status: 500 })
     }
 
     const data = await response.json()
