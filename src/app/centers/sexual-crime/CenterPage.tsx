@@ -23,7 +23,7 @@ export default function SexualCrimeCenterPage() {
         {
           title: '철저한 비밀 보장',
           description: '사건 내용부터 의뢰인 신원까지, 모든 정보를 철저하게 보호합니다.',
-          image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '경찰 조사 동석',
@@ -33,7 +33,7 @@ export default function SexualCrimeCenterPage() {
         {
           title: '증거 보전 및 디지털 포렌식',
           description: '휴대폰, 영상 등 디지털 증거를 확보하고 포렌식 절차를 진행합니다.',
-          image: 'https://images.unsplash.com/photo-1563986768609-322da13575f2?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '변호사 의견서 제출',
@@ -48,7 +48,7 @@ export default function SexualCrimeCenterPage() {
         {
           title: '피해자 보호명령 신청',
           description: '접근금지, 연락금지 등 보호명령을 신청하여 2차 피해를 차단합니다.',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '범죄피해 보상금 청구',
