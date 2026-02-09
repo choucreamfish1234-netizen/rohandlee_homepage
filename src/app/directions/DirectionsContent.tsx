@@ -58,7 +58,7 @@ export default function DirectionsContent() {
               <p className="text-2xl mb-4">📞</p>
               <h3 className="text-sm font-semibold text-black mb-3">연락처</h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                <a href="tel:055-261-8788" className="hover:text-black transition-colors">055-261-8788</a>
+                <a href="tel:032-207-8788" className="hover:text-black transition-colors">032-207-8788</a>
                 <br />
                 <a href="mailto:roandlee@roandlee.com" className="hover:text-black transition-colors">roandlee@roandlee.com</a>
               </p>
