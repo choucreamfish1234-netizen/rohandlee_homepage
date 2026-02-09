@@ -50,12 +50,12 @@ export default function PropertyCrimeCenterPage() {
         {
           title: '투자 리딩방 사기',
           description: '피해금 2억 원 전액 회수에 성공',
-          image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '보이스피싱 피해',
           description: '인출책 검거 및 손해배상 소송 승소',
-          image: 'https://images.unsplash.com/photo-1563986768609-322da13575f2?w=800&h=600&fit=crop&q=80',
+          image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop&q=80',
         },
         {
           title: '업무상 횡령',
