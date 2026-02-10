@@ -91,25 +91,19 @@ export default function HeroSection() {
             당신의 잃어버린 일상을 되찾을 때까지, 로앤이가 끝까지 함께 합니다.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mt-8"
+            className="flex justify-center mt-8"
           >
             <button
               onClick={() => openConsultation()}
-              className="w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-base font-semibold bg-white text-[#1B3B2F] transition-all duration-300 hover:bg-white/90 min-h-[48px]"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-base font-semibold bg-white text-[#1B3B2F] transition-all duration-300 hover:bg-white/90 min-h-[48px]"
             >
               상담 신청하기
             </button>
-            <a
-              href="tel:032-207-8788"
-              className="w-full max-w-[260px] sm:w-auto inline-flex items-center justify-center px-8 py-3.5 rounded-full text-base font-medium border border-white/60 text-white transition-all duration-300 hover:bg-white/10 min-h-[48px]"
-            >
-              032-207-8788
-            </a>
           </motion.div>
         </motion.div>
       </div>
