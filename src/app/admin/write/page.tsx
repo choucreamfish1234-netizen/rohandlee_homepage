@@ -10,7 +10,7 @@ import {
   getPostById,
   createPost,
   updatePost,
-  getCategoryThumbnail,
+  getCategoryImagePool,
 } from '@/lib/blog'
 
 function generateSlug(title: string): string {
@@ -138,7 +138,7 @@ function AdminWritePage() {
       meta_description: metaDescription.trim() || excerpt.trim() || title.trim(),
       category,
       tags,
-      thumbnail_url: thumbnailUrl.trim() || getCategoryThumbnail(category),
+      thumbnail_url: thumbnailUrl.trim() || getCategoryImagePool(category)[0],
       status: saveStatus,
       published_at: saveStatus === 'published' ? new Date().toISOString() : null,
     }
@@ -500,7 +500,7 @@ function AdminWritePage() {
             {(thumbnailUrl || category) && (
               <div className="mt-2 aspect-[16/10] bg-gray-100 overflow-hidden">
                 <img
-                  src={thumbnailUrl || getCategoryThumbnail(category)}
+                  src={thumbnailUrl || getCategoryImagePool(category)[0]}
                   alt="썸네일 미리보기"
                   className="w-full h-full object-cover"
                 />

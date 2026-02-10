@@ -73,16 +73,14 @@ function ReviewsSection() {
             Client Reviews
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-4">
-            의뢰인 후기
+            로앤이 성범죄 전문 변호 실적
           </h2>
           <p className="text-center text-gray-500 text-sm mb-16">
             압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
           </p>
         </ScrollReveal>
 
-        {/* 슬라이더 영역 */}
         <div className="relative">
-          {/* 좌우 화살표 */}
           <button
             onClick={() => scroll('left')}
             className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
@@ -102,7 +100,6 @@ function ReviewsSection() {
             </svg>
           </button>
 
-          {/* 스크롤 컨테이너 */}
           <div
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 -mx-4 px-4"
@@ -111,34 +108,24 @@ function ReviewsSection() {
             {reviews.map((review, i) => (
               <ScrollReveal key={i} delay={i * 0.08}>
                 <div className="flex-shrink-0 w-[340px] sm:w-[360px] snap-start bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all duration-300">
-                  {/* 별점 */}
                   <div className="flex gap-0.5 mb-4">
                     {[...Array(5)].map((_, j) => (
                       <StarIcon key={j} />
                     ))}
                   </div>
-
-                  {/* 제목 */}
                   <h3 className="text-base font-semibold text-black leading-snug mb-3 line-clamp-2">
                     &ldquo;{review.title}&rdquo;
                   </h3>
-
-                  {/* 내용 */}
                   <p className="text-sm text-gray-500 leading-relaxed line-clamp-4">
                     {review.content}
                   </p>
-
-                  {/* 출처 */}
-                  <p className="mt-5 text-xs text-gray-400">
-                    로톡 후기
-                  </p>
+                  <p className="mt-5 text-xs text-gray-400">로톡 후기</p>
                 </div>
               </ScrollReveal>
             ))}
           </div>
         </div>
 
-        {/* CTA 버튼 */}
         <ScrollReveal delay={0.3}>
           <div className="mt-12 text-center">
             <a
@@ -157,11 +144,112 @@ function ReviewsSection() {
   )
 }
 
+// ── 변호 분야 카드 섹션 ──
+const crimeTypes = [
+  { title: '성폭행·성추행', description: '강간, 유사강간, 강제추행, 준강간 등 모든 성폭력 범죄 피해자를 변호합니다.' },
+  { title: '강제추행', description: '직장, 학교, 공공장소 등에서 발생하는 강제추행 피해에 대한 법적 대응을 지원합니다.' },
+  { title: '불법촬영·몰카', description: '몰래카메라, 불법촬영물 유포, 리벤지포르노 피해자의 권리를 보호합니다.' },
+  { title: '디지털성범죄', description: '온라인 그루밍, 사이버 성착취, SNS를 통한 성적 괴롭힘 등 디지털 환경의 성범죄에 대응합니다.' },
+  { title: '리벤지포르노·딥페이크', description: '불법 합성물(딥페이크), 리벤지포르노 유포 차단 및 삭제 요청, 가해자 처벌을 진행합니다.' },
+  { title: '스토킹', description: '스토킹처벌법에 따른 고소, 접근금지 가처분, 피해자 보호 조치를 전문적으로 수행합니다.' },
+  { title: '데이트폭력', description: '친밀한 관계에서 발생하는 폭력, 협박, 감시 행위에 대한 법적 보호를 제공합니다.' },
+  { title: '직장 내 성희롱', description: '직장 내 성희롱 피해자의 권리 구제, 사용자 책임 추궁, 손해배상 청구를 지원합니다.' },
+  { title: '아동·청소년 대상 성범죄', description: '아동·청소년 성보호법에 따른 엄격한 가해자 처벌과 피해 회복을 도와드립니다.' },
+]
+
+function CrimeTypesSection() {
+  return (
+    <section className="py-28 sm:py-40 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+            Practice Areas
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            이유림 변호사가 전담하는 성범죄 유형
+          </h2>
+        </ScrollReveal>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {crimeTypes.map((crime, i) => (
+            <ScrollReveal key={i} delay={i * 0.06}>
+              <div className="border border-gray-200 rounded-xl p-6 hover:border-[#1B3B2F] hover:shadow-sm transition-all duration-300 h-full">
+                <h3 className="text-base font-semibold text-black mb-3">{crime.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{crime.description}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── 신뢰 지표 섹션 ──
+function TrustIndicators() {
+  return (
+    <section className="py-16 bg-[#1B3B2F]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { value: '4.9', suffix: ' ★', label: '로톡 평점' },
+            { value: '600', suffix: '+', label: '상담 후기' },
+            { value: '100', suffix: '%', label: '피해자 전담률' },
+            { value: '', suffix: '무료', label: '첫 상담' },
+          ].map((item, i) => (
+            <ScrollReveal key={i} delay={i * 0.1}>
+              <div>
+                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+                  {item.value}{item.suffix}
+                </p>
+                <p className="mt-2 text-xs sm:text-sm text-white/60">{item.label}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── 피해자 국선변호사 안내 ──
+function VictimLawyerSection() {
+  return (
+    <section className="py-28 sm:py-40 bg-white">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+            Victim Advocate
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-8">
+            피해자 국선변호사 제도 안내
+          </h2>
+          <div className="space-y-6 text-sm text-gray-600 leading-relaxed">
+            <p>
+              성범죄 피해자는 <strong className="text-black">「성폭력범죄의 처벌 등에 관한 특례법」</strong>에 따라
+              국가가 지정하는 국선변호사의 조력을 무료로 받을 수 있습니다.
+            </p>
+            <div className="bg-gray-50 rounded-xl p-6 space-y-3">
+              <p><strong className="text-black">국선변호사:</strong> 국가 지정, 비용 무료, 변호사 선택 불가</p>
+              <p><strong className="text-black">사선변호사:</strong> 피해자가 직접 선임, 전문성 선택 가능, 적극적 맞춤형 변호</p>
+            </div>
+            <p>
+              로앤이는 <strong className="text-black">피해자 전문 사선변호사</strong>로서,
+              상담부터 수사 동행, 재판, 피해 회복까지 A-Z 전 과정을 책임집니다.
+              오직 피해자만 변호하기 때문에 보다 적극적이고 전문적인 변호가 가능합니다.
+            </p>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
+
 export default function SexualCrimeCenterPage() {
   return (
     <CenterPageTemplate
       centerName="성범죄 피해 전문센터"
-      subtitle="성범죄 피해 전문센터"
+      subtitle="성범죄 피해자를 위한 전문 법률 서비스"
       ctaLabel="무료 상담 신청하기"
       ctaHref="/consultation"
       defaultCaseType="성범죄 피해 상담"
@@ -217,7 +305,17 @@ export default function SexualCrimeCenterPage() {
         description:
           '피해자 변호사는 고소장만 내주면 끝이라는 착각.\n로앤이 성범죄피해전문센터에서는\n피해자 변호의 처음부터 끝까지, A-Z를 책임집니다.',
       }}
-      customSection={<><ProcessTimeline /><CenterCases /><FAQAccordion /><ReviewsSection /></>}
+      customSection={
+        <>
+          <CrimeTypesSection />
+          <TrustIndicators />
+          <VictimLawyerSection />
+          <ProcessTimeline />
+          <CenterCases />
+          <FAQAccordion />
+          <ReviewsSection />
+        </>
+      }
       lawyers={[
         {
           name: '이유림',
