@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
-import { EditableText, EditableImage } from '@/components/Editable'
+import { EditableImage } from '@/components/Editable'
 
 interface CaseResult {
   case_name: string
@@ -14,15 +14,14 @@ interface LawyerData {
   key: string
   name: string
   role: string
-  specialty: string
   specialtyTag: string
   description: string
   image: string
   alt: string
-  education: string[]
-  current: string[]
   cases: string[]
   results: CaseResult[]
+  education: string[]
+  current: string[]
   previous: string[]
 }
 
@@ -31,21 +30,10 @@ const lawyers: LawyerData[] = [
     key: 'lee',
     name: '이유림',
     role: '대표변호사',
-    specialty: '성범죄 피해자 전문 변호사',
     specialtyTag: '성범죄 전문',
-    description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
+    description: '끝까지 당신의 편에 서겠습니다. 피해자의 시간 앞에서 겸허히 걷겠습니다.',
     image: '/lawyer-lee.svg',
     alt: '이유림 대표변호사 프로필',
-    education: [
-      '한국외국어대학교 프랑스어/경제학',
-      '충북대학교 법학전문대학원',
-    ],
-    current: [
-      '법률사무소 로앤이 대표변호사',
-      '대한변호사협회 등록 성범죄 전문 변호사',
-      '인천지방법원 국선변호인',
-      '법률구조공단 성범죄 피해자 국선변호사',
-    ],
     cases: [
       '강간·준강간', '카메라이용촬영', '협박', '성범죄피해 형사고소',
       '관련 민사소송', '학교폭력', '프랜차이즈·공정거래', '개인정보보호', '가사',
@@ -56,30 +44,30 @@ const lawyers: LawyerData[] = [
       { case_name: '재산범죄 고소대리', result: '다수 송치' },
       { case_name: '민사 손해배상소송', result: '다수 승소' },
     ],
+    education: [
+      '분당대진고등학교 졸업',
+      '한국외국어대학교 프랑스어/경제학전공 졸업',
+      '충북대학교 법학전문대학원 법학과 전문석사 졸업',
+    ],
+    current: [
+      '법률사무소 로앤이 대표변호사',
+      '서울지방변호사회 국선변호사',
+      '대한난민지원변호사단',
+      '서울이문초등학교 명예교사',
+    ],
     previous: [
-      '법무법인 세민',
-      '법무법인 율본',
-      '법무법인(유한) 바른',
+      '법무법인 로웨이 파트너변호사',
+      '법무법인 심앤이 소속변호사',
     ],
   },
   {
     key: 'noh',
     name: '노채은',
     role: '대표변호사',
-    specialty: '재산범죄 피해자 전문 변호사',
     specialtyTag: '재산범죄 전문',
-    description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
+    description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는 마음이 있습니다.',
     image: '/lawyer-noh.svg',
     alt: '노채은 대표변호사 프로필',
-    education: [
-      '중앙대학교 정치국제학/경제학',
-      '경북대학교 법학전문대학원',
-    ],
-    current: [
-      '법률사무소 로앤이 대표변호사',
-      '대한변호사협회 등록 재산범죄 전문 변호사',
-      '인천지방법원 국선변호인',
-    ],
     cases: [
       '사기·횡령·배임', '재산범죄 민사소송', '학교폭력',
       '기업자문', '동물권', '가사', '압류·추심',
@@ -90,9 +78,22 @@ const lawyers: LawyerData[] = [
       { case_name: '재산범죄 고소대리', result: '다수 송치' },
       { case_name: '민사 손해배상소송', result: '다수 승소' },
     ],
+    education: [
+      '옥련여자고등학교 졸업',
+      '중앙대학교 정치국제학/경제학 복수전공 졸업',
+      '경북대학교 법학전문대학원 법학과 전문석사 졸업',
+    ],
+    current: [
+      '법률사무소 로앤이 대표변호사',
+      '대법원 국선변호인',
+      '부천도시공사인사위원',
+      '인천지방법원 부천지원 마을변호사',
+      '한국소비자원 소송지원 변호사',
+      '경기도소방재난본부 법률자문 변호사',
+      '모노옵틱스, 듀이랩스, 제이원소프트, 밀키트래블, 한국데이터소프트 등 자문변호사',
+    ],
     previous: [
-      '법무법인 세민',
-      '법무법인(유한) 바른',
+      '법률사무소 청인',
     ],
   },
 ]
@@ -101,12 +102,12 @@ function PreviousCareer({ items }: { items: string[] }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div>
+    <div className="text-center">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-500 transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-500 transition-colors"
       >
-        <span>이전 경력 보기</span>
+        <span>이전 경력</span>
         <motion.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -124,14 +125,11 @@ function PreviousCareer({ items }: { items: string[] }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <ul className="mt-3 space-y-1.5">
+            <div className="mt-3 space-y-1">
               {items.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-gray-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-gray-300 flex-shrink-0" />
-                  {item}
-                </li>
+                <p key={item} className="text-sm text-gray-400">{item}</p>
               ))}
-            </ul>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -152,113 +150,90 @@ export default function LawyersSection() {
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.key} delay={i * 0.15}>
-              <div>
+              <div className="max-w-md mx-auto text-center">
                 {/* Photo */}
-                <div className="text-center">
-                  <div className="w-full max-w-sm mx-auto mb-8">
-                    <div className="aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm">
-                      <EditableImage
-                        page="home"
-                        section="lawyers"
-                        fieldKey={`lawyer-${lawyer.key}-photo`}
-                        defaultSrc={lawyer.image}
-                        alt={lawyer.alt}
-                        width={600}
-                        height={800}
-                        className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Name + role + tag */}
-                  <h3 className="text-xl font-bold text-black flex items-center justify-center gap-2">
-                    <EditableText
-                      page="home"
-                      section="lawyers"
-                      fieldKey={`lawyer-${lawyer.key}-name`}
-                      defaultValue={lawyer.name}
-                      tag="span"
-                    />
-                    <span className="font-sans text-base font-normal text-gray-400">{lawyer.role}</span>
-                    <span className="inline-flex items-center px-2.5 py-0.5 text-[11px] font-medium bg-[#1B3B2F] text-white rounded-full">
-                      {lawyer.specialtyTag}
-                    </span>
-                  </h3>
-                  <EditableText
+                <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-8">
+                  <EditableImage
                     page="home"
                     section="lawyers"
-                    fieldKey={`lawyer-${lawyer.key}-specialty`}
-                    defaultValue={lawyer.specialty}
-                    tag="p"
-                    className="mt-1 text-sm text-accent font-medium"
-                  />
-                  <EditableText
-                    page="home"
-                    section="lawyers"
-                    fieldKey={`lawyer-${lawyer.key}-description`}
-                    defaultValue={lawyer.description}
-                    tag="p"
-                    className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line"
+                    fieldKey={`lawyer-${lawyer.key}-photo`}
+                    defaultSrc={lawyer.image}
+                    alt={lawyer.alt}
+                    width={600}
+                    height={800}
+                    className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 ease-out"
                   />
                 </div>
 
-                {/* Categorized career info */}
-                <div className="mt-8 text-left space-y-6">
-                  {/* 학력 */}
-                  <div>
-                    <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">학력</p>
-                    <ul className="space-y-1">
-                      {lawyer.education.map((item) => (
-                        <li key={item} className="text-sm text-gray-700">{item}</li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Name + role + tag */}
+                <h3 className="text-2xl font-medium text-gray-900">{lawyer.name}</h3>
+                <p className="mt-1 text-sm text-gray-400">{lawyer.role}</p>
+                <div className="mt-3">
+                  <span className="inline-flex border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600">
+                    {lawyer.specialtyTag}
+                  </span>
+                </div>
 
-                  {/* 현직 */}
-                  <div>
-                    <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">현직</p>
-                    <ul className="space-y-1.5">
-                      {lawyer.current.map((item) => (
-                        <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#1B3B2F] flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                {/* Description */}
+                <p className="mt-5 text-sm italic text-gray-500 leading-relaxed">
+                  {lawyer.description}
+                </p>
 
-                  {/* 주요 사건 */}
-                  <div>
-                    <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">주요 사건</p>
-                    <div className="flex flex-wrap gap-2">
-                      {lawyer.cases.map((tag) => (
-                        <span
-                          key={tag}
-                          className="inline-flex border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                {/* Key cases - tags */}
+                <div className="mt-8 flex flex-wrap justify-center gap-2">
+                  {lawyer.cases.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
 
-                  {/* 성공 사례 */}
+                {/* Results */}
+                <div className="mt-8">
+                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-3">성공 사례</p>
                   <div>
-                    <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">성공 사례</p>
-                    <div className="space-y-2">
-                      {lawyer.results.map((r) => (
-                        <div key={r.case_name} className="bg-gray-50 rounded-xl p-4 flex items-center justify-between gap-3">
-                          <span className="text-sm text-gray-600">{r.case_name}</span>
-                          <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {lawyer.results.map((r, idx) => (
+                      <div
+                        key={r.case_name}
+                        className={`flex items-center justify-between gap-4 py-2.5 ${
+                          idx < lawyer.results.length - 1 ? 'border-b border-gray-100' : ''
+                        }`}
+                      >
+                        <span className="text-sm text-gray-600">{r.case_name}</span>
+                        <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
+                      </div>
+                    ))}
                   </div>
+                </div>
 
-                  {/* 전직 (아코디언) */}
+                {/* Education */}
+                <div className="mt-8">
+                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">학력</p>
+                  <div className="space-y-1">
+                    {lawyer.education.map((item) => (
+                      <p key={item} className="text-sm text-gray-500">{item}</p>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Current positions */}
+                <div className="mt-8">
+                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">현직</p>
+                  <div className="space-y-1">
+                    {lawyer.current.map((item) => (
+                      <p key={item} className="text-sm text-gray-700">{item}</p>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Previous - accordion */}
+                <div className="mt-8">
                   <PreviousCareer items={lawyer.previous} />
                 </div>
               </div>
