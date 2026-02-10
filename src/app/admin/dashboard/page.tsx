@@ -89,6 +89,10 @@ export default function AdminDashboardPage() {
   const [thumbnailUpdating, setThumbnailUpdating] = useState(false)
   const [thumbnailResult, setThumbnailResult] = useState('')
 
+  // Naver content bulk generation state
+  const [naverUpdating, setNaverUpdating] = useState(false)
+  const [naverResult, setNaverResult] = useState('')
+
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
@@ -183,6 +187,28 @@ export default function AdminDashboardPage() {
       setThumbnailResult('썸네일 업데이트 중 오류가 발생했습니다.')
     } finally {
       setThumbnailUpdating(false)
+    }
+  }
+
+  async function handleNaverBulkGenerate() {
+    if (naverUpdating) return
+    if (!confirm('네이버 콘텐츠가 없는 모든 블로그 글에 대해 네이버용 HTML 콘텐츠를 자동 생성합니다. 진행하시겠습니까?')) return
+
+    setNaverUpdating(true)
+    setNaverResult('생성 중...')
+    try {
+      const res = await fetch('/api/update-naver-content', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) })
+      const data = await res.json()
+      if (res.ok) {
+        setNaverResult(data.message)
+        fetchData()
+      } else {
+        setNaverResult(`오류: ${data.error}`)
+      }
+    } catch {
+      setNaverResult('네이버 콘텐츠 생성 중 오류가 발생했습니다.')
+    } finally {
+      setNaverUpdating(false)
     }
   }
 
@@ -410,6 +436,13 @@ export default function AdminDashboardPage() {
             {thumbnailUpdating ? '재할당 중...' : '블로그 썸네일 재할당'}
           </button>
           <button
+            onClick={handleNaverBulkGenerate}
+            disabled={bulkRunning || naverUpdating}
+            className="px-5 py-2.5 border border-green-600 text-green-700 text-sm font-medium hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
+          >
+            {naverUpdating ? '생성 중...' : '네이버 콘텐츠 일괄 생성'}
+          </button>
+          <button
             onClick={() => setShowDeleteModal(true)}
             disabled={bulkRunning}
             className="px-5 py-2.5 border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
@@ -419,6 +452,9 @@ export default function AdminDashboardPage() {
         </div>
         {thumbnailResult && (
           <p className="mt-3 text-xs text-gray-600">{thumbnailResult}</p>
+        )}
+        {naverResult && (
+          <p className="mt-3 text-xs text-gray-600">{naverResult}</p>
         )}
 
         {/* Progress UI */}
