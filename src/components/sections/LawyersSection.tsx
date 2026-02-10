@@ -9,6 +9,7 @@ const lawyers = [
     name: '이유림',
     role: '대표변호사',
     specialty: '성범죄 피해자 전문 변호사',
+    specialtyTag: '성범죄 전문',
     description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
     image: '/lawyer-lee.svg',
     alt: '이유림 대표변호사 프로필',
@@ -18,6 +19,7 @@ const lawyers = [
     name: '노채은',
     role: '대표변호사',
     specialty: '재산범죄 피해자 전문 변호사',
+    specialtyTag: '재산범죄 전문',
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
     image: '/lawyer-noh.svg',
     alt: '노채은 대표변호사 프로필',
@@ -26,7 +28,7 @@ const lawyers = [
 
 export default function LawyersSection() {
   return (
-    <section id="lawyers" className="py-12 sm:py-20 bg-gray-50">
+    <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
@@ -41,19 +43,25 @@ export default function LawyersSection() {
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.key} delay={i * 0.15}>
               <div className="text-center">
-                <div className="w-full aspect-[3/4] max-w-sm mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
-                  <EditableImage
-                    page="home"
-                    section="lawyers"
-                    fieldKey={`lawyer-${lawyer.key}-photo`}
-                    defaultSrc={lawyer.image}
-                    alt={lawyer.alt}
-                    width={600}
-                    height={800}
-                    className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
-                  />
+                {/* Photo with deep green border + gold accent corner */}
+                <div className="relative w-full max-w-sm mx-auto mb-8">
+                  <div className="aspect-[3/4] bg-gray-100 overflow-hidden border-[3px] border-[#1B3B2F] shadow-sm">
+                    <EditableImage
+                      page="home"
+                      section="lawyers"
+                      fieldKey={`lawyer-${lawyer.key}-photo`}
+                      defaultSrc={lawyer.image}
+                      alt={lawyer.alt}
+                      width={600}
+                      height={800}
+                      className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
+                    />
+                  </div>
+                  {/* Gold accent rectangle - bottom right */}
+                  <div className="absolute -bottom-2 -right-2 w-12 h-12 border-2 border-[#B8960C] pointer-events-none" />
                 </div>
-                <h3 className="text-xl font-bold text-black">
+
+                <h3 className="text-xl font-bold text-black flex items-center justify-center gap-2">
                   <EditableText
                     page="home"
                     section="lawyers"
@@ -61,8 +69,11 @@ export default function LawyersSection() {
                     defaultValue={lawyer.name}
                     tag="span"
                   />
-                  {' '}
                   <span className="font-sans text-base font-normal text-gray-400">{lawyer.role}</span>
+                  {/* Specialty pill tag */}
+                  <span className="inline-flex items-center px-2.5 py-0.5 text-[11px] font-medium bg-[#1B3B2F] text-white rounded-full">
+                    {lawyer.specialtyTag}
+                  </span>
                 </h3>
                 <EditableText
                   page="home"

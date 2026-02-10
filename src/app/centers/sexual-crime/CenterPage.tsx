@@ -248,6 +248,7 @@ function VictimLawyerSection() {
 export default function SexualCrimeCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/sexual-crime"
       centerName="성범죄 피해 전문센터"
       subtitle="성범죄 피해자를 위한 전문 법률 서비스"
       ctaLabel="무료 상담 신청하기"

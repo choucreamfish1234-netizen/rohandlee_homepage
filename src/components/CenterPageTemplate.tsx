@@ -1,9 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import { EditableText, EditableImage } from '@/components/Editable'
 
 interface Service {
   title: string
@@ -26,6 +26,7 @@ interface Lawyer {
 }
 
 interface CenterPageTemplateProps {
+  pagePath: string
   centerName: string
   subtitle: string
   ctaLabel: string
@@ -44,6 +45,7 @@ interface CenterPageTemplateProps {
 }
 
 export default function CenterPageTemplate({
+  pagePath,
   centerName,
   subtitle,
   ctaLabel,
@@ -69,9 +71,22 @@ export default function CenterPageTemplate({
           className="text-center max-w-3xl mx-auto"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-            법률사무소 로앤이
+            <EditableText
+              page={pagePath}
+              section="hero"
+              fieldKey="firm-name"
+              defaultValue="법률사무소 로앤이"
+              tag="span"
+            />
             <br />
-            <span className="text-gray-400">{subtitle}</span>
+            <EditableText
+              page={pagePath}
+              section="hero"
+              fieldKey="subtitle"
+              defaultValue={subtitle}
+              tag="span"
+              className="text-gray-400"
+            />
           </h1>
           <div className="mt-8">
             <button
@@ -88,9 +103,14 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
-              주요 업무 영역
-            </h2>
+            <EditableText
+              page={pagePath}
+              section="services"
+              fieldKey="heading"
+              defaultValue="주요 업무 영역"
+              tag="h2"
+              className="text-2xl sm:text-3xl font-bold text-center text-black mb-16"
+            />
           </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, i) => (
@@ -98,8 +118,11 @@ export default function CenterPageTemplate({
                 <div className="group">
                   <div className="aspect-[4/3] bg-gray-100 overflow-hidden mb-5">
                     {service.image ? (
-                      <Image
-                        src={service.image}
+                      <EditableImage
+                        page={pagePath}
+                        section="services"
+                        fieldKey={`service-${i}-image`}
+                        defaultSrc={service.image}
                         alt={service.title}
                         width={800}
                         height={600}
@@ -109,8 +132,22 @@ export default function CenterPageTemplate({
                       <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 group-hover:scale-105 transition-transform duration-500" />
                     )}
                   </div>
-                  <h3 className="text-base font-semibold text-black">{service.title}</h3>
-                  <p className="mt-2 text-sm text-gray-500 leading-relaxed">{service.description}</p>
+                  <EditableText
+                    page={pagePath}
+                    section="services"
+                    fieldKey={`service-${i}-title`}
+                    defaultValue={service.title}
+                    tag="h3"
+                    className="text-base font-semibold text-black"
+                  />
+                  <EditableText
+                    page={pagePath}
+                    section="services"
+                    fieldKey={`service-${i}-desc`}
+                    defaultValue={service.description}
+                    tag="p"
+                    className="mt-2 text-sm text-gray-500 leading-relaxed"
+                  />
                 </div>
               </ScrollReveal>
             ))}
@@ -123,9 +160,14 @@ export default function CenterPageTemplate({
         <section className="py-28 sm:py-40 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
-                주요 성과 사례
-              </h2>
+              <EditableText
+                page={pagePath}
+                section="cases"
+                fieldKey="heading"
+                defaultValue="주요 성과 사례"
+                tag="h2"
+                className="text-2xl sm:text-3xl font-bold text-center text-black mb-16"
+              />
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {caseExamples.map((c, i) => (
@@ -133,8 +175,11 @@ export default function CenterPageTemplate({
                   <div className="group">
                     {c.image && (
                       <div className="aspect-[4/3] bg-gray-100 overflow-hidden mb-5">
-                        <Image
-                          src={c.image}
+                        <EditableImage
+                          page={pagePath}
+                          section="cases"
+                          fieldKey={`case-${i}-image`}
+                          defaultSrc={c.image}
                           alt={c.title}
                           width={800}
                           height={600}
@@ -142,8 +187,22 @@ export default function CenterPageTemplate({
                         />
                       </div>
                     )}
-                    <h3 className="font-semibold text-black">{c.title}</h3>
-                    <p className="mt-2 text-sm text-gray-500 leading-relaxed">{c.description}</p>
+                    <EditableText
+                      page={pagePath}
+                      section="cases"
+                      fieldKey={`case-${i}-title`}
+                      defaultValue={c.title}
+                      tag="h3"
+                      className="font-semibold text-black"
+                    />
+                    <EditableText
+                      page={pagePath}
+                      section="cases"
+                      fieldKey={`case-${i}-desc`}
+                      defaultValue={c.description}
+                      tag="p"
+                      className="mt-2 text-sm text-gray-500 leading-relaxed"
+                    />
                   </div>
                 </ScrollReveal>
               ))}
@@ -156,13 +215,23 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line">
-              {declaration.title}
-            </h2>
+            <EditableText
+              page={pagePath}
+              section="declaration"
+              fieldKey="title"
+              defaultValue={declaration.title}
+              tag="h2"
+              className="text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line"
+            />
             <div className="mt-8 w-16 h-px bg-accent mx-auto" />
-            <p className="mt-8 text-gray-500 leading-relaxed whitespace-pre-line">
-              {declaration.description}
-            </p>
+            <EditableText
+              page={pagePath}
+              section="declaration"
+              fieldKey="description"
+              defaultValue={declaration.description}
+              tag="p"
+              className="mt-8 text-gray-500 leading-relaxed whitespace-pre-line"
+            />
           </ScrollReveal>
         </div>
       </section>
@@ -202,8 +271,11 @@ export default function CenterPageTemplate({
               <ScrollReveal key={lawyer.name} delay={i * 0.15}>
                 <div className="text-center">
                   <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
-                    <Image
-                      src={lawyer.image}
+                    <EditableImage
+                      page={pagePath}
+                      section="lawyers"
+                      fieldKey={`lawyer-${i}-image`}
+                      defaultSrc={lawyer.image}
                       alt={`${lawyer.name} ${lawyer.role}`}
                       width={600}
                       height={800}
@@ -211,15 +283,34 @@ export default function CenterPageTemplate({
                     />
                   </div>
                   <h3 className="text-xl font-bold text-black">
-                    {lawyer.name}{' '}
+                    <EditableText
+                      page={pagePath}
+                      section="lawyers"
+                      fieldKey={`lawyer-${i}-name`}
+                      defaultValue={lawyer.name}
+                      tag="span"
+                    />
+                    {' '}
                     <span className="font-sans text-base font-normal text-gray-400">
                       {lawyer.role}
                     </span>
                   </h3>
-                  <p className="mt-1 text-sm text-accent font-medium">{lawyer.specialty}</p>
-                  <p className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line">
-                    {lawyer.quote}
-                  </p>
+                  <EditableText
+                    page={pagePath}
+                    section="lawyers"
+                    fieldKey={`lawyer-${i}-specialty`}
+                    defaultValue={lawyer.specialty}
+                    tag="p"
+                    className="mt-1 text-sm text-accent font-medium"
+                  />
+                  <EditableText
+                    page={pagePath}
+                    section="lawyers"
+                    fieldKey={`lawyer-${i}-quote`}
+                    defaultValue={lawyer.quote}
+                    tag="p"
+                    className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line"
+                  />
                 </div>
               </ScrollReveal>
             ))}
@@ -231,8 +322,22 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-black text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold">{ctaTitle}</h2>
-            <p className="mt-4 text-gray-400 text-sm">{ctaDescription}</p>
+            <EditableText
+              page={pagePath}
+              section="cta"
+              fieldKey="title"
+              defaultValue={ctaTitle}
+              tag="h2"
+              className="text-2xl sm:text-3xl font-bold"
+            />
+            <EditableText
+              page={pagePath}
+              section="cta"
+              fieldKey="description"
+              defaultValue={ctaDescription}
+              tag="p"
+              className="mt-4 text-gray-400 text-sm"
+            />
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={handleCtaClick}
@@ -244,7 +349,7 @@ export default function CenterPageTemplate({
                 href="tel:032-207-8788"
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"
               >
-                <span className="">032-207-8788</span>
+                <span>032-207-8788</span>
               </a>
             </div>
           </ScrollReveal>

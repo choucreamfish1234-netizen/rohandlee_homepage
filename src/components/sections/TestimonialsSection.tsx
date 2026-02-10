@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 
 const testimonials = [
   {
@@ -46,19 +47,29 @@ export default function TestimonialsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section className="py-12 sm:py-20 bg-gray-50">
+    <section className="py-12 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 sm:mb-16">
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
               Client Reviews
             </p>
-            <h2 className="text-xl sm:text-3xl font-bold text-black">
-              <span className="text-accent">100</span>명 이상의 의뢰인이 증명합니다.
-            </h2>
-            <p className="mt-5 text-gray-400 text-sm">
-              압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
-            </p>
+            <EditableText
+              page="home"
+              section="testimonials"
+              fieldKey="heading"
+              defaultValue="100명 이상의 의뢰인이 증명합니다."
+              tag="h2"
+              className="text-xl sm:text-3xl font-bold text-black"
+            />
+            <EditableText
+              page="home"
+              section="testimonials"
+              fieldKey="subheading"
+              defaultValue="압도적인 별점 5.0, 수많은 감사 인사가 로앤이의 실력을 말해줍니다."
+              tag="p"
+              className="mt-5 text-gray-400 text-sm"
+            />
           </div>
         </ScrollReveal>
 
@@ -76,9 +87,9 @@ export default function TestimonialsSection() {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="flex-shrink-0 w-[340px] sm:w-[400px] snap-start"
             >
-              <div className="bg-white p-8 shadow-sm border border-gray-100 h-full flex flex-col relative">
+              <div className="bg-[#f5f8f6] p-8 shadow-sm border border-gray-100 h-full flex flex-col relative hover:shadow-md transition-shadow duration-300">
                 {/* 큰따옴표 장식 */}
-                <span className="absolute top-5 right-6 text-[60px] leading-none text-gray-100 select-none">
+                <span className="absolute top-5 right-6 text-[60px] leading-none text-[#1B3B2F]/[0.06] select-none">
                   &ldquo;
                 </span>
 
@@ -102,7 +113,7 @@ export default function TestimonialsSection() {
                 </p>
 
                 {/* 출처 */}
-                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="mt-6 pt-4 border-t border-gray-200 flex items-center justify-between">
                   <span className="text-xs text-gray-400">{t.source}</span>
                   <div className="flex gap-0.5">
                     {Array.from({ length: 5 }).map((_, j) => (
