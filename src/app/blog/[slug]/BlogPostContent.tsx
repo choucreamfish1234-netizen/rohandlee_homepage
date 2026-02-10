@@ -18,22 +18,31 @@ import {
 } from '@/lib/blog'
 import { useConsultation } from '@/components/ConsultationProvider'
 
-export default function BlogPostContent({ slug }: { slug: string }) {
-  const [post, setPost] = useState<BlogPost | null>(null)
-  const [loading, setLoading] = useState(true)
+export default function BlogPostContent({ slug, initialPost }: { slug: string; initialPost?: BlogPost | null }) {
+  const [post, setPost] = useState<BlogPost | null>(initialPost ?? null)
+  const [loading, setLoading] = useState(!initialPost)
   const [adjacent, setAdjacent] = useState<{ prev: { title: string; slug: string } | null; next: { title: string; slug: string } | null }>({ prev: null, next: null })
   const [related, setRelated] = useState<BlogPost[]>([])
   const { openConsultation } = useConsultation()
 
   useEffect(() => {
+    // If we already have the post from server-side, just load extras
+    if (initialPost) {
+      incrementViewCount(initialPost.id)
+      if (initialPost.published_at) {
+        getAdjacentPosts(initialPost.published_at).then(setAdjacent)
+      }
+      getRelatedPosts(initialPost.category, initialPost.id).then(setRelated)
+      return
+    }
+
+    // Fallback: fetch client-side if no initialPost
     async function fetchPost() {
       try {
         const { post: data } = await getPostBySlug(slug)
         if (data) {
           setPost(data)
-          // Increment view count
           incrementViewCount(data.id)
-          // Fetch adjacent and related posts
           if (data.published_at) {
             getAdjacentPosts(data.published_at).then(setAdjacent)
           }
@@ -46,7 +55,7 @@ export default function BlogPostContent({ slug }: { slug: string }) {
       }
     }
     fetchPost()
-  }, [slug])
+  }, [slug, initialPost])
 
   if (loading) {
     return (
