@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { parseAIResponse } from '@/lib/parse-ai-response'
-import { callClaude } from '@/lib/claude-api'
 
 const SITE_PAGES = [
   {
@@ -69,28 +67,121 @@ const SITE_PAGES = [
   },
 ]
 
-const PAGE_AUDIT_SYSTEM = `당신은 법률 웹사이트 SEO 감사 전문가입니다.
-법률사무소 로앤이(roandlee.com)의 페이지 1개를 감사합니다.
-title과 description의 길이, 키워드 포함 여부, SEO 최적화 상태를 평가하세요.
-100점 만점으로 평가하고 문제점과 개선사항을 제시하세요.
+const IMPORTANT_KEYWORDS = ['변호사', '피해자', '로앤이', '부천']
 
-평가 기준:
-- title 길이: 50-60자 권장
-- description 길이: 140-160자 권장
-- 핵심 키워드 포함 여부
-- H1 태그 존재 여부
-- 전반적 SEO 최적화 상태
+function auditPage(
+  title: string,
+  description: string,
+  keywords: string,
+  hasH1: boolean,
+  ogTitle: string,
+  ogDescription: string,
+) {
+  let score = 100
+  const issues: string[] = []
+  const improvements: string[] = []
 
-반드시 유효한 JSON만 응답하세요. 마크다운 코드블록 사용 금지.
-{"score":85,"issues":["문제점1","문제점2"],"improvements":["개선사항1","개선사항2"],"title_feedback":"타이틀 평가","description_feedback":"디스크립션 평가"}`
+  // --- Title 체크 ---
+  let titleFeedback = ''
+  if (!title || title === '(미설정)') {
+    score -= 25
+    issues.push('title 미설정')
+    titleFeedback = 'title이 설정되지 않았습니다. 50-60자의 키워드 포함 title을 설정하세요.'
+  } else {
+    if (title.length < 30) {
+      score -= 10
+      issues.push(`title이 너무 짧음 (${title.length}자, 권장 50-60자)`)
+      titleFeedback = `title이 ${title.length}자로 짧습니다. 핵심 키워드를 포함하여 50-60자로 늘리세요.`
+    } else if (title.length > 65) {
+      score -= 5
+      issues.push(`title이 너무 김 (${title.length}자, 권장 50-60자)`)
+      titleFeedback = `title이 ${title.length}자로 깁니다. 검색결과에서 잘릴 수 있으니 60자 이내로 줄이세요.`
+    } else {
+      titleFeedback = `title 길이 적절 (${title.length}자)`
+    }
+
+    const titleHasKeyword = IMPORTANT_KEYWORDS.some((k) => title.includes(k))
+    if (!titleHasKeyword) {
+      score -= 15
+      issues.push('title에 핵심 키워드 없음 (변호사/피해자/로앤이/부천)')
+      improvements.push('title에 "변호사", "피해자", "로앤이", "부천" 중 하나 이상 포함 권장')
+    }
+  }
+
+  // --- Description 체크 ---
+  let descFeedback = ''
+  if (!description || description === '(미설정)') {
+    score -= 25
+    issues.push('description 미설정')
+    descFeedback = 'description이 설정되지 않았습니다. 140-160자의 설명을 추가하세요.'
+  } else {
+    if (description.length < 80) {
+      score -= 10
+      issues.push(`description이 너무 짧음 (${description.length}자, 권장 140-160자)`)
+      descFeedback = `description이 ${description.length}자로 짧습니다. 140-160자로 늘려 검색결과에서 충분한 정보를 제공하세요.`
+    } else if (description.length > 170) {
+      score -= 5
+      issues.push(`description이 너무 김 (${description.length}자, 권장 140-160자)`)
+      descFeedback = `description이 ${description.length}자로 깁니다. 검색결과에서 잘릴 수 있으니 160자 이내로 줄이세요.`
+    } else {
+      descFeedback = `description 길이 적절 (${description.length}자)`
+    }
+
+    const descHasKeyword = IMPORTANT_KEYWORDS.some((k) => description.includes(k))
+    if (!descHasKeyword) {
+      score -= 10
+      issues.push('description에 핵심 키워드 없음')
+      improvements.push('description에 핵심 키워드 포함 권장')
+    }
+  }
+
+  // --- Keywords 체크 ---
+  if (!keywords) {
+    score -= 5
+    issues.push('keywords 메타태그 미설정')
+    improvements.push('keywords 메타태그에 관련 키워드 설정 권장')
+  }
+
+  // --- H1 체크 ---
+  if (!hasH1) {
+    score -= 10
+    issues.push('H1 태그 없음')
+    improvements.push('페이지에 H1 태그 추가 권장')
+  }
+
+  // --- OG 태그 체크 ---
+  if (!ogTitle || ogTitle === title) {
+    // OG title이 없거나 일반 title과 같으면 약간 감점
+    // (같아도 괜찮지만, 소셜 공유 최적화 가능)
+  }
+  if (!ogDescription || ogDescription === '(미설정)') {
+    score -= 5
+    issues.push('OG description 미설정')
+    improvements.push('소셜 미디어 공유를 위한 OG description 설정 권장')
+  }
+
+  // --- 개선 제안 추가 ---
+  if (issues.length === 0) {
+    improvements.push('현재 SEO 설정이 양호합니다. 주기적으로 키워드 트렌드를 확인하세요.')
+  }
+  if (title && title.length >= 30 && title.length <= 65) {
+    improvements.push('title에 지역명(부천, 경기)과 전문 분야를 함께 포함하면 효과적입니다.')
+  }
+  if (description && description.length >= 80 && description.length <= 170) {
+    improvements.push('description에 CTA(전화번호, 무료상담 등)를 포함하면 클릭률이 높아집니다.')
+  }
+
+  return {
+    score: Math.max(0, score),
+    issues,
+    improvements,
+    title_feedback: titleFeedback,
+    description_feedback: descFeedback,
+  }
+}
 
 export async function POST() {
   try {
-    const anthropicApiKey = process.env.ANTHROPIC_API_KEY
-    if (!anthropicApiKey) {
-      return NextResponse.json({ error: 'ANTHROPIC_API_KEY가 설정되지 않았습니다.' }, { status: 500 })
-    }
-
     // Step 1: Fetch page_seo data for all pages at once
     const { data: seoRows } = await supabaseAdmin
       .from('page_seo')
@@ -103,12 +194,28 @@ export async function POST() {
       }
     }
 
-    // Step 2: Audit each page individually via Claude (using metadata, not HTML fetch)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const auditPages: any[] = []
+    // Step 2: Audit each page using rule-based scoring (no AI calls)
+    const auditPages: {
+      path: string
+      name: string
+      score: number
+      issues: string[]
+      improvements: string[]
+      title_feedback: string
+      description_feedback: string
+    }[] = []
     const allIssues: string[] = []
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const pageResults: any[] = []
+    const pageResults: {
+      path: string
+      name: string
+      title: string
+      description: string
+      keywords: string
+      ogTitle: string
+      ogDescription: string
+      source: string
+      hasH1: boolean
+    }[] = []
 
     for (const page of SITE_PAGES) {
       const seoData = seoMap.get(page.path)
@@ -131,43 +238,15 @@ export async function POST() {
         hasH1: page.hasH1,
       })
 
-      try {
-        const pageData = `${page.name} (${page.path}):
-- Title (${title.length}자): ${title}
-- Meta Description (${description.length}자): ${description}
-- Keywords: ${keywords || '미설정'}
-- OG Title: ${ogTitle}
-- OG Description: ${ogDescription}
-- H1 태그: ${page.hasH1 ? '있음' : '없음'}
-- 데이터 출처: ${source}`
-
-        const text = await callClaude(
-          anthropicApiKey,
-          PAGE_AUDIT_SYSTEM,
-          `이 페이지를 SEO 감사해주세요:\n\n${pageData}`,
-          512,
-        )
-        const parsed = parseAIResponse(text)
-        auditPages.push({ path: page.path, name: page.name, ...parsed })
-        if (parsed.issues) allIssues.push(...parsed.issues)
-      } catch (err) {
-        console.error(`Audit failed for ${page.path}:`, err)
-        auditPages.push({
-          path: page.path,
-          name: page.name,
-          score: 0,
-          issues: ['AI 분석 실패'],
-          improvements: [],
-          title_feedback: '',
-          description_feedback: '',
-        })
-      }
+      const result = auditPage(title, description, keywords, page.hasH1, ogTitle, ogDescription)
+      auditPages.push({ path: page.path, name: page.name, ...result })
+      allIssues.push(...result.issues)
     }
 
     // Calculate overall score
-    const scores = auditPages.filter((p: { score: number }) => p.score > 0).map((p: { score: number }) => p.score)
+    const scores = auditPages.map((p) => p.score)
     const overallScore = scores.length > 0
-      ? Math.round(scores.reduce((a: number, b: number) => a + b, 0) / scores.length)
+      ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
       : 0
 
     // Deduplicate critical issues
@@ -181,7 +260,7 @@ export async function POST() {
       summary: `${auditPages.length}개 페이지 감사 완료. 평균 점수: ${overallScore}점/100점`,
     }
 
-    // Save
+    // Save to seo_analyses
     await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'our_site',
       data: { pages: pageResults, audit },
