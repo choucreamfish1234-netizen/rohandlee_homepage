@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 const CORE_KEYWORDS = [
   { keyword: '성범죄 변호사', category: '성범죄' },
@@ -95,8 +95,8 @@ export async function POST() {
 
     if (!claudeRes.ok) {
       const err = await claudeRes.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 분석에 실패했습니다.' }, { status: 500 })
+      console.error('Claude API error:', claudeRes.status, err)
+      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
     }
 
     const claudeData = await claudeRes.json()
@@ -109,7 +109,7 @@ export async function POST() {
     const result = JSON.parse(jsonMatch[0])
 
     // Clear old keyword tracking and insert fresh data
-    await supabase.from('keyword_tracking').delete().neq('id', 0)
+    await supabaseAdmin.from('keyword_tracking').delete().neq('id', 0)
 
     const keywordRows = [
       ...(result.keyword_analyses || []).map((k: Record<string, string>) => ({
@@ -131,11 +131,11 @@ export async function POST() {
     ]
 
     if (keywordRows.length > 0) {
-      await supabase.from('keyword_tracking').insert(keywordRows)
+      await supabaseAdmin.from('keyword_tracking').insert(keywordRows)
     }
 
     // Save analysis record
-    await supabase.from('seo_analyses').insert({
+    await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'keyword',
       data: result,
       recommendations: result.priority_actions,
@@ -144,6 +144,7 @@ export async function POST() {
     return NextResponse.json(result)
   } catch (error) {
     console.error('Keyword analysis error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${msg}` }, { status: 500 })
   }
 }

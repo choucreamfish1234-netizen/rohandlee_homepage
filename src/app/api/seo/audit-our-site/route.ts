@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 const SITE_PAGES = [
   { path: '/', name: '메인 페이지' },
@@ -130,8 +130,8 @@ export async function POST() {
 
     if (!claudeRes.ok) {
       const err = await claudeRes.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 분석에 실패했습니다.' }, { status: 500 })
+      console.error('Claude API error:', claudeRes.status, err)
+      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
     }
 
     const claudeData = await claudeRes.json()
@@ -144,7 +144,7 @@ export async function POST() {
     const audit = JSON.parse(jsonMatch[0])
 
     // Save to seo_analyses
-    await supabase.from('seo_analyses').insert({
+    await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'our_site',
       data: { pages: pageResults, audit },
       recommendations: audit.top_priorities,
@@ -153,7 +153,8 @@ export async function POST() {
     return NextResponse.json({ audit, pageResults })
   } catch (error) {
     console.error('Site audit error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${msg}` }, { status: 500 })
   }
 }
 
