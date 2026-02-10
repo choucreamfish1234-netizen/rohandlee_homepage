@@ -379,26 +379,6 @@ export default function ConsultationModal({
                         '상담 신청하기'
                       )}
                     </button>
-                    {/* 카카오톡 안내 */}
-                    <div className="pt-2 text-center">
-                      <p className="text-xs text-gray-400 mb-3">
-                        카카오톡으로도 상담 가능합니다
-                      </p>
-                      <a
-                        href="https://pf.kakao.com/_YxgWxcn/chat"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#FEE500] text-[#191919] text-sm font-medium rounded-full hover:brightness-95 transition-all"
-                      >
-                        <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
-                          <path
-                            d="M14 4C8.477 4 4 7.477 4 11.667c0 2.7 1.737 5.067 4.36 6.433-.14.507-.9 3.267-.933 3.5 0 0-.02.167.087.233.107.067.233.033.233.033.307-.043 3.56-2.327 4.12-2.733.7.1 1.413.2 2.133.2 5.523 0 10-3.477 10-7.667S19.523 4 14 4z"
-                            fill="#191919"
-                          />
-                        </svg>
-                        카카오톡 상담하기
-                      </a>
-                    </div>
                   </form>
                 </>
               )}
