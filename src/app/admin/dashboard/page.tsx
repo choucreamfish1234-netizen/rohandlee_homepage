@@ -220,6 +220,12 @@ export default function AdminDashboardPage() {
         >
           SEO 관리
         </Link>
+        <Link
+          href="/admin/analytics"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          방문자 분석
+        </Link>
       </div>
 
       {/* Header */}
