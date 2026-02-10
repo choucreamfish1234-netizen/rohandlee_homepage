@@ -43,9 +43,8 @@ export default function LawyersSection() {
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.key} delay={i * 0.15}>
               <div className="text-center">
-                {/* Photo with deep green border + gold accent corner */}
-                <div className="relative w-full max-w-sm mx-auto mb-8">
-                  <div className="aspect-[3/4] bg-gray-100 overflow-hidden border-[3px] border-[#1B3B2F] shadow-sm">
+                <div className="w-full max-w-sm mx-auto mb-8">
+                  <div className="aspect-[3/4] bg-gray-100 overflow-hidden shadow-sm">
                     <EditableImage
                       page="home"
                       section="lawyers"
@@ -57,8 +56,6 @@ export default function LawyersSection() {
                       className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
                     />
                   </div>
-                  {/* Gold accent rectangle - bottom right */}
-                  <div className="absolute -bottom-2 -right-2 w-12 h-12 border-2 border-[#B8960C] pointer-events-none" />
                 </div>
 
                 <h3 className="text-xl font-bold text-black flex items-center justify-center gap-2">

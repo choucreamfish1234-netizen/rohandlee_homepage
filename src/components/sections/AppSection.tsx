@@ -82,7 +82,7 @@ export default function AppSection() {
           {/* 리셋 RE-Set */}
           <ScrollReveal delay={0.2}>
             <div className="bg-[#f5f8f6] p-6 sm:p-10 border border-gray-100 h-full flex flex-col hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <div className="w-20 h-20 mx-auto mb-8 bg-[#B8960C] rounded-lg flex items-center justify-center">
+              <div className="w-20 h-20 mx-auto mb-8 bg-orange-500 rounded-lg flex items-center justify-center">
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="1 4 1 10 7 10" />
                   <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />

@@ -56,14 +56,6 @@ export default function HeroSection() {
       </div>
 
       <div className="text-center max-w-4xl mx-auto relative z-10 pt-16">
-        {/* Gold accent line */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: 40 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="h-[2px] bg-[#B8960C] mx-auto mb-6"
-        />
-
         {/* Main title with letter-by-letter animation */}
         <motion.div
           initial={{ opacity: 0 }}

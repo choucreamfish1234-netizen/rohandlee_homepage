@@ -12,7 +12,6 @@ const cases = [
     badge: '불송치(무죄)',
     badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     tagColor: 'bg-emerald-50 text-emerald-600',
-    accentColor: '#1B3B5F',
     image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=500&fit=crop&q=80',
   },
   {
@@ -22,7 +21,6 @@ const cases = [
     badge: '징역 8년',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
     tagColor: 'bg-red-50 text-red-600',
-    accentColor: '#1B3B2F',
     image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
   },
   {
@@ -32,7 +30,6 @@ const cases = [
     badge: '전액 회수',
     badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
     tagColor: 'bg-blue-50 text-blue-600',
-    accentColor: '#B8960C',
     image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop&q=80',
   },
   {
@@ -42,7 +39,6 @@ const cases = [
     badge: '실형 선고',
     badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
     tagColor: 'bg-amber-50 text-amber-600',
-    accentColor: '#1B3B2F',
     image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&h=500&fit=crop&q=80',
   },
 ]
@@ -69,11 +65,6 @@ export default function CasesSection() {
           {cases.map((c, i) => (
             <ScrollReveal key={i} delay={i * 0.15}>
               <div className="group bg-white border border-gray-100 overflow-hidden hover:border-gray-200 transition-all duration-300 h-full flex flex-col relative">
-                {/* Left color bar */}
-                <div
-                  className="absolute left-0 top-0 bottom-0 w-[3px] group-hover:w-[6px] transition-all duration-300"
-                  style={{ backgroundColor: c.accentColor }}
-                />
 
                 {/* 이미지 */}
                 <div className="aspect-[16/10] overflow-hidden">
@@ -89,7 +80,7 @@ export default function CasesSection() {
                   />
                 </div>
 
-                <div className="p-5 sm:p-10 pl-6 sm:pl-12 flex flex-col flex-1">
+                <div className="p-5 sm:p-10 flex flex-col flex-1">
                   {/* 태그 */}
                   <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tagColor} mb-5`}>
                     {c.tag}
