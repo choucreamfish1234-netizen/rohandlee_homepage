@@ -48,7 +48,7 @@ function StatItem({ label, end, suffix, isDecimal, showDivider = true }: {
 
   return (
     <div className="text-center relative">
-      <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight font-serif">
+      <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
         {isDecimal ? (count / 10).toFixed(1) : count}
         {suffix}
       </span>
@@ -69,7 +69,7 @@ export default function StatsBar() {
           <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
           <StatItem label="감사 후기" end={600} suffix="+" />
           <div className="text-center">
-            <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight font-serif">
+            <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
               A-Z
             </span>
             <span className="block mt-2 text-[11px] sm:text-xs text-white/60">원스톱 변호</span>

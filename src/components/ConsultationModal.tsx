@@ -190,7 +190,7 @@ export default function ConsultationModal({
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-black mb-3">
+                  <h3 className="text-xl font-bold text-black mb-3">
                     상담 신청이 완료되었습니다
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed">
@@ -207,7 +207,7 @@ export default function ConsultationModal({
                     >
                       Consultation
                     </p>
-                    <h2 className="font-serif text-2xl font-bold text-black">
+                    <h2 className="text-2xl font-bold text-black">
                       무료 상담 신청
                     </h2>
                   </div>

@@ -68,7 +68,7 @@ export default function CenterPageTemplate({
           transition={{ duration: 0.8 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             법률사무소 로앤이
             <br />
             <span className="text-gray-400">{subtitle}</span>
@@ -88,7 +88,7 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
               주요 업무 영역
             </h2>
           </ScrollReveal>
@@ -123,7 +123,7 @@ export default function CenterPageTemplate({
         <section className="py-28 sm:py-40 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+              <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
                 주요 성과 사례
               </h2>
             </ScrollReveal>
@@ -156,7 +156,7 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line">
               {declaration.title}
             </h2>
             <div className="mt-8 w-16 h-px bg-accent mx-auto" />
@@ -173,11 +173,11 @@ export default function CenterPageTemplate({
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black">
-                  <span className="text-accent font-display">100</span>명 이상의 의뢰인이 증명합니다.
+                <h2 className="text-2xl sm:text-3xl font-bold text-black">
+                  <span className="text-accent">100</span>명 이상의 의뢰인이 증명합니다.
                 </h2>
                 <p className="mt-4 text-gray-500 text-sm">
-                  압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
+                  압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
                 </p>
               </div>
             </ScrollReveal>
@@ -192,7 +192,7 @@ export default function CenterPageTemplate({
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
               Assigned Lawyers
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-black mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-16">
               {centerName} 전담 변호사
             </h2>
           </ScrollReveal>
@@ -210,7 +210,7 @@ export default function CenterPageTemplate({
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-black">
+                  <h3 className="text-xl font-bold text-black">
                     {lawyer.name}{' '}
                     <span className="font-sans text-base font-normal text-gray-400">
                       {lawyer.role}
@@ -231,7 +231,7 @@ export default function CenterPageTemplate({
       <section className="py-28 sm:py-40 bg-black text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold">{ctaTitle}</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">{ctaTitle}</h2>
             <p className="mt-4 text-gray-400 text-sm">{ctaDescription}</p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <button
@@ -244,7 +244,7 @@ export default function CenterPageTemplate({
                 href="tel:032-207-8788"
                 className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"
               >
-                <span className="font-display">032-207-8788</span>
+                <span className="">032-207-8788</span>
               </a>
             </div>
           </ScrollReveal>

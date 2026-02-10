@@ -8,7 +8,7 @@ export default function AppSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-20">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-black">
+            <h2 className="text-3xl sm:text-4xl font-bold text-black">
               로앤이 전용 앱 출시.
             </h2>
             <p className="mt-5 text-gray-400 text-sm leading-relaxed">
@@ -31,7 +31,7 @@ export default function AppSection() {
                 </svg>
               </div>
               <div className="text-center flex-1">
-                <h3 className="font-serif text-lg font-semibold text-black">진심의 무게</h3>
+                <h3 className="text-lg font-semibold text-black">진심의 무게</h3>
                 <p className="mt-2 text-sm text-accent font-medium">
                   피해자의 진심을, 법의 언어로.
                 </p>
@@ -64,7 +64,7 @@ export default function AppSection() {
                 </svg>
               </div>
               <div className="text-center flex-1">
-                <h3 className="font-serif text-lg font-semibold text-black">리셋 RE-Set</h3>
+                <h3 className="text-lg font-semibold text-black">리셋 RE-Set</h3>
                 <p className="mt-2 text-sm text-accent font-medium">
                   새로운 출발을 위한 법적 리셋.
                 </p>

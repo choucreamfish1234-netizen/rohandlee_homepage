@@ -78,7 +78,7 @@ export default function CasesList() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Case Results
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">
             성공사례
           </h1>
           <p className="mt-5 text-gray-400 text-sm">

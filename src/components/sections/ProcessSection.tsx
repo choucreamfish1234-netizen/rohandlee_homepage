@@ -43,7 +43,7 @@ export default function ProcessSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             How We Work
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-5">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-5">
             수임 절차
           </h2>
           <p className="text-center text-gray-400 text-sm mb-20">
@@ -56,7 +56,7 @@ export default function ProcessSection() {
             <ScrollReveal key={step.number} delay={i * 0.1}>
               <div className="text-center lg:text-left">
                 {/* 큰 세리프 숫자 */}
-                <span className="font-display text-5xl lg:text-6xl font-light text-gray-200 leading-none">
+                <span className="text-5xl lg:text-6xl font-light text-gray-200 leading-none">
                   {step.number}
                 </span>
                 <h3 className="mt-4 text-base font-semibold text-black">{step.title}</h3>
