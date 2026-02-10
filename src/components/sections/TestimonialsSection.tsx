@@ -78,7 +78,7 @@ export default function TestimonialsSection() {
             >
               <div className="bg-white p-8 shadow-sm border border-gray-100 h-full flex flex-col relative">
                 {/* 큰따옴표 장식 */}
-                <span className="absolute top-5 right-6 text-[60px] leading-none text-gray-100 select-none font-serif">
+                <span className="absolute top-5 right-6 text-[60px] leading-none text-gray-100 select-none">
                   &ldquo;
                 </span>
 

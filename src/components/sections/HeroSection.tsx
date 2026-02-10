@@ -25,7 +25,7 @@ export default function HeroSection() {
             fieldKey="title"
             defaultValue="법률사무소 로앤이"
             tag="h1"
-            style={{ color: '#111', fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '2rem' }}
+            style={{ color: '#111', fontWeight: 700, fontSize: '2rem' }}
           />
         </motion.div>
 
@@ -42,7 +42,7 @@ export default function HeroSection() {
             fieldKey="slogan"
             defaultValue={'\u201c오직 피해자만 변호합니다\u201d'}
             tag="p"
-            style={{ color: '#888', fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: '1.25rem' }}
+            style={{ color: '#888', fontWeight: 400, fontSize: '1.25rem' }}
           />
         </motion.div>
 
@@ -59,7 +59,7 @@ export default function HeroSection() {
             fieldKey="description"
             defaultValue="당신의 잃어버린 일상을 되찾을 때까지, 로앤이가 끝까지 함께 합니다."
             tag="p"
-            style={{ color: '#333', fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '1.5rem', lineHeight: 1.6 }}
+            style={{ color: '#333', fontWeight: 500, fontSize: '1.5rem', lineHeight: 1.6 }}
           />
         </motion.div>
 
@@ -74,14 +74,14 @@ export default function HeroSection() {
           <button
             onClick={() => openConsultation()}
             className="inline-flex items-center justify-center px-10 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:opacity-90"
-            style={{ background: '#1B3B2F', color: '#fff', fontFamily: 'Inter, sans-serif' }}
+            style={{ background: '#1B3B2F', color: '#fff' }}
           >
             무료 상담 신청하기
           </button>
           <a
             href="tel:032-207-8788"
             className="inline-flex items-center justify-center px-10 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-100"
-            style={{ border: '1px solid #1B3B2F', color: '#1B3B2F', background: 'transparent', fontFamily: 'Inter, sans-serif' }}
+            style={{ border: '1px solid #1B3B2F', color: '#1B3B2F', background: 'transparent' }}
           >
             032-207-8788
           </a>

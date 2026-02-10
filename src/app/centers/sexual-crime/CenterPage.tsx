@@ -72,11 +72,11 @@ function ReviewsSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Client Reviews
           </p>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-4">
             의뢰인 후기
           </h2>
           <p className="text-center text-gray-500 text-sm mb-16">
-            압도적인 별점 <span className="text-accent font-bold font-display">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
+            압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
           </p>
         </ScrollReveal>
 

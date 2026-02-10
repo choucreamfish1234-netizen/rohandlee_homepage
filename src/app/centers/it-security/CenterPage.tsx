@@ -113,7 +113,7 @@ function ITSecurityCustomSection() {
             <p className="text-xs tracking-[0.3em] text-emerald-400 uppercase text-center mb-4">
               Privacy Law Expert
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-4">
               개인정보보호법, 로앤이가 다릅니다.
             </h2>
             <p className="text-center text-gray-400 text-sm max-w-2xl mx-auto mb-20 leading-relaxed">
@@ -139,7 +139,7 @@ function ITSecurityCustomSection() {
             <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-3xl sm:text-4xl font-bold text-white font-display">{stat.value}</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-white">{stat.value}</p>
                   <p className="mt-2 text-sm text-gray-400">{stat.label}</p>
                 </div>
               ))}
@@ -155,7 +155,7 @@ function ITSecurityCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               Case Results
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
               IT·보안 센터 성공사례
             </h2>
           </ScrollReveal>
@@ -180,7 +180,7 @@ function ITSecurityCustomSection() {
                         {c.badge}
                       </span>
                     </div>
-                    <h3 className="font-serif text-lg sm:text-xl font-bold text-black leading-snug group-hover:text-accent transition-colors duration-300">
+                    <h3 className="text-lg sm:text-xl font-bold text-black leading-snug group-hover:text-accent transition-colors duration-300">
                       {c.title}
                     </h3>
                     <p className="mt-3 text-sm text-gray-500 leading-relaxed">{c.summary}</p>
@@ -199,7 +199,7 @@ function ITSecurityCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               Process
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-20">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-20">
               디지털 피해 대응 프로세스
             </h2>
           </ScrollReveal>
@@ -227,7 +227,7 @@ function ITSecurityCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               FAQ
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
               자주 묻는 질문
             </h2>
           </ScrollReveal>

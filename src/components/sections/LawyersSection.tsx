@@ -32,7 +32,7 @@ export default function LawyersSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Our Lawyers
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
             변호사 소개
           </h2>
         </ScrollReveal>
@@ -53,7 +53,7 @@ export default function LawyersSection() {
                     className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-black">
+                <h3 className="text-xl font-bold text-black">
                   <EditableText
                     page="home"
                     section="lawyers"

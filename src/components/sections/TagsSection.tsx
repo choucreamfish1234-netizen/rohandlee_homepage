@@ -38,7 +38,7 @@ export default function TagsSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Practice Areas
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-black mb-14">
+          <h2 className="text-3xl sm:text-4xl font-bold text-black mb-14">
             기타 전문 분야
           </h2>
         </ScrollReveal>

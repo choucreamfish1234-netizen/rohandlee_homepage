@@ -17,7 +17,7 @@ export default function DirectionsContent() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Location
           </p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-black">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">
             오시는 길
           </h1>
           <p className="mt-5 text-gray-400 text-sm">
@@ -81,7 +81,7 @@ export default function DirectionsContent() {
         {/* 교통편 안내 */}
         <ScrollReveal>
           <div className="border-t border-gray-100 pt-16">
-            <h2 className="font-serif text-2xl font-bold text-black text-center mb-12">
+            <h2 className="text-2xl font-bold text-black text-center mb-12">
               교통편 안내
             </h2>
 

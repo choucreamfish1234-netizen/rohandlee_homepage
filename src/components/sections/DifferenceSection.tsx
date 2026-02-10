@@ -29,7 +29,7 @@ export default function DifferenceSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Why Ro&Lee
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
             로앤이가 다른 이유
           </h2>
         </ScrollReveal>
@@ -38,7 +38,7 @@ export default function DifferenceSection() {
           {differences.map((diff, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
               <div className="p-8 border border-gray-100 rounded-2xl hover:border-accent/20 transition-all duration-300 hover:shadow-sm">
-                <span className="font-display text-4xl font-light text-gray-200">
+                <span className="text-4xl font-light text-gray-200">
                   0{i + 1}
                 </span>
                 <h3 className="mt-4 text-lg font-semibold text-black">{diff.title}</h3>

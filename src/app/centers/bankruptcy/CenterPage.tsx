@@ -62,7 +62,7 @@ function ReSetSection() {
             >
               Developed by Roh &amp; Lee
             </p>
-            <h2 className="font-serif text-5xl sm:text-6xl font-bold text-black mb-4">
+            <h2 className="text-5xl sm:text-6xl font-bold text-black mb-4">
               RE-Set
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 font-medium mb-8">
@@ -83,19 +83,19 @@ function ReSetSection() {
           <ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 sm:divide-x sm:divide-white/20 text-center text-white">
               <div className="px-4">
-                <p className="font-serif text-3xl sm:text-4xl font-bold mb-2">
+                <p className="text-3xl sm:text-4xl font-bold mb-2">
                   2주 <span className="text-white/50 mx-2">&rarr;</span> 3일
                 </p>
                 <p className="text-sm text-white/70">서류 준비 기간</p>
               </div>
               <div className="px-4">
-                <p className="font-serif text-3xl sm:text-4xl font-bold mb-2">
+                <p className="text-3xl sm:text-4xl font-bold mb-2">
                   47<span className="text-lg font-normal text-white/70 ml-1">종</span>
                 </p>
                 <p className="text-sm text-white/70">자동 수집 가능 서류</p>
               </div>
               <div className="px-4">
-                <p className="font-serif text-3xl sm:text-4xl font-bold mb-2">
+                <p className="text-3xl sm:text-4xl font-bold mb-2">
                   95<span className="text-lg font-normal text-white/70 ml-1">%</span>
                 </p>
                 <p className="text-sm text-white/70">서류 오류율 감소</p>
@@ -112,7 +112,7 @@ function ReSetSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               How It Works
             </p>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-20">
+            <h3 className="text-2xl sm:text-3xl font-bold text-center text-black mb-20">
               RE-Set 작동 프로세스
             </h3>
           </ScrollReveal>
@@ -128,7 +128,7 @@ function ReSetSection() {
                       <div className="absolute top-5 left-[calc(50%+24px)] right-0 h-px bg-gray-200" />
                     )}
                     <p
-                      className="font-serif text-3xl font-bold mb-4"
+                      className="text-3xl font-bold mb-4"
                       style={{ color: '#1B3B2F' }}
                     >
                       {step.num}
@@ -153,7 +153,7 @@ function ReSetSection() {
                   {/* 좌측: 번호 + 세로선 */}
                   <div className="flex flex-col items-center">
                     <p
-                      className="font-serif text-2xl font-bold flex-shrink-0"
+                      className="text-2xl font-bold flex-shrink-0"
                       style={{ color: '#1B3B2F' }}
                     >
                       {step.num}
@@ -192,7 +192,7 @@ function ReSetSection() {
               >
                 Why RE-Set
               </p>
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-black mb-6 leading-snug">
+              <h3 className="text-xl sm:text-2xl font-bold text-black mb-6 leading-snug">
                 로앤이가 직접 개발했습니다.
               </h3>
               <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -219,7 +219,7 @@ function ReSetSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               Comparison
             </p>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            <h3 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
               RE-Set vs 일반 법률사무소
             </h3>
           </ScrollReveal>
