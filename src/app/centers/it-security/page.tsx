@@ -4,11 +4,11 @@ import CenterPage from './CenterPage'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/centers/it-security', {
-    title: 'IT·보안 법률센터',
-    description: '개인정보보호법·정보통신망법 위반 대응, 해킹·랜섬웨어·개인정보 유출 피해 구제. 디지털 시대의 법적 보호막. 무료 상담 032-207-8788.',
-    keywords: 'IT 변호사, 개인정보보호법, 정보통신망법, 해킹 변호사, 랜섬웨어, 개인정보 유출',
-    ogTitle: 'IT·보안 법률센터 | 법률사무소 로앤이',
-    ogDescription: '개인정보보호법·정보통신망법 위반 대응. 디지털 시대의 법적 보호막.',
+    title: '디지털성범죄·딥페이크·리벤지포르노 피해자 변호사 | 로앤이',
+    description: '불법촬영, 몰카, 딥페이크, 리벤지포르노, 온라인 성착취 피해 전문. 유포 차단, 삭제 요청, 가해자 처벌, 손해배상까지. 디지털 증거 보존 전문. 첫 상담 무료.',
+    keywords: '디지털성범죄 변호사, 딥페이크 변호사, 리벤지포르노 변호사, 불법촬영 변호사, 몰카 변호사, 온라인 성착취, 유포 차단, IT 보안 법률',
+    ogTitle: '디지털성범죄·딥페이크·리벤지포르노 피해자 변호사 | 로앤이',
+    ogDescription: '불법촬영, 딥페이크, 리벤지포르노 피해 전문. 유포 차단, 삭제 요청, 가해자 처벌까지. 첫 상담 무료.',
   })
 }
 
