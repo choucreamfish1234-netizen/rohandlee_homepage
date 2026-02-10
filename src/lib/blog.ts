@@ -43,8 +43,131 @@ export const CATEGORY_THUMBNAILS: Record<string, string> = {
   '일반': 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
 }
 
+// Category-based image pools (Unsplash, Pexels, Pixabay 혼합)
+export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
+  '성범죄': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/5668882/pexels-photo-5668882.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2015/07/28/22/05/child-865116_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2017/02/01/13/52/analysis-2030265_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2016/10/09/08/32/digital-marketing-1725340_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2015/01/09/02/45/laptop-593673_960_720.jpg',
+  ],
+  '재산범죄': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/4386373/pexels-photo-4386373.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2016/10/09/19/19/coins-1726618_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2017/09/07/08/54/money-2724241_960_720.jpg',
+  ],
+  '회생파산': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1559526324-593bc073d938?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/3483098/pexels-photo-3483098.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/4386476/pexels-photo-4386476.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/4386442/pexels-photo-4386442.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2017/08/30/07/56/money-2696228_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2018/03/07/18/42/piggy-bank-3206161_960_720.jpg',
+  ],
+  '기업법무': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2015/01/08/18/30/entrepreneur-593371_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_960_720.jpg',
+  ],
+  'IT보안': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1563986768609-322da13575f2?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/5380642/pexels-photo-5380642.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5380664/pexels-photo-5380664.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2018/05/14/16/54/cyber-security-3400657_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2017/05/10/12/41/hacker-2300772_960_720.jpg',
+  ],
+  '법률상식': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/5668772/pexels-photo-5668772.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5669602/pexels-photo-5669602.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2017/01/31/23/42/animal-2028258_960_720.png',
+    'https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_960_720.jpg',
+  ],
+  '일반': [
+    // Unsplash
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80',
+    // Pexels
+    'https://images.pexels.com/photos/5668882/pexels-photo-5668882.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800&h=450&dpr=1',
+    // Pixabay
+    'https://cdn.pixabay.com/photo/2015/07/28/22/05/child-865116_960_720.jpg',
+    'https://cdn.pixabay.com/photo/2016/03/26/13/09/cup-of-coffee-1280537_960_720.jpg',
+  ],
+}
+
 export function getCategoryThumbnail(category: string): string {
   return CATEGORY_THUMBNAILS[category] || CATEGORY_THUMBNAILS['일반']
+}
+
+/**
+ * Get a random thumbnail from the category image pool,
+ * excluding already-used URLs to ensure diversity.
+ * Cycles through the pool if all images have been used.
+ */
+export function getRandomThumbnail(category: string, usedUrls: string[] = []): string {
+  const pool = CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['일반']
+  const available = pool.filter((url) => !usedUrls.includes(url))
+  if (available.length > 0) {
+    return available[Math.floor(Math.random() * available.length)]
+  }
+  // All used — cycle: pick random from full pool
+  return pool[Math.floor(Math.random() * pool.length)]
+}
+
+/**
+ * Get the image pool for a category.
+ */
+export function getCategoryImagePool(category: string): string[] {
+  return CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['일반']
 }
 
 export function getReadingTime(content: string): number {

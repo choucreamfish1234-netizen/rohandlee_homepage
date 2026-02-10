@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { CATEGORY_THUMBNAILS } from '@/lib/blog'
+import { getRandomThumbnail } from '@/lib/blog'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 // Category → author mapping
 function getAuthorByCategory(category: string): string {
@@ -145,8 +146,13 @@ export async function POST(req: NextRequest) {
     }
 
     const parsed = JSON.parse(jsonMatch[0])
-    // Auto-assign thumbnail URL and author based on category
-    parsed.thumbnail_url = CATEGORY_THUMBNAILS[cat] || CATEGORY_THUMBNAILS['일반']
+    // Fetch existing thumbnails for this category to avoid duplicates
+    const { data: existing } = await supabaseAdmin
+      .from('blog_posts')
+      .select('thumbnail_url')
+      .eq('category', cat)
+    const usedUrls = (existing || []).map((p: { thumbnail_url: string | null }) => p.thumbnail_url).filter(Boolean) as string[]
+    parsed.thumbnail_url = getRandomThumbnail(cat, usedUrls)
     parsed.author = author
     return NextResponse.json(parsed)
   } catch (error) {

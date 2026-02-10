@@ -9,7 +9,7 @@ import {
   CATEGORIES,
   getPublishedPosts,
   getFeaturedPosts,
-  getCategoryThumbnail,
+  getCategoryImagePool,
   getReadingTime,
   formatDate,
 } from '@/lib/blog'
@@ -97,7 +97,7 @@ export default function BlogList() {
                 <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
                   <div className="aspect-[16/10] bg-gray-100 overflow-hidden mb-4">
                     <Image
-                      src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                      src={post.thumbnail_url || getCategoryImagePool(post.category)[0]}
                       alt={post.title}
                       width={800}
                       height={500}
@@ -223,7 +223,7 @@ export default function BlogList() {
                       <div className="bg-white border border-gray-100 hover:border-gray-300 transition-all duration-300 h-full flex flex-col overflow-hidden">
                         <div className="aspect-[16/10] overflow-hidden">
                           <Image
-                            src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                            src={post.thumbnail_url || getCategoryImagePool(post.category)[0]}
                             alt={post.title}
                             width={800}
                             height={500}

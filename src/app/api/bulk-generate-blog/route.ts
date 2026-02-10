@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { CATEGORY_THUMBNAILS } from '@/lib/blog'
+import { getRandomThumbnail } from '@/lib/blog'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 
 const TOPICS = [
@@ -121,6 +121,20 @@ export async function POST() {
         controller.enqueue(encoder.encode(`data: ${JSON.stringify(data)}\n\n`))
       }
 
+      // Track used thumbnail URLs per category to avoid duplicates
+      const usedThumbnails: Record<string, string[]> = {}
+
+      // Pre-load existing thumbnails from DB
+      const { data: existingPosts } = await supabaseAdmin
+        .from('blog_posts')
+        .select('category, thumbnail_url')
+      for (const p of existingPosts || []) {
+        if (p.thumbnail_url) {
+          if (!usedThumbnails[p.category]) usedThumbnails[p.category] = []
+          usedThumbnails[p.category].push(p.thumbnail_url)
+        }
+      }
+
       send({ type: 'start', total: TOPICS.length })
 
       for (let i = 0; i < TOPICS.length; i++) {
@@ -181,7 +195,12 @@ export async function POST() {
               author,
               status: 'published',
               published_at: new Date().toISOString(),
-              thumbnail_url: CATEGORY_THUMBNAILS[category] || CATEGORY_THUMBNAILS['일반'],
+              thumbnail_url: (() => {
+                const url = getRandomThumbnail(category, usedThumbnails[category] || [])
+                if (!usedThumbnails[category]) usedThumbnails[category] = []
+                usedThumbnails[category].push(url)
+                return url
+              })(),
               view_count: 0,
               is_featured: false,
               naver_published: false,

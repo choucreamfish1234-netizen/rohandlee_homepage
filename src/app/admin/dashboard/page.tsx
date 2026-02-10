@@ -38,6 +38,10 @@ export default function AdminDashboardPage() {
   const [bulkDone, setBulkDone] = useState(false)
   const bulkLogRef = useRef<HTMLDivElement>(null)
 
+  // Thumbnail re-assign state
+  const [thumbnailUpdating, setThumbnailUpdating] = useState(false)
+  const [thumbnailResult, setThumbnailResult] = useState('')
+
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
@@ -110,6 +114,28 @@ export default function AdminDashboardPage() {
       alert('삭제 중 오류가 발생했습니다.')
     } finally {
       setDeletingAll(false)
+    }
+  }
+
+  async function handleThumbnailReassign() {
+    if (thumbnailUpdating) return
+    if (!confirm('모든 블로그 글의 썸네일을 다양한 이미지로 재할당합니다. 진행하시겠습니까?')) return
+
+    setThumbnailUpdating(true)
+    setThumbnailResult('')
+    try {
+      const res = await fetch('/api/update-blog-thumbnails', { method: 'POST' })
+      const data = await res.json()
+      if (res.ok) {
+        setThumbnailResult(data.message)
+        fetchData()
+      } else {
+        setThumbnailResult(`오류: ${data.error}`)
+      }
+    } catch {
+      setThumbnailResult('썸네일 업데이트 중 오류가 발생했습니다.')
+    } finally {
+      setThumbnailUpdating(false)
     }
   }
 
@@ -284,6 +310,13 @@ export default function AdminDashboardPage() {
             {bulkRunning ? '생성 중...' : 'SEO 블로그 30개 자동 생성'}
           </button>
           <button
+            onClick={handleThumbnailReassign}
+            disabled={bulkRunning || thumbnailUpdating}
+            className="px-5 py-2.5 border border-[#1B3B2F] text-[#1B3B2F] text-sm font-medium hover:bg-[#1B3B2F]/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
+          >
+            {thumbnailUpdating ? '재할당 중...' : '블로그 썸네일 재할당'}
+          </button>
+          <button
             onClick={() => setShowDeleteModal(true)}
             disabled={bulkRunning}
             className="px-5 py-2.5 border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
@@ -291,6 +324,9 @@ export default function AdminDashboardPage() {
             기존 글 전체 삭제
           </button>
         </div>
+        {thumbnailResult && (
+          <p className="mt-3 text-xs text-gray-600">{thumbnailResult}</p>
+        )}
 
         {/* Progress UI */}
         {(bulkRunning || bulkDone) && (

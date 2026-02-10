@@ -12,7 +12,7 @@ import {
   getAdjacentPosts,
   getRelatedPosts,
   incrementViewCount,
-  getCategoryThumbnail,
+  getCategoryImagePool,
   getReadingTime,
   formatDate,
 } from '@/lib/blog'
@@ -167,7 +167,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         {/* Thumbnail */}
         <div className="aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-12">
           <Image
-            src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+            src={post.thumbnail_url || getCategoryImagePool(post.category)[0]}
             alt={post.title}
             width={1200}
             height={675}
@@ -315,7 +315,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
               <Link key={r.id} href={`/blog/${r.slug}`} className="group block bg-white border border-gray-100 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
                 <div className="aspect-[16/10] bg-gray-100 overflow-hidden">
                   <Image
-                    src={r.thumbnail_url || getCategoryThumbnail(r.category)}
+                    src={r.thumbnail_url || getCategoryImagePool(r.category)[0]}
                     alt={r.title}
                     width={800}
                     height={500}
