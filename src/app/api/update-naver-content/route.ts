@@ -46,7 +46,13 @@ function buildNaverPrompt(author: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const { postId } = await req.json()
+    let postId: number | undefined
+    try {
+      const body = await req.json()
+      postId = body.postId
+    } catch {
+      // Empty body or invalid JSON — treat as bulk mode
+    }
 
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
@@ -67,16 +73,19 @@ export async function POST(req: NextRequest) {
       }
       postsToUpdate = [data]
     } else {
+      // Fetch all published posts, then filter in JS for missing naver_content
+      // (avoids PostgREST filter issues with .or('...eq.') for empty strings)
       const { data, error } = await supabaseAdmin
         .from('blog_posts')
-        .select('id, title, content, category')
-        .or('naver_content.is.null,naver_content.eq.')
+        .select('id, title, content, category, naver_content')
         .eq('status', 'published')
         .order('created_at', { ascending: true })
       if (error) {
         return NextResponse.json({ error: `DB 조회 실패: ${error.message}` }, { status: 500 })
       }
-      postsToUpdate = data || []
+      postsToUpdate = (data || [])
+        .filter((post: { naver_content?: string | null }) => !post.naver_content || post.naver_content.trim() === '')
+        .map(({ id, title, content, category }: { id: number; title: string; content: string; category: string; naver_content?: string | null }) => ({ id, title, content, category }))
     }
 
     if (postsToUpdate.length === 0) {
@@ -114,11 +123,21 @@ export async function POST(req: NextRequest) {
 
         const data = await response.json()
         const text = data.content?.[0]?.text || ''
-        const parsed = parseAIResponse(text)
-        const naverContent = parsed.naverContent || ''
+
+        let naverContent = ''
+        try {
+          const parsed = parseAIResponse(text)
+          naverContent = parsed.naverContent || ''
+        } catch {
+          // If JSON parsing fails, the AI may have returned raw HTML directly
+          // Use the raw text as naverContent if it looks like HTML
+          if (text.includes('<') && text.includes('>')) {
+            naverContent = text
+          }
+        }
 
         if (!naverContent) {
-          results.push({ id: post.id, title: post.title, success: false, error: '네이버 콘텐츠 생성 실패' })
+          results.push({ id: post.id, title: post.title, success: false, error: '네이버 콘텐츠 생성 실패 (파싱 오류)' })
           continue
         }
 
