@@ -54,7 +54,8 @@ export async function POST() {
 
 각 키워드에 대해 분석하고, 추가로 공략할 새 키워드도 제안해주세요.
 
-반드시 아래 JSON 형식으로만 응답하세요:
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.
+아래 JSON 형식으로 응답하세요:
 {
   "keyword_analyses": [
     {
@@ -100,13 +101,23 @@ export async function POST() {
     }
 
     const claudeData = await claudeRes.json()
-    const text = claudeData.content?.[0]?.text || ''
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    const rawText = claudeData.content?.[0]?.text || ''
+    const cleanJson = rawText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    const jsonMatch = cleanJson.match(/\{[\s\S]*\}/)
     if (!jsonMatch) {
       return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
     }
 
-    const result = JSON.parse(jsonMatch[0])
+    let result
+    try {
+      result = JSON.parse(jsonMatch[0])
+    } catch {
+      const lastBracket = jsonMatch[0].lastIndexOf(']')
+      const lastBrace = jsonMatch[0].lastIndexOf('}')
+      const cutoff = Math.max(lastBracket, lastBrace) + 1
+      const trimmed = jsonMatch[0].substring(0, cutoff)
+      result = JSON.parse(trimmed)
+    }
 
     // Clear old keyword tracking and insert fresh data
     await supabaseAdmin.from('keyword_tracking').delete().neq('id', 0)

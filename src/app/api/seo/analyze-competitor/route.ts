@@ -78,7 +78,8 @@ export async function POST(req: NextRequest) {
 - 위치: 경기도 부천시
 - 강점: 로톡 평점 4.9, 후기 600+, 피해자 전담
 
-반드시 아래 JSON 형식으로만 응답하세요:
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.
+아래 JSON 형식으로 응답하세요:
 {
   "title_analysis": { "text": "타이틀 텍스트", "score": 85, "keywords": ["키워드1"], "feedback": "분석 코멘트" },
   "meta_description_analysis": { "text": "디스크립션 텍스트", "score": 70, "feedback": "분석 코멘트" },
@@ -127,13 +128,23 @@ ${fetchSuccess ? `웹사이트 SEO 데이터:
     }
 
     const claudeData = await claudeRes.json()
-    const text = claudeData.content?.[0]?.text || ''
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
+    const rawText = claudeData.content?.[0]?.text || ''
+    const cleanJson = rawText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    const jsonMatch = cleanJson.match(/\{[\s\S]*\}/)
     if (!jsonMatch) {
       return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
     }
 
-    const analysis = JSON.parse(jsonMatch[0])
+    let analysis
+    try {
+      analysis = JSON.parse(jsonMatch[0])
+    } catch {
+      const lastBracket = jsonMatch[0].lastIndexOf(']')
+      const lastBrace = jsonMatch[0].lastIndexOf('}')
+      const cutoff = Math.max(lastBracket, lastBrace) + 1
+      const trimmed = jsonMatch[0].substring(0, cutoff)
+      analysis = JSON.parse(trimmed)
+    }
 
     // Save to seo_analyses
     await supabaseAdmin.from('seo_analyses').insert({
