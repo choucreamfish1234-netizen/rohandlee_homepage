@@ -48,23 +48,30 @@ const centersRow2 = [
 function CenterCard({ center, aspectClass, imgW, imgH }: { center: typeof centers[0]; aspectClass: string; imgW: number; imgH: number }) {
   return (
     <Link href={center.href} className="group block">
-      <div className={`${aspectClass} bg-gray-50 overflow-hidden mb-5`}>
-        <Image
-          src={center.image}
-          alt={center.alt}
-          width={imgW}
-          height={imgH}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-        />
-      </div>
-      <div className="transition-transform duration-300 group-hover:-translate-y-1">
-        <h3 className="text-lg font-semibold text-black group-hover:text-accent transition-colors duration-300">
-          {center.title}
-        </h3>
-        <p className="mt-1.5 text-sm text-gray-400">{center.description}</p>
-        <span className="inline-flex items-center mt-3 text-xs text-gray-400 group-hover:text-accent transition-colors duration-300">
-          자세히 보기 <span className="ml-1">&rarr;</span>
-        </span>
+      <div className="border-t-[3px] border-[#1B3B2F] bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+        <div className={`${aspectClass} overflow-hidden relative`}>
+          <Image
+            src={center.image}
+            alt={center.alt}
+            width={imgW}
+            height={imgH}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+          {/* Deep green gradient overlay from bottom */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1B3B2F]/70 via-[#1B3B2F]/20 to-transparent" />
+          {/* Center name overlay on image */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-white drop-shadow-sm">
+              {center.title}
+            </h3>
+          </div>
+        </div>
+        <div className="p-4 sm:p-5">
+          <p className="text-sm text-gray-400">{center.description}</p>
+          <span className="inline-flex items-center mt-3 text-xs text-gray-400 group-hover:text-accent transition-colors duration-300">
+            자세히 보기 <span className="ml-1">&rarr;</span>
+          </span>
+        </div>
       </div>
     </Link>
   )
@@ -84,7 +91,7 @@ export default function CentersSection() {
         </ScrollReveal>
 
         {/* 상단 3개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 mb-4 sm:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 mb-5 sm:mb-8">
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <CenterCard center={center} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
@@ -93,7 +100,7 @@ export default function CentersSection() {
         </div>
 
         {/* 하단 2개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <CenterCard center={center} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
