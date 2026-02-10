@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -55,6 +55,8 @@ function AdminWritePage() {
   const [editorTab, setEditorTab] = useState<EditorTab>('homepage')
   const [copied, setCopied] = useState(false)
   const [showPreview, setShowPreview] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -205,6 +207,45 @@ function AdminWritePage() {
       document.body.removeChild(textarea)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  const handleRandomImage = () => {
+    const pool = getCategoryImagePool(category)
+    const current = thumbnailUrl
+    // Pick a different image than the current one if possible
+    const candidates = pool.filter((url) => url !== current)
+    const pick = candidates.length > 0
+      ? candidates[Math.floor(Math.random() * candidates.length)]
+      : pool[Math.floor(Math.random() * pool.length)]
+    setThumbnailUrl(pick)
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 20 * 1024 * 1024) {
+      alert('파일 크기는 20MB 이하여야 합니다.')
+      return
+    }
+
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await res.json()
+      if (data.error) throw new Error(data.error)
+      setThumbnailUrl(data.url)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '이미지 업로드에 실패했습니다.')
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
     }
   }
 
@@ -489,7 +530,7 @@ function AdminWritePage() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1.5">썸네일 URL</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1.5">썸네일</label>
             <input
               type="text"
               value={thumbnailUrl}
@@ -497,6 +538,30 @@ function AdminWritePage() {
               placeholder="이미지 URL (비우면 카테고리 기본 이미지)"
               className="w-full px-3 py-2 border border-gray-200 text-xs focus:outline-none focus:border-[#1B3B2F] transition-colors"
             />
+            <div className="flex gap-2 mt-2">
+              <button
+                type="button"
+                onClick={handleRandomImage}
+                className="flex-1 px-3 py-2 text-xs font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 transition-colors"
+              >
+                랜덤 이미지
+              </button>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="flex-1 px-3 py-2 text-xs font-medium border border-green-200 text-green-600 hover:bg-green-50 disabled:opacity-50 transition-colors"
+              >
+                {uploading ? '업로드 중...' : '이미지 업로드'}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </div>
             {(thumbnailUrl || category) && (
               <div className="mt-2 aspect-[16/10] bg-gray-100 overflow-hidden">
                 <img
