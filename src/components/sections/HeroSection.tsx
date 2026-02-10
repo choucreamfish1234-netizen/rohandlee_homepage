@@ -1,84 +1,72 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { useConsultation } from '@/components/ConsultationProvider'
 
 const heroImages = ['/hero/hero-1.jpg', '/hero/hero-2.jpg']
 
-const SLIDE_DURATION = 5000 // 5s per slide
-const FADE_DURATION = 1.2
+const SLIDE_DURATION = 5000
 
 export default function HeroSection() {
   const { openConsultation } = useConsultation()
-  const [current, setCurrent] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % heroImages.length)
+    setCurrentIndex((prev) => (prev + 1) % heroImages.length)
   }, [])
 
-  // Auto-advance
   useEffect(() => {
     const timer = setInterval(next, SLIDE_DURATION)
     return () => clearInterval(timer)
   }, [next])
 
   return (
-    <section className="-mt-16">
-      {/* Image Slider */}
-      <div className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: FADE_DURATION, ease: 'easeInOut' }}
-            className="absolute inset-0"
+    <section className="bg-white pt-0 pb-16 md:pb-24 -mt-16">
+      {/* 1. Image Slider */}
+      <div className="w-full h-[40vh] md:h-[55vh] relative overflow-hidden">
+        {heroImages.map((src, i) => (
+          <div
+            key={i}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              currentIndex === i ? 'opacity-100' : 'opacity-0'
+            }`}
           >
-            <motion.div
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.05 }}
-              transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={heroImages[current]}
-                alt="법률사무소 로앤이"
-                fill
-                priority={current === 0}
-                className="object-cover"
-                sizes="100vw"
-              />
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt="법률사무소 로앤이"
+              className="w-full h-full object-cover"
+              style={{
+                transform: currentIndex === i ? 'scale(1.03)' : 'scale(1)',
+                transition: 'transform 5s ease-out',
+              }}
+            />
+          </div>
+        ))}
 
-        {/* Dot indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-          {heroImages.map((_, idx) => (
+        {/* Indicators */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {heroImages.map((_, i) => (
             <button
-              key={idx}
-              onClick={() => setCurrent(idx)}
-              aria-label={`슬라이드 ${idx + 1}`}
-              className={`transition-all duration-300 rounded-full ${
-                idx === current
-                  ? 'w-6 h-2 bg-white'
-                  : 'w-2 h-2 bg-white/50 hover:bg-white/70'
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              aria-label={`슬라이드 ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${
+                currentIndex === i ? 'bg-white w-6' : 'bg-white/40 w-1.5'
               }`}
             />
           ))}
         </div>
       </div>
 
-      {/* Text below slider */}
-      <div className="text-center px-6 py-16">
+      {/* 2. Text below slider */}
+      <div className="text-center px-4 mt-12 md:mt-16">
         <motion.h1
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-3xl md:text-5xl font-medium tracking-tight text-gray-900"
+          className="text-2xl md:text-4xl font-medium tracking-tight text-gray-900"
         >
           법률사무소 로앤이
         </motion.h1>
@@ -87,29 +75,30 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
-          className="text-sm text-gray-400 tracking-widest mt-3"
+          className="text-sm text-gray-400 mt-2"
         >
-          오직 피해자만 변호합니다
+          &ldquo;오직 피해자만 변호합니다&rdquo;
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35, ease: 'easeOut' }}
-          className="text-lg text-gray-500 mt-6 leading-relaxed"
+          className="text-base md:text-lg text-gray-500 mt-6 leading-relaxed"
         >
-          당신의 잃어버린 일상을 되찾을 때까지, 로앤이가 끝까지 함께 합니다.
+          당신의 잃어버린 일상을 되찾을 때까지,<br />
+          로앤이가 끝까지 함께 합니다.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
-          className="mt-8"
+          className="mt-6"
         >
           <button
             onClick={() => openConsultation()}
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-base font-semibold bg-[#1B3B2F] text-white transition-all duration-300 hover:opacity-90 min-h-[48px]"
+            className="bg-[#1B3B2F] text-white rounded-full px-6 py-3 text-sm font-medium hover:bg-[#152f25] transition"
           >
             상담 신청하기
           </button>
