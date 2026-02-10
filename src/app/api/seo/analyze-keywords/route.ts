@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
+import { callClaude } from '@/lib/claude-api'
 
 const CORE_KEYWORDS = [
   { keyword: '성범죄 변호사', category: '성범죄' },
@@ -24,92 +25,87 @@ const CORE_KEYWORDS = [
   { keyword: '리벤지포르노 변호사', category: '성범죄' },
 ]
 
-export async function POST() {
-  try {
-    const anthropicApiKey = process.env.ANTHROPIC_API_KEY
-    if (!anthropicApiKey) {
-      return NextResponse.json({ error: 'ANTHROPIC_API_KEY가 설정되지 않았습니다.' }, { status: 500 })
-    }
+const CHUNK_SYSTEM = `당신은 한국 법률 시장 SEO/SEM 전문가입니다.
 
-    const keywordList = CORE_KEYWORDS.map((k) => `${k.keyword} (${k.category})`).join('\n')
-
-    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 4096,
-        system: `당신은 한국 법률 시장 SEO/SEM 전문가입니다.
-
-법률사무소 로앤이의 핵심 키워드를 분석해주세요.
-
-로앤이 정보:
+법률사무소 로앤이의 키워드를 분석합니다.
 - 전문: 성범죄·재산범죄 피해자 전문
 - 슬로건: "오직 피해자만 변호합니다"
 - 위치: 경기도 부천시
-- 웹사이트: roandlee.com
 
-각 키워드에 대해 분석하고, 추가로 공략할 새 키워드도 제안해주세요.
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록 사용 금지.
+{"keyword_analyses":[{"keyword":"...","category":"...","search_volume":"high/medium/low","difficulty":"high/medium/low","trend":"up/down/stable","our_optimization":"good/fair/poor","recommendation":"..."}]}`
 
-반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.
-아래 JSON 형식으로 응답하세요:
-{
-  "keyword_analyses": [
-    {
-      "keyword": "키워드",
-      "category": "카테고리",
-      "search_volume": "high/medium/low",
-      "difficulty": "high/medium/low",
-      "trend": "up/down/stable",
-      "our_optimization": "good/fair/poor",
-      "recommendation": "최적화 제안"
-    }
-  ],
-  "new_keyword_suggestions": [
-    {
-      "keyword": "새 키워드",
-      "category": "카테고리",
-      "search_volume": "medium",
-      "difficulty": "low",
-      "trend": "new",
-      "reason": "추천 이유"
-    }
-  ],
-  "priority_actions": [
-    "우선 조치사항 1",
-    "우선 조치사항 2",
-    "우선 조치사항 3"
-  ],
-  "summary": "전체 키워드 전략 요약"
-}`,
-        messages: [
-          {
-            role: 'user',
-            content: `로앤이 핵심 키워드 목록:\n${keywordList}\n\n각 키워드를 분석하고, 새로 공략할 키워드도 제안해주세요.`,
-          },
-        ],
-      }),
-    })
+const SUMMARY_SYSTEM = `당신은 한국 법률 시장 SEO/SEM 전문가입니다.
 
-    if (!claudeRes.ok) {
-      const err = await claudeRes.text()
-      console.error('Claude API error:', claudeRes.status, err)
-      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
+분석된 키워드를 바탕으로 새로운 키워드 제안과 우선 조치사항을 알려주세요.
+
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록 사용 금지.
+{"new_keyword_suggestions":[{"keyword":"...","category":"...","search_volume":"medium","difficulty":"low","trend":"new","reason":"..."}],"priority_actions":["조치1","조치2","조치3"],"summary":"전체 키워드 전략 요약"}`
+
+function chunkArray<T>(arr: T[], size: number): T[][] {
+  const chunks: T[][] = []
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size))
+  }
+  return chunks
+}
+
+export async function POST() {
+  try {
+    const apiKey = process.env.ANTHROPIC_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({ error: 'ANTHROPIC_API_KEY가 설정되지 않았습니다.' }, { status: 500 })
     }
 
-    const claudeData = await claudeRes.json()
-    const rawText = claudeData.content?.[0]?.text || ''
-    const result = parseAIResponse(rawText)
+    // Analyze keywords in chunks of 5
+    const chunks = chunkArray(CORE_KEYWORDS, 5)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const allAnalyses: any[] = []
 
-    // Clear old keyword tracking and insert fresh data
+    for (const chunk of chunks) {
+      try {
+        const keywordList = chunk.map((k) => `${k.keyword} (${k.category})`).join('\n')
+        const text = await callClaude(
+          apiKey,
+          CHUNK_SYSTEM,
+          `아래 키워드를 각각 분석해주세요:\n${keywordList}`,
+          1024,
+        )
+        const parsed = parseAIResponse(text)
+        if (parsed.keyword_analyses) {
+          allAnalyses.push(...parsed.keyword_analyses)
+        }
+      } catch (err) {
+        console.error('Keyword chunk analysis failed:', err)
+      }
+    }
+
+    // Get new keyword suggestions and summary
+    let newSuggestions: unknown[] = []
+    let priorityActions: string[] = []
+    let summary = `${allAnalyses.length}개 키워드 분석 완료`
+
+    try {
+      const analyzed = allAnalyses.map((k: { keyword: string }) => k.keyword).join(', ')
+      const summaryText = await callClaude(
+        apiKey,
+        SUMMARY_SYSTEM,
+        `분석된 키워드: ${analyzed}\n\n법률사무소 로앤이가 새로 공략할 키워드와 우선 조치사항을 제안해주세요.`,
+        1024,
+      )
+      const summaryParsed = parseAIResponse(summaryText)
+      newSuggestions = summaryParsed.new_keyword_suggestions || []
+      priorityActions = summaryParsed.priority_actions || []
+      summary = summaryParsed.summary || summary
+    } catch (err) {
+      console.error('Keyword summary generation failed:', err)
+    }
+
+    // Clear old and insert fresh keyword tracking
     await supabaseAdmin.from('keyword_tracking').delete().neq('id', 0)
 
     const keywordRows = [
-      ...(result.keyword_analyses || []).map((k: Record<string, string>) => ({
+      ...allAnalyses.map((k: Record<string, string>) => ({
         keyword: k.keyword,
         category: k.category,
         search_volume: k.search_volume,
@@ -117,7 +113,7 @@ export async function POST() {
         trend: k.trend,
         checked_at: new Date().toISOString(),
       })),
-      ...(result.new_keyword_suggestions || []).map((k: Record<string, string>) => ({
+      ...(newSuggestions as Record<string, string>[]).map((k) => ({
         keyword: k.keyword,
         category: k.category,
         search_volume: k.search_volume,
@@ -131,11 +127,17 @@ export async function POST() {
       await supabaseAdmin.from('keyword_tracking').insert(keywordRows)
     }
 
-    // Save analysis record
+    const result = {
+      keyword_analyses: allAnalyses,
+      new_keyword_suggestions: newSuggestions,
+      priority_actions: priorityActions,
+      summary,
+    }
+
     await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'keyword',
       data: result,
-      recommendations: result.priority_actions,
+      recommendations: priorityActions,
     })
 
     return NextResponse.json(result)

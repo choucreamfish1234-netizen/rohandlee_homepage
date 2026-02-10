@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
+import { callClaude } from '@/lib/claude-api'
 
 const SITE_PAGES = [
   { path: '/', name: '메인 페이지' },
@@ -15,6 +16,13 @@ const SITE_PAGES = [
   { path: '/centers/bankruptcy', name: '회생/파산 센터' },
 ]
 
+const PAGE_AUDIT_SYSTEM = `당신은 법률 웹사이트 SEO 감사 전문가입니다.
+법률사무소 로앤이(roandlee.com)의 페이지 1개를 감사합니다.
+100점 만점으로 평가하고 문제점과 개선사항을 제시하세요.
+
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록 사용 금지.
+{"score":85,"issues":["문제점1","문제점2"],"improvements":["개선사항1","개선사항2"],"title_feedback":"타이틀 평가","description_feedback":"디스크립션 평가"}`
+
 export async function POST() {
   try {
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY
@@ -24,7 +32,7 @@ export async function POST() {
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://roandlee.com'
 
-    // Fetch all pages and extract SEO data
+    // Step 1: Fetch all pages HTML in parallel
     const pageResults = await Promise.all(
       SITE_PAGES.map(async (page) => {
         try {
@@ -65,82 +73,79 @@ export async function POST() {
       })
     )
 
-    // Build analysis prompt
-    const pagesData = pageResults
-      .map((p) => {
-        if (!p.fetchSuccess || !p.extracted) {
-          return `${p.name} (${p.path}): 접근 불가`
-        }
+    // Step 2: Audit each page individually via Claude
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const auditPages: any[] = []
+    const allIssues: string[] = []
+
+    for (const p of pageResults) {
+      if (!p.fetchSuccess || !p.extracted) {
+        auditPages.push({
+          path: p.path,
+          name: p.name,
+          score: 0,
+          issues: ['페이지 접근 불가'],
+          improvements: ['서버 상태 확인 필요'],
+          title_feedback: '확인 불가',
+          description_feedback: '확인 불가',
+        })
+        continue
+      }
+
+      try {
         const e = p.extracted
-        return `${p.name} (${p.path}):
-  - Title: ${e.title || '없음'}
-  - Meta Description: ${e.metaDescription || '없음'}
-  - H1: ${e.h1Tags.join(', ') || '없음'}
-  - H2: ${e.h2Tags.join(', ') || '없음'}
-  - OG Title: ${e.ogTitle || '없음'}
-  - 구조화 데이터: ${e.hasStructuredData ? '있음' : '없음'}
-  - 이미지 alt 누락: ${e.imgWithoutAlt}/${e.totalImages}
-  - Canonical: ${e.canonical || '없음'}
-  - HTML lang: ${e.htmlLang || '없음'}`
-      })
-      .join('\n\n')
+        const pageData = `${p.name} (${p.path}):
+- Title: ${e.title || '없음'}
+- Meta Description: ${e.metaDescription || '없음'}
+- H1: ${e.h1Tags.join(', ') || '없음'}
+- H2: ${e.h2Tags.join(', ') || '없음'}
+- OG Title: ${e.ogTitle || '없음'}
+- 구조화 데이터: ${e.hasStructuredData ? '있음' : '없음'}
+- 이미지 alt 누락: ${e.imgWithoutAlt}/${e.totalImages}
+- Canonical: ${e.canonical || '없음'}
+- HTML lang: ${e.htmlLang || '없음'}`
 
-    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': anthropicApiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 4096,
-        system: `당신은 법률 웹사이트 SEO 감사 전문가입니다.
-
-법률사무소 로앤이(roandlee.com)의 각 페이지 SEO를 감사합니다.
-
-각 페이지를 100점 만점으로 평가하고, 구체적인 문제점과 개선사항을 제시해주세요.
-
-반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.
-아래 JSON 형식으로 응답하세요:
-{
-  "pages": [
-    {
-      "path": "/",
-      "name": "메인 페이지",
-      "score": 85,
-      "issues": ["문제점1", "문제점2"],
-      "improvements": ["개선사항1", "개선사항2"],
-      "title_feedback": "타이틀 평가",
-      "description_feedback": "디스크립션 평가"
-    }
-  ],
-  "overall_score": 78,
-  "critical_issues": ["심각한 문제1", "심각한 문제2"],
-  "top_priorities": ["최우선 개선사항1", "최우선 개선사항2", "최우선 개선사항3"],
-  "technical_issues": ["기술적 문제1"],
-  "summary": "전체 감사 결과 요약"
-}`,
-        messages: [
-          {
-            role: 'user',
-            content: `로앤이 웹사이트 각 페이지 SEO 데이터:\n\n${pagesData}\n\n각 페이지를 감사하고 점수를 매겨주세요.`,
-          },
-        ],
-      }),
-    })
-
-    if (!claudeRes.ok) {
-      const err = await claudeRes.text()
-      console.error('Claude API error:', claudeRes.status, err)
-      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
+        const text = await callClaude(
+          anthropicApiKey,
+          PAGE_AUDIT_SYSTEM,
+          `이 페이지를 SEO 감사해주세요:\n\n${pageData}`,
+          1024,
+        )
+        const parsed = parseAIResponse(text)
+        auditPages.push({ path: p.path, name: p.name, ...parsed })
+        if (parsed.issues) allIssues.push(...parsed.issues)
+      } catch (err) {
+        console.error(`Audit failed for ${p.path}:`, err)
+        auditPages.push({
+          path: p.path,
+          name: p.name,
+          score: 0,
+          issues: ['AI 분석 실패'],
+          improvements: [],
+          title_feedback: '',
+          description_feedback: '',
+        })
+      }
     }
 
-    const claudeData = await claudeRes.json()
-    const rawText = claudeData.content?.[0]?.text || ''
-    const audit = parseAIResponse(rawText)
+    // Calculate overall score
+    const scores = auditPages.filter((p) => p.score > 0).map((p) => p.score)
+    const overallScore = scores.length > 0
+      ? Math.round(scores.reduce((a: number, b: number) => a + b, 0) / scores.length)
+      : 0
 
-    // Save to seo_analyses
+    // Deduplicate critical issues
+    const criticalIssues = Array.from(new Set(allIssues)).slice(0, 5)
+
+    const audit = {
+      pages: auditPages,
+      overall_score: overallScore,
+      critical_issues: criticalIssues,
+      top_priorities: criticalIssues.slice(0, 3),
+      summary: `${auditPages.length}개 페이지 감사 완료. 평균 점수: ${overallScore}점/100점`,
+    }
+
+    // Save
     await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'our_site',
       data: { pages: pageResults, audit },
