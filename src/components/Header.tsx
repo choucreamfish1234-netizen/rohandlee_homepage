@@ -54,7 +54,7 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => openConsultation()}
-              className="bg-white text-[#1B3B2F] text-xs px-4 py-2 rounded-full hover:bg-white/90 transition-colors font-medium"
+              className="bg-white text-[#1B3B2F] text-sm px-4 py-2 rounded-full hover:bg-white/90 transition-colors font-medium min-h-[40px] sm:min-h-0"
             >
               상담 예약
             </button>

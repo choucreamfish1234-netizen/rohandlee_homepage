@@ -45,18 +45,18 @@ const cases = [
 
 export default function CasesSection() {
   return (
-    <section className="py-40 bg-gray-50">
+    <section className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Results
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
             결과로 증명합니다.
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
           {cases.map((c, i) => (
             <ScrollReveal key={i} delay={i * 0.15}>
               <div className="bg-white border border-gray-100 overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
@@ -71,7 +71,7 @@ export default function CasesSection() {
                   />
                 </div>
 
-                <div className="p-8 sm:p-10 flex flex-col flex-1">
+                <div className="p-5 sm:p-10 flex flex-col flex-1">
                   {/* 태그 */}
                   <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tagColor} mb-5`}>
                     {c.tag}

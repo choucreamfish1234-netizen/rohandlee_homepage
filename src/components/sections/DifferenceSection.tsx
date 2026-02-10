@@ -23,21 +23,21 @@ const differences = [
 
 export default function DifferenceSection() {
   return (
-    <section className="py-40 bg-white">
+    <section className="py-12 sm:py-20 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Why Ro&Lee
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
             로앤이가 다른 이유
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-10">
           {differences.map((diff, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="p-8 border border-gray-100 rounded-2xl hover:border-accent/20 transition-all duration-300 hover:shadow-sm">
+              <div className="p-6 sm:p-8 border border-gray-100 rounded-2xl hover:border-accent/20 transition-all duration-300 hover:shadow-sm">
                 <span className="text-4xl font-light text-gray-200">
                   0{i + 1}
                 </span>

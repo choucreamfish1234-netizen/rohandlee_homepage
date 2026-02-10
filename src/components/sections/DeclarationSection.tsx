@@ -4,7 +4,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 
 export default function DeclarationSection() {
   return (
-    <section className="py-40 bg-accent">
+    <section className="py-12 sm:py-20 bg-accent">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-white/50 uppercase mb-10">
@@ -13,7 +13,7 @@ export default function DeclarationSection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-snug">
+          <h2 className="text-xl sm:text-3xl font-bold text-white leading-snug">
             가해자는 변호하지 않습니다.<br />
             오로지 피해자만을 변호합니다.
           </h2>

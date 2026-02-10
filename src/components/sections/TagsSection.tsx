@@ -32,13 +32,13 @@ const tagVariants = {
 
 export default function TagsSection() {
   return (
-    <section className="py-24 sm:py-32 bg-gray-50">
+    <section className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Practice Areas
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-black mb-14">
+          <h2 className="text-xl sm:text-3xl font-bold text-black mb-8 sm:mb-14">
             기타 전문 분야
           </h2>
         </ScrollReveal>

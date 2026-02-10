@@ -46,14 +46,14 @@ export default function TestimonialsSection() {
   const scrollRef = useRef<HTMLDivElement>(null)
 
   return (
-    <section className="py-40 bg-gray-50">
+    <section className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center mb-16">
+          <div className="text-center mb-10 sm:mb-16">
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
               Client Reviews
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-black">
+            <h2 className="text-xl sm:text-3xl font-bold text-black">
               <span className="text-accent">100</span>명 이상의 의뢰인이 증명합니다.
             </h2>
             <p className="mt-5 text-gray-400 text-sm">
