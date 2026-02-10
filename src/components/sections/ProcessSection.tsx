@@ -64,7 +64,7 @@ export default function ProcessSection() {
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-8 lg:gap-6">
           {steps.map((step, i) => (
-            <ScrollReveal key={step.number} delay={i * 0.1}>
+            <ScrollReveal key={step.number} delay={i * 0.12} direction="left">
               <div className="text-center lg:text-left group">
                 {/* 큰 세리프 숫자 */}
                 <span className="text-5xl lg:text-6xl font-light text-[#1B3B2F]/10 leading-none group-hover:text-[#1B3B2F]/20 transition-colors duration-300">

@@ -137,6 +137,142 @@ function PreviousCareer({ items }: { items: string[] }) {
   )
 }
 
+function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
+  return (
+    <div className="max-w-md mx-auto text-center">
+      {/* Photo - scale entrance */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-8"
+      >
+        <EditableImage
+          page="home"
+          section="lawyers"
+          fieldKey={`lawyer-${lawyer.key}-photo`}
+          defaultSrc={lawyer.image}
+          alt={lawyer.alt}
+          width={600}
+          height={800}
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+
+      {/* Name + role + tag - fade-in after photo */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+      >
+        <h3 className="text-2xl font-medium text-gray-900">{lawyer.name}</h3>
+        <p className="mt-1 text-sm text-gray-400">{lawyer.role}</p>
+        <div className="mt-3">
+          <span className="inline-flex border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600">
+            {lawyer.specialtyTag}
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Description - fade-in */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
+        className="mt-5 text-sm italic text-gray-500 leading-relaxed"
+      >
+        {lawyer.description}
+      </motion.p>
+
+      {/* Key cases - tags pop-in */}
+      <div className="mt-8 flex flex-wrap justify-center gap-2">
+        {lawyer.cases.map((tag, idx) => (
+          <motion.span
+            key={tag}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.5 + idx * 0.05, ease: 'easeOut' }}
+            className="border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600"
+          >
+            {tag}
+          </motion.span>
+        ))}
+      </div>
+
+      {/* Results - sequential slide-in */}
+      <div className="mt-8">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.6, ease: 'easeOut' }}
+          className="text-xs tracking-widest text-gray-300 uppercase mb-3"
+        >
+          성공 사례
+        </motion.p>
+        <div>
+          {lawyer.results.map((r, idx) => (
+            <motion.div
+              key={r.case_name}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.6 + idx * 0.1, ease: 'easeOut' }}
+              className={`flex items-center justify-between gap-4 py-2.5 ${
+                idx < lawyer.results.length - 1 ? 'border-b border-gray-100' : ''
+              }`}
+            >
+              <span className="text-sm text-gray-600">{r.case_name}</span>
+              <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Education - fade-in */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+        className="mt-8"
+      >
+        <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">학력</p>
+        <div className="space-y-1">
+          {lawyer.education.map((item) => (
+            <p key={item} className="text-sm text-gray-500">{item}</p>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Current positions - fade-in */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+        className="mt-8"
+      >
+        <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">현직</p>
+        <div className="space-y-1">
+          {lawyer.current.map((item) => (
+            <p key={item} className="text-sm text-gray-700">{item}</p>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Previous - accordion */}
+      <div className="mt-8">
+        <PreviousCareer items={lawyer.previous} />
+      </div>
+    </div>
+  )
+}
+
 export default function LawyersSection() {
   return (
     <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
@@ -151,93 +287,8 @@ export default function LawyersSection() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
-          {lawyers.map((lawyer, i) => (
-            <ScrollReveal key={lawyer.key} delay={i * 0.15}>
-              <div className="max-w-md mx-auto text-center">
-                {/* Photo */}
-                <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-8">
-                  <EditableImage
-                    page="home"
-                    section="lawyers"
-                    fieldKey={`lawyer-${lawyer.key}-photo`}
-                    defaultSrc={lawyer.image}
-                    alt={lawyer.alt}
-                    width={600}
-                    height={800}
-                    className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 ease-out"
-                  />
-                </div>
-
-                {/* Name + role + tag */}
-                <h3 className="text-2xl font-medium text-gray-900">{lawyer.name}</h3>
-                <p className="mt-1 text-sm text-gray-400">{lawyer.role}</p>
-                <div className="mt-3">
-                  <span className="inline-flex border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600">
-                    {lawyer.specialtyTag}
-                  </span>
-                </div>
-
-                {/* Description */}
-                <p className="mt-5 text-sm italic text-gray-500 leading-relaxed">
-                  {lawyer.description}
-                </p>
-
-                {/* Key cases - tags */}
-                <div className="mt-8 flex flex-wrap justify-center gap-2">
-                  {lawyer.cases.map((tag) => (
-                    <span
-                      key={tag}
-                      className="border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Results */}
-                <div className="mt-8">
-                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-3">성공 사례</p>
-                  <div>
-                    {lawyer.results.map((r, idx) => (
-                      <div
-                        key={r.case_name}
-                        className={`flex items-center justify-between gap-4 py-2.5 ${
-                          idx < lawyer.results.length - 1 ? 'border-b border-gray-100' : ''
-                        }`}
-                      >
-                        <span className="text-sm text-gray-600">{r.case_name}</span>
-                        <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Education */}
-                <div className="mt-8">
-                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">학력</p>
-                  <div className="space-y-1">
-                    {lawyer.education.map((item) => (
-                      <p key={item} className="text-sm text-gray-500">{item}</p>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Current positions */}
-                <div className="mt-8">
-                  <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">현직</p>
-                  <div className="space-y-1">
-                    {lawyer.current.map((item) => (
-                      <p key={item} className="text-sm text-gray-700">{item}</p>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Previous - accordion */}
-                <div className="mt-8">
-                  <PreviousCareer items={lawyer.previous} />
-                </div>
-              </div>
-            </ScrollReveal>
+          {lawyers.map((lawyer) => (
+            <LawyerCard key={lawyer.key} lawyer={lawyer} />
           ))}
         </div>
       </div>

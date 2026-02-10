@@ -4,34 +4,6 @@ import { motion } from 'framer-motion'
 import { useConsultation } from '@/components/ConsultationProvider'
 import { EditableText } from '@/components/Editable'
 
-const letterVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.05 * i, duration: 0.4, ease: 'easeOut' as const },
-  }),
-}
-
-function AnimatedText({ text, className }: { text: string; className?: string }) {
-  return (
-    <span className={className}>
-      {text.split('').map((char, i) => (
-        <motion.span
-          key={i}
-          custom={i}
-          initial="hidden"
-          animate="visible"
-          variants={letterVariants}
-          className="inline-block"
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
-    </span>
-  )
-}
-
 export default function HeroSection() {
   const { openConsultation } = useConsultation()
 
@@ -56,31 +28,11 @@ export default function HeroSection() {
       </div>
 
       <div className="text-center max-w-4xl mx-auto relative z-10 pt-16">
-        {/* Main title with letter-by-letter animation */}
+        {/* Badge / Slogan - fade-in, delay 0 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <h1 className="text-2xl sm:text-3xl font-bold text-black">
-            <AnimatedText text="법률사무소 로앤이" />
-          </h1>
-          <EditableText
-            page="home"
-            section="hero"
-            fieldKey="title"
-            defaultValue="법률사무소 로앤이"
-            tag="span"
-            className="sr-only"
-          />
-        </motion.div>
-
-        {/* Slogan */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.0, duration: 0.6 }}
-          className="mt-4"
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
           <EditableText
             page="home"
@@ -92,11 +44,31 @@ export default function HeroSection() {
           />
         </motion.div>
 
-        {/* Description */}
+        {/* Main copy line 1 - fade-in-up, delay 0.2 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+          className="mt-4"
+        >
+          <h1 className="text-2xl sm:text-3xl font-bold text-black">
+            법률사무소 로앤이
+          </h1>
+          <EditableText
+            page="home"
+            section="hero"
+            fieldKey="title"
+            defaultValue="법률사무소 로앤이"
+            tag="span"
+            className="sr-only"
+          />
+        </motion.div>
+
+        {/* Main copy line 2 - fade-in-up, delay 0.35 */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.35, ease: 'easeOut' }}
           className="mt-6"
         >
           <EditableText
@@ -109,11 +81,11 @@ export default function HeroSection() {
           />
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons - fade-in-up, delay 0.65 */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
+          transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10"
         >
           <button
@@ -121,7 +93,6 @@ export default function HeroSection() {
             className="group w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl text-base font-semibold transition-all duration-300 hover:opacity-90 min-h-[48px] relative"
             style={{ background: '#1B3B2F', color: '#fff' }}
           >
-            {/* Pulse shadow animation */}
             <span className="absolute inset-0 rounded-xl animate-pulse-shadow" />
             <span className="relative z-10">상담 신청하기</span>
           </button>
