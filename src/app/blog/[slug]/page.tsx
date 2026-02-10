@@ -9,10 +9,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
+  const decodedSlug = decodeURIComponent(slug)
   const { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('title, excerpt, meta_description')
-    .eq('slug', slug)
+    .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
 
@@ -24,17 +25,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params
+  const decodedSlug = decodeURIComponent(slug)
 
-  const { data: post, error } = await supabaseAdmin
+  // 1차: published 필터로 조회
+  let { data: post, error } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
-    .eq('slug', slug)
+    .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
 
-  if (error) {
-    console.error('Blog post fetch error:', error.message, '| slug:', slug)
+  // 2차: published 필터 실패 시 status 필터 없이 재시도
+  if (!post) {
+    const fallback = await supabaseAdmin
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', decodedSlug)
+      .maybeSingle()
+
+    if (fallback.data) {
+      console.log('Blog post found without status filter:', {
+        slug: decodedSlug,
+        status: fallback.data.status,
+        published_at: fallback.data.published_at,
+      })
+      post = fallback.data
+    }
+    if (fallback.error) {
+      error = fallback.error
+    }
   }
 
-  return <BlogPostContent slug={slug} initialPost={post as BlogPost | null} />
+  if (error) {
+    console.error('Blog post fetch error:', error.message, '| slug:', decodedSlug)
+  }
+
+  return <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost | null} />
 }
