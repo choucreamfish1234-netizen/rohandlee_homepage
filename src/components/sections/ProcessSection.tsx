@@ -1,91 +1,93 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import ScrollReveal from '@/components/ScrollReveal'
 import { EditableText } from '@/components/Editable'
 
 const steps = [
-  { num: '01', title: '상담', description: '전화·온라인으로 사건 개요를 파악합니다.' },
-  { num: '02', title: '사건 분석', description: '증거와 법리를 면밀히 검토합니다.' },
-  { num: '03', title: '증거 수집', description: '디지털 포렌식, 진술 조력 등을 진행합니다.' },
-  { num: '04', title: '수사·재판', description: '수사 동행부터 법정 변론까지 전담합니다.' },
-  { num: '05', title: '피해 회복', description: '합의금·배상금 회수로 일상을 되찾습니다.' },
+  {
+    number: '01',
+    title: '상담 예약',
+    description: '전화, 카카오톡, 온라인 폼으로 상담을 예약합니다.',
+  },
+  {
+    number: '02',
+    title: '초기 상담',
+    description: '전담 변호사가 사건 개요를 파악하고 방향을 안내합니다.',
+  },
+  {
+    number: '03',
+    title: '사건 분석',
+    description: '증거와 법리를 면밀히 분석하고 최적의 전략을 수립합니다.',
+  },
+  {
+    number: '04',
+    title: '수임 계약',
+    description: '투명한 비용 안내와 함께 수임 계약을 체결합니다.',
+  },
+  {
+    number: '05',
+    title: '사건 진행',
+    description: '전용 앱으로 진행 상황을 실시간 공유합니다.',
+  },
+  {
+    number: '06',
+    title: '사건 종결',
+    description: '최선의 결과를 이끌어내고 사후 관리까지 진행합니다.',
+  },
 ]
 
 export default function ProcessSection() {
   return (
-    <section className="bg-white">
-      <div className="max-w-5xl mx-auto px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <p className="text-xs tracking-widest text-gray-400 uppercase mb-4">
-            Process
+    <section className="py-12 sm:py-20 bg-[#f5f8f6]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <ScrollReveal>
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+            How We Work
           </p>
           <EditableText
             page="home"
             section="process"
             fieldKey="heading"
-            defaultValue="수임부터 해결까지"
+            defaultValue="수임 절차"
             tag="h2"
-            className="text-3xl font-medium text-gray-900 tracking-tight mb-12 md:mb-16"
+            className="text-xl sm:text-3xl font-bold text-center text-black mb-5"
           />
-        </motion.div>
+          <EditableText
+            page="home"
+            section="process"
+            fieldKey="subheading"
+            defaultValue="의뢰인의 불안이 안심으로 바뀌는 순간"
+            tag="p"
+            className="text-center text-gray-400 text-sm mb-10 sm:mb-20"
+          />
+        </ScrollReveal>
 
-        {/* Desktop: horizontal */}
-        <div className="hidden md:grid md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-8 lg:gap-6">
           {steps.map((step, i) => (
-            <motion.div
-              key={step.num}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
-              className="relative"
-            >
-              {i < steps.length - 1 && (
-                <div className="absolute top-3 left-[calc(50%+20px)] right-0 border-t border-dashed border-gray-200" />
-              )}
-              <span className="text-sm text-gray-300 font-mono">{step.num}</span>
-              <EditableText
-                page="home"
-                section="process"
-                fieldKey={`step-${i}-title`}
-                defaultValue={step.title}
-                tag="h3"
-                className="mt-3 text-base font-medium text-gray-900"
-              />
-              <EditableText
-                page="home"
-                section="process"
-                fieldKey={`step-${i}-desc`}
-                defaultValue={step.description}
-                tag="p"
-                className="mt-2 text-sm text-gray-500 leading-relaxed"
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Mobile: vertical */}
-        <div className="md:hidden space-y-8">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.num}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
-              className="flex gap-5"
-            >
-              <span className="text-sm text-gray-300 font-mono flex-shrink-0 pt-0.5">{step.num}</span>
-              <div>
-                <h3 className="text-base font-medium text-gray-900">{step.title}</h3>
-                <p className="mt-1 text-sm text-gray-500 leading-relaxed">{step.description}</p>
+            <ScrollReveal key={step.number} delay={i * 0.1}>
+              <div className="text-center lg:text-left group">
+                {/* 큰 세리프 숫자 */}
+                <span className="text-5xl lg:text-6xl font-light text-[#1B3B2F]/10 leading-none group-hover:text-[#1B3B2F]/20 transition-colors duration-300">
+                  {step.number}
+                </span>
+                <EditableText
+                  page="home"
+                  section="process"
+                  fieldKey={`step-${i}-title`}
+                  defaultValue={step.title}
+                  tag="h3"
+                  className="mt-4 text-base font-semibold text-black"
+                />
+                <EditableText
+                  page="home"
+                  section="process"
+                  fieldKey={`step-${i}-desc`}
+                  defaultValue={step.description}
+                  tag="p"
+                  className="mt-2 text-sm text-gray-400 leading-relaxed"
+                />
               </div>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

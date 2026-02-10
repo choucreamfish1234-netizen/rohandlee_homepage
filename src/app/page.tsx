@@ -4,10 +4,13 @@ import HeroSection from '@/components/sections/HeroSection'
 import StatsBar from '@/components/sections/StatsBar'
 import DeclarationSection from '@/components/sections/DeclarationSection'
 import CentersSection from '@/components/sections/CentersSection'
+import TagsSection from '@/components/sections/TagsSection'
 import ProcessSection from '@/components/sections/ProcessSection'
+import TestimonialsSection from '@/components/sections/TestimonialsSection'
+import DifferenceSection from '@/components/sections/DifferenceSection'
 import CasesSection from '@/components/sections/CasesSection'
 import LawyersSection from '@/components/sections/LawyersSection'
-import BlogPreviewSection from '@/components/sections/BlogPreviewSection'
+import AppSection from '@/components/sections/AppSection'
 import CtaSection from '@/components/sections/CtaSection'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -27,10 +30,13 @@ export default function Home() {
       <StatsBar />
       <DeclarationSection />
       <CentersSection />
+      <TagsSection />
       <ProcessSection />
+      <TestimonialsSection />
+      <DifferenceSection />
       <CasesSection />
       <LawyersSection />
-      <BlogPreviewSection />
+      <AppSection />
       <CtaSection />
     </>
   )

@@ -52,6 +52,15 @@ body {
   scrollbar-width: none;
 }
 
+@keyframes pulse-shadow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(27, 59, 47, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 8px rgba(27, 59, 47, 0);
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -61,5 +70,8 @@ body {
   }
   .bg-accent {
     background-color: var(--color-accent);
+  }
+  .animate-pulse-shadow {
+    animation: pulse-shadow 2s ease-in-out infinite;
   }
 }
