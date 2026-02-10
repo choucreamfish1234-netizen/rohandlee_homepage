@@ -224,6 +224,7 @@ function CorporateCustomSection() {
 export default function CorporateCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/corporate"
       centerName="기업경영 법무센터"
       subtitle="기업경영 법무센터"
       ctaLabel="기업 법무 상담 예약"

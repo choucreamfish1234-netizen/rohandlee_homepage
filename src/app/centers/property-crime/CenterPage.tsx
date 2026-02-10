@@ -8,6 +8,7 @@ import Testimonials from './Testimonials'
 export default function PropertyCrimeCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/property-crime"
       centerName="재산범죄 피해 전문센터"
       subtitle="재산범죄 피해 전문센터"
       ctaLabel="피해금 회복 가능성 진단"

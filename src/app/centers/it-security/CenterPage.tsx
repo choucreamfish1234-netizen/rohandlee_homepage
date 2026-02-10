@@ -248,6 +248,7 @@ function ITSecurityCustomSection() {
 export default function ITSecurityCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/it-security"
       centerName="IT·보안 법률센터"
       subtitle="IT·보안 법률센터"
       ctaLabel="IT보안 법률 상담"

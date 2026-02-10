@@ -324,6 +324,7 @@ function ReSetSection() {
 export default function BankruptcyCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/bankruptcy"
       centerName="회생·파산 전문센터 리셋"
       subtitle="회생·파산 전문센터(리셋)"
       ctaLabel="무료 회생 가능성 진단"
