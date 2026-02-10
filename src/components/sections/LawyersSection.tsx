@@ -203,42 +203,12 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         ))}
       </div>
 
-      {/* Results - sequential slide-in */}
-      <div className="mt-8">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.6, ease: 'easeOut' }}
-          className="text-xs tracking-widest text-gray-300 uppercase mb-3"
-        >
-          성공 사례
-        </motion.p>
-        <div>
-          {lawyer.results.map((r, idx) => (
-            <motion.div
-              key={r.case_name}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.6 + idx * 0.1, ease: 'easeOut' }}
-              className={`flex items-center justify-between gap-4 py-2.5 ${
-                idx < lawyer.results.length - 1 ? 'border-b border-gray-100' : ''
-              }`}
-            >
-              <span className="text-sm text-gray-600">{r.case_name}</span>
-              <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
       {/* Education - fade-in */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.5, delay: 0.6, ease: 'easeOut' }}
         className="mt-8"
       >
         <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">학력</p>
@@ -254,7 +224,7 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.8, ease: 'easeOut' }}
+        transition={{ duration: 0.5, delay: 0.7, ease: 'easeOut' }}
         className="mt-8"
       >
         <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">현직</p>
@@ -268,6 +238,36 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
       {/* Previous - accordion */}
       <div className="mt-8">
         <PreviousCareer items={lawyer.previous} />
+      </div>
+
+      {/* Results - sequential slide-in */}
+      <div className="mt-8">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.8, ease: 'easeOut' }}
+          className="text-xs tracking-widest text-gray-300 uppercase mb-3"
+        >
+          성공 사례
+        </motion.p>
+        <div>
+          {lawyer.results.map((r, idx) => (
+            <motion.div
+              key={r.case_name}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.8 + idx * 0.1, ease: 'easeOut' }}
+              className={`flex items-center justify-between gap-4 py-2.5 ${
+                idx < lawyer.results.length - 1 ? 'border-b border-gray-100' : ''
+              }`}
+            >
+              <span className="text-sm text-gray-600">{r.case_name}</span>
+              <span className="text-sm text-[#1B3B2F] font-medium whitespace-nowrap">{r.result}</span>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   )
