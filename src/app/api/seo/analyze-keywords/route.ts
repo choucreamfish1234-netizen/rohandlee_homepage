@@ -40,7 +40,7 @@ export async function POST() {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250514',
+        model: 'claude-sonnet-4-5-20250929',
         max_tokens: 4096,
         system: `당신은 한국 법률 시장 SEO/SEM 전문가입니다.
 
