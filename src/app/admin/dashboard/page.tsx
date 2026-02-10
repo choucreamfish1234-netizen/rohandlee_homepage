@@ -92,6 +92,11 @@ export default function AdminDashboardPage() {
   // Naver content bulk generation state
   const [naverUpdating, setNaverUpdating] = useState(false)
   const [naverResult, setNaverResult] = useState('')
+  const [naverTotal, setNaverTotal] = useState(0)
+  const [naverCompleted, setNaverCompleted] = useState(0)
+  const [naverErrors, setNaverErrors] = useState(0)
+  const [naverCurrent, setNaverCurrent] = useState('')
+  const [naverFailedList, setNaverFailedList] = useState<{ id: number; title: string; error: string }[]>([])
 
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -192,19 +197,82 @@ export default function AdminDashboardPage() {
 
   async function handleNaverBulkGenerate() {
     if (naverUpdating) return
-    if (!confirm('네이버 콘텐츠가 없는 모든 블로그 글에 대해 네이버용 HTML 콘텐츠를 자동 생성합니다. 진행하시겠습니까?')) return
+    if (!confirm('네이버 콘텐츠가 없는 모든 블로그 글에 대해 네이버용 HTML을 생성합니다. 진행하시겠습니까?')) return
 
     setNaverUpdating(true)
-    setNaverResult('생성 중...')
+    setNaverResult('')
+    setNaverCompleted(0)
+    setNaverErrors(0)
+    setNaverCurrent('')
+    setNaverFailedList([])
+
     try {
-      const res = await fetch('/api/update-naver-content', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) })
-      const data = await res.json()
-      if (res.ok) {
-        setNaverResult(data.message)
-        fetchData()
-      } else {
-        setNaverResult(`오류: ${data.error}`)
+      // 1. Fetch posts without naver_content from client side
+      const { data: postsToUpdate, error: fetchErr } = await supabase
+        .from('blog_posts')
+        .select('id, title')
+        .eq('status', 'published')
+        .or('naver_content.is.null,naver_content.eq.')
+        .order('created_at', { ascending: true })
+
+      if (fetchErr) {
+        // Column might not exist
+        setNaverResult(`DB 오류: ${fetchErr.message}. naver_content 컬럼이 없을 수 있습니다.`)
+        setNaverUpdating(false)
+        return
       }
+
+      const targetPosts = postsToUpdate || []
+      if (targetPosts.length === 0) {
+        setNaverResult('업데이트할 글이 없습니다. (모든 글에 네이버 콘텐츠가 이미 있음)')
+        setNaverUpdating(false)
+        return
+      }
+
+      setNaverTotal(targetPosts.length)
+
+      // 2. Process 1 by 1
+      let successCount = 0
+      let errorCount = 0
+      const failed: { id: number; title: string; error: string }[] = []
+
+      for (let i = 0; i < targetPosts.length; i++) {
+        const post = targetPosts[i]
+        setNaverCurrent(`${i + 1}/${targetPosts.length} - ${post.title}`)
+
+        try {
+          const res = await fetch('/api/update-single-naver', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId: post.id }),
+          })
+          const data = await res.json()
+
+          if (res.ok && data.success) {
+            successCount++
+            setNaverCompleted(successCount)
+          } else {
+            errorCount++
+            setNaverErrors(errorCount)
+            failed.push({ id: post.id, title: post.title, error: data.error || '알 수 없는 오류' })
+            setNaverFailedList([...failed])
+          }
+        } catch (err) {
+          errorCount++
+          setNaverErrors(errorCount)
+          failed.push({ id: post.id, title: post.title, error: err instanceof Error ? err.message : '네트워크 오류' })
+          setNaverFailedList([...failed])
+        }
+
+        // Wait 1 second between requests
+        if (i < targetPosts.length - 1) {
+          await sleep(1000)
+        }
+      }
+
+      setNaverCurrent('')
+      setNaverResult(`${successCount}개 성공, ${errorCount}개 실패 (총 ${targetPosts.length}개)`)
+      fetchData()
     } catch {
       setNaverResult('네이버 콘텐츠 생성 중 오류가 발생했습니다.')
     } finally {
@@ -453,8 +521,32 @@ export default function AdminDashboardPage() {
         {thumbnailResult && (
           <p className="mt-3 text-xs text-gray-600">{thumbnailResult}</p>
         )}
+        {/* Naver progress */}
+        {naverUpdating && naverTotal > 0 && (
+          <div className="mt-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-600 rounded-full transition-all duration-300"
+                  style={{ width: `${((naverCompleted + naverErrors) / naverTotal) * 100}%` }}
+                />
+              </div>
+              <span className="text-sm font-semibold text-black whitespace-nowrap">
+                {naverCompleted + naverErrors} / {naverTotal}
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 animate-pulse">{naverCurrent}</p>
+          </div>
+        )}
         {naverResult && (
-          <p className="mt-3 text-xs text-gray-600">{naverResult}</p>
+          <p className="mt-3 text-xs text-gray-600 font-medium">{naverResult}</p>
+        )}
+        {naverFailedList.length > 0 && (
+          <div className="mt-2 text-xs text-red-500 space-y-1">
+            {naverFailedList.map((f) => (
+              <p key={f.id}>- [{f.id}] {f.title}: {f.error}</p>
+            ))}
+          </div>
         )}
 
         {/* Progress UI */}
