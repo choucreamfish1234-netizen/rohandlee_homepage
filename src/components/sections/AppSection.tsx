@@ -4,11 +4,11 @@ import ScrollReveal from '@/components/ScrollReveal'
 
 export default function AppSection() {
   return (
-    <section className="py-40 bg-white">
+    <section className="py-12 sm:py-20 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center mb-20">
-            <h2 className="text-3xl sm:text-4xl font-bold text-black">
+          <div className="text-center mb-10 sm:mb-20">
+            <h2 className="text-xl sm:text-3xl font-bold text-black">
               로앤이 전용 앱 출시.
             </h2>
             <p className="mt-5 text-gray-400 text-sm leading-relaxed">
@@ -18,10 +18,10 @@ export default function AppSection() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-10">
           {/* 진심의 무게 */}
           <ScrollReveal delay={0.1}>
-            <div className="bg-gray-50 p-10 border border-gray-100 h-full flex flex-col">
+            <div className="bg-gray-50 p-6 sm:p-10 border border-gray-100 h-full flex flex-col">
               <div className="w-20 h-20 mx-auto mb-8 bg-black flex items-center justify-center">
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 19l7-7 3 3-7 7-3-3z" />
@@ -56,7 +56,7 @@ export default function AppSection() {
 
           {/* 리셋 RE-Set */}
           <ScrollReveal delay={0.2}>
-            <div className="bg-gray-50 p-10 border border-gray-100 h-full flex flex-col">
+            <div className="bg-gray-50 p-6 sm:p-10 border border-gray-100 h-full flex flex-col">
               <div className="w-20 h-20 mx-auto mb-8 bg-orange-500 flex items-center justify-center">
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="1 4 1 10 7 10" />

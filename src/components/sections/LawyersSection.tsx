@@ -26,18 +26,18 @@ const lawyers = [
 
 export default function LawyersSection() {
   return (
-    <section id="lawyers" className="py-28 sm:py-40 bg-gray-50">
+    <section id="lawyers" className="py-12 sm:py-20 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Our Lawyers
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
             변호사 소개
           </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
           {lawyers.map((lawyer, i) => (
             <ScrollReveal key={lawyer.key} delay={i * 0.15}>
               <div className="text-center">

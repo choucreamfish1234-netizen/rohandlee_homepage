@@ -72,19 +72,19 @@ function CenterCard({ center, aspectClass, imgW, imgH }: { center: typeof center
 
 export default function CentersSection() {
   return (
-    <section id="centers" className="py-40 bg-white">
+    <section id="centers" className="py-12 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             5 Specialized Centers
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-black mb-20">
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
             5대 전문센터
           </h2>
         </ScrollReveal>
 
         {/* 상단 3개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 mb-4 sm:mb-8">
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <CenterCard center={center} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
@@ -93,7 +93,7 @@ export default function CentersSection() {
         </div>
 
         {/* 하단 2개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <CenterCard center={center} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />

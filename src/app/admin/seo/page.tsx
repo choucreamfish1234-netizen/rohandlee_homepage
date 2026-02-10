@@ -14,6 +14,7 @@ interface SeoAnalysis { id: number; analysis_type: string; data: Record<string, 
 interface CompetitorAnalysis { overall_score: number; summary: string; vs_roandlee?: { competitor_strengths: string[]; competitor_weaknesses: string[]; our_advantages: string[] }; actionable_improvements?: { priority: string; action: string; detail: string }[]; title_analysis?: { text: string; score: number; keywords: string[]; feedback: string }; meta_description_analysis?: { text: string; score: number; feedback: string }; target_keywords?: string[] }
 interface PageSeoRow { id: number; page_path: string; title: string | null; description: string | null; keywords: string | null; og_title: string | null; og_description: string | null; updated_at: string }
 interface AiSuggestion { page_path: string; page_name: string; current_title: string; suggested_title: string; current_description: string; suggested_description: string; reason: string; target_keywords: string[] }
+interface AuditOptPage { page_path: string; page_name: string; current_title: string; current_description: string; issues: string[]; score: number }
 
 type Tab = 'keywords' | 'competitors' | 'audit' | 'meta'
 
@@ -56,6 +57,11 @@ export default function AdminSeoPage() {
   const [aiSuggestions, setAiSuggestions] = useState<AiSuggestion[]>([])
   const [applyingAll, setApplyingAll] = useState(false)
   const [applyingSingle, setApplyingSingle] = useState<string | null>(null)
+
+  const [auditText, setAuditText] = useState('')
+  const [optimizingFromAudit, setOptimizingFromAudit] = useState(false)
+  const [oneClickOptimizing, setOneClickOptimizing] = useState(false)
+  const [optimizeProgress, setOptimizeProgress] = useState('')
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -160,6 +166,126 @@ export default function AdminSeoPage() {
       await fetchAll()
     } catch (err) { alert(`전체 적용 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`) }
     finally { setApplyingAll(false) }
+  }
+
+  function parseAuditResultText(text: string): AuditOptPage[] {
+    const pages: AuditOptPage[] = []
+    // Try to parse as JSON first (from API response)
+    try {
+      const json = JSON.parse(text)
+      const auditData = json.audit || json
+      const auditPages = auditData.pages || []
+      const pageResultsArr = json.pageResults || []
+      for (const p of auditPages) {
+        if (p.score >= 100) continue
+        const pr = pageResultsArr.find((r: { path: string }) => r.path === p.path)
+        pages.push({
+          page_path: p.path,
+          page_name: p.name || PAGE_NAMES[p.path] || p.path,
+          current_title: pr?.title || pageSeoList.find(ps => ps.page_path === p.path)?.title || '',
+          current_description: pr?.description || pageSeoList.find(ps => ps.page_path === p.path)?.description || '',
+          issues: p.issues || [],
+          score: p.score,
+        })
+      }
+      if (pages.length > 0) return pages.sort((a, b) => a.score - b.score)
+    } catch { /* not JSON, try text parsing */ }
+
+    // Text-based parsing: look for patterns like "페이지명 (경로) - 점수: N"
+    const lines = text.split('\n')
+    let currentPage: Partial<AuditOptPage> | null = null
+    for (const line of lines) {
+      const trimmed = line.trim()
+      // Match page path patterns
+      const pathMatch = trimmed.match(/([가-힣\s/]+)\s*\(?(\/[^\s)]*)\)?\s*[-:]\s*(?:점수|score)?\s*:?\s*(\d+)/i)
+      if (pathMatch) {
+        if (currentPage?.page_path) pages.push(currentPage as AuditOptPage)
+        const score = parseInt(pathMatch[3])
+        if (score >= 100) { currentPage = null; continue }
+        currentPage = {
+          page_name: pathMatch[1].trim(),
+          page_path: pathMatch[2],
+          score,
+          issues: [],
+          current_title: pageSeoList.find(ps => ps.page_path === pathMatch[2])?.title || '',
+          current_description: pageSeoList.find(ps => ps.page_path === pathMatch[2])?.description || '',
+        }
+        continue
+      }
+      // Collect issues
+      if (currentPage && (trimmed.startsWith('-') || trimmed.startsWith('•'))) {
+        currentPage.issues = currentPage.issues || []
+        currentPage.issues.push(trimmed.replace(/^[-•]\s*/, ''))
+      }
+    }
+    if (currentPage?.page_path) pages.push(currentPage as AuditOptPage)
+    return pages.sort((a, b) => a.score - b.score)
+  }
+
+  async function handleOptimizeFromAudit() {
+    if (!auditText.trim()) { alert('감사 결과를 붙여넣어주세요.'); return }
+    const pages = parseAuditResultText(auditText.trim())
+    if (pages.length === 0) { alert('최적화할 페이지를 찾을 수 없습니다. 감사 결과 형식을 확인해주세요.'); return }
+    await runOptimize(pages)
+  }
+
+  async function handleOneClickOptimize() {
+    setOneClickOptimizing(true)
+    setOptimizeProgress('사이트 감사 실행 중...')
+    try {
+      const auditRes = await fetch('/api/seo/audit-our-site', { method: 'POST' })
+      const auditData = await auditRes.json()
+      if (auditData.error) { alert(`감사 실패: ${auditData.error}`); return }
+      await fetchAll()
+
+      const auditPages = auditData.audit?.pages || []
+      const pageResults = auditData.pageResults || []
+      const pages: AuditOptPage[] = []
+      for (const p of auditPages) {
+        if (p.score >= 100) continue
+        const pr = pageResults.find((r: { path: string }) => r.path === p.path)
+        pages.push({
+          page_path: p.path,
+          page_name: p.name,
+          current_title: pr?.title || '',
+          current_description: pr?.description || '',
+          issues: p.issues || [],
+          score: p.score,
+        })
+      }
+      if (pages.length === 0) { setOptimizeProgress('모든 페이지가 100점입니다!'); return }
+      await runOptimize(pages)
+    } catch (err) {
+      alert(`원클릭 최적화 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`)
+    } finally {
+      setOneClickOptimizing(false)
+      setOptimizeProgress('')
+    }
+  }
+
+  async function runOptimize(pages: AuditOptPage[]) {
+    setOptimizingFromAudit(true)
+    setOptimizeProgress(`${pages.length}개 페이지 AI 최적화 중...`)
+    try {
+      const res = await fetch('/api/seo/optimize-from-audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pages }),
+      })
+      const data = await res.json()
+      if (data.error) { alert(data.error); return }
+      if (data.suggestions?.length > 0) {
+        setAiSuggestions(data.suggestions)
+        setAuditText('')
+        setOptimizeProgress(`${data.suggestions.length}개 페이지 최적화 제안 완료!`)
+      } else {
+        setOptimizeProgress('AI가 제안을 생성하지 못했습니다.')
+      }
+    } catch (err) {
+      alert(`최적화 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`)
+    } finally {
+      setOptimizingFromAudit(false)
+    }
   }
 
   function openEditModal(page: PageSeoRow) {
@@ -378,6 +504,51 @@ export default function AdminSeoPage() {
               {aiSuggestions.length > 0 && <button onClick={handleApplyAll} disabled={applyingAll} className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors">{applyingAll ? '적용 중...' : `전체 적용 (${aiSuggestions.length})`}</button>}
               <button onClick={handleGenerateMeta} disabled={generatingMeta} className="px-4 py-2 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 transition-colors">{generatingMeta ? 'AI 분석 중...' : 'AI 최적화 제안 생성'}</button>
             </div>
+          </div>
+
+          {/* Auto-optimize from audit */}
+          <div className="border border-gray-100 bg-white p-5 mb-8">
+            <h4 className="text-sm font-bold text-black mb-3">감사 결과로 자동 최적화</h4>
+            <p className="text-xs text-gray-500 mb-4">사이트 감사 결과를 기반으로 문제가 있는 페이지의 메타태그를 AI가 자동 최적화합니다.</p>
+
+            {/* One-click button */}
+            <button
+              onClick={handleOneClickOptimize}
+              disabled={oneClickOptimizing || optimizingFromAudit}
+              className="w-full sm:w-auto mb-4 px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+            >
+              {oneClickOptimizing ? (
+                <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />{optimizeProgress}</>
+              ) : (
+                '사이트 감사 실행 → 결과로 자동 최적화 (원클릭)'
+              )}
+            </button>
+
+            <div className="border-t border-gray-100 pt-4 mt-1">
+              <p className="text-xs text-gray-400 mb-2">또는 감사 결과를 직접 붙여넣기:</p>
+              <textarea
+                value={auditText}
+                onChange={e => setAuditText(e.target.value)}
+                rows={4}
+                placeholder="사이트 감사 결과를 여기에 붙여넣으세요 (JSON 또는 텍스트)"
+                className="w-full px-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-[#1B3B2F] resize-none mb-3 font-mono"
+              />
+              <button
+                onClick={handleOptimizeFromAudit}
+                disabled={optimizingFromAudit || !auditText.trim()}
+                className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 transition-colors flex items-center gap-2"
+              >
+                {optimizingFromAudit ? (
+                  <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />{optimizeProgress}</>
+                ) : (
+                  'AI로 메타태그 자동 최적화'
+                )}
+              </button>
+            </div>
+
+            {optimizeProgress && !optimizingFromAudit && !oneClickOptimizing && (
+              <p className="text-xs text-emerald-600 mt-3 font-medium">{optimizeProgress}</p>
+            )}
           </div>
 
           {/* Current SEO Table */}
