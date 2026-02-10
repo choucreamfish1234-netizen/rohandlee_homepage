@@ -31,7 +31,7 @@ const cases = [
     badge: '징역 8년 선고',
     badgeColor: 'bg-red-50 text-red-700 border-red-200',
     tagColor: 'bg-red-50 text-red-600',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80',
   },
   {
     id: 3,

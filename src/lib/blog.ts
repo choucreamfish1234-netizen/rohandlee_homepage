@@ -48,7 +48,7 @@ export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
   '성범죄': [
     // Unsplash
     'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80',
