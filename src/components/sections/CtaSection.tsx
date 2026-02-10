@@ -38,7 +38,7 @@ export default function CtaSection() {
             page="home"
             section="cta"
             fieldKey="description"
-            defaultValue={'성범죄 전담 10년 변호사의\n상담을 지금 바로 받아보세요.'}
+            defaultValue={'성범죄 전문 변호사의\n상담을 지금 바로 받아보세요.'}
             tag="p"
             className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed whitespace-pre-line"
           />
@@ -48,7 +48,7 @@ export default function CtaSection() {
           <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
               onClick={() => openConsultation()}
-              className="w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-[#1B3B2F] text-base font-semibold rounded-xl hover:bg-gray-100 hover:border-[#B8960C] transition-all duration-300 min-h-[48px] border-2 border-transparent"
+              className="w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-[#1B3B2F] text-base font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 min-h-[48px]"
             >
               상담 신청하기
             </button>

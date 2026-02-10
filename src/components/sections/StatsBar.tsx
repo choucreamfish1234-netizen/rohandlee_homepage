@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Star, MessageCircle, Target, Shield, Zap } from 'lucide-react'
 
 function useCountUp(end: number, duration = 2000) {
   const [count, setCount] = useState(0)
@@ -38,20 +37,16 @@ function useCountUp(end: number, duration = 2000) {
   return { count, ref }
 }
 
-function StatItem({ label, end, suffix, isDecimal, icon }: {
+function StatItem({ label, end, suffix, isDecimal }: {
   label: string
   end: number
   suffix: string
   isDecimal?: boolean
-  icon: React.ReactNode
 }) {
   const { count, ref } = useCountUp(end, 2200)
 
   return (
     <div className="text-center flex flex-col items-center">
-      <div className="mb-2 text-white/40">
-        {icon}
-      </div>
       <span ref={ref} className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
         {isDecimal ? (count / 10).toFixed(1) : count}
         {suffix}
@@ -61,16 +56,12 @@ function StatItem({ label, end, suffix, isDecimal, icon }: {
   )
 }
 
-function StaticItem({ value, label, icon }: {
+function StaticItem({ value, label }: {
   value: string
   label: string
-  icon: React.ReactNode
 }) {
   return (
     <div className="text-center flex flex-col items-center">
-      <div className="mb-2 text-white/40">
-        {icon}
-      </div>
       <span className="block text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
         {value}
       </span>
@@ -85,23 +76,23 @@ export default function StatsBar() {
       <div className="max-w-5xl mx-auto px-4 py-8 sm:py-10">
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 sm:gap-4">
           <div className="relative">
-            <StatItem label="로톡 평점" end={49} suffix="" isDecimal icon={<Star size={20} />} />
+            <StatItem label="로톡 평점" end={49} suffix="" isDecimal />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">
-            <StatItem label="상담 후기" end={600} suffix="+" icon={<MessageCircle size={20} />} />
+            <StatItem label="상담 후기" end={600} suffix="+" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">
-            <StatItem label="피해자 전담률" end={100} suffix="%" icon={<Target size={20} />} />
+            <StatItem label="피해자 전담률" end={100} suffix="%" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">
-            <StaticItem value="무료" label="첫 상담" icon={<Shield size={20} />} />
+            <StaticItem value="무료" label="첫 상담" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <StaticItem value="A-Z" label="원스톱 변호" icon={<Zap size={20} />} />
+            <StaticItem value="A-Z" label="원스톱 변호" />
           </div>
         </div>
       </div>
