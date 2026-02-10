@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { parseAIResponse } from '@/lib/parse-ai-response'
 
 export async function POST(req: NextRequest) {
   try {
@@ -129,22 +130,7 @@ ${fetchSuccess ? `웹사이트 SEO 데이터:
 
     const claudeData = await claudeRes.json()
     const rawText = claudeData.content?.[0]?.text || ''
-    const cleanJson = rawText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-    const jsonMatch = cleanJson.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) {
-      return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
-    }
-
-    let analysis
-    try {
-      analysis = JSON.parse(jsonMatch[0])
-    } catch {
-      const lastBracket = jsonMatch[0].lastIndexOf(']')
-      const lastBrace = jsonMatch[0].lastIndexOf('}')
-      const cutoff = Math.max(lastBracket, lastBrace) + 1
-      const trimmed = jsonMatch[0].substring(0, cutoff)
-      analysis = JSON.parse(trimmed)
-    }
+    const analysis = parseAIResponse(rawText)
 
     // Save to seo_analyses
     await supabaseAdmin.from('seo_analyses').insert({

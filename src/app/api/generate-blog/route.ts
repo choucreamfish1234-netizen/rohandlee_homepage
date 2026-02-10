@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getRandomThumbnail } from '@/lib/blog'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { parseAIResponse } from '@/lib/parse-ai-response'
 
 // Category → author mapping
 function getAuthorByCategory(category: string): string {
@@ -95,7 +96,8 @@ export async function POST(req: NextRequest) {
 - 네이버 SEO를 위해 키워드를 자연스럽게 반복 (3-5회)
 - 문장을 짧고 읽기 쉽게 (모바일 가독성 중요)
 
-반드시 아래 JSON 형식으로 응답하세요:
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요. 응답이 잘리지 않도록 간결하게 작성하세요.
+아래 JSON 형식으로 응답하세요:
 {
   "title": "블로그 글 제목",
   "slug": "url-slug-영문",
@@ -118,7 +120,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 8192,
+        max_tokens: 4096,
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
       }),
@@ -139,13 +141,7 @@ export async function POST(req: NextRequest) {
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
 
-    // Parse JSON from response
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) {
-      return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
-    }
-
-    const parsed = JSON.parse(jsonMatch[0])
+    const parsed = parseAIResponse(text)
     // Fetch existing thumbnails for this category to avoid duplicates
     const { data: existing } = await supabaseAdmin
       .from('blog_posts')

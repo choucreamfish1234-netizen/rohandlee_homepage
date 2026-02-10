@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getRandomThumbnail } from '@/lib/blog'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { parseAIResponse } from '@/lib/parse-ai-response'
 
 function getAuthorByCategory(category: string): string {
   switch (category) {
@@ -60,7 +61,8 @@ function buildSystemPrompt(author: string): string {
 - 제목(h1)은 포함하지 않습니다
 - 글 하단에 작성자 표시: '글쓴이: ${author} (법률사무소 로앤이)'
 
-반드시 아래 JSON 형식으로 응답하세요:
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요. 응답이 잘리지 않도록 간결하게 작성하세요.
+아래 JSON 형식으로 응답하세요:
 {
   "title": "블로그 글 제목",
   "slug": "url-slug-영문-소문자-하이픈",
@@ -121,7 +123,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 8192,
+        max_tokens: 4096,
         system: buildSystemPrompt(author),
         messages: [{
           role: 'user',
@@ -142,17 +144,7 @@ export async function POST(req: NextRequest) {
 
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
-
-    if (!jsonMatch) {
-      return NextResponse.json({
-        success: false,
-        error: 'AI 응답 JSON 파싱 실패',
-        index,
-      }, { status: 500 })
-    }
-
-    const parsed = JSON.parse(jsonMatch[0])
+    const parsed = parseAIResponse(text)
 
     // Generate slug, handle duplicates
     let slug = parsed.slug || topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
