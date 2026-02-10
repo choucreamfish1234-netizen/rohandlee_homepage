@@ -6,17 +6,62 @@ import Link from 'next/link'
 import { type BlogPost, getAllPosts, getAdminStats, deletePost, updatePost, formatDate } from '@/lib/blog'
 import { supabase } from '@/lib/supabase'
 
+const TOPICS = [
+  { topic: '성범죄 피해를 당했을 때 가장 먼저 해야 할 것들', category: '성범죄' },
+  { topic: '디지털 성범죄 증거, 이렇게 보존하세요', category: '성범죄' },
+  { topic: '스토킹 피해, 접근금지 가처분으로 나를 지키는 방법', category: '성범죄' },
+  { topic: '불법촬영 피해를 발견했다면 당황하지 마세요', category: '성범죄' },
+  { topic: '데이트폭력, 사랑이 아니라 범죄입니다', category: '성범죄' },
+  { topic: '딥페이크 성범죄 피해자가 알아야 할 모든 것', category: '성범죄' },
+  { topic: '리벤지포르노 유포 피해, 혼자 해결하려 하지 마세요', category: '성범죄' },
+  { topic: '성범죄 피해자 국선변호사 제도 활용하는 방법', category: '성범죄' },
+  { topic: '직장 내 성희롱 피해, 어디에 어떻게 신고하나요', category: '성범죄' },
+  { topic: '아동 청소년 대상 성범죄 신고와 보호 절차', category: '성범죄' },
+  { topic: '보이스피싱 피해금 환급받는 방법 총정리', category: '재산범죄' },
+  { topic: '전세사기 피해자 특별법, 이렇게 활용하세요', category: '재산범죄' },
+  { topic: '투자사기 피해 민형사 동시 진행하는 전략', category: '재산범죄' },
+  { topic: '횡령 배임 피해자의 고소장 이렇게 쓰세요', category: '재산범죄' },
+  { topic: '사기죄 고소할 때 꼭 필요한 증거 체크리스트', category: '재산범죄' },
+  { topic: '중고거래 사기 당했을 때 대처법', category: '재산범죄' },
+  { topic: '보험사기 피해자가 보상받는 절차', category: '재산범죄' },
+  { topic: '임금체불 피해, 체불 사업주를 처벌하는 방법', category: '재산범죄' },
+  { topic: '온라인 쇼핑몰 사기 피해 신고와 환불 받기', category: '재산범죄' },
+  { topic: '가상화폐 투자사기 피해 구제 방법', category: '재산범죄' },
+  { topic: '개인회생 신청 자격, 나도 가능할까요', category: '회생파산' },
+  { topic: '개인파산 면책까지의 과정 쉽게 정리', category: '회생파산' },
+  { topic: '개인회생 vs 개인파산, 나에게 맞는 선택은', category: '회생파산' },
+  { topic: '신용회복위원회 vs 개인회생, 뭐가 다른가요', category: '회생파산' },
+  { topic: '개인회생 중 주의해야 할 것들', category: '회생파산' },
+  { topic: '형사 고소장, 어렵지 않게 작성하는 방법', category: '일반' },
+  { topic: '합의금 협상할 때 피해자가 꼭 알아야 할 것', category: '일반' },
+  { topic: '피해자가 법정에 서야 할 때 준비하는 방법', category: '일반' },
+  { topic: '고소와 고발의 차이, 헷갈리시죠', category: '일반' },
+  { topic: '좋은 변호사 선택하는 기준 5가지', category: '일반' },
+]
+
+function getAuthorByCategory(category: string): string {
+  switch (category) {
+    case '재산범죄':
+    case '회생파산':
+      return '노채은 변호사'
+    case '성범죄':
+    case '일반':
+    default:
+      return '이유림 변호사'
+  }
+}
+
 interface BulkResult {
-  type: string
-  index?: number
-  topic?: string
+  type: 'done' | 'error' | 'skipped'
+  index: number
+  topic: string
   title?: string
   slug?: string
   category?: string
   author?: string
   error?: string
-  total?: number
-  status?: string
+  reason?: string
+  existingTitle?: string
 }
 
 export default function AdminDashboardPage() {
@@ -33,10 +78,12 @@ export default function AdminDashboardPage() {
   const [bulkTotal, setBulkTotal] = useState(0)
   const [bulkCompleted, setBulkCompleted] = useState(0)
   const [bulkErrors, setBulkErrors] = useState(0)
+  const [bulkSkipped, setBulkSkipped] = useState(0)
   const [bulkCurrent, setBulkCurrent] = useState('')
   const [bulkResults, setBulkResults] = useState<BulkResult[]>([])
   const [bulkDone, setBulkDone] = useState(false)
   const bulkLogRef = useRef<HTMLDivElement>(null)
+  const stopRef = useRef(false)
 
   // Thumbnail re-assign state
   const [thumbnailUpdating, setThumbnailUpdating] = useState(false)
@@ -139,74 +186,110 @@ export default function AdminDashboardPage() {
     }
   }
 
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+  }
+
   async function handleBulkGenerate() {
     if (bulkRunning) return
-    if (!confirm('SEO 블로그 30개를 자동 생성합니다. 약 3~4분 소요됩니다. 진행하시겠습니까?')) return
+    if (!confirm('SEO 블로그 30개를 자동 생성합니다. 약 10~15분 소요됩니다. 진행하시겠습니까?')) return
 
     setBulkRunning(true)
     setBulkCompleted(0)
     setBulkErrors(0)
-    setBulkTotal(30)
+    setBulkSkipped(0)
+    setBulkTotal(TOPICS.length)
     setBulkCurrent('시작 중...')
     setBulkResults([])
     setBulkDone(false)
+    stopRef.current = false
 
-    try {
-      const res = await fetch('/api/bulk-generate-blog', { method: 'POST' })
-      if (!res.body) {
-        alert('스트리밍을 지원하지 않는 환경입니다.')
-        setBulkRunning(false)
-        return
+    for (let i = 0; i < TOPICS.length; i++) {
+      // Check if stop was requested
+      if (stopRef.current) {
+        setBulkCurrent('중지됨')
+        break
       }
 
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
+      const { topic, category } = TOPICS[i]
+      const author = getAuthorByCategory(category)
+      setBulkCurrent(`${topic} (${author})`)
 
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
+      try {
+        const res = await fetch('/api/generate-single-blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic, category, index: i }),
+        })
 
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n\n')
-        buffer = lines.pop() || ''
+        const data = await res.json()
 
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue
-          try {
-            const data: BulkResult = JSON.parse(line.slice(6))
-
-            if (data.type === 'start') {
-              setBulkTotal(data.total || 30)
-            } else if (data.type === 'progress') {
-              setBulkCurrent(`${data.topic} (${data.author})`)
-            } else if (data.type === 'done') {
-              setBulkCompleted((prev) => prev + 1)
-              setBulkResults((prev) => [...prev, data])
-              setTimeout(() => {
-                bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
-              }, 100)
-            } else if (data.type === 'error') {
-              setBulkErrors((prev) => prev + 1)
-              setBulkResults((prev) => [...prev, data])
-              setTimeout(() => {
-                bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
-              }, 100)
-            } else if (data.type === 'complete') {
-              setBulkDone(true)
-              setBulkCurrent('완료!')
-            }
-          } catch {
-            // skip parse errors
-          }
+        if (data.skipped) {
+          // Duplicate — skip
+          setBulkSkipped((prev) => prev + 1)
+          setBulkResults((prev) => [...prev, {
+            type: 'skipped',
+            index: i,
+            topic,
+            category,
+            author,
+            reason: data.reason,
+            existingTitle: data.existingTitle,
+          }])
+        } else if (data.success) {
+          setBulkCompleted((prev) => prev + 1)
+          setBulkResults((prev) => [...prev, {
+            type: 'done',
+            index: i,
+            topic,
+            title: data.title,
+            slug: data.slug,
+            category: data.category,
+            author: data.author,
+          }])
+        } else {
+          setBulkErrors((prev) => prev + 1)
+          setBulkResults((prev) => [...prev, {
+            type: 'error',
+            index: i,
+            topic,
+            category,
+            author,
+            error: data.error || '알 수 없는 오류',
+          }])
         }
+      } catch (err) {
+        setBulkErrors((prev) => prev + 1)
+        setBulkResults((prev) => [...prev, {
+          type: 'error',
+          index: i,
+          topic,
+          category,
+          author,
+          error: err instanceof Error ? err.message : '네트워크 오류',
+        }])
       }
-    } catch (err) {
-      alert(`오류: ${err instanceof Error ? err.message : '알 수 없는 오류'}`)
-    } finally {
-      setBulkRunning(false)
-      fetchData()
+
+      // Scroll log to bottom
+      setTimeout(() => {
+        bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
+      }, 100)
+
+      // Wait 3 seconds between requests (API rate limit prevention)
+      if (i < TOPICS.length - 1 && !stopRef.current) {
+        await sleep(3000)
+      }
     }
+
+    setBulkDone(true)
+    setBulkCurrent(stopRef.current ? '중지됨' : '완료!')
+    setBulkRunning(false)
+    fetchData()
+  }
+
+  function handleStopGeneration() {
+    stopRef.current = true
+    setBulkCurrent('중지 요청됨...')
   }
 
   const filteredPosts = search
@@ -221,6 +304,8 @@ export default function AdminDashboardPage() {
       default: return { text: status, color: 'bg-gray-100 text-gray-600' }
     }
   }
+
+  const bulkProcessed = bulkCompleted + bulkErrors + bulkSkipped
 
   return (
     <div className="py-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -299,9 +384,9 @@ export default function AdminDashboardPage() {
         <h2 className="text-sm font-bold text-black mb-3">SEO 블로그 대량 생성</h2>
         <p className="text-xs text-gray-500 mb-4">
           성범죄(10개), 재산범죄(10개), 회생파산(5개), 일반(5개) 총 30개 블로그 글을 AI로 자동 생성합니다.
-          카테고리별 담당 변호사 말투가 자동 적용됩니다.
+          카테고리별 담당 변호사 말투가 자동 적용됩니다. 중복 주제는 자동으로 건너뜁니다.
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={handleBulkGenerate}
             disabled={bulkRunning}
@@ -309,6 +394,14 @@ export default function AdminDashboardPage() {
           >
             {bulkRunning ? '생성 중...' : 'SEO 블로그 30개 자동 생성'}
           </button>
+          {bulkRunning && (
+            <button
+              onClick={handleStopGeneration}
+              className="px-5 py-2.5 bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors rounded"
+            >
+              중지
+            </button>
+          )}
           <button
             onClick={handleThumbnailReassign}
             disabled={bulkRunning || thumbnailUpdating}
@@ -335,19 +428,20 @@ export default function AdminDashboardPage() {
               <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#1B3B2F] rounded-full transition-all duration-500"
-                  style={{ width: `${bulkTotal > 0 ? ((bulkCompleted + bulkErrors) / bulkTotal) * 100 : 0}%` }}
+                  style={{ width: `${bulkTotal > 0 ? (bulkProcessed / bulkTotal) * 100 : 0}%` }}
                 />
               </div>
               <span className="text-sm font-semibold text-black whitespace-nowrap">
-                {bulkCompleted + bulkErrors} / {bulkTotal}
+                {bulkProcessed} / {bulkTotal}
               </span>
             </div>
 
-            <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 mb-3">
               <span className="text-emerald-600 font-medium">성공: {bulkCompleted}</span>
+              {bulkSkipped > 0 && <span className="text-amber-600 font-medium">중복 건너뜀: {bulkSkipped}</span>}
               {bulkErrors > 0 && <span className="text-red-500 font-medium">실패: {bulkErrors}</span>}
               {bulkRunning && <span className="animate-pulse">생성 중: {bulkCurrent}</span>}
-              {bulkDone && <span className="text-[#1B3B2F] font-semibold">완료!</span>}
+              {bulkDone && <span className="text-[#1B3B2F] font-semibold">{bulkCurrent}</span>}
             </div>
 
             <div
@@ -355,7 +449,7 @@ export default function AdminDashboardPage() {
               className="max-h-64 overflow-y-auto border border-gray-200 bg-white rounded text-xs divide-y divide-gray-100"
             >
               {bulkResults.map((r, i) => (
-                <div key={i} className={`px-4 py-2.5 flex items-center justify-between ${r.type === 'error' ? 'bg-red-50' : ''}`}>
+                <div key={i} className={`px-4 py-2.5 flex items-center justify-between ${r.type === 'error' ? 'bg-red-50' : r.type === 'skipped' ? 'bg-amber-50' : ''}`}>
                   {r.type === 'done' ? (
                     <>
                       <div className="flex items-center gap-2 min-w-0">
@@ -366,6 +460,14 @@ export default function AdminDashboardPage() {
                         <span className="text-gray-400">{r.category}</span>
                         <span className="text-gray-400">{r.author}</span>
                       </div>
+                    </>
+                  ) : r.type === 'skipped' ? (
+                    <>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-amber-500 flex-shrink-0">&#8722;</span>
+                        <span className="text-amber-700 truncate">{r.topic}</span>
+                      </div>
+                      <span className="text-amber-500 flex-shrink-0 ml-3">{r.reason}</span>
                     </>
                   ) : (
                     <>
