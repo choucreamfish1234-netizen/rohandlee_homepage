@@ -61,12 +61,31 @@ function buildSystemPrompt(author: string): string {
 - 제목(h1)은 포함하지 않습니다
 - 글 하단에 작성자 표시: '글쓴이: ${author} (법률사무소 로앤이)'
 
+[네이버 블로그용 규칙]
+- 순수 HTML 형식으로 작성 (네이버 에디터에 HTML로 붙여넣기용)
+- 마크다운 문법(**굵은**, *기울임*, ## 제목 등)을 절대 사용하지 마세요.
+- 소제목은 <h3> 태그, 굵은 글씨는 <b> 태그, 기울임은 <em> 태그를 사용하세요.
+- 문단 사이 <br><br>로 여백 충분히
+- 핵심 내용은 <blockquote> 태그로 강조
+- 위와 동일한 말투/톤 적용
+- 글 하단에 로앤이 정보 박스 포함:
+  <div style="background:#f5f5f5;padding:20px;border-radius:8px;margin-top:30px;">
+    <b>법률사무소 로앤이</b><br>
+    오직 피해자만 변호합니다.<br><br>
+    무료 상담: 032-207-8788<br>
+    카카오톡: https://pf.kakao.com/_YxgWxcn/chat<br>
+    홈페이지: https://rohandlee-homepage.vercel.app
+  </div>
+- 네이버 SEO를 위해 키워드를 자연스럽게 반복 (3-5회)
+- 문장을 짧고 읽기 쉽게 (모바일 가독성 중요)
+
 반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요. 응답이 잘리지 않도록 간결하게 작성하세요.
 아래 JSON 형식으로 응답하세요:
 {
   "title": "블로그 글 제목",
   "slug": "url-slug-영문-소문자-하이픈",
   "content": "홈페이지용 본문 (마크다운)",
+  "naverContent": "네이버 블로그용 본문 (순수 HTML, 마크다운 문법 금지)",
   "excerpt": "2줄 내외의 짧은 요약",
   "tags": ["태그1", "태그2", "태그3"],
   "meta_description": "SEO 메타 설명 (160자 이내)"
@@ -127,7 +146,7 @@ export async function POST(req: NextRequest) {
         system: buildSystemPrompt(author),
         messages: [{
           role: 'user',
-          content: `주제: ${topic}\n카테고리: ${cat}\n작성자: ${author}\n\n위 주제에 대한 법률 블로그 글을 작성해주세요. 반드시 ${author}의 말투로 작성하세요.`,
+          content: `주제: ${topic}\n카테고리: ${cat}\n작성자: ${author}\n\n위 주제에 대한 법률 블로그 글을 홈페이지용(마크다운)과 네이버용(순수 HTML) 두 가지 버전으로 작성해주세요. 반드시 ${author}의 말투로 작성하세요.`,
         }],
       }),
     })
@@ -174,6 +193,7 @@ export async function POST(req: NextRequest) {
         title: parsed.title || topic,
         slug,
         content: parsed.content || '',
+        naver_content: parsed.naverContent || null,
         excerpt: parsed.excerpt || '',
         meta_description: parsed.meta_description || '',
         category: cat,
@@ -184,7 +204,7 @@ export async function POST(req: NextRequest) {
         thumbnail_url: thumbnailUrl,
         view_count: 0,
         is_featured: false,
-        naver_published: false,
+        naver_published: !!parsed.naverContent,
       })
       .select('id, title, slug')
       .single()
