@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { parseAIResponse } from '@/lib/parse-ai-response'
 
 export async function POST(req: NextRequest) {
   try {
@@ -48,7 +49,9 @@ D등급 (수임 불가): 공소시효 만료, 관할 외, 가해자 측, 로앤�
 - 이모지 사용 금지
 - 의뢰인 이름을 사용하여 개인화
 
-[응답 형식 - 순수 JSON만, 마크다운 백틱 없이]
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외 텍스트를 포함하지 마세요. 응답이 잘리지 않도록 간결하게 작성하세요.
+
+[응답 형식]
 {
   "analysis": {
     "case_category": "대분류",
@@ -98,14 +101,7 @@ D등급 (수임 불가): 공소시효 만료, 관할 외, 가해자 측, 로앤�
 
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
-
-    // Parse JSON
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) {
-      return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
-    }
-
-    const parsed = JSON.parse(jsonMatch[0])
+    const parsed = parseAIResponse(text)
 
     // 3. Update consultation in Supabase
     const { error: updateError } = await supabase
