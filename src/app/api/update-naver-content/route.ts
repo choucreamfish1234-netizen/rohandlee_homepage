@@ -59,6 +59,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 })
     }
 
+    // Check if naver_content column exists by doing a minimal query
+    const { error: colCheckError } = await supabaseAdmin
+      .from('blog_posts')
+      .select('naver_content')
+      .limit(1)
+    if (colCheckError) {
+      const SQL_HINT = `ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS naver_content text;\nALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS naver_published boolean default false;`
+      return NextResponse.json({
+        error: `naver_content 컬럼이 없습니다. Supabase SQL Editor에서 아래 SQL을 실행하세요:\n\n${SQL_HINT}`,
+      }, { status: 500 })
+    }
+
     // If postId is provided, update single post. Otherwise, update all posts without naver_content.
     let postsToUpdate: { id: number; title: string; content: string; category: string }[]
 
@@ -74,7 +86,6 @@ export async function POST(req: NextRequest) {
       postsToUpdate = [data]
     } else {
       // Fetch all published posts, then filter in JS for missing naver_content
-      // (avoids PostgREST filter issues with .or('...eq.') for empty strings)
       const { data, error } = await supabaseAdmin
         .from('blog_posts')
         .select('id, title, content, category, naver_content')
