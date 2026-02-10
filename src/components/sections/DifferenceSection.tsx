@@ -1,6 +1,7 @@
 'use client'
 
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 import { Users, Smartphone, Award, Eye } from 'lucide-react'
 
 const differences = [
@@ -34,9 +35,14 @@ export default function DifferenceSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Why Ro&Lee
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            로앤이가 다른 이유
-          </h2>
+          <EditableText
+            page="home"
+            section="difference"
+            fieldKey="heading"
+            defaultValue="로앤이가 다른 이유"
+            tag="h2"
+            className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
+          />
         </ScrollReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-10">
@@ -53,8 +59,22 @@ export default function DifferenceSection() {
                       <span className="text-4xl font-light text-gray-200">
                         0{i + 1}
                       </span>
-                      <h3 className="mt-2 text-lg font-semibold text-black">{diff.title}</h3>
-                      <p className="mt-3 text-sm text-gray-400 leading-relaxed">{diff.description}</p>
+                      <EditableText
+                        page="home"
+                        section="difference"
+                        fieldKey={`diff-${i}-title`}
+                        defaultValue={diff.title}
+                        tag="h3"
+                        className="mt-2 text-lg font-semibold text-black"
+                      />
+                      <EditableText
+                        page="home"
+                        section="difference"
+                        fieldKey={`diff-${i}-desc`}
+                        defaultValue={diff.description}
+                        tag="p"
+                        className="mt-3 text-sm text-gray-400 leading-relaxed"
+                      />
                     </div>
                   </div>
                 </div>

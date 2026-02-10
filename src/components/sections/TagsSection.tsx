@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 
 const tags = [
   '스토킹',
@@ -38,9 +39,14 @@ export default function TagsSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Practice Areas
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-black mb-8 sm:mb-14">
-            기타 전문 분야
-          </h2>
+          <EditableText
+            page="home"
+            section="tags"
+            fieldKey="heading"
+            defaultValue="기타 전문 분야"
+            tag="h2"
+            className="text-xl sm:text-3xl font-bold text-black mb-8 sm:mb-14"
+          />
         </ScrollReveal>
 
         <div className="flex flex-wrap justify-center gap-3">

@@ -1,6 +1,7 @@
 'use client'
 
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 
 export default function AppSection() {
   return (
@@ -8,13 +9,22 @@ export default function AppSection() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 sm:mb-20">
-            <h2 className="text-xl sm:text-3xl font-bold text-black">
-              로앤이 전용 앱 출시.
-            </h2>
-            <p className="mt-5 text-gray-400 text-sm leading-relaxed">
-              변호사를 직접 만나지 않아도,<br />
-              로앤이의 법률서비스를 무료로 이용하세요.
-            </p>
+            <EditableText
+              page="home"
+              section="app"
+              fieldKey="heading"
+              defaultValue="로앤이 전용 앱 출시."
+              tag="h2"
+              className="text-xl sm:text-3xl font-bold text-black"
+            />
+            <EditableText
+              page="home"
+              section="app"
+              fieldKey="subheading"
+              defaultValue={'변호사를 직접 만나지 않아도,\n로앤이의 법률서비스를 무료로 이용하세요.'}
+              tag="p"
+              className="mt-5 text-gray-400 text-sm leading-relaxed whitespace-pre-line"
+            />
           </div>
         </ScrollReveal>
 
@@ -31,15 +41,30 @@ export default function AppSection() {
                 </svg>
               </div>
               <div className="text-center flex-1">
-                <h3 className="text-lg font-semibold text-black">진심의 무게</h3>
-                <p className="mt-2 text-sm text-accent font-medium">
-                  피해자의 진심을, 법의 언어로.
-                </p>
-                <p className="mt-4 text-sm text-gray-400 leading-relaxed">
-                  쉬운 질문에 답하기만 하면, AI가 법원 제출용 엄벌 탄원서를 자동으로 완성합니다.
-                  피해 유형 선택부터 정신적·신체적 피해 체크, Word 파일 다운로드까지.
-                  전문 변호사 검토 서비스도 제공합니다.
-                </p>
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app1-title"
+                  defaultValue="진심의 무게"
+                  tag="h3"
+                  className="text-lg font-semibold text-black"
+                />
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app1-subtitle"
+                  defaultValue="피해자의 진심을, 법의 언어로."
+                  tag="p"
+                  className="mt-2 text-sm text-accent font-medium"
+                />
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app1-desc"
+                  defaultValue="쉬운 질문에 답하기만 하면, AI가 법원 제출용 엄벌 탄원서를 자동으로 완성합니다. 피해 유형 선택부터 정신적·신체적 피해 체크, Word 파일 다운로드까지. 전문 변호사 검토 서비스도 제공합니다."
+                  tag="p"
+                  className="mt-4 text-sm text-gray-400 leading-relaxed"
+                />
                 <div className="mt-6 flex flex-wrap justify-center gap-2">
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">AI 탄원서 작성</span>
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">Word 다운로드</span>
@@ -64,14 +89,30 @@ export default function AppSection() {
                 </svg>
               </div>
               <div className="text-center flex-1">
-                <h3 className="text-lg font-semibold text-black">리셋 RE-Set</h3>
-                <p className="mt-2 text-sm text-accent font-medium">
-                  새로운 출발을 위한 법적 리셋.
-                </p>
-                <p className="mt-4 text-sm text-gray-400 leading-relaxed">
-                  개인회생·파산 사건에 필요한 서류를 자동으로 수집하고 정리합니다.
-                  복잡한 절차를 간단하게, 새 출발까지 함께합니다.
-                </p>
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app2-title"
+                  defaultValue="리셋 RE-Set"
+                  tag="h3"
+                  className="text-lg font-semibold text-black"
+                />
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app2-subtitle"
+                  defaultValue="새로운 출발을 위한 법적 리셋."
+                  tag="p"
+                  className="mt-2 text-sm text-accent font-medium"
+                />
+                <EditableText
+                  page="home"
+                  section="app"
+                  fieldKey="app2-desc"
+                  defaultValue="개인회생·파산 사건에 필요한 서류를 자동으로 수집하고 정리합니다. 복잡한 절차를 간단하게, 새 출발까지 함께합니다."
+                  tag="p"
+                  className="mt-4 text-sm text-gray-400 leading-relaxed"
+                />
                 <div className="mt-6 flex flex-wrap justify-center gap-2">
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">서류 자동수집</span>
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">회생파산 전문</span>

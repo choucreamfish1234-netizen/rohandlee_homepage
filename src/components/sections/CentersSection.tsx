@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText, EditableImage } from '@/components/Editable'
 
 const centers = [
   {
@@ -45,29 +45,45 @@ const centersRow2 = [
   },
 ]
 
-function CenterCard({ center, aspectClass, imgW, imgH }: { center: typeof centers[0]; aspectClass: string; imgW: number; imgH: number }) {
+function CenterCard({ center, index, aspectClass, imgW, imgH }: {
+  center: typeof centers[0]
+  index: number
+  aspectClass: string
+  imgW: number
+  imgH: number
+}) {
   return (
     <Link href={center.href} className="group block">
       <div className="border-t-[3px] border-[#1B3B2F] bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
         <div className={`${aspectClass} overflow-hidden relative`}>
-          <Image
-            src={center.image}
+          <EditableImage
+            page="home"
+            section="centers"
+            fieldKey={`center-${index}-image`}
+            defaultSrc={center.image}
             alt={center.alt}
             width={imgW}
             height={imgH}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           />
           {/* Deep green gradient overlay from bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1B3B2F]/70 via-[#1B3B2F]/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1B3B2F]/70 via-[#1B3B2F]/20 to-transparent pointer-events-none" />
           {/* Center name overlay on image */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pointer-events-none">
             <h3 className="text-base sm:text-lg font-semibold text-white drop-shadow-sm">
               {center.title}
             </h3>
           </div>
         </div>
         <div className="p-4 sm:p-5">
-          <p className="text-sm text-gray-400">{center.description}</p>
+          <EditableText
+            page="home"
+            section="centers"
+            fieldKey={`center-${index}-desc`}
+            defaultValue={center.description}
+            tag="p"
+            className="text-sm text-gray-400"
+          />
           <span className="inline-flex items-center mt-3 text-xs text-gray-400 group-hover:text-accent transition-colors duration-300">
             자세히 보기 <span className="ml-1">&rarr;</span>
           </span>
@@ -85,16 +101,21 @@ export default function CentersSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             5 Specialized Centers
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            5대 전문센터
-          </h2>
+          <EditableText
+            page="home"
+            section="centers"
+            fieldKey="heading"
+            defaultValue="5대 전문센터"
+            tag="h2"
+            className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
+          />
         </ScrollReveal>
 
         {/* 상단 3개 센터 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 mb-5 sm:mb-8">
           {centers.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
-              <CenterCard center={center} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
+              <CenterCard center={center} index={i} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
             </ScrollReveal>
           ))}
         </div>
@@ -103,7 +124,7 @@ export default function CentersSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
-              <CenterCard center={center} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
+              <CenterCard center={center} index={i + 3} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
             </ScrollReveal>
           ))}
         </div>

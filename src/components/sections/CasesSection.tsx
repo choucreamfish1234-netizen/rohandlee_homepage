@@ -1,8 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText, EditableImage } from '@/components/Editable'
 
 const cases = [
   {
@@ -55,9 +55,14 @@ export default function CasesSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Results
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            결과로 증명합니다.
-          </h2>
+          <EditableText
+            page="home"
+            section="cases"
+            fieldKey="heading"
+            defaultValue="결과로 증명합니다."
+            tag="h2"
+            className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
+          />
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
@@ -72,8 +77,11 @@ export default function CasesSection() {
 
                 {/* 이미지 */}
                 <div className="aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={c.image}
+                  <EditableImage
+                    page="home"
+                    section="cases"
+                    fieldKey={`case-${i}-image`}
+                    defaultSrc={c.image}
                     alt={c.title}
                     width={800}
                     height={500}
@@ -88,14 +96,24 @@ export default function CasesSection() {
                   </span>
 
                   {/* 제목 */}
-                  <h3 className="text-lg sm:text-xl font-bold text-black leading-snug mb-3">
-                    {c.title}
-                  </h3>
+                  <EditableText
+                    page="home"
+                    section="cases"
+                    fieldKey={`case-${i}-title`}
+                    defaultValue={c.title}
+                    tag="h3"
+                    className="text-lg sm:text-xl font-bold text-black leading-snug mb-3"
+                  />
 
                   {/* 설명 */}
-                  <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-1">
-                    {c.description}
-                  </p>
+                  <EditableText
+                    page="home"
+                    section="cases"
+                    fieldKey={`case-${i}-desc`}
+                    defaultValue={c.description}
+                    tag="p"
+                    className="text-sm text-gray-500 leading-relaxed mb-8 flex-1"
+                  />
 
                   {/* 결과 뱃지 */}
                   <div className={`self-start inline-flex items-center text-sm font-semibold px-4 py-2 border shadow-sm ${c.badgeColor}`}>

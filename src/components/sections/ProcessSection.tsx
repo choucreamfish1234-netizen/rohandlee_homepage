@@ -1,6 +1,7 @@
 'use client'
 
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 
 const steps = [
   {
@@ -43,12 +44,22 @@ export default function ProcessSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             How We Work
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-5">
-            수임 절차
-          </h2>
-          <p className="text-center text-gray-400 text-sm mb-10 sm:mb-20">
-            의뢰인의 불안이 안심으로 바뀌는 순간
-          </p>
+          <EditableText
+            page="home"
+            section="process"
+            fieldKey="heading"
+            defaultValue="수임 절차"
+            tag="h2"
+            className="text-xl sm:text-3xl font-bold text-center text-black mb-5"
+          />
+          <EditableText
+            page="home"
+            section="process"
+            fieldKey="subheading"
+            defaultValue="의뢰인의 불안이 안심으로 바뀌는 순간"
+            tag="p"
+            className="text-center text-gray-400 text-sm mb-10 sm:mb-20"
+          />
         </ScrollReveal>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-8 lg:gap-6">
@@ -59,8 +70,22 @@ export default function ProcessSection() {
                 <span className="text-5xl lg:text-6xl font-light text-[#1B3B2F]/10 leading-none group-hover:text-[#1B3B2F]/20 transition-colors duration-300">
                   {step.number}
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-black">{step.title}</h3>
-                <p className="mt-2 text-sm text-gray-400 leading-relaxed">{step.description}</p>
+                <EditableText
+                  page="home"
+                  section="process"
+                  fieldKey={`step-${i}-title`}
+                  defaultValue={step.title}
+                  tag="h3"
+                  className="mt-4 text-base font-semibold text-black"
+                />
+                <EditableText
+                  page="home"
+                  section="process"
+                  fieldKey={`step-${i}-desc`}
+                  defaultValue={step.description}
+                  tag="p"
+                  className="mt-2 text-sm text-gray-400 leading-relaxed"
+                />
               </div>
             </ScrollReveal>
           ))}

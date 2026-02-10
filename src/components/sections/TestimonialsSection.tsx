@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
+import { EditableText } from '@/components/Editable'
 
 const testimonials = [
   {
@@ -53,12 +54,22 @@ export default function TestimonialsSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
               Client Reviews
             </p>
-            <h2 className="text-xl sm:text-3xl font-bold text-black">
-              <span className="text-accent">100</span>명 이상의 의뢰인이 증명합니다.
-            </h2>
-            <p className="mt-5 text-gray-400 text-sm">
-              압도적인 별점 <span className="text-accent font-bold">5.0</span>, 수많은 감사 인사가 로앤이의 실력을 말해줍니다.
-            </p>
+            <EditableText
+              page="home"
+              section="testimonials"
+              fieldKey="heading"
+              defaultValue="100명 이상의 의뢰인이 증명합니다."
+              tag="h2"
+              className="text-xl sm:text-3xl font-bold text-black"
+            />
+            <EditableText
+              page="home"
+              section="testimonials"
+              fieldKey="subheading"
+              defaultValue="압도적인 별점 5.0, 수많은 감사 인사가 로앤이의 실력을 말해줍니다."
+              tag="p"
+              className="mt-5 text-gray-400 text-sm"
+            />
           </div>
         </ScrollReveal>
 

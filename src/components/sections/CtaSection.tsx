@@ -2,6 +2,7 @@
 
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import { EditableText } from '@/components/Editable'
 
 export default function CtaSection() {
   const { openConsultation } = useConsultation()
@@ -22,17 +23,25 @@ export default function CtaSection() {
 
       <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
         <ScrollReveal>
-          <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
-            혼자 앓지 마세요.<br />
-            지금 전문가와 이야기하세요.
-          </h2>
+          <EditableText
+            page="home"
+            section="cta"
+            fieldKey="title"
+            defaultValue={'혼자 앓지 마세요.\n지금 전문가와 이야기하세요.'}
+            tag="h2"
+            className="text-2xl sm:text-4xl font-bold leading-snug whitespace-pre-line"
+          />
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <p className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed">
-            성범죄 전담 10년 변호사의<br />
-            상담을 지금 바로 받아보세요.
-          </p>
+          <EditableText
+            page="home"
+            section="cta"
+            fieldKey="description"
+            defaultValue={'성범죄 전담 10년 변호사의\n상담을 지금 바로 받아보세요.'}
+            tag="p"
+            className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed whitespace-pre-line"
+          />
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
