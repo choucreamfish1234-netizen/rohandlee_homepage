@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export async function POST() {
   try {
@@ -10,21 +10,21 @@ export async function POST() {
 
     // Fetch latest analyses for context
     const [keywordResult, auditResult, competitorResult] = await Promise.all([
-      supabase
+      supabaseAdmin
         .from('seo_analyses')
         .select('data')
         .eq('analysis_type', 'keyword')
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle(),
-      supabase
+      supabaseAdmin
         .from('seo_analyses')
         .select('data')
         .eq('analysis_type', 'our_site')
         .order('created_at', { ascending: false })
         .limit(1)
         .maybeSingle(),
-      supabase
+      supabaseAdmin
         .from('seo_analyses')
         .select('data')
         .eq('analysis_type', 'competitor')
@@ -137,8 +137,8 @@ ${contextStr}`,
 
     if (!claudeRes.ok) {
       const err = await claudeRes.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 분석에 실패했습니다.' }, { status: 500 })
+      console.error('Claude API error:', claudeRes.status, err)
+      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
     }
 
     const claudeData = await claudeRes.json()
@@ -176,12 +176,12 @@ ${contextStr}`,
       })
 
       if (changes.length > 0) {
-        await supabase.from('seo_changes').insert(changes)
+        await supabaseAdmin.from('seo_changes').insert(changes)
       }
     }
 
     // Save full report
-    await supabase.from('seo_analyses').insert({
+    await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'full_report',
       data: result,
       recommendations: result.general_recommendations,
@@ -190,6 +190,7 @@ ${contextStr}`,
     return NextResponse.json(result)
   } catch (error) {
     console.error('Generate meta error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${msg}` }, { status: 500 })
   }
 }

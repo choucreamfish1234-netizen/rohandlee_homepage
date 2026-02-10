@@ -153,7 +153,7 @@ export default function AdminSeoPage() {
       const data = await res.json()
       if (data.error) { alert(data.error); return }
       await fetchAll()
-    } catch { alert('키워드 분석에 실패했습니다.') }
+    } catch (err) { alert(`키워드 분석 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`) }
     finally { setAnalyzingKeywords(false) }
   }
 
@@ -169,7 +169,7 @@ export default function AdminSeoPage() {
       if (data.error) { alert(data.error); return }
       setCompetitorAnalysisResult(data.analysis as CompetitorAnalysis)
       setShowCompetitorModal(true)
-    } catch { alert('경쟁사 분석에 실패했습니다.') }
+    } catch (err) { alert(`경쟁사 분석 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`) }
     finally { setAnalyzingCompetitor(null) }
   }
 
@@ -180,7 +180,7 @@ export default function AdminSeoPage() {
       const data = await res.json()
       if (data.error) { alert(data.error); return }
       await fetchAll()
-    } catch { alert('사이트 감사에 실패했습니다.') }
+    } catch (err) { alert(`사이트 감사 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`) }
     finally { setAuditing(false) }
   }
 
@@ -191,7 +191,7 @@ export default function AdminSeoPage() {
       const data = await res.json()
       if (data.error) { alert(data.error); return }
       await fetchAll()
-    } catch { alert('메타태그 제안 생성에 실패했습니다.') }
+    } catch (err) { alert(`메타태그 제안 생성 실패: ${err instanceof Error ? err.message : '네트워크 오류'}`) }
     finally { setGeneratingMeta(false) }
   }
 
