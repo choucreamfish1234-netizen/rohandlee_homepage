@@ -1,6 +1,6 @@
 'use client'
 
-import ScrollReveal from '@/components/ScrollReveal'
+import { motion } from 'framer-motion'
 import { EditableText, EditableImage } from '@/components/Editable'
 
 const lawyers = [
@@ -8,91 +8,95 @@ const lawyers = [
     key: 'lee',
     name: '이유림',
     role: '대표변호사',
-    specialty: '성범죄 피해자 전문 변호사',
-    specialtyTag: '성범죄 전문',
+    tags: ['성범죄 전문', '피해자 전담', '로톡 평점 4.9'],
     description: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
     image: '/lawyer-lee.svg',
-    alt: '이유림 대표변호사 프로필',
+    alt: '이유림 대표변호사',
   },
   {
     key: 'noh',
     name: '노채은',
     role: '대표변호사',
-    specialty: '재산범죄 피해자 전문 변호사',
-    specialtyTag: '재산범죄 전문',
+    tags: ['재산범죄 전문', '회생·파산 전문'],
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
     image: '/lawyer-noh.svg',
-    alt: '노채은 대표변호사 프로필',
+    alt: '노채은 대표변호사',
   },
 ]
 
 export default function LawyersSection() {
   return (
-    <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            Our Lawyers
+    <section id="lawyers" className="bg-white">
+      <div className="max-w-5xl mx-auto px-6 py-24 md:py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <p className="text-xs tracking-widest text-gray-400 uppercase mb-4">
+            Attorneys
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            변호사 소개
-          </h2>
-        </ScrollReveal>
+          <EditableText
+            page="home"
+            section="lawyers"
+            fieldKey="heading"
+            defaultValue="로앤이를 이끄는 변호사"
+            tag="h2"
+            className="text-3xl font-medium text-gray-900 tracking-tight mb-12 md:mb-16"
+          />
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
           {lawyers.map((lawyer, i) => (
-            <ScrollReveal key={lawyer.key} delay={i * 0.15}>
-              <div className="text-center">
-                {/* Photo with deep green border + gold accent corner */}
-                <div className="relative w-full max-w-sm mx-auto mb-8">
-                  <div className="aspect-[3/4] bg-gray-100 overflow-hidden border-[3px] border-[#1B3B2F] shadow-sm">
-                    <EditableImage
-                      page="home"
-                      section="lawyers"
-                      fieldKey={`lawyer-${lawyer.key}-photo`}
-                      defaultSrc={lawyer.image}
-                      alt={lawyer.alt}
-                      width={600}
-                      height={800}
-                      className="w-full h-full object-cover hover:scale-[1.03] transition-all duration-700 ease-out"
-                    />
-                  </div>
-                  {/* Gold accent rectangle - bottom right */}
-                  <div className="absolute -bottom-2 -right-2 w-12 h-12 border-2 border-[#B8960C] pointer-events-none" />
-                </div>
-
-                <h3 className="text-xl font-bold text-black flex items-center justify-center gap-2">
+            <motion.div
+              key={lawyer.key}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15, ease: 'easeOut' }}
+            >
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-6">
+                <EditableImage
+                  page="home"
+                  section="lawyers"
+                  fieldKey={`lawyer-${lawyer.key}-photo`}
+                  defaultSrc={lawyer.image}
+                  alt={lawyer.alt}
+                  width={600}
+                  height={800}
+                  className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500"
+                />
+              </div>
+              <div>
+                <div className="flex items-baseline gap-2">
                   <EditableText
                     page="home"
                     section="lawyers"
                     fieldKey={`lawyer-${lawyer.key}-name`}
                     defaultValue={lawyer.name}
-                    tag="span"
+                    tag="h3"
+                    className="text-xl font-medium text-gray-900"
                   />
-                  <span className="font-sans text-base font-normal text-gray-400">{lawyer.role}</span>
-                  {/* Specialty pill tag */}
-                  <span className="inline-flex items-center px-2.5 py-0.5 text-[11px] font-medium bg-[#1B3B2F] text-white rounded-full">
-                    {lawyer.specialtyTag}
-                  </span>
-                </h3>
-                <EditableText
-                  page="home"
-                  section="lawyers"
-                  fieldKey={`lawyer-${lawyer.key}-specialty`}
-                  defaultValue={lawyer.specialty}
-                  tag="p"
-                  className="mt-1 text-sm text-accent font-medium"
-                />
+                  <span className="text-sm text-gray-400">{lawyer.role}</span>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {lawyer.tags.map((tag) => (
+                    <span key={tag} className="text-xs border border-gray-200 rounded-full px-3 py-1 text-gray-500">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
                 <EditableText
                   page="home"
                   section="lawyers"
                   fieldKey={`lawyer-${lawyer.key}-description`}
                   defaultValue={lawyer.description}
                   tag="p"
-                  className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line"
+                  className="mt-4 text-sm text-gray-500 leading-relaxed whitespace-pre-line"
                 />
               </div>
-            </ScrollReveal>
+            </motion.div>
           ))}
         </div>
       </div>

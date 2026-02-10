@@ -1,65 +1,54 @@
 'use client'
 
-import ScrollReveal from '@/components/ScrollReveal'
+import { motion } from 'framer-motion'
 import { useConsultation } from '@/components/ConsultationProvider'
 import { EditableText } from '@/components/Editable'
 
 export default function CtaSection() {
   const { openConsultation } = useConsultation()
-  return (
-    <section
-      className="py-16 sm:py-24 text-white relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #1B3B2F 0%, #2d5a47 50%, #1B3B2F 100%)',
-      }}
-    >
-      {/* Radial light effect */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%)',
-        }}
-      />
 
-      <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
-        <ScrollReveal>
+  return (
+    <section className="bg-[#1B3B2F]">
+      <div className="max-w-3xl mx-auto px-6 py-20 md:py-28 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
           <EditableText
             page="home"
             section="cta"
             fieldKey="title"
-            defaultValue={'혼자 앓지 마세요.\n지금 전문가와 이야기하세요.'}
+            defaultValue="혼자 힘들지 마세요."
             tag="h2"
-            className="text-2xl sm:text-4xl font-bold leading-snug whitespace-pre-line"
+            className="text-3xl font-medium text-white tracking-tight"
           />
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.1}>
           <EditableText
             page="home"
             section="cta"
             fieldKey="description"
-            defaultValue={'성범죄 전담 10년 변호사의\n상담을 지금 바로 받아보세요.'}
+            defaultValue="지금 전문가와 이야기하세요."
             tag="p"
-            className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed whitespace-pre-line"
+            className="mt-3 text-gray-400"
           />
-        </ScrollReveal>
+        </motion.div>
 
-        <ScrollReveal delay={0.2}>
-          <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button
-              onClick={() => openConsultation()}
-              className="w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-[#1B3B2F] text-base font-semibold rounded-xl hover:bg-gray-100 hover:border-[#B8960C] transition-all duration-300 min-h-[48px] border-2 border-transparent"
-            >
-              상담 신청하기
-            </button>
-            <a
-              href="tel:032-207-8788"
-              className="w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white text-base font-medium rounded-xl hover:border-white/60 transition-all duration-300 min-h-[48px]"
-            >
-              032-207-8788
-            </a>
-          </div>
-        </ScrollReveal>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+          className="mt-8"
+        >
+          <button
+            onClick={() => openConsultation()}
+            className="inline-flex items-center justify-center bg-white text-[#1B3B2F] rounded-full px-8 py-3.5 text-sm font-medium hover:bg-gray-100 transition-colors duration-200"
+          >
+            상담 신청하기
+          </button>
+          <p className="mt-4 text-sm text-white/50">032-207-8788</p>
+        </motion.div>
       </div>
     </section>
   )
