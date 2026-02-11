@@ -51,6 +51,15 @@ function getAuthorByCategory(category: string): string {
   }
 }
 
+function generateSlug(title: string): string {
+  return title
+    .replace(/[^\w\sㄱ-ㅎ가-힣]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+    .substring(0, 60)
+}
+
 interface BulkResult {
   type: 'done' | 'error' | 'skipped'
   index: number
@@ -295,6 +304,42 @@ export default function AdminDashboardPage() {
     return new Promise((resolve) => setTimeout(resolve, ms))
   }
 
+  async function generateWithRetry(topic: string, category: string, index: number, title: string, slug: string): Promise<Response> {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 55000)
+
+    try {
+      const res = await fetch('/api/generate-single-blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, category, index, title, slug }),
+        signal: controller.signal,
+      })
+      clearTimeout(timeout)
+      return res
+    } catch {
+      clearTimeout(timeout)
+      // Retry once on failure
+      console.log(`Retrying ${topic}...`)
+      await sleep(2000)
+      const controller2 = new AbortController()
+      const timeout2 = setTimeout(() => controller2.abort(), 55000)
+      try {
+        const res = await fetch('/api/generate-single-blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic, category, index, title, slug }),
+          signal: controller2.signal,
+        })
+        clearTimeout(timeout2)
+        return res
+      } catch (err) {
+        clearTimeout(timeout2)
+        throw err
+      }
+    }
+  }
+
   async function handleBulkGenerate() {
     if (bulkRunning) return
     if (!confirm('SEO 블로그 30개를 자동 생성합니다. 약 10~15분 소요됩니다. 진행하시겠습니까?')) return
@@ -318,15 +363,12 @@ export default function AdminDashboardPage() {
 
       const { topic, category } = TOPICS[i]
       const author = getAuthorByCategory(category)
+      const title = topic
+      const slug = generateSlug(topic)
       setBulkCurrent(`${topic} (${author})`)
 
       try {
-        const res = await fetch('/api/generate-single-blog', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ topic, category, index: i }),
-        })
-
+        const res = await generateWithRetry(topic, category, i, title, slug)
         const data = await res.json()
 
         if (data.skipped) {
@@ -371,7 +413,7 @@ export default function AdminDashboardPage() {
           topic,
           category,
           author,
-          error: err instanceof Error ? err.message : '네트워크 오류',
+          error: err instanceof Error ? err.message : '네트워크 오류 (타임아웃)',
         }])
       }
 
@@ -380,9 +422,9 @@ export default function AdminDashboardPage() {
         bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
       }, 100)
 
-      // Wait 3 seconds between requests (API rate limit prevention)
+      // Wait 5 seconds between requests (API rate limit + timeout prevention)
       if (i < TOPICS.length - 1 && !stopRef.current) {
-        await sleep(3000)
+        await sleep(5000)
       }
     }
 
