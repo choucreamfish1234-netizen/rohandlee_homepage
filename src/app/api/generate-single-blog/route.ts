@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
 - 피해자 감정 공감으로 시작
 - 소제목은 ## 사용
 - 중요 키워드 **볼드** 처리
-- 1500~2500자 분량
+- 글 분량은 1500~2000자 이내로 작성하세요. 핵심 내용 위주로 간결하게.
 - 마크다운 본문만 응답. JSON 금지. 코드블록으로 감싸지 마세요. 글 본문 텍스트만 응답하세요.`
 
     console.log('generate-single-blog: calling Claude for', topic)
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 3000,
+        max_tokens: 4096,
         system: systemPrompt,
         messages: [{
           role: 'user',
