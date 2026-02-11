@@ -11,7 +11,6 @@ import {
   getPostBySlug,
   getAdjacentPosts,
   getRelatedPosts,
-  incrementViewCount,
   getCategoryImagePool,
   getReadingTime,
   formatDate,
@@ -28,7 +27,6 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
   useEffect(() => {
     // If we already have the post from server-side, just load extras
     if (initialPost) {
-      incrementViewCount(initialPost.id)
       if (initialPost.published_at) {
         getAdjacentPosts(initialPost.published_at).then(setAdjacent)
       }
@@ -42,7 +40,6 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         const { post: data } = await getPostBySlug(slug)
         if (data) {
           setPost(data)
-          incrementViewCount(data.id)
           if (data.published_at) {
             getAdjacentPosts(data.published_at).then(setAdjacent)
           }

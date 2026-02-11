@@ -2,11 +2,25 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { Metadata } from 'next'
 import type { BlogPost } from '@/lib/blog'
 import BlogPostContent from './BlogPostContent'
+import ViewCounter from '@/components/ViewCounter'
 
 const baseUrl = 'https://rohandlee-homepage.vercel.app'
 
+export const revalidate = 3600
+
 interface Props {
   params: Promise<{ slug: string }>
+}
+
+export async function generateStaticParams() {
+  const { data: posts } = await supabaseAdmin
+    .from('blog_posts')
+    .select('slug')
+    .eq('status', 'published')
+
+  return (posts || []).map((post) => ({
+    slug: post.slug,
+  }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -120,6 +134,7 @@ export default async function Page({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
+      {post && <ViewCounter postId={post.id} />}
       <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost | null} />
     </>
   )
