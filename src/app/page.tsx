@@ -10,8 +10,8 @@ import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import DifferenceSection from '@/components/sections/DifferenceSection'
 import CasesSection from '@/components/sections/CasesSection'
 import LawyersSection from '@/components/sections/LawyersSection'
+import BlogHighlights from '@/components/BlogHighlights'
 import AppSection from '@/components/sections/AppSection'
-import BlogHighlightSection from '@/components/sections/BlogHighlightSection'
 import CtaSection from '@/components/sections/CtaSection'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -37,8 +37,8 @@ export default function Home() {
       <DifferenceSection />
       <CasesSection />
       <LawyersSection />
+      <BlogHighlights />
       <AppSection />
-      <BlogHighlightSection />
       <CtaSection />
     </>
   )
