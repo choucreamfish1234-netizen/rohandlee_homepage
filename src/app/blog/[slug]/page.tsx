@@ -102,15 +102,59 @@ export default async function Page({ params }: Props) {
     console.error('Blog post fetch error:', error.message, '| slug:', decodedSlug)
   }
 
-  // JSON-LD Article structured data
+  // Author info mapping for JSON-LD
+  const authorName = post?.author || '이유림 변호사'
+  const isLeeYurim = authorName.includes('이유림')
+  const authorJsonLd = {
+    '@type': 'Person' as const,
+    name: isLeeYurim ? '이유림' : '노채은',
+    jobTitle: isLeeYurim ? '대표변호사' : '변호사',
+    affiliation: {
+      '@type': 'LegalService' as const,
+      name: '법률사무소 로앤이',
+    },
+    knowsAbout: isLeeYurim
+      ? ['성범죄 피해자 변호', '디지털 포렌식', '피해자 국선변호', '스토킹 피해 변호']
+      : ['재산범죄 피해 구제', '보이스피싱 피해 변호', '개인회생', '개인파산'],
+  }
+
+  // Extract FAQ from markdown content for FAQPage schema
+  function extractFaqFromContent(content: string): { question: string; answer: string }[] {
+    const faqs: { question: string; answer: string }[] = []
+    const lines = content.split('\n')
+    let currentQ = ''
+    for (const line of lines) {
+      const qMatch = line.match(/\*?\*?Q:\s*(.+?)[\*]*$/)
+      const aMatch = line.match(/\*?\*?A:\*?\*?\s*(.+)$/)
+      if (qMatch) {
+        currentQ = qMatch[1].replace(/\*+/g, '').trim()
+      } else if (aMatch && currentQ) {
+        const answer = aMatch[1].replace(/\*+/g, '').replace(/\(.+?감수\)/g, '').trim()
+        if (answer) {
+          faqs.push({ question: currentQ, answer })
+        }
+        currentQ = ''
+      }
+    }
+    return faqs
+  }
+
+  // Determine about topic based on category
+  const aboutTopic = post ? (() => {
+    switch (post.category) {
+      case '성범죄': return '성범죄 피해자 법률 상담'
+      case '재산범죄': return '재산범죄 피해 법률 상담'
+      case '회생파산': return '개인회생·파산 법률 상담'
+      default: return '법률 상담'
+    }
+  })() : null
+
+  // JSON-LD Article structured data (GEO-enhanced)
   const jsonLd = post ? {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
-    author: {
-      '@type': 'Person',
-      name: post.author || '이유림 변호사',
-    },
+    author: authorJsonLd,
     publisher: {
       '@type': 'Organization',
       name: '법률사무소 로앤이',
@@ -124,6 +168,27 @@ export default async function Page({ params }: Props) {
       '@type': 'WebPage',
       '@id': `${baseUrl}/blog/${decodedSlug}`,
     },
+    about: {
+      '@type': 'Thing',
+      name: aboutTopic,
+    },
+    isAccessibleForFree: true,
+    inLanguage: 'ko',
+  } : null
+
+  // FAQPage schema (if content has Q&A section)
+  const faqs = post ? extractFaqFromContent(post.content || '') : []
+  const faqJsonLd = faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   } : null
 
   return (
@@ -132,6 +197,12 @@ export default async function Page({ params }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
       {post && <ViewCounter postId={post.id} />}

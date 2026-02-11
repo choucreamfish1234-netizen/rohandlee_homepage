@@ -98,6 +98,17 @@ export default function AdminDashboardPage() {
   const [naverCurrent, setNaverCurrent] = useState('')
   const [naverFailedList, setNaverFailedList] = useState<{ id: number; title: string; error: string }[]>([])
 
+  // GEO rewrite state
+  const [geoRewriting, setGeoRewriting] = useState(false)
+  const [geoPostId, setGeoPostId] = useState<number | null>(null)
+  const [geoResult, setGeoResult] = useState('')
+  const [geoBulkRunning, setGeoBulkRunning] = useState(false)
+  const [geoBulkTotal, setGeoBulkTotal] = useState(0)
+  const [geoBulkCompleted, setGeoBulkCompleted] = useState(0)
+  const [geoBulkErrors, setGeoBulkErrors] = useState(0)
+  const [geoBulkCurrent, setGeoBulkCurrent] = useState('')
+  const geoBulkStopRef = useRef(false)
+
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
@@ -386,6 +397,103 @@ export default function AdminDashboardPage() {
     setBulkCurrent('중지 요청됨...')
   }
 
+  async function handleGeoRewrite(postId: number) {
+    if (geoRewriting) return
+    setGeoRewriting(true)
+    setGeoPostId(postId)
+    setGeoResult('')
+    try {
+      const res = await fetch('/api/geo-rewrite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setGeoResult(`"${data.title}" GEO 리라이트 완료`)
+        fetchData()
+      } else {
+        setGeoResult(`오류: ${data.error}`)
+      }
+    } catch {
+      setGeoResult('GEO 리라이트 중 오류가 발생했습니다.')
+    } finally {
+      setGeoRewriting(false)
+      setGeoPostId(null)
+    }
+  }
+
+  async function handleGeoBulkRewrite() {
+    if (geoBulkRunning) return
+    if (!confirm('모든 게시된 블로그 글을 GEO 규칙에 맞게 리라이트합니다. 원본이 덮어쓰여집니다. 진행하시겠습니까?')) return
+
+    setGeoBulkRunning(true)
+    setGeoBulkCompleted(0)
+    setGeoBulkErrors(0)
+    setGeoResult('')
+    geoBulkStopRef.current = false
+
+    try {
+      const { data: targetPosts } = await supabase
+        .from('blog_posts')
+        .select('id, title')
+        .eq('status', 'published')
+        .order('created_at', { ascending: true })
+
+      const targets = targetPosts || []
+      if (targets.length === 0) {
+        setGeoResult('리라이트할 글이 없습니다.')
+        setGeoBulkRunning(false)
+        return
+      }
+
+      setGeoBulkTotal(targets.length)
+      let successCount = 0
+      let errorCount = 0
+
+      for (let i = 0; i < targets.length; i++) {
+        if (geoBulkStopRef.current) {
+          setGeoBulkCurrent('중지됨')
+          break
+        }
+
+        const post = targets[i]
+        setGeoBulkCurrent(`${i + 1}/${targets.length} - ${post.title}`)
+
+        try {
+          const res = await fetch('/api/geo-rewrite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ postId: post.id }),
+          })
+          const data = await res.json()
+          if (res.ok && data.success) {
+            successCount++
+            setGeoBulkCompleted(successCount)
+          } else {
+            errorCount++
+            setGeoBulkErrors(errorCount)
+          }
+        } catch {
+          errorCount++
+          setGeoBulkErrors(errorCount)
+        }
+
+        if (i < targets.length - 1 && !geoBulkStopRef.current) {
+          await sleep(2000)
+        }
+      }
+
+      setGeoBulkCurrent('')
+      setGeoResult(`GEO 리라이트 완료: ${successCount}개 성공, ${errorCount}개 실패`)
+      fetchData()
+    } catch {
+      setGeoResult('GEO 리라이트 중 오류가 발생했습니다.')
+    } finally {
+      setGeoBulkRunning(false)
+    }
+  }
+
   const filteredPosts = search
     ? posts.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()) || p.category.includes(search))
     : posts
@@ -613,6 +721,55 @@ export default function AdminDashboardPage() {
         )}
       </div>
 
+      {/* GEO Rewrite Section */}
+      <div className="mb-8 p-6 border border-purple-200 bg-purple-50/50 rounded-lg">
+        <h2 className="text-sm font-bold text-purple-900 mb-1">GEO 리라이트</h2>
+        <p className="text-xs text-purple-600 mb-4">
+          기존 블로그 글에 법조문 인용, Entity Linking, Q&A 섹션을 추가하여 AI 검색엔진 최적화를 강화합니다.
+          새로 생성하는 글에는 자동 적용됩니다.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={handleGeoBulkRewrite}
+            disabled={geoBulkRunning || bulkRunning}
+            className="px-5 py-2.5 bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
+          >
+            {geoBulkRunning ? 'GEO 리라이트 중...' : '전체 글 GEO 리라이트'}
+          </button>
+          {geoBulkRunning && (
+            <button
+              onClick={() => { geoBulkStopRef.current = true; setGeoBulkCurrent('중지 요청됨...') }}
+              className="px-5 py-2.5 bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors rounded"
+            >
+              중지
+            </button>
+          )}
+        </div>
+        {geoBulkRunning && geoBulkTotal > 0 && (
+          <div className="mt-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="flex-1 h-3 bg-purple-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-purple-600 rounded-full transition-all duration-300"
+                  style={{ width: `${((geoBulkCompleted + geoBulkErrors) / geoBulkTotal) * 100}%` }}
+                />
+              </div>
+              <span className="text-sm font-semibold text-black whitespace-nowrap">
+                {geoBulkCompleted + geoBulkErrors} / {geoBulkTotal}
+              </span>
+            </div>
+            <div className="flex items-center gap-4 text-xs text-gray-500">
+              <span className="text-emerald-600 font-medium">성공: {geoBulkCompleted}</span>
+              {geoBulkErrors > 0 && <span className="text-red-500 font-medium">실패: {geoBulkErrors}</span>}
+              <span className="animate-pulse">{geoBulkCurrent}</span>
+            </div>
+          </div>
+        )}
+        {geoResult && (
+          <p className="mt-3 text-xs text-purple-800 font-medium">{geoResult}</p>
+        )}
+      </div>
+
       {/* Delete All Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -732,6 +889,13 @@ export default function AdminDashboardPage() {
                   </span>
                 </div>
                 <div className="col-span-2 flex justify-end gap-2">
+                  <button
+                    onClick={() => handleGeoRewrite(post.id)}
+                    disabled={geoRewriting || geoBulkRunning}
+                    className="text-xs text-purple-500 hover:text-purple-700 disabled:opacity-50 transition-colors"
+                  >
+                    {geoPostId === post.id ? '...' : 'GEO'}
+                  </button>
                   <Link
                     href={`/admin/write?id=${post.id}`}
                     className="text-xs text-gray-500 hover:text-[#1B3B2F] transition-colors"
