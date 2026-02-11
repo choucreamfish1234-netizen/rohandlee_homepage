@@ -1,63 +1,56 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   type BlogPost,
   CATEGORIES,
-  getPublishedPosts,
-  getFeaturedPosts,
   getCategoryImagePool,
   getReadingTime,
   formatDate,
 } from '@/lib/blog'
 
-export default function BlogList() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [featured, setFeatured] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
+const POSTS_PER_PAGE = 9
+
+export default function BlogListClient({
+  initialPosts,
+  initialFeatured,
+}: {
+  initialPosts: BlogPost[]
+  initialFeatured: BlogPost[]
+}) {
+  const [featured] = useState<BlogPost[]>(initialFeatured)
   const [category, setCategory] = useState('전체')
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
+
+  // Derive pagination from filtered posts
+  const filteredPosts = useMemo(() => {
+    let result = initialPosts
+    if (category !== '전체') {
+      result = result.filter(p => p.category === category)
+    }
+    if (debouncedSearch) {
+      const q = debouncedSearch.toLowerCase()
+      result = result.filter(p =>
+        p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q)
+      )
+    }
+    return result
+  }, [initialPosts, category, debouncedSearch])
+
+  const totalCount = filteredPosts.length
+  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
+  const pagedPosts = filteredPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE)
 
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300)
     return () => clearTimeout(timer)
   }, [search])
-
-  // Fetch featured posts on mount
-  useEffect(() => {
-    getFeaturedPosts().then(setFeatured).catch(() => setFeatured([]))
-  }, [])
-
-  // Fetch posts
-  const fetchPosts = useCallback(async () => {
-    setLoading(true)
-    try {
-      const result = await getPublishedPosts({
-        page,
-        category: category === '전체' ? undefined : category,
-        search: debouncedSearch || undefined,
-      })
-      setPosts(result.posts)
-      setTotalPages(result.totalPages)
-      setTotalCount(result.totalCount)
-    } catch {
-      setPosts([])
-    } finally {
-      setLoading(false)
-    }
-  }, [page, category, debouncedSearch])
-
-  useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
 
   // Reset page when category/search changes
   useEffect(() => {
@@ -165,25 +158,11 @@ export default function BlogList() {
         </motion.div>
 
         {/* Results count */}
-        {!loading && (
-          <p className="text-xs text-gray-400 mb-6">
-            총 {totalCount}개의 글
-          </p>
-        )}
+        <p className="text-xs text-gray-400 mb-6">
+          총 {totalCount}개의 글
+        </p>
 
-        {/* Loading */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="animate-pulse">
-                <div className="aspect-[16/10] bg-gray-100 mb-4" />
-                <div className="h-3 bg-gray-100 w-1/4 mb-2" />
-                <div className="h-4 bg-gray-100 w-3/4 mb-2" />
-                <div className="h-3 bg-gray-100 w-1/2" />
-              </div>
-            ))}
-          </div>
-        ) : posts.length === 0 ? (
+        {pagedPosts.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -211,7 +190,7 @@ export default function BlogList() {
             {/* Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence mode="wait">
-                {posts.map((post, i) => (
+                {pagedPosts.map((post, i) => (
                   <motion.div
                     key={post.id}
                     initial={{ opacity: 0, y: 20 }}
