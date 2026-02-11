@@ -87,7 +87,7 @@ const jsonLd = {
   description: '성범죄·재산범죄 피해자 전문 법률사무소',
   url: baseUrl,
   telephone: '032-207-8788',
-  email: 'roandlee@roandlee.com',
+  email: 'rohandlee@naver.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '부일로205번길 54, 205호',
