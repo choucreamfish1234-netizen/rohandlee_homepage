@@ -18,7 +18,8 @@ export default function BlogHighlights() {
       const { data } = await supabase
         .from('blog_posts')
         .select('id, title, slug, category, thumbnail_url, author, created_at, view_count')
-        .eq('published', true)
+        .eq('status', 'published')
+        .lte('published_at', new Date().toISOString())
         .order('view_count', { ascending: false })
         .limit(10)
       if (data) setPosts(data)
@@ -26,14 +27,16 @@ export default function BlogHighlights() {
     fetchPosts()
   }, [])
 
-  if (posts.length === 0) return null
-
   return (
     <section className="bg-[#FAFAFA] py-16 md:py-24">
       <div className="text-center mb-10">
         <span className="text-xs tracking-widest text-gray-400 uppercase">INSIGHTS</span>
         <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mt-2">피해자를 위한 법률 정보</h2>
       </div>
+      {posts.length === 0 ? (
+        <p className="text-center text-gray-400 text-sm">게시글을 불러오는 중...</p>
+      ) : (
+      <>
       <div ref={scrollRef} className="overflow-x-auto scrollbar-hide snap-x snap-mandatory">
         <div className="flex gap-4 px-4 md:px-8 lg:px-16 pb-4" style={{ width: 'max-content' }}>
           {posts.map((post, i) => (
@@ -66,6 +69,8 @@ export default function BlogHighlights() {
       <div className="text-center mt-4">
         <a href="/blog" className="text-sm text-[#1B3B2F] hover:underline">블로그 더 보기 &rarr;</a>
       </div>
+      </>
+      )}
     </section>
   )
 }
