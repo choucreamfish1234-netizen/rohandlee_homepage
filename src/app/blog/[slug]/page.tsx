@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import type { BlogPost } from '@/lib/blog'
 import BlogPostContent from './BlogPostContent'
 
+const baseUrl = 'https://rohandlee-homepage.vercel.app'
+
 interface Props {
   params: Promise<{ slug: string }>
 }
@@ -12,14 +14,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const decodedSlug = decodeURIComponent(slug)
   const { data: post } = await supabaseAdmin
     .from('blog_posts')
-    .select('title, excerpt, meta_description')
+    .select('title, excerpt, meta_description, seo_description, thumbnail_url, author, created_at, content')
     .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
 
+  if (!post) {
+    return { title: '블로그 | 법률사무소 로앤이' }
+  }
+
+  const description = post.seo_description || post.meta_description || post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || '법률사무소 로앤이 블로그'
+  const title = `${post.title} | 법률사무소 로앤이`
+
   return {
-    title: post?.title || '블로그',
-    description: post?.meta_description || post?.excerpt || '법률사무소 로앤이 블로그',
+    title,
+    description,
+    alternates: {
+      canonical: `${baseUrl}/blog/${decodedSlug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description,
+      type: 'article',
+      publishedTime: post.created_at,
+      authors: [post.author || '이유림 변호사'],
+      images: post.thumbnail_url ? [post.thumbnail_url] : undefined,
+      url: `${baseUrl}/blog/${decodedSlug}`,
+      siteName: '법률사무소 로앤이',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description,
+      images: post.thumbnail_url ? [post.thumbnail_url] : undefined,
+    },
   }
 }
 
@@ -60,5 +88,39 @@ export default async function Page({ params }: Props) {
     console.error('Blog post fetch error:', error.message, '| slug:', decodedSlug)
   }
 
-  return <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost | null} />
+  // JSON-LD Article structured data
+  const jsonLd = post ? {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    author: {
+      '@type': 'Person',
+      name: post.author || '이유림 변호사',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '법률사무소 로앤이',
+      url: baseUrl,
+    },
+    datePublished: post.created_at,
+    dateModified: post.updated_at || post.created_at,
+    image: post.thumbnail_url || undefined,
+    description: post.seo_description || post.meta_description || post.excerpt || '',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/blog/${decodedSlug}`,
+    },
+  } : null
+
+  return (
+    <>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost | null} />
+    </>
+  )
 }
