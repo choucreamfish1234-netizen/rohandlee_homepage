@@ -108,14 +108,14 @@ export default async function Page({ params }: Props) {
   const authorJsonLd = {
     '@type': 'Person' as const,
     name: isLeeYurim ? '이유림' : '노채은',
-    jobTitle: isLeeYurim ? '대표변호사' : '변호사',
+    jobTitle: isLeeYurim ? '성범죄 피해자 전문 변호사' : '재산범죄 피해자 전문 변호사',
     affiliation: {
       '@type': 'LegalService' as const,
       name: '법률사무소 로앤이',
     },
     knowsAbout: isLeeYurim
-      ? ['성범죄 피해자 변호', '디지털 포렌식', '피해자 국선변호', '스토킹 피해 변호']
-      : ['재산범죄 피해 구제', '보이스피싱 피해 변호', '개인회생', '개인파산'],
+      ? ['성범죄 피해자 변호', '디지털 포렌식', '피해자 국선변호', '불법촬영', '스토킹']
+      : ['보이스피싱 피해 구제', '전세사기', '개인회생', '개인파산'],
   }
 
   // Extract FAQ from markdown content for FAQPage schema

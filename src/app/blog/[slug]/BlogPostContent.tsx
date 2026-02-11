@@ -298,6 +298,9 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
             무료 상담 신청
           </button>
         </div>
+
+        {/* Author Profile Box */}
+        <AuthorProfileBox author={post.author} category={post.category} />
       </motion.article>
 
       {/* Related Posts */}
@@ -337,5 +340,39 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         </div>
       )}
     </section>
+  )
+}
+
+function AuthorProfileBox({ author, category }: { author: string; category: string }) {
+  const isLee = author?.includes('이유림') || ['성범죄', '일반'].includes(category)
+
+  if (isLee) {
+    return (
+      <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
+        <Image src="/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+        <div>
+          <p className="font-medium text-gray-900">이유림 변호사</p>
+          <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
+          <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+            충북대학교 법학전문대학원 졸업. 서울지방변호사회 국선변호사.
+            디지털 포렌식 및 IT 법률에 정통한 피해자 전문 변호사.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
+      <Image src="/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+      <div>
+        <p className="font-medium text-gray-900">노채은 변호사</p>
+        <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·회생파산 전문</p>
+        <p className="text-xs text-gray-400 mt-1 leading-relaxed">
+          경북대학교 법학전문대학원 졸업. 대법원 국선변호인.
+          보이스피싱·전세사기 피해 구제 및 개인회생·파산에 정통한 전문 변호사.
+        </p>
+      </div>
+    </div>
   )
 }

@@ -276,9 +276,51 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
   )
 }
 
+const lawyerJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: '이유림',
+    jobTitle: '대표변호사',
+    worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
+    knowsAbout: ['성범죄 피해자 변호', '디지털 포렌식', 'IT 법률', '피해자 국선변호', '불법촬영', '스토킹'],
+    alumniOf: [
+      { '@type': 'CollegeOrUniversity', name: '한국외국어대학교' },
+      { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },
+    ],
+    memberOf: [
+      { '@type': 'Organization', name: '서울지방변호사회' },
+      { '@type': 'Organization', name: '대한난민지원변호사단' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: '노채은',
+    jobTitle: '대표변호사',
+    worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
+    knowsAbout: ['재산범죄 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
+    alumniOf: [
+      { '@type': 'CollegeOrUniversity', name: '중앙대학교' },
+      { '@type': 'CollegeOrUniversity', name: '경북대학교 법학전문대학원' },
+    ],
+    memberOf: [
+      { '@type': 'Organization', name: '대법원 국선변호인' },
+      { '@type': 'Organization', name: '한국소비자원 소송지원 변호사' },
+    ],
+  },
+]
+
 export default function LawyersSection() {
   return (
     <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
+      {lawyerJsonLd.map((ld, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
+        />
+      ))}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
