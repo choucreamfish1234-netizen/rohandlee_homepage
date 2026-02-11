@@ -23,23 +23,31 @@ function formatDate(dateStr: string) {
 
 export default function BlogHighlightSection() {
   const [posts, setPosts] = useState<BlogPost[]>([])
+  const [loaded, setLoaded] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     async function fetchPosts() {
-      const { data } = await supabase
-        .from('blog_posts')
-        .select('id, title, slug, category, thumbnail_url, author, created_at, view_count')
-        .eq('published', true)
-        .order('view_count', { ascending: false })
-        .limit(10)
+      try {
+        const { data } = await supabase
+          .from('blog_posts')
+          .select('id, title, slug, category, thumbnail_url, author, created_at, view_count')
+          .eq('published', true)
+          .order('view_count', { ascending: false })
+          .limit(10)
 
-      if (data) setPosts(data)
+        if (data && data.length > 0) setPosts(data)
+      } catch (err) {
+        console.error('Blog fetch error:', err)
+      } finally {
+        setLoaded(true)
+      }
     }
     fetchPosts()
   }, [])
 
-  if (posts.length === 0) return null
+  // Hide only after load confirms no posts
+  if (loaded && posts.length === 0) return null
 
   return (
     <motion.section
@@ -62,7 +70,19 @@ export default function BlogHighlightSection() {
         className="mt-10 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
       >
         <div className="flex gap-4 px-4 md:px-8 lg:px-16 pb-4" style={{ width: 'max-content' }}>
-          {posts.map((post, i) => (
+          {!loaded ? (
+            // Loading skeleton
+            Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="snap-start flex-shrink-0 w-[260px] md:w-[320px] bg-white rounded-2xl overflow-hidden border border-gray-100">
+                <div className="aspect-[16/10] bg-gray-100 animate-pulse" />
+                <div className="p-4 space-y-2">
+                  <div className="h-3 w-16 bg-gray-100 rounded animate-pulse" />
+                  <div className="h-4 w-full bg-gray-100 rounded animate-pulse" />
+                  <div className="h-3 w-24 bg-gray-100 rounded animate-pulse" />
+                </div>
+              </div>
+            ))
+          ) : posts.map((post, i) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}
