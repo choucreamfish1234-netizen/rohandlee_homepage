@@ -480,7 +480,7 @@ export default function AdminDashboardPage() {
         }
 
         if (i < targets.length - 1 && !geoBulkStopRef.current) {
-          await sleep(2000)
+          await sleep(3000)
         }
       }
 

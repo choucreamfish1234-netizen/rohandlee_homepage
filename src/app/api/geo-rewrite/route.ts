@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
-import { parseAIResponse } from '@/lib/parse-ai-response'
-import { getAuthorByCategory, buildGeoRewritePrompt } from '@/lib/geo-prompt'
+import { getAuthorByCategory } from '@/lib/geo-prompt'
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,30 +18,31 @@ export async function POST(req: NextRequest) {
     // Fetch existing post
     const { data: post, error: fetchError } = await supabaseAdmin
       .from('blog_posts')
-      .select('*')
+      .select('id, title, content, category, author')
       .eq('id', postId)
       .single()
 
     if (fetchError || !post) {
+      console.error('GEO rewrite: post fetch error', fetchError?.message, 'postId:', postId)
       return NextResponse.json({ error: '글을 찾을 수 없습니다.' }, { status: 404 })
     }
 
     const author = post.author || getAuthorByCategory(post.category)
-    const systemPrompt = buildGeoRewritePrompt(author, post.category)
+    const authorName = author.replace(' 변호사', '')
 
-    const userPrompt = `아래 기존 블로그 글을 GEO 관점에서 리라이트해주세요.
+    const systemPrompt = `당신은 법률사무소 로앤이의 ${author}입니다.
+아래 블로그 글을 GEO(Generative Engine Optimization) 최적화해서 리라이트하세요.
 
-[기존 글 제목]: ${post.title}
-[카테고리]: ${post.category}
-[작성자]: ${author}
+[필수 추가 요소]
+1. 관련 법조문 최소 3개 인용 (형법, 성폭력처벌법 등 조문 번호 명시)
+2. "${authorName} 변호사"를 전문성과 묶어서 최소 3회 언급
+3. 글 하단에 "## 자주 묻는 질문" Q&A 3~5개 추가 (**Q: 질문** / **A:** 답변 형식)
+4. 글 상단에 "작성: ${author} (법률사무소 로앤이)" 추가
+5. 글 하단에 "본 글은 법률사무소 로앤이 ${author}가 직접 작성·감수한 법률 정보입니다." 추가
+6. 기존 말투와 톤 유지
+7. 마크다운 형식으로만 응답. JSON이나 코드블록으로 감싸지 마세요. 글 내용만 응답하세요.`
 
-[기존 홈페이지용 본문 (마크다운)]:
-${post.content}
-
-[기존 네이버용 본문 (HTML)]:
-${post.naver_content || '(없음 - 새로 생성해주세요)'}
-
-위 글을 GEO 규칙에 맞게 리라이트해주세요. 법조문, Entity Linking, Q&A 섹션을 추가/보강하세요.`
+    console.log('GEO rewrite: calling Claude API for post', postId, post.title)
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -53,46 +53,52 @@ ${post.naver_content || '(없음 - 새로 생성해주세요)'}
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-5-20250929',
-        max_tokens: 8192,
+        max_tokens: 4096,
         system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
+        messages: [{
+          role: 'user',
+          content: `다음 블로그 글을 GEO 최적화해서 리라이트해주세요:\n\n제목: ${post.title}\n카테고리: ${post.category}\n\n${post.content}`,
+        }],
       }),
     })
 
     if (!response.ok) {
       const err = await response.text()
-      console.error('Claude API error:', response.status, err)
+      console.error('GEO rewrite: Claude API error', response.status, err.substring(0, 300))
       return NextResponse.json({
-        error: `AI 리라이트 실패 (HTTP ${response.status})`,
+        error: `AI API 오류 (HTTP ${response.status}): ${err.substring(0, 100)}`,
       }, { status: 500 })
     }
 
     const data = await response.json()
-    const text = data.content?.[0]?.text || ''
-    const parsed = parseAIResponse(text)
+    const rewrittenContent = data.content?.[0]?.text || ''
 
-    // Update the post with rewritten content
-    const updateData: Record<string, unknown> = {
-      content: parsed.content || post.content,
-      updated_at: new Date().toISOString(),
-    }
-    if (parsed.naverContent) {
-      updateData.naver_content = parsed.naverContent
-    }
-    if (parsed.meta_description) {
-      updateData.meta_description = parsed.meta_description
+    if (!rewrittenContent || rewrittenContent.length < 100) {
+      console.error('GEO rewrite: empty or too short response', rewrittenContent.substring(0, 200))
+      return NextResponse.json({
+        error: 'AI 응답이 비어있거나 너무 짧습니다.',
+      }, { status: 500 })
     }
 
+    console.log('GEO rewrite: got response, length:', rewrittenContent.length, 'for post', postId)
+
+    // Update content directly (no JSON parsing needed)
     const { error: updateError } = await supabaseAdmin
       .from('blog_posts')
-      .update(updateData)
+      .update({
+        content: rewrittenContent,
+        updated_at: new Date().toISOString(),
+      })
       .eq('id', postId)
 
     if (updateError) {
+      console.error('GEO rewrite: DB update error', updateError.message)
       return NextResponse.json({
         error: `DB 업데이트 실패: ${updateError.message}`,
       }, { status: 500 })
     }
+
+    console.log('GEO rewrite: success for post', postId, post.title)
 
     return NextResponse.json({
       success: true,
@@ -100,7 +106,7 @@ ${post.naver_content || '(없음 - 새로 생성해주세요)'}
       postId,
     })
   } catch (error) {
-    console.error('GEO rewrite error:', error)
+    console.error('GEO rewrite: unexpected error', error)
     const message = error instanceof Error ? error.message : '알 수 없는 오류'
     return NextResponse.json({ error: `서버 오류: ${message}` }, { status: 500 })
   }
