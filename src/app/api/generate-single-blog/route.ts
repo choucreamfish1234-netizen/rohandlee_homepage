@@ -26,10 +26,11 @@ export async function POST(req: NextRequest) {
     const finalTitle = preTitle || topic
     let slug = preSlug || topic.toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/(^-|-$)/g, '').substring(0, 80)
 
-    // Duplicate check
+    // Duplicate check — only against published posts
     const { data: existingPosts } = await supabaseAdmin
       .from('blog_posts')
       .select('id, title, slug')
+      .eq('status', 'published')
 
     if (existingPosts && existingPosts.length > 0) {
       const topicWords = topic.toLowerCase().replace(/[^가-힣a-z0-9\s]/g, '').split(/\s+/).filter((w: string) => w.length > 1)
@@ -49,11 +50,12 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Slug duplicate check
+    // Slug duplicate check — only against published posts
     const { data: slugCheck } = await supabaseAdmin
       .from('blog_posts')
       .select('id')
       .eq('slug', slug)
+      .eq('status', 'published')
       .maybeSingle()
     if (slugCheck) {
       slug = `${slug}-${Date.now()}`
