@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { type BlogPost, getAllPosts, getAdminStats, deletePost, updatePost, formatDate } from '@/lib/blog'
 import { supabase } from '@/lib/supabase'
 
-const TOPICS = [
+const TOPICS_SET1 = [
   { topic: '성범죄 피해를 당했을 때 가장 먼저 해야 할 것들', category: '성범죄' },
   { topic: '디지털 성범죄 증거, 이렇게 보존하세요', category: '성범죄' },
   { topic: '스토킹 피해, 접근금지 가처분으로 나를 지키는 방법', category: '성범죄' },
@@ -38,6 +38,48 @@ const TOPICS = [
   { topic: '고소와 고발의 차이, 헷갈리시죠', category: '일반' },
   { topic: '좋은 변호사 선택하는 기준 5가지', category: '일반' },
 ]
+
+const TOPICS_SET2 = [
+  // 성범죄 10개 (새 주제)
+  { topic: '성범죄 합의, 해야 할까요? 피해자가 알아야 할 모든 것', category: '성범죄' },
+  { topic: '성범죄 무고 역고소, 겁먹지 마세요', category: '성범죄' },
+  { topic: '직장 내 성희롱, 회사가 묵인하면 어떻게 해야 하나요', category: '성범죄' },
+  { topic: '미성년자 성범죄 피해, 부모가 먼저 해야 할 일', category: '성범죄' },
+  { topic: '성범죄 피해자 국선변호사 제도 완벽 가이드', category: '성범죄' },
+  { topic: '온라인 그루밍 범죄, 자녀를 지키는 법', category: '성범죄' },
+  { topic: '성범죄 재판 절차, 피해자는 무엇을 준비해야 하나요', category: '성범죄' },
+  { topic: '성범죄 피해자 신변보호 제도 총정리', category: '성범죄' },
+  { topic: '술자리 성범죄, 준강간죄 성립 요건과 증거', category: '성범죄' },
+  { topic: '성범죄 손해배상 청구, 민사소송 가이드', category: '성범죄' },
+
+  // 재산범죄 10개 (새 주제)
+  { topic: '중고거래 사기 당했을 때 환불받는 방법', category: '재산범죄' },
+  { topic: '보이스피싱 피해금 환급, 아직 늦지 않았습니다', category: '재산범죄' },
+  { topic: '전세보증금 못 돌려받을 때 법적 대응 절차', category: '재산범죄' },
+  { topic: '투자 사기 피해, 원금 회수할 수 있을까요', category: '재산범죄' },
+  { topic: '횡령 배임 피해, 고소부터 민사소송까지', category: '재산범죄' },
+  { topic: '인터넷 쇼핑몰 사기 피해 신고와 구제 방법', category: '재산범죄' },
+  { topic: '지인에게 빌려준 돈 못 받을 때 법적 해결법', category: '재산범죄' },
+  { topic: '가상화폐 사기 피해, 법적으로 보호받을 수 있나요', category: '재산범죄' },
+  { topic: '공사대금 미지급, 하도급 대금 받는 방법', category: '재산범죄' },
+  { topic: '명의도용 피해, 즉시 해야 할 5가지', category: '재산범죄' },
+
+  // 회생파산 5개 (새 주제)
+  { topic: '개인회생과 개인파산, 나에게 맞는 선택은', category: '회생파산' },
+  { topic: '개인회생 신청 자격과 절차 총정리', category: '회생파산' },
+  { topic: '개인파산 면책 후 불이익, 실제로 어떤가요', category: '회생파산' },
+  { topic: '채무 독촉에 시달릴 때, 당장 할 수 있는 것들', category: '회생파산' },
+  { topic: '소상공인 폐업 후 채무 정리 방법', category: '회생파산' },
+
+  // 일반 5개 (새 주제)
+  { topic: '형사 고소장 작성법, 핵심만 알려드립니다', category: '일반' },
+  { topic: '합의서 작성 시 반드시 넣어야 할 조항들', category: '일반' },
+  { topic: '내용증명 보내는 법과 효과', category: '일반' },
+  { topic: '법률구조공단 무료 법률 상담 이용 가이드', category: '일반' },
+  { topic: '민사소송 비용, 실제로 얼마나 드나요', category: '일반' },
+]
+
+const ALL_TOPICS = [...TOPICS_SET1, ...TOPICS_SET2]
 
 function getAuthorByCategory(category: string): string {
   switch (category) {
@@ -118,9 +160,29 @@ export default function AdminDashboardPage() {
   const [geoBulkCurrent, setGeoBulkCurrent] = useState('')
   const geoBulkStopRef = useRef(false)
 
+  // Blog topic availability state
+  const [availableTopicCount, setAvailableTopicCount] = useState<number | null>(null)
+  const [existingPostCount, setExistingPostCount] = useState<number>(0)
+
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
+
+  async function fetchAvailableTopics() {
+    try {
+      const { data: existing } = await supabase
+        .from('blog_posts')
+        .select('title')
+        .eq('status', 'published')
+
+      const existingTitles = new Set((existing || []).map((p: { title: string }) => p.title))
+      const available = ALL_TOPICS.filter((t) => !existingTitles.has(t.topic))
+      setAvailableTopicCount(available.length)
+      setExistingPostCount(existing?.length || 0)
+    } catch {
+      // ignore
+    }
+  }
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -128,6 +190,7 @@ export default function AdminDashboardPage() {
       return
     }
     fetchData()
+    fetchAvailableTopics()
   }, [router])
 
   async function fetchData() {
@@ -151,6 +214,8 @@ export default function AdminDashboardPage() {
     } catch {
       // ignore
     }
+
+    fetchAvailableTopics()
   }
 
   async function handleDelete(id: number) {
@@ -342,26 +407,41 @@ export default function AdminDashboardPage() {
 
   async function handleBulkGenerate() {
     if (bulkRunning) return
-    if (!confirm('SEO 블로그 30개를 자동 생성합니다. 약 10~15분 소요됩니다. 진행하시겠습니까?')) return
+
+    // 1. DB에서 기존 글 title 목록 조회
+    const { data: existing } = await supabase
+      .from('blog_posts')
+      .select('title')
+      .eq('status', 'published')
+
+    const existingTitles = new Set((existing || []).map((p: { title: string }) => p.title))
+    const newTopics = ALL_TOPICS.filter((t) => !existingTitles.has(t.topic)).slice(0, 30)
+
+    if (newTopics.length === 0) {
+      alert('생성할 새 주제가 없습니다. 기존 글을 삭제하거나 주제를 추가해주세요.')
+      return
+    }
+
+    if (!confirm(`DB에 없는 새 주제 ${newTopics.length}개를 생성합니다. 약 ${Math.ceil(newTopics.length / 3)}~${Math.ceil(newTopics.length / 2)}분 소요됩니다. 진행하시겠습니까?`)) return
 
     setBulkRunning(true)
     setBulkCompleted(0)
     setBulkErrors(0)
     setBulkSkipped(0)
-    setBulkTotal(TOPICS.length)
+    setBulkTotal(newTopics.length)
     setBulkCurrent('시작 중...')
     setBulkResults([])
     setBulkDone(false)
     stopRef.current = false
 
-    for (let i = 0; i < TOPICS.length; i++) {
+    for (let i = 0; i < newTopics.length; i++) {
       // Check if stop was requested
       if (stopRef.current) {
         setBulkCurrent('중지됨')
         break
       }
 
-      const { topic, category } = TOPICS[i]
+      const { topic, category } = newTopics[i]
       const author = getAuthorByCategory(category)
       const title = topic
       const slug = generateSlug(topic)
@@ -423,7 +503,7 @@ export default function AdminDashboardPage() {
       }, 100)
 
       // Wait 5 seconds between requests (API rate limit + timeout prevention)
-      if (i < TOPICS.length - 1 && !stopRef.current) {
+      if (i < newTopics.length - 1 && !stopRef.current) {
         await sleep(5000)
       }
     }
@@ -627,16 +707,26 @@ export default function AdminDashboardPage() {
       <div className="mb-8 p-6 border border-gray-200 bg-gray-50 rounded-lg">
         <h2 className="text-sm font-bold text-black mb-3">SEO 블로그 대량 생성</h2>
         <p className="text-xs text-gray-500 mb-4">
-          성범죄(10개), 재산범죄(10개), 회생파산(5개), 일반(5개) 총 30개 블로그 글을 AI로 자동 생성합니다.
-          카테고리별 담당 변호사 말투가 자동 적용됩니다. 중복 주제는 자동으로 건너뜁니다.
+          총 {ALL_TOPICS.length}개 주제 풀 (1세트 30개 + 2세트 30개)에서 DB에 없는 주제만 자동 생성합니다.
+          카테고리별 담당 변호사 말투가 자동 적용됩니다.
         </p>
+        {availableTopicCount !== null && (
+          <div className="flex flex-wrap items-center gap-4 mb-4 text-xs">
+            <span className="px-3 py-1.5 bg-white border border-gray-200 rounded font-medium text-gray-700">
+              현재 블로그 글: <span className="text-black font-bold">{existingPostCount}개</span>
+            </span>
+            <span className={`px-3 py-1.5 rounded font-medium ${availableTopicCount > 0 ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-red-50 border border-red-200 text-red-600'}`}>
+              생성 가능한 새 주제: <span className="font-bold">{availableTopicCount}개</span>
+            </span>
+          </div>
+        )}
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={handleBulkGenerate}
-            disabled={bulkRunning}
+            disabled={bulkRunning || availableTopicCount === 0}
             className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
           >
-            {bulkRunning ? '생성 중...' : 'SEO 블로그 30개 자동 생성'}
+            {bulkRunning ? '생성 중...' : availableTopicCount === 0 ? '생성할 주제 없음' : `새 주제 ${availableTopicCount !== null ? Math.min(availableTopicCount, 30) : ''}개 자동 생성`}
           </button>
           {bulkRunning && (
             <button
