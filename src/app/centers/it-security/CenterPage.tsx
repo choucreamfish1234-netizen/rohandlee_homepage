@@ -298,14 +298,14 @@ export default function ITSecurityCenterPage() {
           role: '대표변호사',
           specialty: 'IT·보안 법률 전문 변호사',
           quote: '디지털 시대의 새로운 위협에\n법률로 대응하겠습니다.',
-          image: '/lawyer-lee.svg',
+          image: '/images/lawyers/lawyer-lee.svg',
         },
         {
           name: '노채은',
           role: '대표변호사',
           specialty: 'IT·보안 법률 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/lawyer-noh.svg',
+          image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
       ctaTitle="디지털 피해, 혼자 대응하지 마세요."

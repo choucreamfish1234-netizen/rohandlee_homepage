@@ -32,7 +32,7 @@ const lawyers: LawyerData[] = [
     role: '대표변호사',
     specialtyTag: '성범죄 전문',
     description: '끝까지 당신의 편에 서겠습니다. 피해자의 시간 앞에서 겸허히 걷겠습니다.',
-    image: '/lawyer-lee.svg',
+    image: '/images/lawyers/lawyer-lee.svg',
     alt: '이유림 대표변호사 프로필',
     cases: [
       '강간·준강간', '카메라이용촬영', '협박', '성범죄피해 형사고소',
@@ -69,7 +69,7 @@ const lawyers: LawyerData[] = [
     role: '대표변호사',
     specialtyTag: '재산범죄 전문',
     description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는 마음이 있습니다.',
-    image: '/lawyer-noh.svg',
+    image: '/images/lawyers/lawyer-noh.svg',
     alt: '노채은 대표변호사 프로필',
     cases: [
       '사기·횡령·배임', '재산범죄 민사소송', '학교폭력',
