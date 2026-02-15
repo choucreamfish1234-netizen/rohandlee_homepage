@@ -576,6 +576,19 @@ export default function SincerityContent() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            custom={0.35}
+            variants={fadeInUp}
+            className="mt-6 inline-flex items-center gap-2 bg-[#1B3B2F]/10 border border-[#1B3B2F]/20 rounded-full px-5 py-2.5"
+          >
+            <span className="text-sm md:text-base font-semibold text-[#1B3B2F]">
+              로앤이 의뢰인은 변호사 검토 무제한 무료
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
             custom={0.4}
             variants={fadeInUp}
             className="mt-10"
