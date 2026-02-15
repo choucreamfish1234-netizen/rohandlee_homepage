@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 import { EditableText } from '@/components/Editable'
 
@@ -31,52 +32,54 @@ export default function AppSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-10">
           {/* 진심의 무게 */}
           <ScrollReveal delay={0.1}>
-            <div className="bg-[#f5f8f6] p-6 sm:p-10 border border-gray-100 h-full flex flex-col hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-              <div className="w-20 h-20 mx-auto mb-8 bg-[#1B3B2F] rounded-lg flex items-center justify-center">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                  <path d="M2 2l7.586 7.586" />
-                  <circle cx="11" cy="11" r="2" />
-                </svg>
-              </div>
-              <div className="text-center flex-1">
-                <EditableText
-                  page="home"
-                  section="app"
-                  fieldKey="app1-title"
-                  defaultValue="진심의 무게"
-                  tag="h3"
-                  className="text-lg font-semibold text-black"
-                />
-                <EditableText
-                  page="home"
-                  section="app"
-                  fieldKey="app1-subtitle"
-                  defaultValue="피해자의 진심을, 법의 언어로."
-                  tag="p"
-                  className="mt-2 text-sm text-accent font-medium"
-                />
-                <EditableText
-                  page="home"
-                  section="app"
-                  fieldKey="app1-desc"
-                  defaultValue="쉬운 질문에 답하기만 하면, AI가 법원 제출용 엄벌 탄원서를 자동으로 완성합니다. 피해 유형 선택부터 정신적·신체적 피해 체크, Word 파일 다운로드까지. 전문 변호사 검토 서비스도 제공합니다."
-                  tag="p"
-                  className="mt-4 text-sm text-gray-400 leading-relaxed"
-                />
-                <div className="mt-6 flex flex-wrap justify-center gap-2">
-                  <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">AI 탄원서 작성</span>
-                  <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">Word 다운로드</span>
-                  <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">변호사 검토</span>
+            <Link href="/apps/sincerity" className="block h-full">
+              <div className="bg-[#f5f8f6] p-6 sm:p-10 border border-gray-100 h-full flex flex-col hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                <div className="w-20 h-20 mx-auto mb-8 bg-[#1B3B2F] rounded-lg flex items-center justify-center">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                    <path d="M2 2l7.586 7.586" />
+                    <circle cx="11" cy="11" r="2" />
+                  </svg>
+                </div>
+                <div className="text-center flex-1">
+                  <EditableText
+                    page="home"
+                    section="app"
+                    fieldKey="app1-title"
+                    defaultValue="진심의 무게"
+                    tag="h3"
+                    className="text-lg font-semibold text-black"
+                  />
+                  <EditableText
+                    page="home"
+                    section="app"
+                    fieldKey="app1-subtitle"
+                    defaultValue="피해자의 진심을, 법의 언어로."
+                    tag="p"
+                    className="mt-2 text-sm text-accent font-medium"
+                  />
+                  <EditableText
+                    page="home"
+                    section="app"
+                    fieldKey="app1-desc"
+                    defaultValue="쉬운 질문에 답하기만 하면, AI가 법원 제출용 엄벌 탄원서를 자동으로 완성합니다. 피해 유형 선택부터 정신적·신체적 피해 체크, Word 파일 다운로드까지. 전문 변호사 검토 서비스도 제공합니다."
+                    tag="p"
+                    className="mt-4 text-sm text-gray-400 leading-relaxed"
+                  />
+                  <div className="mt-6 flex flex-wrap justify-center gap-2">
+                    <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">AI 탄원서 작성</span>
+                    <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">Word 다운로드</span>
+                    <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">변호사 검토</span>
+                  </div>
+                </div>
+                <div className="mt-8 text-center">
+                  <span className="text-sm text-black font-medium hover:text-accent transition-colors">
+                    자세히 보기 &rarr;
+                  </span>
                 </div>
               </div>
-              <div className="mt-8 text-center">
-                <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" className="text-sm text-black font-medium hover:text-accent transition-colors">
-                  자세히 보기 &rarr;
-                </a>
-              </div>
-            </div>
+            </Link>
           </ScrollReveal>
 
           {/* 리셋 RE-Set */}

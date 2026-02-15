@@ -6,80 +6,14 @@ import Link from 'next/link'
 import { type BlogPost, getAllPosts, getAdminStats, deletePost, updatePost, formatDate } from '@/lib/blog'
 import { supabase } from '@/lib/supabase'
 
-const TOPICS_SET1 = [
-  { topic: '성범죄 피해를 당했을 때 가장 먼저 해야 할 것들', category: '성범죄' },
-  { topic: '디지털 성범죄 증거, 이렇게 보존하세요', category: '성범죄' },
-  { topic: '스토킹 피해, 접근금지 가처분으로 나를 지키는 방법', category: '성범죄' },
-  { topic: '불법촬영 피해를 발견했다면 당황하지 마세요', category: '성범죄' },
-  { topic: '데이트폭력, 사랑이 아니라 범죄입니다', category: '성범죄' },
-  { topic: '딥페이크 성범죄 피해자가 알아야 할 모든 것', category: '성범죄' },
-  { topic: '리벤지포르노 유포 피해, 혼자 해결하려 하지 마세요', category: '성범죄' },
-  { topic: '성범죄 피해자 국선변호사 제도 활용하는 방법', category: '성범죄' },
-  { topic: '직장 내 성희롱 피해, 어디에 어떻게 신고하나요', category: '성범죄' },
-  { topic: '아동 청소년 대상 성범죄 신고와 보호 절차', category: '성범죄' },
-  { topic: '보이스피싱 피해금 환급받는 방법 총정리', category: '재산범죄' },
-  { topic: '전세사기 피해자 특별법, 이렇게 활용하세요', category: '재산범죄' },
-  { topic: '투자사기 피해 민형사 동시 진행하는 전략', category: '재산범죄' },
-  { topic: '횡령 배임 피해자의 고소장 이렇게 쓰세요', category: '재산범죄' },
-  { topic: '사기죄 고소할 때 꼭 필요한 증거 체크리스트', category: '재산범죄' },
-  { topic: '중고거래 사기 당했을 때 대처법', category: '재산범죄' },
-  { topic: '보험사기 피해자가 보상받는 절차', category: '재산범죄' },
-  { topic: '임금체불 피해, 체불 사업주를 처벌하는 방법', category: '재산범죄' },
-  { topic: '온라인 쇼핑몰 사기 피해 신고와 환불 받기', category: '재산범죄' },
-  { topic: '가상화폐 투자사기 피해 구제 방법', category: '재산범죄' },
-  { topic: '개인회생 신청 자격, 나도 가능할까요', category: '회생파산' },
-  { topic: '개인파산 면책까지의 과정 쉽게 정리', category: '회생파산' },
-  { topic: '개인회생 vs 개인파산, 나에게 맞는 선택은', category: '회생파산' },
-  { topic: '신용회복위원회 vs 개인회생, 뭐가 다른가요', category: '회생파산' },
-  { topic: '개인회생 중 주의해야 할 것들', category: '회생파산' },
-  { topic: '형사 고소장, 어렵지 않게 작성하는 방법', category: '일반' },
-  { topic: '합의금 협상할 때 피해자가 꼭 알아야 할 것', category: '일반' },
-  { topic: '피해자가 법정에 서야 할 때 준비하는 방법', category: '일반' },
-  { topic: '고소와 고발의 차이, 헷갈리시죠', category: '일반' },
-  { topic: '좋은 변호사 선택하는 기준 5가지', category: '일반' },
-]
-
-const TOPICS_SET2 = [
-  // 성범죄 10개 (새 주제)
-  { topic: '성범죄 합의, 해야 할까요? 피해자가 알아야 할 모든 것', category: '성범죄' },
-  { topic: '성범죄 무고 역고소, 겁먹지 마세요', category: '성범죄' },
-  { topic: '직장 내 성희롱, 회사가 묵인하면 어떻게 해야 하나요', category: '성범죄' },
-  { topic: '미성년자 성범죄 피해, 부모가 먼저 해야 할 일', category: '성범죄' },
-  { topic: '성범죄 피해자 국선변호사 제도 완벽 가이드', category: '성범죄' },
-  { topic: '온라인 그루밍 범죄, 자녀를 지키는 법', category: '성범죄' },
-  { topic: '성범죄 재판 절차, 피해자는 무엇을 준비해야 하나요', category: '성범죄' },
-  { topic: '성범죄 피해자 신변보호 제도 총정리', category: '성범죄' },
-  { topic: '술자리 성범죄, 준강간죄 성립 요건과 증거', category: '성범죄' },
-  { topic: '성범죄 손해배상 청구, 민사소송 가이드', category: '성범죄' },
-
-  // 재산범죄 10개 (새 주제)
-  { topic: '중고거래 사기 당했을 때 환불받는 방법', category: '재산범죄' },
-  { topic: '보이스피싱 피해금 환급, 아직 늦지 않았습니다', category: '재산범죄' },
-  { topic: '전세보증금 못 돌려받을 때 법적 대응 절차', category: '재산범죄' },
-  { topic: '투자 사기 피해, 원금 회수할 수 있을까요', category: '재산범죄' },
-  { topic: '횡령 배임 피해, 고소부터 민사소송까지', category: '재산범죄' },
-  { topic: '인터넷 쇼핑몰 사기 피해 신고와 구제 방법', category: '재산범죄' },
-  { topic: '지인에게 빌려준 돈 못 받을 때 법적 해결법', category: '재산범죄' },
-  { topic: '가상화폐 사기 피해, 법적으로 보호받을 수 있나요', category: '재산범죄' },
-  { topic: '공사대금 미지급, 하도급 대금 받는 방법', category: '재산범죄' },
-  { topic: '명의도용 피해, 즉시 해야 할 5가지', category: '재산범죄' },
-
-  // 회생파산 5개 (새 주제)
-  { topic: '개인회생과 개인파산, 나에게 맞는 선택은', category: '회생파산' },
-  { topic: '개인회생 신청 자격과 절차 총정리', category: '회생파산' },
-  { topic: '개인파산 면책 후 불이익, 실제로 어떤가요', category: '회생파산' },
-  { topic: '채무 독촉에 시달릴 때, 당장 할 수 있는 것들', category: '회생파산' },
-  { topic: '소상공인 폐업 후 채무 정리 방법', category: '회생파산' },
-
-  // 일반 5개 (새 주제)
-  { topic: '형사 고소장 작성법, 핵심만 알려드립니다', category: '일반' },
-  { topic: '합의서 작성 시 반드시 넣어야 할 조항들', category: '일반' },
-  { topic: '내용증명 보내는 법과 효과', category: '일반' },
-  { topic: '법률구조공단 무료 법률 상담 이용 가이드', category: '일반' },
-  { topic: '민사소송 비용, 실제로 얼마나 드나요', category: '일반' },
-]
-
-const ALL_TOPICS = [...TOPICS_SET1, ...TOPICS_SET2]
+interface GeneratedTopic {
+  title: string
+  category: string
+  author: string
+  status?: 'pending' | 'generating' | 'done' | 'error' | 'skipped'
+  error?: string
+  slug?: string
+}
 
 function getAuthorByCategory(category: string): string {
   switch (category) {
@@ -160,24 +94,22 @@ export default function AdminDashboardPage() {
   const [geoBulkCurrent, setGeoBulkCurrent] = useState('')
   const geoBulkStopRef = useRef(false)
 
-  // Blog topic availability state
-  const [availableTopicCount, setAvailableTopicCount] = useState<number | null>(null)
+  // AI topic generation state
+  const [generatedTopics, setGeneratedTopics] = useState<GeneratedTopic[]>([])
+  const [topicGenerating, setTopicGenerating] = useState(false)
   const [existingPostCount, setExistingPostCount] = useState<number>(0)
 
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
 
-  async function fetchAvailableTopics() {
+  async function fetchExistingPostCount() {
     try {
       const { data: existing } = await supabase
         .from('blog_posts')
         .select('title')
         .eq('status', 'published')
 
-      const existingTitles = new Set((existing || []).map((p: { title: string }) => p.title))
-      const available = ALL_TOPICS.filter((t) => !existingTitles.has(t.topic))
-      setAvailableTopicCount(available.length)
       setExistingPostCount(existing?.length || 0)
     } catch {
       // ignore
@@ -190,7 +122,7 @@ export default function AdminDashboardPage() {
       return
     }
     fetchData()
-    fetchAvailableTopics()
+    fetchExistingPostCount()
   }, [router])
 
   async function fetchData() {
@@ -215,7 +147,7 @@ export default function AdminDashboardPage() {
       // ignore
     }
 
-    fetchAvailableTopics()
+    fetchExistingPostCount()
   }
 
   async function handleDelete(id: number) {
@@ -406,112 +338,155 @@ export default function AdminDashboardPage() {
   }
 
   async function handleBulkGenerate() {
-    if (bulkRunning) return
+    if (bulkRunning || topicGenerating) return
 
-    // 1. DB에서 기존 글 title 목록 조회
-    const { data: existing } = await supabase
-      .from('blog_posts')
-      .select('title')
-      .eq('status', 'published')
-
-    const existingTitles = new Set((existing || []).map((p: { title: string }) => p.title))
-    const newTopics = ALL_TOPICS.filter((t) => !existingTitles.has(t.topic)).slice(0, 30)
-
-    if (newTopics.length === 0) {
-      alert('생성할 새 주제가 없습니다. 기존 글을 삭제하거나 주제를 추가해주세요.')
-      return
-    }
-
-    if (!confirm(`DB에 없는 새 주제 ${newTopics.length}개를 생성합니다. 약 ${Math.ceil(newTopics.length / 3)}~${Math.ceil(newTopics.length / 2)}분 소요됩니다. 진행하시겠습니까?`)) return
-
-    setBulkRunning(true)
-    setBulkCompleted(0)
-    setBulkErrors(0)
-    setBulkSkipped(0)
-    setBulkTotal(newTopics.length)
-    setBulkCurrent('시작 중...')
+    // === 1단계: AI 주제 생성 ===
+    setTopicGenerating(true)
+    setGeneratedTopics([])
     setBulkResults([])
     setBulkDone(false)
-    stopRef.current = false
+    setBulkCurrent('주제 생성 중...')
 
-    for (let i = 0; i < newTopics.length; i++) {
-      // Check if stop was requested
-      if (stopRef.current) {
-        setBulkCurrent('중지됨')
-        break
+    try {
+      const res = await fetch('/api/generate-topics', { method: 'POST' })
+      const data = await res.json()
+
+      if (!data.success || !data.topics || data.topics.length === 0) {
+        alert(`주제 생성 실패: ${data.error || '알 수 없는 오류'}`)
+        setTopicGenerating(false)
+        setBulkCurrent('')
+        return
       }
 
-      const { topic, category } = newTopics[i]
-      const author = getAuthorByCategory(category)
-      const title = topic
-      const slug = generateSlug(topic)
-      setBulkCurrent(`${topic} (${author})`)
+      const topics: GeneratedTopic[] = data.topics.map((t: { title: string; category: string; author: string }) => ({
+        ...t,
+        status: 'pending' as const,
+      }))
 
-      try {
-        const res = await generateWithRetry(topic, category, i, title, slug)
-        const data = await res.json()
+      setGeneratedTopics(topics)
+      setTopicGenerating(false)
 
-        if (data.skipped) {
-          // Duplicate — skip
-          setBulkSkipped((prev) => prev + 1)
-          setBulkResults((prev) => [...prev, {
-            type: 'skipped',
-            index: i,
-            topic,
-            category,
-            author,
-            reason: data.reason,
-            existingTitle: data.existingTitle,
-          }])
-        } else if (data.success) {
-          setBulkCompleted((prev) => prev + 1)
-          setBulkResults((prev) => [...prev, {
-            type: 'done',
-            index: i,
-            topic,
-            title: data.title,
-            slug: data.slug,
-            category: data.category,
-            author: data.author,
-          }])
-        } else {
+      // 확인 메시지
+      if (!confirm(`AI가 ${topics.length}개 주제를 생성했습니다. 본문 생성을 시작하시겠습니까? (약 ${Math.ceil(topics.length / 3)}~${Math.ceil(topics.length / 2)}분 소요)`)) {
+        setBulkCurrent('')
+        return
+      }
+
+      // === 2단계: 각 주제별 본문 생성 ===
+      setBulkRunning(true)
+      setBulkCompleted(0)
+      setBulkErrors(0)
+      setBulkSkipped(0)
+      setBulkTotal(topics.length)
+      setBulkCurrent('본문 생성 시작...')
+      setBulkResults([])
+      stopRef.current = false
+
+      for (let i = 0; i < topics.length; i++) {
+        if (stopRef.current) {
+          setBulkCurrent('중지됨')
+          // Mark remaining as pending
+          setGeneratedTopics((prev) => prev.map((t, idx) =>
+            idx >= i && t.status === 'pending' ? { ...t, status: 'pending' as const } : t
+          ))
+          break
+        }
+
+        const topic = topics[i]
+        const title = topic.title
+        const slug = generateSlug(title)
+        const category = topic.category
+        const author = topic.author || getAuthorByCategory(category)
+
+        // Mark current topic as generating
+        setGeneratedTopics((prev) => prev.map((t, idx) =>
+          idx === i ? { ...t, status: 'generating' as const } : t
+        ))
+        setBulkCurrent(`${title} (${author})`)
+
+        try {
+          const res = await generateWithRetry(title, category, i, title, slug)
+          const data = await res.json()
+
+          if (data.skipped) {
+            setBulkSkipped((prev) => prev + 1)
+            setGeneratedTopics((prev) => prev.map((t, idx) =>
+              idx === i ? { ...t, status: 'skipped' as const, error: data.reason } : t
+            ))
+            setBulkResults((prev) => [...prev, {
+              type: 'skipped',
+              index: i,
+              topic: title,
+              category,
+              author,
+              reason: data.reason,
+              existingTitle: data.existingTitle,
+            }])
+          } else if (data.success) {
+            setBulkCompleted((prev) => prev + 1)
+            setGeneratedTopics((prev) => prev.map((t, idx) =>
+              idx === i ? { ...t, status: 'done' as const, slug: data.slug } : t
+            ))
+            setBulkResults((prev) => [...prev, {
+              type: 'done',
+              index: i,
+              topic: title,
+              title: data.title,
+              slug: data.slug,
+              category: data.category,
+              author: data.author,
+            }])
+          } else {
+            setBulkErrors((prev) => prev + 1)
+            setGeneratedTopics((prev) => prev.map((t, idx) =>
+              idx === i ? { ...t, status: 'error' as const, error: data.error || '알 수 없는 오류' } : t
+            ))
+            setBulkResults((prev) => [...prev, {
+              type: 'error',
+              index: i,
+              topic: title,
+              category,
+              author,
+              error: data.error || '알 수 없는 오류',
+            }])
+          }
+        } catch (err) {
           setBulkErrors((prev) => prev + 1)
+          const errorMsg = err instanceof Error ? err.message : '네트워크 오류 (타임아웃)'
+          setGeneratedTopics((prev) => prev.map((t, idx) =>
+            idx === i ? { ...t, status: 'error' as const, error: errorMsg } : t
+          ))
           setBulkResults((prev) => [...prev, {
             type: 'error',
             index: i,
-            topic,
+            topic: title,
             category,
             author,
-            error: data.error || '알 수 없는 오류',
+            error: errorMsg,
           }])
         }
-      } catch (err) {
-        setBulkErrors((prev) => prev + 1)
-        setBulkResults((prev) => [...prev, {
-          type: 'error',
-          index: i,
-          topic,
-          category,
-          author,
-          error: err instanceof Error ? err.message : '네트워크 오류 (타임아웃)',
-        }])
+
+        // Scroll log to bottom
+        setTimeout(() => {
+          bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
+        }, 100)
+
+        // Wait 5 seconds between requests
+        if (i < topics.length - 1 && !stopRef.current) {
+          await sleep(5000)
+        }
       }
 
-      // Scroll log to bottom
-      setTimeout(() => {
-        bulkLogRef.current?.scrollTo({ top: bulkLogRef.current.scrollHeight, behavior: 'smooth' })
-      }, 100)
-
-      // Wait 5 seconds between requests (API rate limit + timeout prevention)
-      if (i < newTopics.length - 1 && !stopRef.current) {
-        await sleep(5000)
-      }
+      setBulkDone(true)
+      setBulkCurrent(stopRef.current ? '중지됨' : '완료!')
+      setBulkRunning(false)
+      fetchData()
+    } catch (err) {
+      alert(`오류 발생: ${err instanceof Error ? err.message : '알 수 없는 오류'}`)
+      setTopicGenerating(false)
+      setBulkRunning(false)
+      setBulkCurrent('')
     }
-
-    setBulkDone(true)
-    setBulkCurrent(stopRef.current ? '중지됨' : '완료!')
-    setBulkRunning(false)
-    fetchData()
   }
 
   function handleStopGeneration() {
@@ -705,28 +680,23 @@ export default function AdminDashboardPage() {
 
       {/* Bulk Actions */}
       <div className="mb-8 p-6 border border-gray-200 bg-gray-50 rounded-lg">
-        <h2 className="text-sm font-bold text-black mb-3">SEO 블로그 대량 생성</h2>
+        <h2 className="text-sm font-bold text-black mb-3">SEO 블로그 대량 생성 (AI 자동 주제)</h2>
         <p className="text-xs text-gray-500 mb-4">
-          총 {ALL_TOPICS.length}개 주제 풀 (1세트 30개 + 2세트 30개)에서 DB에 없는 주제만 자동 생성합니다.
+          AI가 기존 글과 중복되지 않는 새로운 주제 30개를 자동 생성한 뒤, 각 주제별 본문을 작성합니다.
           카테고리별 담당 변호사 말투가 자동 적용됩니다.
         </p>
-        {availableTopicCount !== null && (
-          <div className="flex flex-wrap items-center gap-4 mb-4 text-xs">
-            <span className="px-3 py-1.5 bg-white border border-gray-200 rounded font-medium text-gray-700">
-              현재 블로그 글: <span className="text-black font-bold">{existingPostCount}개</span>
-            </span>
-            <span className={`px-3 py-1.5 rounded font-medium ${availableTopicCount > 0 ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-red-50 border border-red-200 text-red-600'}`}>
-              생성 가능한 새 주제: <span className="font-bold">{availableTopicCount}개</span>
-            </span>
-          </div>
-        )}
+        <div className="flex flex-wrap items-center gap-4 mb-4 text-xs">
+          <span className="px-3 py-1.5 bg-white border border-gray-200 rounded font-medium text-gray-700">
+            현재 블로그 글: <span className="text-black font-bold">{existingPostCount}개</span>
+          </span>
+        </div>
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={handleBulkGenerate}
-            disabled={bulkRunning || availableTopicCount === 0}
+            disabled={bulkRunning || topicGenerating}
             className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
           >
-            {bulkRunning ? '생성 중...' : availableTopicCount === 0 ? '생성할 주제 없음' : `새 주제 ${availableTopicCount !== null ? Math.min(availableTopicCount, 30) : ''}개 자동 생성`}
+            {topicGenerating ? '주제 생성 중...' : bulkRunning ? '본문 생성 중...' : '30개 생성'}
           </button>
           {bulkRunning && (
             <button
@@ -786,6 +756,57 @@ export default function AdminDashboardPage() {
             {naverFailedList.map((f) => (
               <p key={f.id}>- [{f.id}] {f.title}: {f.error}</p>
             ))}
+          </div>
+        )}
+
+        {/* AI Generated Topics Preview */}
+        {(topicGenerating || generatedTopics.length > 0) && (
+          <div className="mt-5">
+            <h3 className="text-xs font-bold text-gray-700 mb-2">
+              {topicGenerating ? (
+                <span className="animate-pulse">AI 주제 생성 중...</span>
+              ) : (
+                `AI 생성 주제 (${generatedTopics.length}개)`
+              )}
+            </h3>
+            {generatedTopics.length > 0 && (
+              <div className="max-h-72 overflow-y-auto border border-gray-200 bg-white rounded text-xs divide-y divide-gray-100">
+                {generatedTopics.map((t, i) => (
+                  <div key={i} className={`px-4 py-2.5 flex items-center justify-between ${
+                    t.status === 'error' ? 'bg-red-50' :
+                    t.status === 'skipped' ? 'bg-amber-50' :
+                    t.status === 'done' ? 'bg-emerald-50/30' :
+                    t.status === 'generating' ? 'bg-blue-50' : ''
+                  }`}>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="flex-shrink-0 w-5 text-center">
+                        {t.status === 'done' ? (
+                          <span className="text-emerald-500">&#10003;</span>
+                        ) : t.status === 'error' ? (
+                          <span className="text-red-500">&#10007;</span>
+                        ) : t.status === 'skipped' ? (
+                          <span className="text-amber-500">&#8722;</span>
+                        ) : t.status === 'generating' ? (
+                          <span className="text-blue-500 animate-spin inline-block">&#9696;</span>
+                        ) : (
+                          <span className="text-gray-300">{i + 1}</span>
+                        )}
+                      </span>
+                      <span className={`truncate ${t.status === 'done' ? 'font-medium text-black' : t.status === 'error' ? 'text-red-600' : 'text-gray-700'}`}>
+                        {t.title}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-3">
+                      <span className="text-gray-400">{t.category}</span>
+                      <span className="text-gray-400">{t.author}</span>
+                      {t.error && t.status === 'error' && (
+                        <span className="text-red-400 text-[10px]">{t.error}</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

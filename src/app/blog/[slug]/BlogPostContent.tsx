@@ -349,7 +349,7 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
   if (isLee) {
     return (
       <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
-        <Image src="/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+        <Image src="/images/lawyers/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
         <div>
           <p className="font-medium text-gray-900">이유림 변호사</p>
           <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
@@ -364,7 +364,7 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
 
   return (
     <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
-      <Image src="/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+      <Image src="/images/lawyers/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
       <div>
         <p className="font-medium text-gray-900">노채은 변호사</p>
         <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·회생파산 전문</p>
