@@ -913,7 +913,7 @@ export default function SincerityContent() {
               무료로 작성 시작하기
             </a>
             <p className="mt-4 text-sm text-white/60">
-              또는 전화 상담: 032-207-8788
+              032-207-8788
             </p>
           </motion.div>
         </div>
