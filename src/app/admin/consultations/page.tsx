@@ -10,7 +10,7 @@ interface Consultation {
   name: string
   phone: string
   email: string | null
-  case_type: string | null
+  category: string | null
   content: string | null
   status: string
   grade: string | null
@@ -312,11 +312,11 @@ export default function AdminConsultationsPage() {
                     {c.name}
                   </button>
                   <p className="text-xs text-gray-400 sm:hidden mt-0.5">
-                    {c.case_type} · {ss.label}
+                    {c.category} · {ss.label}
                   </p>
                 </div>
                 <div className="col-span-2 hidden sm:block text-sm text-gray-600">{c.phone}</div>
-                <div className="col-span-2 hidden sm:block text-xs text-gray-600">{c.case_type || '-'}</div>
+                <div className="col-span-2 hidden sm:block text-xs text-gray-600">{c.category || '-'}</div>
                 <div className="col-span-2 hidden sm:block text-xs text-gray-400">{formatDate(c.created_at)}</div>
                 <div className="col-span-1 hidden sm:block">
                   <span className={`inline-block text-xs px-2 py-0.5 ${ss.bg} ${ss.text}`}>{ss.label}</span>
@@ -378,7 +378,7 @@ export default function AdminConsultationsPage() {
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">이름</span><span className="text-black font-medium">{selected.name}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">연락처</span><a href={`tel:${selected.phone}`} className="text-[#1B3B2F] font-medium">{selected.phone}</a></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">이메일</span><span className="text-black">{selected.email || '미등록'}</span></div>
-                    <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">유형</span><span className="text-black">{selected.case_type || '-'}</span></div>
+                    <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">유형</span><span className="text-black">{selected.category || '-'}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">접수일</span><span className="text-black">{formatDate(selected.created_at)}</span></div>
                   </div>
                 </div>

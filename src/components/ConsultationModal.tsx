@@ -28,7 +28,7 @@ export default function ConsultationModal({
     name: '',
     phone: '',
     email: '',
-    case_type: defaultCaseType,
+    category: defaultCaseType,
     content: '',
     privacy_agreed: false,
   })
@@ -39,7 +39,7 @@ export default function ConsultationModal({
   // defaultCaseType이 바뀌면 반영
   useEffect(() => {
     if (defaultCaseType) {
-      setForm((prev) => ({ ...prev, case_type: defaultCaseType }))
+      setForm((prev) => ({ ...prev, category: defaultCaseType }))
     }
   }, [defaultCaseType])
 
@@ -78,7 +78,7 @@ export default function ConsultationModal({
           name: '',
           phone: '',
           email: '',
-          case_type: defaultCaseType,
+          category: defaultCaseType,
           content: '',
           privacy_agreed: false,
         })
@@ -103,7 +103,7 @@ export default function ConsultationModal({
             name: form.name,
             phone: form.phone,
             email: form.email || null,
-            case_type: form.case_type || null,
+            category: form.category || null,
             content: form.content || null,
             privacy_agreed: form.privacy_agreed,
             created_at: new Date().toISOString(),
@@ -285,9 +285,9 @@ export default function ConsultationModal({
                       </label>
                       <select
                         id="modal-case-type"
-                        value={form.case_type}
+                        value={form.category}
                         onChange={(e) =>
-                          setForm({ ...form, case_type: e.target.value })
+                          setForm({ ...form, category: e.target.value })
                         }
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
                       >
