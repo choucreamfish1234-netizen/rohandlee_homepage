@@ -53,6 +53,7 @@ export default function ConsultationForm() {
             email: form.email || null,
             category: form.category,
             content: form.content,
+            status: 'new',
             created_at: new Date().toISOString(),
           },
         ])
