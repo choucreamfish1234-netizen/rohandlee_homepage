@@ -58,13 +58,11 @@ export async function POST(req: NextRequest) {
 </html>`
 
     // Send email via Resend
-    // 도메인 인증 전이므로 onboarding@resend.dev 사용
-    // 도메인 인증 완료 후 실제 도메인 이메일로 변경 필요
     const resend = new Resend(resendApiKey)
     console.log('[send-consultation-email] 이메일 발송 시도:', { to: consultation.email, subject: emailSubject })
 
     const { data: sendData, error: sendError } = await resend.emails.send({
-      from: '법률사무소 로앤이 <onboarding@resend.dev>',
+      from: '법률사무소 로앤이 <noreply@lawfirmrohandlee.com>',
       to: [consultation.email],
       subject: emailSubject,
       html: htmlEmail,
