@@ -110,6 +110,7 @@ export default function ConsultationModal({
             category: form.category || null,
             content: form.content || null,
             privacy_consent: form.privacy_consent,
+            status: 'new',
             created_at: new Date().toISOString(),
           },
         ])

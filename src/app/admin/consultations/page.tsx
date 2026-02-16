@@ -78,15 +78,18 @@ export default function AdminConsultationsPage() {
     setLoading(false)
   }, [])
 
+  // "미발송" = email_sent_at이 null이고 전화완료가 아닌 건
+  const isUnsent = (c: Consultation) => !c.email_sent_at && c.status !== 'called'
+
   const stats = {
-    new: consultations.filter((c) => c.status === 'new').length,
+    new: consultations.filter(isUnsent).length,
     analyzed: consultations.filter((c) => c.status === 'analyzed').length,
     sent: consultations.filter((c) => c.status === 'sent').length,
     called: consultations.filter((c) => c.status === 'called').length,
   }
 
   const filtered = consultations
-    .filter((c) => filter === 'all' || c.status === filter)
+    .filter((c) => filter === 'all' || (filter === 'new' ? isUnsent(c) : c.status === filter))
     .filter((c) => gradeFilter === 'all' || c.grade === gradeFilter)
     .sort((a, b) => {
       const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 }
@@ -230,7 +233,7 @@ export default function AdminConsultationsPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {[
-          { label: '신규 상담', value: stats.new, color: 'text-red-600', key: 'new' },
+          { label: '미발송', value: stats.new, color: 'text-red-600', key: 'new' },
           { label: '분석 완료', value: stats.analyzed, color: 'text-yellow-600', key: 'analyzed' },
           { label: '발송 완료', value: stats.sent, color: 'text-emerald-600', key: 'sent' },
           { label: '전화 완료', value: stats.called, color: 'text-blue-600', key: 'called' },
@@ -322,7 +325,7 @@ export default function AdminConsultationsPage() {
                   <span className={`inline-block text-xs px-2 py-0.5 ${ss.bg} ${ss.text}`}>{ss.label}</span>
                 </div>
                 <div className="col-span-2 flex justify-end gap-2">
-                  {c.status === 'new' && (
+                  {!c.ai_analysis && (
                     <button
                       onClick={() => handleAnalyze(c.id)}
                       disabled={analyzing === c.id}
