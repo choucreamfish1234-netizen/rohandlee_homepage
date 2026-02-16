@@ -27,7 +27,7 @@ export default function ConsultationForm() {
     name: '',
     phone: '',
     email: '',
-    case_type: '',
+    category: '',
     content: '',
   })
   const [submitting, setSubmitting] = useState(false)
@@ -47,7 +47,7 @@ export default function ConsultationForm() {
             name: form.name,
             phone: form.phone,
             email: form.email || null,
-            case_type: form.case_type,
+            category: form.category,
             content: form.content,
             created_at: new Date().toISOString(),
           },
@@ -146,14 +146,14 @@ export default function ConsultationForm() {
             </div>
 
             <div>
-              <label htmlFor="case_type" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="category" className="block text-sm font-medium text-black mb-2">
                 사건 유형 <span className="text-red-500">*</span>
               </label>
               <select
-                id="case_type"
+                id="category"
                 required
-                value={form.case_type}
-                onChange={(e) => setForm({ ...form, case_type: e.target.value })}
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors bg-white"
               >
                 <option value="">선택해주세요</option>

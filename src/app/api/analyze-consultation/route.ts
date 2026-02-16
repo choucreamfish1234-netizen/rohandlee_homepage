@@ -74,7 +74,7 @@ D등급 (수임 불가): 공소시효 만료, 관할 외, 가해자 측, 로앤�
 이름: ${consultation.name}
 연락처: ${consultation.phone}
 이메일: ${consultation.email || '미제공'}
-상담 유형: ${consultation.case_type || '미선택'}
+상담 유형: ${consultation.category || '미선택'}
 상담 내용: ${consultation.content || '내용 없음'}
 접수일: ${consultation.created_at}`
 

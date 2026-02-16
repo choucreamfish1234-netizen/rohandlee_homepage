@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS consultations (
   name text not null,
   phone text not null,
   email text,
-  case_type text,
+  category text,
   content text,
   privacy_agreed boolean default true,
   status text default 'new',
