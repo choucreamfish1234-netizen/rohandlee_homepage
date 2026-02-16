@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS consultations (
   email text,
   category text,
   content text,
-  privacy_agreed boolean default true,
+  privacy_consent boolean default true,
   status text default 'new',
   grade text,
   ai_analysis jsonb,

@@ -30,7 +30,7 @@ interface Consultation {
   notes: string | null
   assigned_to: string | null
   created_at: string
-  privacy_agreed?: boolean
+  privacy_consent?: boolean
 }
 
 const gradeStyles: Record<string, { bg: string; text: string }> = {

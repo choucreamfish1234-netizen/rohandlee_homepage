@@ -30,7 +30,7 @@ export default function ConsultationModal({
     email: '',
     category: defaultCaseType,
     content: '',
-    privacy_agreed: false,
+    privacy_consent: false,
   })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -80,7 +80,7 @@ export default function ConsultationModal({
           email: '',
           category: defaultCaseType,
           content: '',
-          privacy_agreed: false,
+          privacy_consent: false,
         })
         setSubmitted(false)
         setError('')
@@ -91,7 +91,7 @@ export default function ConsultationModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.privacy_agreed) return
+    if (!form.privacy_consent) return
     setSubmitting(true)
     setError('')
 
@@ -105,7 +105,7 @@ export default function ConsultationModal({
             email: form.email || null,
             category: form.category || null,
             content: form.content || null,
-            privacy_agreed: form.privacy_agreed,
+            privacy_consent: form.privacy_consent,
             created_at: new Date().toISOString(),
           },
         ])
@@ -328,9 +328,9 @@ export default function ConsultationModal({
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={form.privacy_agreed}
+                        checked={form.privacy_consent}
                         onChange={(e) =>
-                          setForm({ ...form, privacy_agreed: e.target.checked })
+                          setForm({ ...form, privacy_consent: e.target.checked })
                         }
                         className="mt-0.5 w-4 h-4 accent-[#1B3B2F] rounded"
                       />
@@ -348,7 +348,7 @@ export default function ConsultationModal({
                     {/* 제출 버튼 */}
                     <button
                       type="submit"
-                      disabled={submitting || !form.privacy_agreed}
+                      disabled={submitting || !form.privacy_consent}
                       className="w-full py-4 text-white text-sm font-medium rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
                       style={{ backgroundColor: '#1B3B2F' }}
                     >
