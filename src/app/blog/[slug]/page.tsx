@@ -4,7 +4,7 @@ import type { BlogPost } from '@/lib/blog'
 import BlogPostContent from './BlogPostContent'
 import ViewCounter from '@/components/ViewCounter'
 
-const baseUrl = 'https://rohandlee-homepage.vercel.app'
+const baseUrl = 'https://lawfirmrohandlee.com'
 
 export const revalidate = 3600
 

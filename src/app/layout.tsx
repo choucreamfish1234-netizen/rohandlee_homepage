@@ -7,7 +7,7 @@ import ConsultationProvider from '@/components/ConsultationProvider'
 import AdminMode from '@/components/AdminMode'
 import Analytics from '@/components/Analytics'
 
-const baseUrl = 'https://rohandlee-homepage.vercel.app'
+const baseUrl = 'https://lawfirmrohandlee.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     canonical: baseUrl,
   },
   verification: {
-    google: '4jmZTE-JZux3e1z-ptl3aircXeVeUN-vZ3CDrayN5b8',
+    google: 'y8B4tXoCgV9DVJRsVV5PJAj0PiSnD2oe6etWwNUriUg',
     other: {
       'naver-site-verification': '91b643fbd6f1fc3cc4679f5dd8d590d61a20680f',
     },

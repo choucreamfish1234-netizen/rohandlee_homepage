@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
 오직 피해자만 변호합니다.<br><br>
 무료 상담: 032-207-8788<br>
 카카오톡: <a href="https://pf.kakao.com/_YxgWxcn/chat">카카오톡 상담</a><br>
-홈페이지: <a href="https://rohandlee-homepage.vercel.app">rohandlee-homepage.vercel.app</a>
+홈페이지: <a href="https://lawfirmrohandlee.com">lawfirmrohandlee.com</a>
 </div>`
 
     const fullContent = naverContent + footer
