@@ -12,7 +12,7 @@ const baseUrl = 'https://lawfirmrohandlee.com'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '부천 성범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    default: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
     template: '%s | 법률사무소 로앤이',
   },
   description:
@@ -40,15 +40,15 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: baseUrl,
     siteName: '법률사무소 로앤이',
-    title: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    title: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
     description: '성범죄·재산범죄 피해자 전문. 로톡 평점 4.9, 후기 600+',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    title: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
     description: '성범죄·재산범죄 피해자 전문. 로톡 평점 4.9, 후기 600+',
-    images: ['/og-image.png'],
+    images: [`${baseUrl}/og-image.png`],
   },
   robots: {
     index: true,
