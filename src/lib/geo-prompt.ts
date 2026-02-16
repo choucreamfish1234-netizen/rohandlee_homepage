@@ -149,7 +149,7 @@ ${geoRules}
     오직 피해자만 변호합니다.<br><br>
     무료 상담: 032-207-8788<br>
     카카오톡: https://pf.kakao.com/_YxgWxcn/chat<br>
-    홈페이지: https://rohandlee-homepage.vercel.app
+    홈페이지: https://lawfirmrohandlee.com
   </div>
 - 네이버 SEO를 위해 키워드를 자연스럽게 반복 (3-5회)
 - 문장을 짧고 읽기 쉽게 (모바일 가독성 중요)
