@@ -220,40 +220,48 @@ export default function Analytics() {
     const utm = getUtmParams()
     const device = detectDevice()
 
-    ensureSession()
+    // Track page view asynchronously
+    const trackPageView = async () => {
+      await ensureSession()
 
-    // Insert page view
-    supabase.from('page_views').insert({
-      visitor_id: vid,
-      session_id: sid,
-      page_path: pathname,
-      page_title: document.title,
-      referrer: ref || null,
-      referrer_type: refType === 'internal' ? null : refType,
-      search_keyword: keyword,
-      ...utm,
-      device_type: device.type,
-      device_brand: device.brand || null,
-      browser: device.browser,
-      os: device.os,
-      screen_resolution: getScreenRes(),
-      language: navigator.language || null,
-    })
-
-    // Update session page_count
-    supabase
-      .from('visitor_sessions')
-      .select('page_count')
-      .eq('session_id', sid)
-      .single()
-      .then(({ data }) => {
-        if (data) {
-          supabase
-            .from('visitor_sessions')
-            .update({ page_count: (data.page_count || 0) + 1 })
-            .eq('session_id', sid)
-        }
+      // Insert page view
+      const { error } = await supabase.from('page_views').insert({
+        visitor_id: vid,
+        session_id: sid,
+        page_path: pathname,
+        page_title: document.title,
+        referrer: ref || null,
+        referrer_type: refType === 'internal' ? null : refType,
+        search_keyword: keyword,
+        ...utm,
+        device_type: device.type,
+        device_brand: device.brand || null,
+        browser: device.browser,
+        os: device.os,
+        screen_resolution: getScreenRes(),
+        language: navigator.language || null,
       })
+
+      if (error) {
+        console.error('[Analytics] page_views insert failed:', error.message)
+      }
+
+      // Update session page_count
+      const { data } = await supabase
+        .from('visitor_sessions')
+        .select('page_count')
+        .eq('session_id', sid)
+        .single()
+
+      if (data) {
+        await supabase
+          .from('visitor_sessions')
+          .update({ page_count: (data.page_count || 0) + 1 })
+          .eq('session_id', sid)
+      }
+    }
+
+    trackPageView()
 
     // Scroll tracking
     const onScroll = () => {
@@ -312,5 +320,7 @@ export function trackEvent(
     referrer_type: refType === 'internal' ? null : refType,
     device_type: device.type,
     metadata: metadata || {},
+  }).then(({ error }) => {
+    if (error) console.error('[Analytics] event insert failed:', error.message)
   })
 }

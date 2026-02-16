@@ -87,6 +87,7 @@ ALTER TABLE visitor_sessions ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Allow insert for anon" ON page_views FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow select for service_role" ON page_views FOR SELECT USING (true);
+CREATE POLICY "Allow update for anon" ON page_views FOR UPDATE USING (true);
 
 CREATE POLICY "Allow insert for anon" ON consultation_events FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow select for service_role" ON consultation_events FOR SELECT USING (true);
