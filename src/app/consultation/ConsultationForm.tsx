@@ -36,6 +36,10 @@ export default function ConsultationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!form.email.trim()) {
+      setError('이메일을 입력해주세요')
+      return
+    }
     setSubmitting(true)
     setError('')
 
@@ -133,15 +137,16 @@ export default function ConsultationForm() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
-                이메일
+                이메일 <span className="text-red-500">*</span>
               </label>
               <input
                 id="email"
                 type="email"
+                required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors"
-                placeholder="답변 받으실 이메일 주소 (선택)"
+                placeholder="답변 받으실 이메일 주소"
               />
             </div>
 
@@ -176,7 +181,7 @@ export default function ConsultationForm() {
                 value={form.content}
                 onChange={(e) => setForm({ ...form, content: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors resize-none"
-                placeholder="사건 경위를 간략히 적어주세요. 비밀이 철저히 보장됩니다."
+                placeholder="사건 경위를 자세히 적어주세요. 자세할수록 정확한 상담이 가능합니다. 비밀이 철저히 보장됩니다."
               />
             </div>
 
