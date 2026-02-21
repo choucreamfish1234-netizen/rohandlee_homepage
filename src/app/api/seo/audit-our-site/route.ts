@@ -6,8 +6,8 @@ const SITE_PAGES = [
     path: '/',
     name: '메인 페이지',
     hasH1: true,
-    defaultTitle: '부천 성범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
-    defaultDescription: '성범죄 피해자 전문 변호사 이유림, 재산범죄 전문 변호사 노채은. 로톡 평점 4.9, 후기 600건 이상. 성폭행, 성추행, 불법촬영, 디지털성범죄, 스토킹, 보이스피싱, 전세사기 피해자를 위한 전문 법률 서비스. 부천시 원미구 소재.',
+    defaultTitle: '로앤이 법률사무소 | 성범죄·재산범죄 피해자 전문 변호사 | 오직 피해자만 변호합니다',
+    defaultDescription: '성범죄 피해자 전문 변호사 이유림, 재산범죄 전문 변호사 노채은. 로톡 평점 4.9, 후기 600건 이상. 성폭행, 성추행, 불법촬영, 디지털성범죄, 스토킹, 보이스피싱, 전세사기 피해자를 위한 전문 법률 서비스.',
   },
   {
     path: '/blog',
@@ -62,12 +62,12 @@ const SITE_PAGES = [
     path: '/centers/rehabilitation',
     name: '회생파산 센터',
     hasH1: true,
-    defaultTitle: '개인회생·개인파산 전문 변호사 | 부천 회생파산 상담 | 로앤이',
-    defaultDescription: '개인회생 신청부터 면책까지 전 과정 대행. 개인회생 vs 개인파산 비교 상담. 월 변제금 최소화. 채무 탕감 전문. 부천시 소재 법률사무소 로앤이.',
+    defaultTitle: '개인회생·개인파산 전문 변호사 | 회생파산 상담 | 로앤이',
+    defaultDescription: '개인회생 신청부터 면책까지 전 과정 대행. 개인회생 vs 개인파산 비교 상담. 월 변제금 최소화. 채무 탕감 전문. 법률사무소 로앤이.',
   },
 ]
 
-const IMPORTANT_KEYWORDS = ['변호사', '피해자', '로앤이', '부천']
+const IMPORTANT_KEYWORDS = ['변호사', '피해자', '로앤이']
 
 function auditPage(
   title: string,
@@ -103,8 +103,8 @@ function auditPage(
     const titleHasKeyword = IMPORTANT_KEYWORDS.some((k) => title.includes(k))
     if (!titleHasKeyword) {
       score -= 15
-      issues.push('title에 핵심 키워드 없음 (변호사/피해자/로앤이/부천)')
-      improvements.push('title에 "변호사", "피해자", "로앤이", "부천" 중 하나 이상 포함 권장')
+      issues.push('title에 핵심 키워드 없음 (변호사/피해자/로앤이)')
+      improvements.push('title에 "변호사", "피해자", "로앤이" 중 하나 이상 포함 권장')
     }
   }
 
@@ -165,7 +165,7 @@ function auditPage(
     improvements.push('현재 SEO 설정이 양호합니다. 주기적으로 키워드 트렌드를 확인하세요.')
   }
   if (title && title.length >= 30 && title.length <= 65) {
-    improvements.push('title에 지역명(부천, 경기)과 전문 분야를 함께 포함하면 효과적입니다.')
+    improvements.push('title에 전문 분야와 사무소명을 함께 포함하면 효과적입니다.')
   }
   if (description && description.length >= 80 && description.length <= 170) {
     improvements.push('description에 CTA(전화번호, 무료상담 등)를 포함하면 클릭률이 높아집니다.')

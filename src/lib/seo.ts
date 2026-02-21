@@ -47,6 +47,11 @@ export async function getPageSeo(
     openGraph: {
       title: ogTitle,
       description: ogDescription,
+      images: [{ url: 'https://lawfirmrohandlee.com/og-image.png', width: 1200, height: 630 }],
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   }
 }
