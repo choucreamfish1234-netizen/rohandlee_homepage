@@ -12,15 +12,14 @@ const baseUrl = 'https://lawfirmrohandlee.com'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    default: '로앤이 법률사무소 | 성범죄·재산범죄 피해자 전문 변호사 | 오직 피해자만 변호합니다',
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '성범죄 피해자 전문 변호사 이유림, 재산범죄 전문 변호사 노채은. 로톡 평점 4.9, 후기 600건 이상. 성폭행, 성추행, 불법촬영, 디지털성범죄, 스토킹, 보이스피싱, 전세사기 피해자를 위한 전문 법률 서비스. 부천시 원미구 소재.',
+    '성범죄 피해자 전문 변호사 이유림, 재산범죄 전문 변호사 노채은. 로톡 평점 4.9, 후기 600건 이상. 성폭행, 성추행, 불법촬영, 디지털성범죄, 스토킹, 보이스피싱, 전세사기 피해자를 위한 전문 법률 서비스.',
   keywords: [
     '성범죄 변호사',
     '성범죄 피해자 변호사',
-    '부천 변호사',
     '피해자 전문 변호사',
     '성폭행 변호사',
     '성추행 변호사',
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: baseUrl,
     siteName: '법률사무소 로앤이',
-    title: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    title: '로앤이 법률사무소 | 성범죄·재산범죄 피해자 전문 변호사 | 오직 피해자만 변호합니다',
     description: '성범죄·재산범죄 피해자 전문. 로톡 평점 4.9, 후기 600+',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },

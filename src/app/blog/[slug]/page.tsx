@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       publishedTime: post.created_at,
       authors: [post.author || '이유림 변호사'],
-      images: post.thumbnail_url ? [post.thumbnail_url] : undefined,
+      images: post.thumbnail_url ? [post.thumbnail_url] : [`${baseUrl}/og-image.png`],
       url: `${baseUrl}/blog/${decodedSlug}`,
       siteName: '법률사무소 로앤이',
     },
@@ -60,7 +60,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: post.title,
       description,
-      images: post.thumbnail_url ? [post.thumbnail_url] : undefined,
+      images: post.thumbnail_url ? [post.thumbnail_url] : [`${baseUrl}/og-image.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   }
 }
