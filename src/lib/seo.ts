@@ -34,11 +34,13 @@ export async function getPageSeo(
     // Fall back to defaults if table doesn't exist or query fails
   }
 
-  const title = seo?.title || defaults.title
-  const description = seo?.description || defaults.description
+  // DB에 "부천"이 포함된 이전 값이 있으면 코드 기본값 사용
+  const hasOldBucheon = (v: string | null) => v && v.includes('부천')
+  const title = (hasOldBucheon(seo?.title ?? null) ? null : seo?.title) || defaults.title
+  const description = (hasOldBucheon(seo?.description ?? null) ? null : seo?.description) || defaults.description
   const keywords = seo?.keywords || defaults.keywords
-  const ogTitle = seo?.og_title || defaults.ogTitle || title
-  const ogDescription = seo?.og_description || defaults.ogDescription || description
+  const ogTitle = (hasOldBucheon(seo?.og_title ?? null) ? null : seo?.og_title) || defaults.ogTitle || title
+  const ogDescription = (hasOldBucheon(seo?.og_description ?? null) ? null : seo?.og_description) || defaults.ogDescription || description
 
   return {
     title,
