@@ -193,7 +193,7 @@ export default function ConsultationForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-4 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
             >
               {submitting ? '전송 중...' : '상담 신청하기'}
             </button>

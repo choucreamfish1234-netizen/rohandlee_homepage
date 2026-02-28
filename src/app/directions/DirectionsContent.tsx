@@ -8,7 +8,7 @@ const PAGE = 'directions'
 
 export default function DirectionsContent() {
   return (
-    <section className="pt-32 pb-28 sm:pb-40 bg-white">
+    <section className="pt-24 sm:pt-32 pb-16 sm:pb-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 헤더 */}
         <motion.div
@@ -40,12 +40,13 @@ export default function DirectionsContent() {
 
         {/* 네이버 지도 */}
         <ScrollReveal>
-          <div className="overflow-hidden rounded-2xl mb-12">
+          <div className="overflow-hidden rounded-xl sm:rounded-2xl mb-8 sm:mb-12">
             <iframe
               src="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EB%B6%80%EC%9D%BC%EB%A1%9C205%EB%B2%88%EA%B8%B8%2054"
               width="100%"
-              height="500"
-              style={{ border: 0, borderRadius: '16px' }}
+              height="350"
+              className="sm:h-[500px]"
+              style={{ border: 0, borderRadius: '12px' }}
               allowFullScreen
               loading="lazy"
               title="법률사무소 로앤이 위치"

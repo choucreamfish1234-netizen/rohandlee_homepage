@@ -61,6 +61,22 @@ body {
   }
 }
 
+/* Mobile touch-friendly defaults */
+@media (max-width: 640px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  button, a, select, input, textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent iOS zoom on input focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -73,5 +89,9 @@ body {
   }
   .animate-pulse-shadow {
     animation: pulse-shadow 2s ease-in-out infinite;
+  }
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
   }
 }

@@ -85,9 +85,9 @@ export default function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
-              className="flex-shrink-0 w-[340px] sm:w-[400px] snap-start"
+              className="flex-shrink-0 w-[280px] sm:w-[340px] md:w-[400px] snap-start"
             >
-              <div className="bg-[#f5f8f6] p-8 shadow-sm border border-gray-100 h-full flex flex-col relative hover:shadow-md transition-shadow duration-300">
+              <div className="bg-[#f5f8f6] p-5 sm:p-8 shadow-sm border border-gray-100 h-full flex flex-col relative hover:shadow-md transition-shadow duration-300">
                 {/* 큰따옴표 장식 */}
                 <span className="absolute top-5 right-6 text-[60px] leading-none text-[#1B3B2F]/[0.06] select-none">
                   &ldquo;

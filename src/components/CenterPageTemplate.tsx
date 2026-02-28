@@ -63,14 +63,14 @@ export default function CenterPageTemplate({
   return (
     <>
       {/* 히어로 */}
-      <section className="min-h-[60vh] flex flex-col items-center justify-center px-4 bg-white">
+      <section className="min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             <EditableText
               page={pagePath}
               section="hero"
@@ -91,7 +91,7 @@ export default function CenterPageTemplate({
           <div className="mt-8">
             <button
               onClick={handleCtaClick}
-              className="inline-flex items-center justify-center px-6 py-3 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors min-h-[48px]"
             >
               {ctaLabel}
             </button>
@@ -100,7 +100,7 @@ export default function CenterPageTemplate({
       </section>
 
       {/* 서비스 그리드 */}
-      <section className="py-28 sm:py-40 bg-white">
+      <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <EditableText
@@ -157,7 +157,7 @@ export default function CenterPageTemplate({
 
       {/* 사례 */}
       {caseExamples && caseExamples.length > 0 && (
-        <section className="py-28 sm:py-40 bg-gray-50">
+        <section className="py-16 sm:py-28 md:py-40 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <EditableText
@@ -212,7 +212,7 @@ export default function CenterPageTemplate({
       )}
 
       {/* 선언문 */}
-      <section className="py-28 sm:py-40 bg-white">
+      <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <EditableText
@@ -238,7 +238,7 @@ export default function CenterPageTemplate({
 
       {/* 의뢰인 후기 또는 커스텀 섹션 */}
       {customSection ? customSection : (
-        <section className="py-28 sm:py-40 bg-gray-50">
+        <section className="py-16 sm:py-28 md:py-40 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
@@ -255,7 +255,7 @@ export default function CenterPageTemplate({
       )}
 
       {/* 담당 변호사 */}
-      <section className="py-28 sm:py-40 bg-white">
+      <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <ScrollReveal>
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
@@ -319,7 +319,7 @@ export default function CenterPageTemplate({
       </section>
 
       {/* CTA */}
-      <section className="py-28 sm:py-40 bg-black text-white">
+      <section className="py-16 sm:py-28 md:py-40 bg-black text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <EditableText
@@ -338,16 +338,16 @@ export default function CenterPageTemplate({
               tag="p"
               className="mt-4 text-gray-400 text-sm"
             />
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
               <button
                 onClick={handleCtaClick}
-                className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
                 무료 상담 신청하기
               </button>
               <a
                 href="tel:032-207-8788"
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors"
+                className="inline-flex items-center justify-center px-8 py-3.5 border border-gray-600 text-white text-sm font-medium rounded-full hover:border-gray-400 transition-colors min-h-[48px]"
               >
                 <span>032-207-8788</span>
               </a>

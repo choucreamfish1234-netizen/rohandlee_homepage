@@ -97,7 +97,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
       <motion.article
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-3xl mx-auto px-6 md:px-0"
+        className="max-w-3xl mx-auto px-4 sm:px-6 md:px-0"
       >
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-gray-400 mb-8">
@@ -286,14 +286,14 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         </div>
 
         {/* CTA */}
-        <div className="rounded-2xl bg-gradient-to-br from-[#1B3B2F] to-[#2d5a47] p-10 text-center shadow-xl">
-          <h3 className="text-xl font-bold text-white mb-3">법률사무소 로앤이에 상담하기</h3>
-          <p className="text-sm text-white/70 mb-8 max-w-md mx-auto">
+        <div className="rounded-2xl bg-gradient-to-br from-[#1B3B2F] to-[#2d5a47] p-6 sm:p-10 text-center shadow-xl">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-3">법률사무소 로앤이에 상담하기</h3>
+          <p className="text-sm text-white/70 mb-6 sm:mb-8 max-w-md mx-auto">
             전문 변호사가 끝까지 함께합니다. 지금 바로 무료 상담을 신청하세요.
           </p>
           <button
             onClick={() => openConsultation()}
-            className="bg-white text-[#1B3B2F] text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-white/90 transition-colors shadow-md"
+            className="bg-white text-[#1B3B2F] text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-white/90 transition-colors shadow-md min-h-[48px]"
           >
             무료 상담 신청
           </button>
@@ -348,9 +348,9 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
 
   if (isLee) {
     return (
-      <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
+      <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
         <Image src="/images/lawyers/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
-        <div>
+        <div className="text-center sm:text-left">
           <p className="font-medium text-gray-900">이유림 변호사</p>
           <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
           <p className="text-xs text-gray-400 mt-1 leading-relaxed">
@@ -363,9 +363,9 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
   }
 
   return (
-    <div className="mt-12 p-6 bg-gray-50 rounded-2xl flex gap-4 items-start">
+    <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
       <Image src="/images/lawyers/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
-      <div>
+      <div className="text-center sm:text-left">
         <p className="font-medium text-gray-900">노채은 변호사</p>
         <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·회생파산 전문</p>
         <p className="text-xs text-gray-400 mt-1 leading-relaxed">

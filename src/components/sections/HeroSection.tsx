@@ -56,7 +56,7 @@ export default function HeroSection() {
   return (
     <section className="bg-white pt-0 pb-16 md:pb-24 -mt-16">
       {/* Image Slider */}
-      <div className="w-full h-[40vh] md:h-[55vh] relative overflow-hidden">
+      <div className="w-full h-[35vh] sm:h-[40vh] md:h-[55vh] relative overflow-hidden">
         {loading ? (
           <div className="absolute inset-0 bg-[#1B3B2F] animate-pulse" />
         ) : images.length === 0 ? (
@@ -115,7 +115,7 @@ export default function HeroSection() {
       </div>
 
       {/* Text below slider */}
-      <div className="text-center px-4 mt-12 md:mt-16">
+      <div className="text-center px-5 sm:px-4 mt-8 sm:mt-12 md:mt-16">
         <motion.h1
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export default function HeroSection() {
         >
           <button
             onClick={() => openConsultation()}
-            className="bg-[#1B3B2F] text-white rounded-full px-6 py-3 text-sm font-medium hover:bg-[#152f25] transition"
+            className="bg-[#1B3B2F] text-white rounded-full px-8 py-3.5 text-sm font-medium hover:bg-[#152f25] transition min-h-[48px]"
           >
             상담 신청하기
           </button>

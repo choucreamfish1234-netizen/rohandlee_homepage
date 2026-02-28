@@ -137,13 +137,13 @@ export default function CasesList() {
   const canEdit = isEditMode && dbReady
 
   return (
-    <section className="pt-32 pb-28 sm:pb-40 bg-white">
+    <section className="pt-24 sm:pt-32 pb-16 sm:pb-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Case Results
@@ -173,12 +173,12 @@ export default function CasesList() {
         )}
 
         {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-16">
+        <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-16">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2.5 text-sm font-medium transition-all duration-300 min-h-[44px] ${
                 activeCategory === cat
                   ? 'bg-accent text-white'
                   : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
@@ -336,25 +336,25 @@ export default function CasesList() {
       </div>
 
       {/* CTA */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-28 sm:mt-40">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-40">
         <ScrollReveal>
-          <div className="bg-accent py-16 sm:py-20 px-8 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+          <div className="bg-accent py-12 sm:py-20 px-5 sm:px-8 text-center">
+            <h2 className="text-xl sm:text-3xl font-bold text-white mb-4">
               비슷한 사건으로 고민 중이신가요?
             </h2>
-            <p className="text-white/60 text-sm mb-10">
+            <p className="text-white/60 text-sm mb-8 sm:mb-10">
               로앤이의 전문 변호사가 무료로 상담해드립니다.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
                 href="/consultation"
-                className="inline-flex items-center justify-center px-10 py-4 bg-white text-accent text-sm font-medium rounded-full hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center justify-center px-8 sm:px-10 py-4 bg-white text-accent text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
                 무료 상담 신청하기
               </Link>
               <a
                 href="tel:032-207-8788"
-                className="inline-flex items-center justify-center px-10 py-4 border border-white/30 text-white text-sm font-medium rounded-full hover:border-white/60 transition-colors"
+                className="inline-flex items-center justify-center px-8 sm:px-10 py-4 border border-white/30 text-white text-sm font-medium rounded-full hover:border-white/60 transition-colors min-h-[48px]"
               >
                 032-207-8788
               </a>
