@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const description = post.seo_description || post.meta_description || post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || '법률사무소 로앤이 블로그'
-  const title = `${post.title} | 법률사무소 로앤이`
+  const title = post.title
 
   return {
     title,

@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     '이유림 변호사',
     '노채은 변호사',
   ],
+  applicationName: '법률사무소 로앤이',
   authors: [{ name: '법률사무소 로앤이' }],
   openGraph: {
     type: 'website',
@@ -161,6 +162,16 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            'name': '법률사무소 로앤이',
+            'alternateName': '로앤이',
+            'url': 'https://lawfirmrohandlee.com',
+          }) }}
+        />
         <AdminMode>
           <ConsultationProvider>
             <Header />
