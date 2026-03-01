@@ -154,7 +154,7 @@ export default function ConsultationModal({
             {/* 닫기 버튼 */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
+              className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
               aria-label="닫기"
             >
               <svg
@@ -331,14 +331,14 @@ export default function ConsultationModal({
                     </div>
 
                     {/* 개인정보 동의 */}
-                    <label className="flex items-start gap-3 cursor-pointer">
+                    <label className="flex items-start gap-3 cursor-pointer py-1">
                       <input
                         type="checkbox"
                         checked={form.privacy_consent}
                         onChange={(e) =>
                           setForm({ ...form, privacy_consent: e.target.checked })
                         }
-                        className="mt-0.5 w-4 h-4 accent-[#1B3B2F] rounded"
+                        className="mt-0.5 w-5 h-5 accent-[#1B3B2F] rounded flex-shrink-0"
                       />
                       <span className="text-xs text-gray-500 leading-relaxed">
                         상담 목적으로 개인정보(성함, 연락처)를 수집·이용하는 것에

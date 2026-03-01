@@ -145,7 +145,7 @@ export default function BlogListClient({
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-2 text-xs font-medium transition-colors ${
+                className={`px-4 py-2.5 text-xs font-medium transition-colors min-h-[40px] ${
                   category === cat
                     ? 'bg-[#1B3B2F] text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -232,11 +232,11 @@ export default function BlogListClient({
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
+              <div className="mt-12 flex justify-center items-center gap-2 sm:gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
                 >
                   이전
                 </button>
@@ -244,7 +244,7 @@ export default function BlogListClient({
                   <button
                     key={p}
                     onClick={() => setPage(p)}
-                    className={`w-9 h-9 text-sm font-medium transition-colors ${
+                    className={`w-11 h-11 text-sm font-medium transition-colors ${
                       page === p
                         ? 'bg-[#1B3B2F] text-white'
                         : 'border border-gray-200 hover:bg-gray-50'
@@ -256,7 +256,7 @@ export default function BlogListClient({
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
                 >
                   다음
                 </button>

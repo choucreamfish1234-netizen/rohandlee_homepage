@@ -51,26 +51,26 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => openConsultation()}
-              className="bg-white text-[#1B3B2F] text-sm px-4 py-2 rounded-full hover:bg-white/90 transition-colors font-medium min-h-[40px] sm:min-h-0"
+              className="bg-white text-[#1B3B2F] text-sm px-4 py-2.5 rounded-full hover:bg-white/90 transition-colors font-medium min-h-[44px]"
             >
               상담 예약
             </button>
             <button
-              className="md:hidden p-2"
+              className="md:hidden w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="메뉴 열기"
             >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                 {mobileOpen ? (
-                  <path d="M5 5L15 15M15 5L5 15" stroke="white" strokeWidth="1.5" />
+                  <path d="M5 5L17 17M17 5L5 17" stroke="white" strokeWidth="1.5" />
                 ) : (
                   <>
-                    <path d="M3 6H17" stroke="white" strokeWidth="1.5" />
-                    <path d="M3 10H17" stroke="white" strokeWidth="1.5" />
-                    <path d="M3 14H17" stroke="white" strokeWidth="1.5" />
+                    <path d="M3 6H19" stroke="white" strokeWidth="1.5" />
+                    <path d="M3 11H19" stroke="white" strokeWidth="1.5" />
+                    <path d="M3 16H19" stroke="white" strokeWidth="1.5" />
                   </>
                 )}
               </svg>
@@ -87,12 +87,12 @@ export default function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-[#1B3B2F] border-t border-white/10"
           >
-            <nav className="px-4 py-4 flex flex-col gap-4">
+            <nav className="px-4 py-3 flex flex-col">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/70 hover:text-white transition-colors"
+                  className="text-base text-white/70 hover:text-white hover:bg-white/5 transition-colors py-3.5 px-2 rounded-lg"
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

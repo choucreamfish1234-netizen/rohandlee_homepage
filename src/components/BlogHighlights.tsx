@@ -60,14 +60,14 @@ export default function BlogHighlights() {
           ))}
         </div>
       </div>
-      <div className="flex justify-center gap-2 mt-6">
+      <div className="flex justify-center gap-3 mt-6">
         <button onClick={() => scrollRef.current?.scrollBy({ left: -340, behavior: 'smooth' })}
-          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-900 transition">&larr;</button>
+          className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-900 transition">&larr;</button>
         <button onClick={() => scrollRef.current?.scrollBy({ left: 340, behavior: 'smooth' })}
-          className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-900 transition">&rarr;</button>
+          className="w-11 h-11 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-gray-900 transition">&rarr;</button>
       </div>
-      <div className="text-center mt-4">
-        <a href="/blog" className="text-sm text-[#1B3B2F] hover:underline">블로그 더 보기 &rarr;</a>
+      <div className="text-center mt-5">
+        <a href="/blog" className="inline-flex items-center text-sm text-[#1B3B2F] hover:underline min-h-[44px]">블로그 더 보기 &rarr;</a>
       </div>
       </>
       )}
