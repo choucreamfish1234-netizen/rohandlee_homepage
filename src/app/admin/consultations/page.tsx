@@ -92,10 +92,12 @@ export default function AdminConsultationsPage() {
     .filter((c) => filter === 'all' || (filter === 'new' ? isUnsent(c) : c.status === filter))
     .filter((c) => gradeFilter === 'all' || c.grade === gradeFilter)
     .sort((a, b) => {
-      const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 }
-      const ga = a.grade ? gradeOrder[a.grade] ?? 4 : 4
-      const gb = b.grade ? gradeOrder[b.grade] ?? 4 : 4
-      if (ga !== gb) return ga - gb
+      if (gradeFilter !== 'all') {
+        const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 }
+        const ga = a.grade ? gradeOrder[a.grade] ?? 4 : 4
+        const gb = b.grade ? gradeOrder[b.grade] ?? 4 : 4
+        if (ga !== gb) return ga - gb
+      }
       return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     })
 
