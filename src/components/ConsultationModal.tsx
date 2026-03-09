@@ -28,9 +28,9 @@ export default function ConsultationModal({
     name: '',
     phone: '',
     email: '',
-    case_type: defaultCaseType,
+    category: defaultCaseType,
     content: '',
-    privacy_agreed: false,
+    privacy_consent: false,
   })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -39,7 +39,7 @@ export default function ConsultationModal({
   // defaultCaseType이 바뀌면 반영
   useEffect(() => {
     if (defaultCaseType) {
-      setForm((prev) => ({ ...prev, case_type: defaultCaseType }))
+      setForm((prev) => ({ ...prev, category: defaultCaseType }))
     }
   }, [defaultCaseType])
 
@@ -78,9 +78,9 @@ export default function ConsultationModal({
           name: '',
           phone: '',
           email: '',
-          case_type: defaultCaseType,
+          category: defaultCaseType,
           content: '',
-          privacy_agreed: false,
+          privacy_consent: false,
         })
         setSubmitted(false)
         setError('')
@@ -91,7 +91,11 @@ export default function ConsultationModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.privacy_agreed) return
+    if (!form.email.trim()) {
+      setError('이메일을 입력해주세요')
+      return
+    }
+    if (!form.privacy_consent) return
     setSubmitting(true)
     setError('')
 
@@ -103,9 +107,10 @@ export default function ConsultationModal({
             name: form.name,
             phone: form.phone,
             email: form.email || null,
-            case_type: form.case_type || null,
+            category: form.category || null,
             content: form.content || null,
-            privacy_agreed: form.privacy_agreed,
+            privacy_consent: form.privacy_consent,
+            status: 'new',
             created_at: new Date().toISOString(),
           },
         ])
@@ -149,7 +154,7 @@ export default function ConsultationModal({
             {/* 닫기 버튼 */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
+              className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors z-10"
               aria-label="닫기"
             >
               <svg
@@ -190,7 +195,7 @@ export default function ConsultationModal({
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-black mb-3">
+                  <h3 className="text-xl font-bold text-black mb-3">
                     상담 신청이 완료되었습니다
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed">
@@ -207,7 +212,7 @@ export default function ConsultationModal({
                     >
                       Consultation
                     </p>
-                    <h2 className="font-serif text-2xl font-bold text-black">
+                    <h2 className="text-2xl font-bold text-black">
                       무료 상담 신청
                     </h2>
                   </div>
@@ -261,17 +266,18 @@ export default function ConsultationModal({
                         htmlFor="modal-email"
                         className="block text-sm font-medium text-black mb-2"
                       >
-                        이메일
+                        이메일 <span className="text-red-500">*</span>
                       </label>
                       <input
                         id="modal-email"
                         type="email"
+                        required
                         value={form.email}
                         onChange={(e) =>
                           setForm({ ...form, email: e.target.value })
                         }
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors"
-                        placeholder="답변 받으실 이메일 주소 (선택)"
+                        placeholder="답변 받으실 이메일 주소"
                       />
                     </div>
 
@@ -285,9 +291,9 @@ export default function ConsultationModal({
                       </label>
                       <select
                         id="modal-case-type"
-                        value={form.case_type}
+                        value={form.category}
                         onChange={(e) =>
-                          setForm({ ...form, case_type: e.target.value })
+                          setForm({ ...form, category: e.target.value })
                         }
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors bg-white"
                       >
@@ -317,7 +323,7 @@ export default function ConsultationModal({
                           setForm({ ...form, content: e.target.value })
                         }
                         className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-gray-400 transition-colors resize-none"
-                        placeholder="사건 경위를 간략히 적어주세요. 비밀이 철저히 보장됩니다."
+                        placeholder="사건 경위를 자세히 적어주세요. 자세할수록 정확한 상담이 가능합니다. 비밀이 철저히 보장됩니다."
                       />
                       <p className="mt-1 text-xs text-gray-400 text-right">
                         {form.content.length}/500
@@ -325,14 +331,14 @@ export default function ConsultationModal({
                     </div>
 
                     {/* 개인정보 동의 */}
-                    <label className="flex items-start gap-3 cursor-pointer">
+                    <label className="flex items-start gap-3 cursor-pointer py-1">
                       <input
                         type="checkbox"
-                        checked={form.privacy_agreed}
+                        checked={form.privacy_consent}
                         onChange={(e) =>
-                          setForm({ ...form, privacy_agreed: e.target.checked })
+                          setForm({ ...form, privacy_consent: e.target.checked })
                         }
-                        className="mt-0.5 w-4 h-4 accent-[#1B3B2F] rounded"
+                        className="mt-0.5 w-5 h-5 accent-[#1B3B2F] rounded flex-shrink-0"
                       />
                       <span className="text-xs text-gray-500 leading-relaxed">
                         상담 목적으로 개인정보(성함, 연락처)를 수집·이용하는 것에
@@ -348,7 +354,7 @@ export default function ConsultationModal({
                     {/* 제출 버튼 */}
                     <button
                       type="submit"
-                      disabled={submitting || !form.privacy_agreed}
+                      disabled={submitting || !form.privacy_consent}
                       className="w-full py-4 text-white text-sm font-medium rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:opacity-90"
                       style={{ backgroundColor: '#1B3B2F' }}
                     >
@@ -379,26 +385,6 @@ export default function ConsultationModal({
                         '상담 신청하기'
                       )}
                     </button>
-                    {/* 카카오톡 안내 */}
-                    <div className="pt-2 text-center">
-                      <p className="text-xs text-gray-400 mb-3">
-                        카카오톡으로도 상담 가능합니다
-                      </p>
-                      <a
-                        href="https://pf.kakao.com/_YxgWxcn/chat"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#FEE500] text-[#191919] text-sm font-medium rounded-full hover:brightness-95 transition-all"
-                      >
-                        <svg width="18" height="18" viewBox="0 0 28 28" fill="none">
-                          <path
-                            d="M14 4C8.477 4 4 7.477 4 11.667c0 2.7 1.737 5.067 4.36 6.433-.14.507-.9 3.267-.933 3.5 0 0-.02.167.087.233.107.067.233.033.233.033.307-.043 3.56-2.327 4.12-2.733.7.1 1.413.2 2.133.2 5.523 0 10-3.477 10-7.667S19.523 4 14 4z"
-                            fill="#191919"
-                          />
-                        </svg>
-                        카카오톡 상담하기
-                      </a>
-                    </div>
                   </form>
                 </>
               )}

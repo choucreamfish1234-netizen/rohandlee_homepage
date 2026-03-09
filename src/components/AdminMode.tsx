@@ -50,7 +50,7 @@ export default function AdminMode({ children }: { children: React.ReactNode }) {
   // Ctrl+Shift+E shortcut
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'E') {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'KeyE') {
         e.preventDefault()
         if (isEditMode) {
           setIsEditMode(false)

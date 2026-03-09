@@ -10,7 +10,7 @@ interface Consultation {
   name: string
   phone: string
   email: string | null
-  case_type: string | null
+  category: string | null
   content: string | null
   status: string
   grade: string | null
@@ -31,7 +31,7 @@ interface Consultation {
   notes: string | null
   assigned_to: string | null
   created_at: string
-  privacy_agreed?: boolean
+  privacy_consent?: boolean
 }
 
 const gradeStyles: Record<string, { bg: string; text: string }> = {
@@ -127,8 +127,11 @@ export default function AdminConsultationsPage() {
     setLoading(false)
   }, [])
 
+  // "미발송" = email_sent_at이 null이고 전화완료가 아닌 건
+  const isUnsent = (c: Consultation) => !c.email_sent_at && c.status !== 'called'
+
   const stats = {
-    new: consultations.filter((c) => c.status === 'new').length,
+    new: consultations.filter(isUnsent).length,
     analyzed: consultations.filter((c) => c.status === 'analyzed').length,
     sent: consultations.filter((c) => c.status === 'sent').length,
     called: consultations.filter((c) => c.status === 'called').length,
@@ -136,7 +139,7 @@ export default function AdminConsultationsPage() {
 
   // 항상 접수일자(created_at) 최신순 정렬
   const filtered = consultations
-    .filter((c) => filter === 'all' || c.status === filter)
+    .filter((c) => filter === 'all' || (filter === 'new' ? isUnsent(c) : c.status === filter))
     .filter((c) => gradeFilter === 'all' || c.grade === gradeFilter)
 
   async function handleAnalyze(id: number) {
@@ -279,6 +282,12 @@ export default function AdminConsultationsPage() {
         >
           SEO 관리
         </Link>
+        <Link
+          href="/admin/analytics"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          방문자 분석
+        </Link>
       </div>
 
       {/* Header */}
@@ -300,7 +309,7 @@ export default function AdminConsultationsPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {[
-          { label: '신규 상담', value: stats.new, color: 'text-red-600', key: 'new' },
+          { label: '미발송', value: stats.new, color: 'text-red-600', key: 'new' },
           { label: '분석 완료', value: stats.analyzed, color: 'text-yellow-600', key: 'analyzed' },
           { label: '발송 완료', value: stats.sent, color: 'text-emerald-600', key: 'sent' },
           { label: '전화 완료', value: stats.called, color: 'text-blue-600', key: 'called' },
@@ -382,11 +391,11 @@ export default function AdminConsultationsPage() {
                     {c.name}
                   </button>
                   <p className="text-xs text-gray-400 sm:hidden mt-0.5">
-                    {c.case_type} · {getStatusLabel(c.status)}
+                    {c.category} · {getStatusLabel(c.status)}
                   </p>
                 </div>
                 <div className="col-span-2 hidden sm:block text-sm text-gray-600">{c.phone}</div>
-                <div className="col-span-1 hidden sm:block text-xs text-gray-600">{c.case_type || '-'}</div>
+                <div className="col-span-1 hidden sm:block text-xs text-gray-600">{c.category || '-'}</div>
                 <div className="col-span-2 hidden sm:block text-xs text-gray-400">{formatDate(c.created_at)}</div>
                 <div className="col-span-2 hidden sm:block relative">
                   <button
@@ -445,7 +454,7 @@ export default function AdminConsultationsPage() {
                   )}
                 </div>
                 <div className="col-span-2 flex justify-end gap-2">
-                  {c.status === 'new' && (
+                  {!c.ai_analysis && (
                     <button
                       onClick={() => handleAnalyze(c.id)}
                       disabled={analyzing === c.id}
@@ -507,7 +516,7 @@ export default function AdminConsultationsPage() {
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">이름</span><span className="text-black font-medium">{selected.name}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">연락처</span><a href={`tel:${selected.phone}`} className="text-[#1B3B2F] font-medium">{selected.phone}</a></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">이메일</span><span className="text-black">{selected.email || '미등록'}</span></div>
-                    <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">유형</span><span className="text-black">{selected.case_type || '-'}</span></div>
+                    <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">유형</span><span className="text-black">{selected.category || '-'}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">접수일</span><span className="text-black">{formatDate(selected.created_at)}</span></div>
                   </div>
                 </div>

@@ -75,7 +75,7 @@ export default function ProcessTimeline() {
             Process
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-20">
-            피해 접수부터 회복까지, A-Z 전 과정
+            성범죄 피해 상담 절차
           </h2>
         </ScrollReveal>
 

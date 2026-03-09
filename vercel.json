@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "src/app/api/generate-single-blog/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/generate-blog/route.ts": {
+      "maxDuration": 60
+    },
+    "src/app/api/geo-rewrite/route.ts": {
+      "maxDuration": 60
+    }
+  }
+}

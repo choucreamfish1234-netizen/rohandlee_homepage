@@ -1,63 +1,56 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   type BlogPost,
   CATEGORIES,
-  getPublishedPosts,
-  getFeaturedPosts,
-  getCategoryThumbnail,
+  getCategoryImagePool,
   getReadingTime,
   formatDate,
 } from '@/lib/blog'
 
-export default function BlogList() {
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [featured, setFeatured] = useState<BlogPost[]>([])
-  const [loading, setLoading] = useState(true)
+const POSTS_PER_PAGE = 9
+
+export default function BlogListClient({
+  initialPosts,
+  initialFeatured,
+}: {
+  initialPosts: BlogPost[]
+  initialFeatured: BlogPost[]
+}) {
+  const [featured] = useState<BlogPost[]>(initialFeatured)
   const [category, setCategory] = useState('전체')
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
   const [page, setPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
+
+  // Derive pagination from filtered posts
+  const filteredPosts = useMemo(() => {
+    let result = initialPosts
+    if (category !== '전체') {
+      result = result.filter(p => p.category === category)
+    }
+    if (debouncedSearch) {
+      const q = debouncedSearch.toLowerCase()
+      result = result.filter(p =>
+        p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q)
+      )
+    }
+    return result
+  }, [initialPosts, category, debouncedSearch])
+
+  const totalCount = filteredPosts.length
+  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
+  const pagedPosts = filteredPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE)
 
   // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300)
     return () => clearTimeout(timer)
   }, [search])
-
-  // Fetch featured posts on mount
-  useEffect(() => {
-    getFeaturedPosts().then(setFeatured).catch(() => setFeatured([]))
-  }, [])
-
-  // Fetch posts
-  const fetchPosts = useCallback(async () => {
-    setLoading(true)
-    try {
-      const result = await getPublishedPosts({
-        page,
-        category: category === '전체' ? undefined : category,
-        search: debouncedSearch || undefined,
-      })
-      setPosts(result.posts)
-      setTotalPages(result.totalPages)
-      setTotalCount(result.totalCount)
-    } catch {
-      setPosts([])
-    } finally {
-      setLoading(false)
-    }
-  }, [page, category, debouncedSearch])
-
-  useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
 
   // Reset page when category/search changes
   useEffect(() => {
@@ -97,7 +90,7 @@ export default function BlogList() {
                 <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
                   <div className="aspect-[16/10] bg-gray-100 overflow-hidden mb-4">
                     <Image
-                      src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                      src={post.thumbnail_url || getCategoryImagePool(post.category)[0]}
                       alt={post.title}
                       width={800}
                       height={500}
@@ -152,7 +145,7 @@ export default function BlogList() {
               <button
                 key={cat}
                 onClick={() => setCategory(cat)}
-                className={`px-4 py-2 text-xs font-medium transition-colors ${
+                className={`px-4 py-2.5 text-xs font-medium transition-colors min-h-[40px] ${
                   category === cat
                     ? 'bg-[#1B3B2F] text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -165,25 +158,11 @@ export default function BlogList() {
         </motion.div>
 
         {/* Results count */}
-        {!loading && (
-          <p className="text-xs text-gray-400 mb-6">
-            총 {totalCount}개의 글
-          </p>
-        )}
+        <p className="text-xs text-gray-400 mb-6">
+          총 {totalCount}개의 글
+        </p>
 
-        {/* Loading */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="animate-pulse">
-                <div className="aspect-[16/10] bg-gray-100 mb-4" />
-                <div className="h-3 bg-gray-100 w-1/4 mb-2" />
-                <div className="h-4 bg-gray-100 w-3/4 mb-2" />
-                <div className="h-3 bg-gray-100 w-1/2" />
-              </div>
-            ))}
-          </div>
-        ) : posts.length === 0 ? (
+        {pagedPosts.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -211,7 +190,7 @@ export default function BlogList() {
             {/* Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence mode="wait">
-                {posts.map((post, i) => (
+                {pagedPosts.map((post, i) => (
                   <motion.div
                     key={post.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -223,7 +202,7 @@ export default function BlogList() {
                       <div className="bg-white border border-gray-100 hover:border-gray-300 transition-all duration-300 h-full flex flex-col overflow-hidden">
                         <div className="aspect-[16/10] overflow-hidden">
                           <Image
-                            src={post.thumbnail_url || getCategoryThumbnail(post.category)}
+                            src={post.thumbnail_url || getCategoryImagePool(post.category)[0]}
                             alt={post.title}
                             width={800}
                             height={500}
@@ -253,11 +232,11 @@ export default function BlogList() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
+              <div className="mt-12 flex justify-center items-center gap-2 sm:gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
                 >
                   이전
                 </button>
@@ -265,7 +244,7 @@ export default function BlogList() {
                   <button
                     key={p}
                     onClick={() => setPage(p)}
-                    className={`w-9 h-9 text-sm font-medium transition-colors ${
+                    className={`w-11 h-11 text-sm font-medium transition-colors ${
                       page === p
                         ? 'bg-[#1B3B2F] text-white'
                         : 'border border-gray-200 hover:bg-gray-50'
@@ -277,7 +256,7 @@ export default function BlogList() {
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-2 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors"
+                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
                 >
                   다음
                 </button>

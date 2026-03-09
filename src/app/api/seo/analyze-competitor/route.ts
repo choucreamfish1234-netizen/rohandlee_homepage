@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
+import { parseAIResponse } from '@/lib/parse-ai-response'
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,7 +11,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Fetch competitor info
-    const { data: competitor, error: fetchError } = await supabase
+    const { data: competitor, error: fetchError } = await supabaseAdmin
       .from('competitors')
       .select('*')
       .eq('id', competitorId)
@@ -78,7 +79,8 @@ export async function POST(req: NextRequest) {
 - 위치: 경기도 부천시
 - 강점: 로톡 평점 4.9, 후기 600+, 피해자 전담
 
-반드시 아래 JSON 형식으로만 응답하세요:
+반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.
+아래 JSON 형식으로 응답하세요:
 {
   "title_analysis": { "text": "타이틀 텍스트", "score": 85, "keywords": ["키워드1"], "feedback": "분석 코멘트" },
   "meta_description_analysis": { "text": "디스크립션 텍스트", "score": 70, "feedback": "분석 코멘트" },
@@ -122,21 +124,16 @@ ${fetchSuccess ? `웹사이트 SEO 데이터:
 
     if (!claudeRes.ok) {
       const err = await claudeRes.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 분석에 실패했습니다.' }, { status: 500 })
+      console.error('Claude API error:', claudeRes.status, err)
+      return NextResponse.json({ error: `AI 분석 실패 (HTTP ${claudeRes.status}): ${err.substring(0, 200)}` }, { status: 500 })
     }
 
     const claudeData = await claudeRes.json()
-    const text = claudeData.content?.[0]?.text || ''
-    const jsonMatch = text.match(/\{[\s\S]*\}/)
-    if (!jsonMatch) {
-      return NextResponse.json({ error: 'AI 응답을 파싱할 수 없습니다.' }, { status: 500 })
-    }
-
-    const analysis = JSON.parse(jsonMatch[0])
+    const rawText = claudeData.content?.[0]?.text || ''
+    const analysis = parseAIResponse(rawText)
 
     // Save to seo_analyses
-    await supabase.from('seo_analyses').insert({
+    await supabaseAdmin.from('seo_analyses').insert({
       analysis_type: 'competitor',
       data: { competitor_id: competitor.id, competitor_name: competitor.name, extracted, analysis },
       recommendations: analysis.actionable_improvements,
@@ -145,7 +142,8 @@ ${fetchSuccess ? `웹사이트 SEO 데이터:
     return NextResponse.json({ analysis, extracted })
   } catch (error) {
     console.error('Competitor analysis error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const msg = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${msg}` }, { status: 500 })
   }
 }
 

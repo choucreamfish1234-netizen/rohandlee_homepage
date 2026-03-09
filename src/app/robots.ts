@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://rohandlee-homepage.vercel.app/sitemap.xml',
+    sitemap: 'https://lawfirmrohandlee.com/sitemap.xml',
   }
 }

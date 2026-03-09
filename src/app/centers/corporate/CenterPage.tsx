@@ -112,7 +112,7 @@ function CorporateCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               Business Package
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-4">
               기업 규모별 맞춤 법무 패키지
             </h2>
             <p className="text-center text-gray-500 text-sm mb-20">
@@ -136,7 +136,7 @@ function CorporateCustomSection() {
                     </span>
                   )}
                   <div className="text-3xl mb-4">{pkg.icon}</div>
-                  <h3 className="font-serif text-xl font-bold text-black">{pkg.name}</h3>
+                  <h3 className="text-xl font-bold text-black">{pkg.name}</h3>
                   <p className="mt-2 text-lg font-semibold text-emerald-700">{pkg.price}</p>
                   <ul className="mt-6 space-y-3">
                     {pkg.items.map((item) => (
@@ -172,7 +172,7 @@ function CorporateCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               Process
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-20">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-20">
               기업 법무 도입 프로세스
             </h2>
           </ScrollReveal>
@@ -203,7 +203,7 @@ function CorporateCustomSection() {
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
               FAQ
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-black mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
               자주 묻는 질문
             </h2>
           </ScrollReveal>
@@ -224,6 +224,7 @@ function CorporateCustomSection() {
 export default function CorporateCenterPage() {
   return (
     <CenterPageTemplate
+      pagePath="centers/corporate"
       centerName="기업경영 법무센터"
       subtitle="기업경영 법무센터"
       ctaLabel="기업 법무 상담 예약"
@@ -273,14 +274,14 @@ export default function CorporateCenterPage() {
           role: '대표변호사',
           specialty: '기업법무 전문 변호사',
           quote: '기업의 안정적인 성장을 위해\n법적 파트너로서 함께하겠습니다.',
-          image: '/lawyer-lee.svg',
+          image: '/images/lawyers/lawyer-lee.svg',
         },
         {
           name: '노채은',
           role: '대표변호사',
           specialty: '기업법무 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/lawyer-noh.svg',
+          image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
       ctaTitle="기업의 내일을 지키세요."

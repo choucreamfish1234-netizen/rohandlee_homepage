@@ -27,7 +27,7 @@ export default function ConsultationForm() {
     name: '',
     phone: '',
     email: '',
-    case_type: '',
+    category: '',
     content: '',
   })
   const [submitting, setSubmitting] = useState(false)
@@ -36,6 +36,10 @@ export default function ConsultationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!form.email.trim()) {
+      setError('이메일을 입력해주세요')
+      return
+    }
     setSubmitting(true)
     setError('')
 
@@ -47,8 +51,9 @@ export default function ConsultationForm() {
             name: form.name,
             phone: form.phone,
             email: form.email || null,
-            case_type: form.case_type,
+            category: form.category,
             content: form.content,
+            status: 'new',
             created_at: new Date().toISOString(),
           },
         ])
@@ -133,27 +138,28 @@ export default function ConsultationForm() {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-black mb-2">
-                이메일
+                이메일 <span className="text-red-500">*</span>
               </label>
               <input
                 id="email"
                 type="email"
+                required
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors"
-                placeholder="답변 받으실 이메일 주소 (선택)"
+                placeholder="답변 받으실 이메일 주소"
               />
             </div>
 
             <div>
-              <label htmlFor="case_type" className="block text-sm font-medium text-black mb-2">
+              <label htmlFor="category" className="block text-sm font-medium text-black mb-2">
                 사건 유형 <span className="text-red-500">*</span>
               </label>
               <select
-                id="case_type"
+                id="category"
                 required
-                value={form.case_type}
-                onChange={(e) => setForm({ ...form, case_type: e.target.value })}
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors bg-white"
               >
                 <option value="">선택해주세요</option>
@@ -176,7 +182,7 @@ export default function ConsultationForm() {
                 value={form.content}
                 onChange={(e) => setForm({ ...form, content: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-accent transition-colors resize-none"
-                placeholder="사건 경위를 간략히 적어주세요. 비밀이 철저히 보장됩니다."
+                placeholder="사건 경위를 자세히 적어주세요. 자세할수록 정확한 상담이 가능합니다. 비밀이 철저히 보장됩니다."
               />
             </div>
 
@@ -187,7 +193,7 @@ export default function ConsultationForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-4 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
             >
               {submitting ? '전송 중...' : '상담 신청하기'}
             </button>
