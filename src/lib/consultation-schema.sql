@@ -25,6 +25,12 @@ CREATE INDEX IF NOT EXISTS idx_consultations_status ON consultations(status);
 CREATE INDEX IF NOT EXISTS idx_consultations_grade ON consultations(grade);
 CREATE INDEX IF NOT EXISTS idx_consultations_created_at ON consultations(created_at DESC);
 
+-- called_at 컬럼 추가
+ALTER TABLE consultations ADD COLUMN IF NOT EXISTS called_at timestamptz;
+
+-- status 자유 입력을 위해 CHECK 제약 제거
+ALTER TABLE consultations DROP CONSTRAINT IF EXISTS consultations_status_check;
+
 -- RLS 정책 (이미 활성화되어 있을 수 있음)
 ALTER TABLE consultations ENABLE ROW LEVEL SECURITY;
 
@@ -40,3 +46,7 @@ CREATE POLICY "Allow update access" ON consultations
   FOR UPDATE TO anon
   USING (true)
   WITH CHECK (true);
+
+CREATE POLICY "Allow delete access" ON consultations
+  FOR DELETE TO anon
+  USING (true);
