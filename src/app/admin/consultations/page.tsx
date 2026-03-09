@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
@@ -27,6 +27,7 @@ interface Consultation {
   } | null
   email_draft: string | null
   email_sent_at: string | null
+  called_at: string | null
   notes: string | null
   assigned_to: string | null
   created_at: string
@@ -40,11 +41,43 @@ const gradeStyles: Record<string, { bg: string; text: string }> = {
   D: { bg: 'bg-gray-100', text: 'text-gray-600' },
 }
 
-const statusStyles: Record<string, { label: string; bg: string; text: string }> = {
-  new: { label: '신규', bg: 'bg-red-50', text: 'text-red-700' },
-  analyzed: { label: '분석완료', bg: 'bg-yellow-50', text: 'text-yellow-700' },
-  sent: { label: '발송완료', bg: 'bg-emerald-50', text: 'text-emerald-700' },
-  called: { label: '전화완료', bg: 'bg-blue-50', text: 'text-blue-700' },
+const STATUS_OPTIONS = [
+  { value: 'new', label: '신규접수' },
+  { value: 'analyzed', label: '분석완료' },
+  { value: 'sent', label: '이메일발송' },
+  { value: 'called', label: '전화완료' },
+  { value: 'retained', label: '수임완료' },
+  { value: 'hold', label: '보류' },
+  { value: 'closed', label: '종결' },
+]
+
+function getStatusLabel(status: string): string {
+  const found = STATUS_OPTIONS.find((o) => o.value === status)
+  return found ? found.label : status
+}
+
+function getStatusStyle(status: string): { bg: string; text: string } {
+  const styles: Record<string, { bg: string; text: string }> = {
+    new: { bg: 'bg-red-50', text: 'text-red-700' },
+    analyzed: { bg: 'bg-yellow-50', text: 'text-yellow-700' },
+    sent: { bg: 'bg-emerald-50', text: 'text-emerald-700' },
+    called: { bg: 'bg-blue-50', text: 'text-blue-700' },
+    retained: { bg: 'bg-purple-50', text: 'text-purple-700' },
+    hold: { bg: 'bg-orange-50', text: 'text-orange-700' },
+    closed: { bg: 'bg-gray-100', text: 'text-gray-600' },
+  }
+  return styles[status] || { bg: 'bg-gray-100', text: 'text-gray-600' }
+}
+
+function formatDateTime(d: string | null): string {
+  if (!d) return ''
+  const date = new Date(d)
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const h = String(date.getHours()).padStart(2, '0')
+  const min = String(date.getMinutes()).padStart(2, '0')
+  return `${y}.${m}.${day} ${h}:${min}`
 }
 
 export default function AdminConsultationsPage() {
@@ -59,6 +92,10 @@ export default function AdminConsultationsPage() {
   const [emailBody, setEmailBody] = useState('')
   const [sending, setSending] = useState(false)
   const [notes, setNotes] = useState('')
+  const [statusEditId, setStatusEditId] = useState<number | null>(null)
+  const [customStatusInput, setCustomStatusInput] = useState('')
+  const [showCustomInput, setShowCustomInput] = useState(false)
+  const statusDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -67,6 +104,18 @@ export default function AdminConsultationsPage() {
     }
     fetchConsultations()
   }, [router])
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (statusDropdownRef.current && !statusDropdownRef.current.contains(e.target as Node)) {
+        setStatusEditId(null)
+        setShowCustomInput(false)
+        setCustomStatusInput('')
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const fetchConsultations = useCallback(async () => {
     setLoading(true)
@@ -85,16 +134,10 @@ export default function AdminConsultationsPage() {
     called: consultations.filter((c) => c.status === 'called').length,
   }
 
+  // 항상 접수일자(created_at) 최신순 정렬
   const filtered = consultations
     .filter((c) => filter === 'all' || c.status === filter)
     .filter((c) => gradeFilter === 'all' || c.grade === gradeFilter)
-    .sort((a, b) => {
-      const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3 }
-      const ga = a.grade ? gradeOrder[a.grade] ?? 4 : 4
-      const gb = b.grade ? gradeOrder[b.grade] ?? 4 : 4
-      if (ga !== gb) return ga - gb
-      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    })
 
   async function handleAnalyze(id: number) {
     setAnalyzing(id)
@@ -110,7 +153,6 @@ export default function AdminConsultationsPage() {
         return
       }
       await fetchConsultations()
-      // Auto-open detail with refreshed data
       const refreshed = await supabase.from('consultations').select('*').eq('id', id).single()
       if (refreshed.data) openDetail(refreshed.data as Consultation)
     } catch {
@@ -164,9 +206,23 @@ export default function AdminConsultationsPage() {
   }
 
   async function handleStatusChange(id: number, status: string) {
-    await supabase.from('consultations').update({ status }).eq('id', id)
+    const updateData: Record<string, string> = { status }
+    if (status === 'called') {
+      updateData.called_at = new Date().toISOString()
+    }
+    await supabase.from('consultations').update(updateData).eq('id', id)
+    setStatusEditId(null)
+    setShowCustomInput(false)
+    setCustomStatusInput('')
     fetchConsultations()
     if (selected?.id === id) setSelected(null)
+  }
+
+  async function handleDelete(id: number) {
+    if (!confirm('정말 삭제하시겠습니까?')) return
+    await supabase.from('consultations').delete().eq('id', id)
+    if (selected?.id === id) setSelected(null)
+    fetchConsultations()
   }
 
   async function handleSaveNotes() {
@@ -182,6 +238,26 @@ export default function AdminConsultationsPage() {
       hour: '2-digit',
       minute: '2-digit',
     })
+  }
+
+  function renderStatusWithTimestamp(c: Consultation) {
+    const parts: string[] = []
+    if (c.email_sent_at) {
+      parts.push(`이메일 발송 (${formatDateTime(c.email_sent_at)})`)
+    }
+    if (c.called_at) {
+      parts.push(`전화완료 (${formatDateTime(c.called_at)})`)
+    }
+    if (parts.length > 0) {
+      return (
+        <div className="space-y-0.5">
+          {parts.map((p, i) => (
+            <p key={i} className="text-xs text-gray-500">{p}</p>
+          ))}
+        </div>
+      )
+    }
+    return null
   }
 
   return (
@@ -276,15 +352,15 @@ export default function AdminConsultationsPage() {
             <div className="col-span-1">등급</div>
             <div className="col-span-2">이름</div>
             <div className="col-span-2">연락처</div>
-            <div className="col-span-2">유형</div>
+            <div className="col-span-1">유형</div>
             <div className="col-span-2">접수일</div>
-            <div className="col-span-1">상태</div>
+            <div className="col-span-2">상태</div>
             <div className="col-span-2 text-right">액션</div>
           </div>
 
           {filtered.map((c) => {
             const gs = c.grade ? gradeStyles[c.grade] : null
-            const ss = statusStyles[c.status] || statusStyles.new
+            const ss = getStatusStyle(c.status)
             return (
               <div
                 key={c.id}
@@ -306,14 +382,67 @@ export default function AdminConsultationsPage() {
                     {c.name}
                   </button>
                   <p className="text-xs text-gray-400 sm:hidden mt-0.5">
-                    {c.case_type} · {ss.label}
+                    {c.case_type} · {getStatusLabel(c.status)}
                   </p>
                 </div>
                 <div className="col-span-2 hidden sm:block text-sm text-gray-600">{c.phone}</div>
-                <div className="col-span-2 hidden sm:block text-xs text-gray-600">{c.case_type || '-'}</div>
+                <div className="col-span-1 hidden sm:block text-xs text-gray-600">{c.case_type || '-'}</div>
                 <div className="col-span-2 hidden sm:block text-xs text-gray-400">{formatDate(c.created_at)}</div>
-                <div className="col-span-1 hidden sm:block">
-                  <span className={`inline-block text-xs px-2 py-0.5 ${ss.bg} ${ss.text}`}>{ss.label}</span>
+                <div className="col-span-2 hidden sm:block relative">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setStatusEditId(statusEditId === c.id ? null : c.id)
+                      setShowCustomInput(false)
+                      setCustomStatusInput('')
+                    }}
+                    className={`inline-block text-xs px-2 py-0.5 cursor-pointer hover:ring-1 hover:ring-gray-300 ${ss.bg} ${ss.text}`}
+                    title="클릭하여 상태 변경"
+                  >
+                    {getStatusLabel(c.status)}
+                  </button>
+                  {renderStatusWithTimestamp(c)}
+                  {statusEditId === c.id && (
+                    <div ref={statusDropdownRef} className="absolute z-50 top-full left-0 mt-1 bg-white border border-gray-200 shadow-lg py-1 min-w-[160px]">
+                      {STATUS_OPTIONS.map((opt) => (
+                        <button
+                          key={opt.value}
+                          onClick={() => handleStatusChange(c.id, opt.value)}
+                          className={`block w-full text-left px-3 py-1.5 text-xs hover:bg-gray-50 ${
+                            c.status === opt.value ? 'font-bold text-[#1B3B2F]' : 'text-gray-700'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                      <div className="border-t border-gray-100 mt-1 pt-1">
+                        {!showCustomInput ? (
+                          <button
+                            onClick={() => setShowCustomInput(true)}
+                            className="block w-full text-left px-3 py-1.5 text-xs text-gray-400 hover:bg-gray-50"
+                          >
+                            직접 입력...
+                          </button>
+                        ) : (
+                          <div className="px-2 py-1">
+                            <input
+                              type="text"
+                              value={customStatusInput}
+                              onChange={(e) => setCustomStatusInput(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' && customStatusInput.trim()) {
+                                  handleStatusChange(c.id, customStatusInput.trim())
+                                }
+                              }}
+                              placeholder="상태 입력"
+                              className="w-full px-2 py-1 text-xs border border-gray-200 focus:outline-none focus:border-[#1B3B2F]"
+                              autoFocus
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="col-span-2 flex justify-end gap-2">
                   {c.status === 'new' && (
@@ -330,6 +459,12 @@ export default function AdminConsultationsPage() {
                     className="text-xs px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
                   >
                     상세
+                  </button>
+                  <button
+                    onClick={() => handleDelete(c.id)}
+                    className="text-xs px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                  >
+                    삭제
                   </button>
                 </div>
               </div>
@@ -352,8 +487,8 @@ export default function AdminConsultationsPage() {
                     {selected.grade}등급
                   </span>
                 )}
-                <span className={`text-xs px-2 py-0.5 ${statusStyles[selected.status]?.bg} ${statusStyles[selected.status]?.text}`}>
-                  {statusStyles[selected.status]?.label}
+                <span className={`text-xs px-2 py-0.5 ${getStatusStyle(selected.status).bg} ${getStatusStyle(selected.status).text}`}>
+                  {getStatusLabel(selected.status)}
                 </span>
               </div>
               <button onClick={() => setSelected(null)} className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors">
@@ -376,6 +511,27 @@ export default function AdminConsultationsPage() {
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">접수일</span><span className="text-black">{formatDate(selected.created_at)}</span></div>
                   </div>
                 </div>
+
+                {/* Status timestamps */}
+                {(selected.email_sent_at || selected.called_at) && (
+                  <div>
+                    <h3 className="text-sm font-semibold text-black mb-3">처리 이력</h3>
+                    <div className="space-y-1.5 text-sm">
+                      {selected.email_sent_at && (
+                        <div className="flex gap-2">
+                          <span className="text-gray-400 w-20 shrink-0">이메일 발송</span>
+                          <span className="text-black">{formatDateTime(selected.email_sent_at)}</span>
+                        </div>
+                      )}
+                      {selected.called_at && (
+                        <div className="flex gap-2">
+                          <span className="text-gray-400 w-20 shrink-0">전화 완료</span>
+                          <span className="text-black">{formatDateTime(selected.called_at)}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <h3 className="text-sm font-semibold text-black mb-3">상담 내용</h3>
@@ -494,25 +650,39 @@ export default function AdminConsultationsPage() {
                       rows={10}
                       className="w-full px-4 py-3 border border-gray-200 text-sm font-mono leading-relaxed focus:outline-none focus:border-[#1B3B2F] transition-colors resize-y"
                     />
-                    <div className="mt-4 flex flex-wrap gap-3">
+                    <div className="mt-4">
                       <button
                         onClick={handleSendEmail}
                         disabled={sending || !selected.email}
-                        className="flex-1 py-3 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+                        className="w-full py-3 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors"
                       >
                         {sending ? '발송 중...' : selected.email ? '이메일 발송' : '이메일 미등록'}
                       </button>
-                      {selected.grade === 'A' && selected.status !== 'called' && (
-                        <button
-                          onClick={() => handleStatusChange(selected.id, 'called')}
-                          className="px-6 py-3 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
-                        >
-                          전화 완료로 표시
-                        </button>
-                      )}
                     </div>
                   </div>
                 )}
+
+                {/* 전화완료 버튼 - 이메일 발송과 독립적으로 항상 표시 */}
+                {selected.status !== 'called' && (
+                  <div>
+                    <button
+                      onClick={() => handleStatusChange(selected.id, 'called')}
+                      className="w-full py-3 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+                    >
+                      전화 완료로 표시
+                    </button>
+                  </div>
+                )}
+
+                {/* 삭제 버튼 */}
+                <div className="pt-4 border-t border-gray-100">
+                  <button
+                    onClick={() => handleDelete(selected.id)}
+                    className="text-xs text-red-500 hover:text-red-700 transition-colors"
+                  >
+                    이 상담 삭제
+                  </button>
+                </div>
               </div>
             </div>
           </div>
