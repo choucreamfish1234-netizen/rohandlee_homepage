@@ -213,7 +213,21 @@ export default function AdminConsultationsPage() {
     if (status === 'called') {
       updateData.called_at = new Date().toISOString()
     }
-    await supabase.from('consultations').update(updateData).eq('id', id)
+    try {
+      const res = await fetch('/api/consultations', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, ...updateData }),
+      })
+      const data = await res.json()
+      if (data.error) {
+        alert('상태 변경에 실패했습니다: ' + data.error)
+        return
+      }
+    } catch {
+      alert('상태 변경에 실패했습니다.')
+      return
+    }
     setStatusEditId(null)
     setShowCustomInput(false)
     setCustomStatusInput('')
@@ -223,14 +237,42 @@ export default function AdminConsultationsPage() {
 
   async function handleDelete(id: number) {
     if (!confirm('정말 삭제하시겠습니까?')) return
-    await supabase.from('consultations').delete().eq('id', id)
+    try {
+      const res = await fetch('/api/consultations', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      })
+      const data = await res.json()
+      if (data.error) {
+        alert('삭제에 실패했습니다: ' + data.error)
+        return
+      }
+    } catch {
+      alert('삭제에 실패했습니다.')
+      return
+    }
     if (selected?.id === id) setSelected(null)
     fetchConsultations()
   }
 
   async function handleSaveNotes() {
     if (!selected) return
-    await supabase.from('consultations').update({ notes }).eq('id', selected.id)
+    try {
+      const res = await fetch('/api/consultations', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: selected.id, notes }),
+      })
+      const data = await res.json()
+      if (data.error) {
+        alert('메모 저장에 실패했습니다: ' + data.error)
+        return
+      }
+    } catch {
+      alert('메모 저장에 실패했습니다.')
+      return
+    }
     fetchConsultations()
   }
 

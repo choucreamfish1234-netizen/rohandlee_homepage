@@ -28,3 +28,4 @@ ALTER TABLE consultations ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow insert for anon" ON consultations FOR INSERT WITH CHECK (true);
 CREATE POLICY "Allow select for anon" ON consultations FOR SELECT USING (true);
 CREATE POLICY "Allow update for anon" ON consultations FOR UPDATE USING (true);
+CREATE POLICY "Allow delete for anon" ON consultations FOR DELETE USING (true);
