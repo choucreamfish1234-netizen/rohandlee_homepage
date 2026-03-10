@@ -52,8 +52,8 @@ export default function Footer() {
                 />
               </li>
               <li>
-                <a href="mailto:rohandlee@naver.com" className="hover:text-black transition-colors">
-                  E. rohandlee@naver.com
+                <a href="mailto:rohetlee@naver.com" className="hover:text-black transition-colors">
+                  E. rohetlee@naver.com
                 </a>
               </li>
               <li>
