@@ -103,6 +103,26 @@ export default function AdminDashboardPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deletingAll, setDeletingAll] = useState(false)
 
+  // SEO optimization state
+  const [selectedPosts, setSelectedPosts] = useState<Set<number>>(new Set())
+  const [seoOptimizing, setSeoOptimizing] = useState(false)
+  const [seoPostId, setSeoPostId] = useState<number | null>(null)
+  const [seoBulkRunning, setSeoBulkRunning] = useState(false)
+  const [seoBulkTotal, setSeoBulkTotal] = useState(0)
+  const [seoBulkCompleted, setSeoBulkCompleted] = useState(0)
+  const [seoBulkErrors, setSeoBulkErrors] = useState(0)
+  const [seoBulkCurrent, setSeoBulkCurrent] = useState('')
+  const seoBulkStopRef = useRef(false)
+  const [seoResult, setSeoResult] = useState('')
+  // Before/after comparison modal
+  const [showSeoModal, setShowSeoModal] = useState(false)
+  const [seoPreview, setSeoPreview] = useState<{
+    postId: number
+    original: { title: string; content: string; description: string | null; tags: string[] }
+    optimized: { title: string; content: string; description: string; tags: string[] }
+  } | null>(null)
+  const [seoApplying, setSeoApplying] = useState(false)
+
   async function fetchExistingPostCount() {
     try {
       const { data: existing } = await supabase
@@ -591,6 +611,164 @@ export default function AdminDashboardPage() {
     }
   }
 
+  // ── SEO 최적화 핸들러 ──
+  function toggleSelectPost(id: number) {
+    setSelectedPosts((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  function toggleSelectAll() {
+    if (selectedPosts.size === filteredPosts.length) {
+      setSelectedPosts(new Set())
+    } else {
+      setSelectedPosts(new Set(filteredPosts.map((p) => p.id)))
+    }
+  }
+
+  async function handleSeoOptimize(postId: number) {
+    if (seoOptimizing || seoBulkRunning) return
+    if (!confirm('기존 글을 SEO 규칙에 맞게 수정합니다. 진행할까요?')) return
+
+    setSeoOptimizing(true)
+    setSeoPostId(postId)
+    setSeoResult('')
+    try {
+      const res = await fetch('/api/optimize-blog-seo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setSeoPreview(data)
+        setShowSeoModal(true)
+      } else {
+        setSeoResult(`오류: ${data.error}`)
+      }
+    } catch {
+      setSeoResult('SEO 최적화 중 오류가 발생했습니다.')
+    } finally {
+      setSeoOptimizing(false)
+      setSeoPostId(null)
+    }
+  }
+
+  async function handleSeoBulkOptimize() {
+    const ids = Array.from(selectedPosts)
+    if (ids.length === 0) {
+      alert('글을 선택해주세요.')
+      return
+    }
+    if (!confirm(`선택한 ${ids.length}개 글을 SEO 최적화합니다. 진행할까요?`)) return
+
+    setSeoBulkRunning(true)
+    setSeoBulkTotal(ids.length)
+    setSeoBulkCompleted(0)
+    setSeoBulkErrors(0)
+    setSeoBulkCurrent('')
+    setSeoResult('')
+    seoBulkStopRef.current = false
+
+    let successCount = 0
+    let errorCount = 0
+
+    for (let i = 0; i < ids.length; i++) {
+      if (seoBulkStopRef.current) {
+        setSeoBulkCurrent('중지됨')
+        break
+      }
+
+      const id = ids[i]
+      const post = posts.find((p) => p.id === id)
+      setSeoBulkCurrent(`${i + 1}/${ids.length} - ${post?.title || id}`)
+
+      try {
+        // Generate optimized content
+        const res = await fetch('/api/optimize-blog-seo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ postId: id }),
+        })
+        const data = await res.json()
+
+        if (res.ok && data.success) {
+          // Auto-apply in bulk mode
+          const applyRes = await fetch('/api/optimize-blog-seo', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              postId: id,
+              title: data.optimized.title,
+              content: data.optimized.content,
+              description: data.optimized.description,
+              tags: data.optimized.tags,
+            }),
+          })
+          const applyData = await applyRes.json()
+          if (applyData.success) {
+            successCount++
+            setSeoBulkCompleted(successCount)
+          } else {
+            errorCount++
+            setSeoBulkErrors(errorCount)
+          }
+        } else {
+          errorCount++
+          setSeoBulkErrors(errorCount)
+        }
+      } catch {
+        errorCount++
+        setSeoBulkErrors(errorCount)
+      }
+
+      // Rate limit: 5초 간격
+      if (i < ids.length - 1 && !seoBulkStopRef.current) {
+        await sleep(5000)
+      }
+    }
+
+    setSeoBulkCurrent('')
+    setSeoResult(`SEO 최적화 완료: ${successCount}개 성공, ${errorCount}개 실패 (총 ${ids.length}개)`)
+    setSeoBulkRunning(false)
+    setSelectedPosts(new Set())
+    fetchData()
+  }
+
+  async function handleSeoApply() {
+    if (!seoPreview) return
+    setSeoApplying(true)
+    try {
+      const res = await fetch('/api/optimize-blog-seo', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postId: seoPreview.postId,
+          title: seoPreview.optimized.title,
+          content: seoPreview.optimized.content,
+          description: seoPreview.optimized.description,
+          tags: seoPreview.optimized.tags,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSeoResult('수정 완료!')
+        setShowSeoModal(false)
+        setSeoPreview(null)
+        fetchData()
+      } else {
+        setSeoResult(`적용 실패: ${data.error}`)
+      }
+    } catch {
+      setSeoResult('적용 중 오류가 발생했습니다.')
+    } finally {
+      setSeoApplying(false)
+    }
+  }
+
   const filteredPosts = search
     ? posts.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()) || p.category.includes(search))
     : posts
@@ -923,6 +1101,159 @@ export default function AdminDashboardPage() {
         )}
       </div>
 
+      {/* SEO Optimization Section */}
+      <div className="mb-8 p-6 border border-blue-200 bg-blue-50/50 rounded-lg">
+        <h2 className="text-sm font-bold text-blue-900 mb-1">SEO 최적화 수정</h2>
+        <p className="text-xs text-blue-600 mb-4">
+          기존 블로그 글의 제목, 본문 구조, 키워드, 메타 정보를 SEO 규칙에 맞게 리라이트합니다.
+          개별 글은 아래 목록에서 &quot;SEO&quot; 버튼으로, 여러 글은 체크박스 선택 후 일괄 수정할 수 있습니다.
+        </p>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={handleSeoBulkOptimize}
+            disabled={seoBulkRunning || seoOptimizing || selectedPosts.size === 0}
+            className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
+          >
+            {seoBulkRunning ? 'SEO 최적화 중...' : `선택한 ${selectedPosts.size}개 글 SEO 최적화`}
+          </button>
+          {seoBulkRunning && (
+            <button
+              onClick={() => { seoBulkStopRef.current = true; setSeoBulkCurrent('중지 요청됨...') }}
+              className="px-5 py-2.5 bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition-colors rounded"
+            >
+              중지
+            </button>
+          )}
+          {selectedPosts.size > 0 && !seoBulkRunning && (
+            <span className="text-xs text-blue-600 font-medium">{selectedPosts.size}개 선택됨</span>
+          )}
+        </div>
+        {seoBulkRunning && seoBulkTotal > 0 && (
+          <div className="mt-4">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="flex-1 h-3 bg-blue-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                  style={{ width: `${((seoBulkCompleted + seoBulkErrors) / seoBulkTotal) * 100}%` }}
+                />
+              </div>
+              <span className="text-sm font-semibold text-black whitespace-nowrap">
+                {seoBulkCompleted + seoBulkErrors} / {seoBulkTotal}
+              </span>
+            </div>
+            <div className="flex items-center gap-4 text-xs text-gray-500">
+              <span className="text-emerald-600 font-medium">성공: {seoBulkCompleted}</span>
+              {seoBulkErrors > 0 && <span className="text-red-500 font-medium">실패: {seoBulkErrors}</span>}
+              <span className="animate-pulse">{seoBulkCurrent}</span>
+            </div>
+          </div>
+        )}
+        {seoResult && (
+          <p className="mt-3 text-xs text-blue-800 font-medium">{seoResult}</p>
+        )}
+      </div>
+
+      {/* SEO Before/After Modal */}
+      {showSeoModal && seoPreview && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+              <h3 className="text-lg font-bold text-black">SEO 최적화 미리보기</h3>
+              <button
+                onClick={() => { setShowSeoModal(false); setSeoPreview(null) }}
+                className="text-gray-400 hover:text-black transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Before */}
+                <div>
+                  <h4 className="text-sm font-bold text-red-600 mb-3 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-red-400" /> 수정 전
+                  </h4>
+                  <div className="border border-gray-200 rounded-lg p-4 space-y-3">
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">제목</p>
+                      <p className="text-sm font-medium text-black">{seoPreview.original.title}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">설명</p>
+                      <p className="text-xs text-gray-600">{seoPreview.original.description || '(없음)'}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">태그</p>
+                      <div className="flex flex-wrap gap-1">
+                        {(seoPreview.original.tags || []).map((tag, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 bg-gray-100 text-gray-600 rounded">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">본문 미리보기</p>
+                      <div className="text-xs text-gray-600 max-h-60 overflow-y-auto whitespace-pre-wrap leading-relaxed">
+                        {seoPreview.original.content.substring(0, 1000)}
+                        {seoPreview.original.content.length > 1000 && '...'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* After */}
+                <div>
+                  <h4 className="text-sm font-bold text-emerald-600 mb-3 flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400" /> 수정 후
+                  </h4>
+                  <div className="border border-emerald-200 rounded-lg p-4 space-y-3 bg-emerald-50/30">
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">제목</p>
+                      <p className="text-sm font-medium text-black">{seoPreview.optimized.title}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">설명</p>
+                      <p className="text-xs text-gray-600">{seoPreview.optimized.description || '(없음)'}</p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">태그</p>
+                      <div className="flex flex-wrap gap-1">
+                        {(seoPreview.optimized.tags || []).map((tag, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-1">본문 미리보기</p>
+                      <div className="text-xs text-gray-600 max-h-60 overflow-y-auto whitespace-pre-wrap leading-relaxed">
+                        {seoPreview.optimized.content.substring(0, 1000)}
+                        {seoPreview.optimized.content.length > 1000 && '...'}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200">
+              <button
+                onClick={() => { setShowSeoModal(false); setSeoPreview(null) }}
+                disabled={seoApplying}
+                className="px-5 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors rounded"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleSeoApply}
+                disabled={seoApplying}
+                className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 transition-colors rounded"
+              >
+                {seoApplying ? '적용 중...' : '적용'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Delete All Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -987,14 +1318,23 @@ export default function AdminDashboardPage() {
         </div>
       ) : (
         <div className="border border-gray-100 divide-y divide-gray-100 bg-white">
-          <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-5 py-3 bg-gray-50 text-xs font-medium text-gray-500">
-            <div className="col-span-4">제목</div>
+          <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-5 py-3 bg-gray-50 text-xs font-medium text-gray-500 items-center">
+            <div className="col-span-1 flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={filteredPosts.length > 0 && selectedPosts.size === filteredPosts.length}
+                onChange={toggleSelectAll}
+                className="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              />
+              <span>선택</span>
+            </div>
+            <div className="col-span-3">제목</div>
             <div className="col-span-1">카테고리</div>
             <div className="col-span-1">상태</div>
             <div className="col-span-1">네이버</div>
             <div className="col-span-1 text-right">조회</div>
-            <div className="col-span-2">날짜</div>
-            <div className="col-span-2 text-right">관리</div>
+            <div className="col-span-1">날짜</div>
+            <div className="col-span-3 text-right">관리</div>
           </div>
 
           {filteredPosts.map((post) => {
@@ -1002,9 +1342,19 @@ export default function AdminDashboardPage() {
             return (
               <div
                 key={post.id}
-                className="grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 px-5 py-4 hover:bg-gray-50 transition-colors items-center"
+                className={`grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 px-5 py-4 hover:bg-gray-50 transition-colors items-center ${
+                  selectedPosts.has(post.id) ? 'bg-blue-50/50' : ''
+                }`}
               >
-                <div className="col-span-4">
+                <div className="col-span-1 hidden sm:flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selectedPosts.has(post.id)}
+                    onChange={() => toggleSelectPost(post.id)}
+                    className="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                </div>
+                <div className="col-span-3">
                   <Link
                     href={`/admin/write?id=${post.id}`}
                     className="text-sm font-medium text-black hover:text-[#1B3B2F] transition-colors line-clamp-1"
@@ -1036,12 +1386,19 @@ export default function AdminDashboardPage() {
                 <div className="col-span-1 hidden sm:block text-right">
                   <span className="text-xs text-gray-500">{post.view_count}</span>
                 </div>
-                <div className="col-span-2 hidden sm:block">
+                <div className="col-span-1 hidden sm:block">
                   <span className="text-xs text-gray-400">
                     {formatDate(post.published_at || post.created_at)}
                   </span>
                 </div>
-                <div className="col-span-2 flex justify-end gap-2">
+                <div className="col-span-3 flex justify-end gap-2">
+                  <button
+                    onClick={() => handleSeoOptimize(post.id)}
+                    disabled={seoOptimizing || seoBulkRunning}
+                    className="text-xs text-blue-500 hover:text-blue-700 disabled:opacity-50 transition-colors font-medium"
+                  >
+                    {seoPostId === post.id ? '...' : 'SEO'}
+                  </button>
                   <button
                     onClick={() => handleGeoRewrite(post.id)}
                     disabled={geoRewriting || geoBulkRunning}

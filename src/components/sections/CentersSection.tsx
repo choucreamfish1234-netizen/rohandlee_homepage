@@ -20,6 +20,27 @@ const centers = [
     alt: '서류와 펜이 있는 깔끔한 데스크 - 법률과 계약',
   },
   {
+    title: '부동산 피해 전담센터',
+    description: '전세 사기·토지 매매 사기·권리금 분쟁, 민형사 동시 타격으로 반드시 되찾습니다',
+    href: '/centers/real-estate',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop&q=80',
+    alt: '열쇠와 집 모형 - 부동산 피해',
+  },
+  {
+    title: '기업경영 법무센터',
+    description: '기업 운영의 법적 리스크를 사전 차단합니다',
+    href: '/centers/corporate',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80',
+    alt: '고층 빌딩을 올려다 본 모습',
+  },
+  {
+    title: 'IT·보안 법률센터',
+    description: '디지털 시대의 법적 보호막이 되겠습니다',
+    href: '/centers/it-security',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop&q=80',
+    alt: '코드가 흐르는 화면 - 디지털과 기술',
+  },
+  {
     title: '회생파산 전담 센터(리셋)',
     description: '새로운 시작을 위한 법적 리셋 시스템',
     href: '/centers/bankruptcy',
@@ -28,52 +49,22 @@ const centers = [
   },
 ]
 
-const centersRow2 = [
-  {
-    title: '기업경영 법무센터',
-    description: '기업 운영의 법적 리스크를 사전 차단합니다',
-    href: '/centers/corporate',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=675&fit=crop&q=80',
-    alt: '고층 빌딩을 올려다 본 모습',
-  },
-  {
-    title: 'IT·보안 법률센터',
-    description: '디지털 시대의 법적 보호막이 되겠습니다',
-    href: '/centers/it-security',
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&h=675&fit=crop&q=80',
-    alt: '코드가 흐르는 화면 - 디지털과 기술',
-  },
-]
-
-const centersRow3 = [
-  {
-    title: '임대차·보증금 피해 전담센터',
-    description: '전세 사기·보증금 미반환, 민형사 동시 타격으로 반드시 되찾습니다',
-    href: '/centers/lease-deposit',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=675&fit=crop&q=80',
-    alt: '열쇠와 집 모형 - 임대차와 보증금',
-  },
-]
-
-function CenterCard({ center, index, aspectClass, imgW, imgH }: {
+function CenterCard({ center, index }: {
   center: typeof centers[0]
   index: number
-  aspectClass: string
-  imgW: number
-  imgH: number
 }) {
   return (
     <Link href={center.href} className="group block">
       <div className="border-t-[3px] border-[#1B3B2F] bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
-        <div className={`${aspectClass} overflow-hidden relative`}>
+        <div className="aspect-[4/3] overflow-hidden relative">
           <EditableImage
             page="home"
             section="centers"
             fieldKey={`center-${index}-image`}
             defaultSrc={center.image}
             alt={center.alt}
-            width={imgW}
-            height={imgH}
+            width={800}
+            height={600}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           />
           {/* Deep green gradient overlay from bottom */}
@@ -121,29 +112,10 @@ export default function CentersSection() {
           />
         </ScrollReveal>
 
-        {/* 상단 3개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 mb-5 sm:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {centers.map((center, i) => (
-            <ScrollReveal key={center.href} delay={i * 0.12}>
-              <CenterCard center={center} index={i} aspectClass="aspect-[4/3]" imgW={800} imgH={600} />
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* 중단 2개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mb-5 sm:mb-8">
-          {centersRow2.map((center, i) => (
-            <ScrollReveal key={center.href} delay={i * 0.12}>
-              <CenterCard center={center} index={i + 3} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
-            </ScrollReveal>
-          ))}
-        </div>
-
-        {/* 하단 1개 센터 */}
-        <div className="grid grid-cols-1 gap-5 sm:gap-8">
-          {centersRow3.map((center, i) => (
-            <ScrollReveal key={center.href} delay={i * 0.12}>
-              <CenterCard center={center} index={i + 5} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
+            <ScrollReveal key={center.href} delay={i * 0.1}>
+              <CenterCard center={center} index={i} />
             </ScrollReveal>
           ))}
         </div>
