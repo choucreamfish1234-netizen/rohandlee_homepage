@@ -15,17 +15,22 @@ const faqs = [
   {
     question: '전세 사기로 형사 고소가 가능한가요?',
     answer:
-      '임대인이 처음부터 보증금을 돌려줄 의사나 능력이 없었음에도 계약을 체결했다면 사기죄(형법 제347조)에 해당할 수 있습니다. 근저당 설정 사실을 숨기거나, 이미 다른 임차인에게 이중계약을 한 경우 등이 대표적입니다. 노채은 변호사가 형사 고소 가능 여부를 정확하게 판단해드립니다.',
+      '임대인이 처음부터 보증금을 돌려줄 의사나 능력이 없었음에도 계약을 체결했다면 사기죄(형법 제347조)에 해당할 수 있습니다. 근저당 설정 사실을 숨기거나, 이미 다른 임차인에게 이중계약을 한 경우 등이 대표적입니다.',
   },
   {
-    question: '임대인이 연락을 안 받는데 어떻게 해야 하나요?',
+    question: '토지를 샀는데 개발이 안 되는 땅이었어요. 사기인가요?',
     answer:
-      '내용증명을 발송하면 법적으로 의사를 통보한 것으로 인정됩니다. 로앤이의 내용증명 자동 생성 도구를 이용하시면 지금 바로 작성하실 수 있습니다. 이후 임차권등기명령 등 법적 절차를 병행하여 임대인이 응하지 않을 수 없는 환경을 만듭니다.',
+      '매도인이 개발 가능성에 대해 허위 정보를 제공하거나, 중요한 사실(개발제한구역, 군사시설보호구역 등)을 의도적으로 숨긴 경우 사기죄가 성립할 수 있습니다. 매매 당시의 정황과 계약서를 분석하여 형사 고소 및 민사 손해배상 가능 여부를 판단해드립니다.',
   },
   {
-    question: '이미 계약이 만료되었는데 보증금을 받을 수 있나요?',
+    question: '상가 권리금을 받지 못하고 쫓겨났는데 구제 방법이 있나요?',
     answer:
-      '보증금반환청구권의 소멸시효는 10년입니다. 계약 만료 후에도 충분히 법적 청구가 가능합니다. 다만 시간이 지날수록 임대인의 재산이 줄어들 수 있으므로 가능한 빨리 법적 조치를 시작하시는 것이 유리합니다.',
+      '상가건물 임대차보호법 제10조의4에 따라 임대인이 정당한 사유 없이 권리금 회수를 방해하면 손해배상 책임이 있습니다. 권리금 회수 방해 행위가 있었다면 손해배상 청구가 가능하며, 시효는 3년입니다.',
+  },
+  {
+    question: '중개사가 중요한 사실을 알려주지 않아서 피해를 봤어요.',
+    answer:
+      '공인중개사는 중개대상물의 권리관계, 법적 제한사항 등을 성실하게 설명할 의무가 있습니다(공인중개사법 제25조). 이를 위반하여 피해가 발생한 경우 중개사 및 중개법인에 대한 손해배상 청구가 가능합니다.',
   },
   {
     question: '변호사 비용이 부담됩니다.',
@@ -34,20 +39,68 @@ const faqs = [
   },
 ]
 
+const serviceAreas = [
+  {
+    title: '전세·임대차 분쟁',
+    description: '보증금 미반환, 전세 사기, 계약갱신청구권 거부, 부당 퇴거 요구, 월세 분쟁, 임차권등기명령',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+      </svg>
+    ),
+  },
+  {
+    title: '토지·매매 분쟁',
+    description: '토지 매매 사기, 허위 개발 정보로 인한 사기, 이중매매, 소유권 분쟁, 등기 사기',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+      </svg>
+    ),
+  },
+  {
+    title: '상가·권리금 분쟁',
+    description: '권리금 회수 방해, 상가 임대차 보호법 위반, 부당한 퇴거, 원상복구 비용 과다 청구',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36c-.602 0-1.088-.487-1.088-1.088A5.912 5.912 0 017.184 14H12m1.5 7H21V3.75a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75V21m0 0H4.5" />
+      </svg>
+    ),
+  },
+  {
+    title: '중개사고',
+    description: '공인중개사의 이중계약, 허위매물, 중요 사항 미고지, 중개 과실로 인한 손해',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+      </svg>
+    ),
+  },
+  {
+    title: '하자·수리 분쟁',
+    description: '누수, 곰팡이 등 하자 보수 책임 회피, 무단 출입, 생활 방해',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.03A.75.75 0 015.25 17.6V6.4a.75.75 0 01.786-.6l5.384 3.03a.75.75 0 010 1.34zM15.75 7.5v9m3-6v3" />
+      </svg>
+    ),
+  },
+]
+
 const legalServiceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: '법률사무소 로앤이 임대차·보증금 피해 전담센터',
+  name: '법률사무소 로앤이 부동산 피해 전담센터',
   description:
-    '전세 사기·보증금 미반환 피해자 전문. 민사 가압류와 형사 고소를 동시에 진행하는 입체 전략.',
-  url: 'https://lawfirmrohandlee.com/centers/lease-deposit',
+    '전세 사기·보증금 미반환·토지 매매 사기·권리금 분쟁. 민사 가압류와 형사 고소 동시 진행.',
+  url: 'https://lawfirmrohandlee.com/centers/real-estate',
   telephone: '032-207-8788',
   areaServed: {
     '@type': 'Country',
     name: 'KR',
   },
   priceRange: '무료 상담',
-  serviceType: ['임대차 분쟁', '보증금 반환 소송', '전세 사기 형사 고소', '가압류', '임차권등기명령'],
+  serviceType: ['전세 사기', '보증금 반환', '토지 매매 사기', '권리금 분쟁', '임대차 분쟁', '가압류', '중개사고'],
 }
 
 const faqJsonLd = {
@@ -94,18 +147,18 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   )
 }
 
-export default function LeaseDepositPage() {
+export default function RealEstatePage() {
   const { openConsultation } = useConsultation()
 
   return (
     <>
       <Script
-        id="lease-deposit-legal-service-jsonld"
+        id="real-estate-legal-service-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
       />
       <Script
-        id="lease-deposit-faq-jsonld"
+        id="real-estate-faq-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
@@ -119,31 +172,27 @@ export default function LeaseDepositPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">
-            제6센터 — 임대차·보증금 피해 전담
+            부동산 피해 전담센터
           </p>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-            돌려받아야 할 돈이 아닙니다.
+            빼앗긴 보증금, 속아 산 땅,
             <br />
-            <span className="text-[#1B3B2F]">돌려받아야 할 삶입니다.</span>
+            사라진 권리금.
+            <br />
+            <span className="text-[#1B3B2F]">부동산 피해, 끝까지 되찾습니다.</span>
           </h1>
           <p className="mt-6 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-            보증금을 돌려주지 않는 임대인, 더 이상 기다리지 마세요.
+            전세 사기부터 토지 매매 사기, 상가 권리금 분쟁까지.
             <br />
-            로앤이가 끝까지 추적하고, 반드시 받아냅니다.
+            부동산을 둘러싼 모든 피해, 로앤이가 민사와 형사로 동시에 추적합니다.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="mt-8">
             <button
-              onClick={() => openConsultation('임대차·보증금 피해 상담')}
+              onClick={() => openConsultation('부동산 피해 상담')}
               className="inline-flex items-center justify-center px-8 py-3.5 bg-[#1B3B2F] text-white text-sm font-medium rounded-full hover:bg-[#153126] transition-colors min-h-[48px]"
             >
               무료 상담 신청하기
             </button>
-            <a
-              href="#"
-              className="inline-flex items-center justify-center px-8 py-3.5 border border-[#1B3B2F] text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-[#1B3B2F]/5 transition-colors min-h-[48px]"
-            >
-              내용증명 바로 작성하기
-            </a>
           </div>
         </motion.div>
       </section>
@@ -153,58 +202,81 @@ export default function LeaseDepositPage() {
         <div className="max-w-3xl mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              왜 로앤이가 임대차 전담 센터를 만들었는가
+              왜 로앤이가 부동산 피해 전담센터를 만들었는가
             </h2>
           </ScrollReveal>
           <ScrollReveal>
             <div className="space-y-6 text-sm sm:text-base text-gray-600 leading-relaxed">
               <p>
-                전 재산이었습니다. 2년 동안 아끼고 모아 마련한 전세보증금. 계약 만료일이 지나도
-                임대인은 전화를 받지 않습니다. &ldquo;조금만 기다려달라&rdquo;는 말만 반복하다, 어느
-                날 번호가 바뀌어 있습니다.
-              </p>
-              <p>등기부를 떼보니 근저당이 잔뜩 설정되어 있습니다.</p>
-              <p>이런 사연을 마주할 때마다 저희는 분노했습니다.</p>
-              <p>
-                법률사무소 로앤이는 창립 이래 단 한 번도 가해자를 변호한 적이 없습니다. 성범죄
-                피해자, 재산범죄 피해자, 사기 피해자 — 언제나 부당하게 빼앗긴 사람들의 곁에 서
-                왔습니다.
+                전 재산이었습니다. 2년 동안 모아 마련한 전세보증금이 돌아오지 않습니다. 10년 모은
+                돈으로 산 토지가 개발 불가능한 땅이었습니다. 10년 운영한 가게의 권리금을 한 푼도
+                받지 못하고 쫓겨났습니다. 믿었던 중개사가 이중계약을 맺고 사라졌습니다.
               </p>
               <p>
-                전세 사기 피해자도 다르지 않습니다. 신뢰를 악용해 남의 전 재산을 삼킨 악성 임대인은
-                명백한 가해자이고, 보증금을 빼앗긴 임차인은 명백한 피해자입니다.
+                부동산은 대부분의 사람에게 인생에서 가장 큰 돈이 오가는 거래입니다. 그래서 피해
+                규모도 가장 크고, 회복도 가장 어렵습니다.
+              </p>
+              <p>
+                법률사무소 로앤이는 창립 이래 단 한 번도 가해자를 변호한 적이 없습니다. 부동산
+                거래에서 신뢰를 악용해 남의 재산을 삼킨 사람은 명백한 가해자이고, 재산을 빼앗긴
+                사람은 명백한 피해자입니다.
               </p>
               <p className="font-semibold text-black">
                 그래서 만들었습니다.
                 <br />
-                제6센터, 임대차·보증금 피해 전담 센터.
+                부동산 피해 전담센터.
                 <br />
-                오직 임차인만을 위한 센터입니다.
+                오직 피해자만을 위한 센터입니다.
               </p>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* 차별점 섹션 */}
+      {/* 취급 분야 섹션 */}
       <section className="py-16 sm:py-28 md:py-40 bg-[#FAFAFA]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-16">
+              이런 피해를 다룹니다
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {serviceAreas.map((area, i) => (
+              <ScrollReveal key={area.title} delay={i * 0.1}>
+                <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
+                  <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
+                    {area.icon}
+                  </div>
+                  <h3 className="text-lg font-bold text-black mb-3">{area.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{area.description}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 차별점 섹션 */}
+      <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-6">
               타 로펌이 할 수 없는, 로앤이만의 전략
             </h2>
             <p className="text-sm sm:text-base text-gray-500 text-center max-w-2xl mx-auto leading-relaxed mb-16">
-              일반 로펌은 민사소송 하나만 겁니다. 보증금반환청구 소장을 넣고 기다립니다. 그동안
-              임대인은 재산을 빼돌립니다.
+              일반 로펌은 민사소송 하나만 겁니다. 소장을 넣고 기다립니다. 그동안 상대방은 재산을
+              빼돌립니다.
               <br />
               로앤이는 다릅니다. 두 개의 칼날이 동시에 움직입니다.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* 카드1 - 민사 */}
             <ScrollReveal delay={0}>
-              <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
+              <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
                 <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
                   <svg
                     className="w-6 h-6 text-[#1B3B2F]"
@@ -225,7 +297,7 @@ export default function LeaseDepositPage() {
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
                   소송 전에 승부를 결정짓습니다. 등기부, 재산조회, 금융거래 흐름을 분석하여
-                  가압류·임차권등기명령을 선제적으로 집행합니다. 임대인이 재산을 숨길 틈을 주지
+                  가압류·가처분을 선제적으로 집행합니다. 상대방이 재산을 숨길 틈을 주지
                   않습니다. IT 기술을 직접 활용하는 변호사이기에 가능한 속도입니다.
                 </p>
               </div>
@@ -233,7 +305,7 @@ export default function LeaseDepositPage() {
 
             {/* 카드2 - 형사 */}
             <ScrollReveal delay={0.12}>
-              <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
+              <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
                 <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
                   <svg
                     className="w-6 h-6 text-[#1B3B2F]"
@@ -253,41 +325,9 @@ export default function LeaseDepositPage() {
                   노채은 변호사 — 형사 고소로 숨통을 조인다
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  보증금을 돌려주지 않는 것은 단순한 채무불이행이 아닙니다. 처음부터 돌려줄 의사
-                  없이 계약했다면 사기죄입니다. 노채은 변호사는 재산범죄 전담 변호사로서 악성
-                  임대인의 범죄 구조를 파헤치고, 형사 고소로 직접 타격합니다. 형사 압박이 들어가는
-                  순간, 민사 협상의 판이 완전히 달라집니다.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            {/* 카드3 - 리걸테크 */}
-            <ScrollReveal delay={0.24}>
-              <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
-                <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
-                  <svg
-                    className="w-6 h-6 text-[#1B3B2F]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold text-black mb-3">
-                  기술이 피해자의 무기가 됩니다
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  로앤이는 대한민국 유일의 리걸테크 피해자 전담 로펌입니다. 제6센터에서는 보증금
-                  반환 촉구 내용증명 자동 생성 도구를 제공합니다. 변호사를 만나기 전에, 지금 이
-                  자리에서 바로 내용증명을 보낼 수 있습니다. 어렵고 복잡한 법률 문서를 혼자 고민할
-                  필요가 없습니다. 몇 가지 정보만 입력하면 법적 효력이 있는 내용증명이 완성됩니다.
-                  초기 대응이 빠를수록 보증금을 되찾을 확률은 높아집니다.
+                  부동산 거래에서의 기망 행위는 사기죄에 해당합니다. 노채은 변호사는 재산범죄
+                  전담 변호사로서 상대방의 범죄 구조를 파헤치고, 형사 고소로 직접 타격합니다.
+                  형사 압박이 들어가는 순간, 민사 협상의 판이 완전히 달라집니다.
                 </p>
               </div>
             </ScrollReveal>
@@ -297,7 +337,7 @@ export default function LeaseDepositPage() {
             <p className="mt-12 sm:mt-16 text-center text-sm sm:text-base font-semibold text-black">
               민사로 재산을 잠그고, 형사로 숨통을 조이는 입체 전략.
               <br />
-              이것이 로앤이 제6센터의 방식입니다.
+              이것이 로앤이 부동산 피해 전담센터의 방식입니다.
             </p>
           </ScrollReveal>
         </div>
@@ -308,37 +348,26 @@ export default function LeaseDepositPage() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold">
-              보증금, 반드시 돌려받으실 수 있습니다.
+              부동산 피해, 반드시 되찾으실 수 있습니다.
             </h2>
             <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
               <p>
-                혼자 임대인과 싸우지 마세요. 혼자 보낸 문자, 혼자 쓴 내용증명, 혼자 찾아간 경찰서
-                — 효과가 없었다면, 이제 전문가에게 맡기세요.
-              </p>
-              <p>
-                로앤이 제6센터는 임차인 피해자만을 위해 존재합니다. 가해자의 사건은 받지 않습니다.
-                임대인 측의 의뢰는 정중히 거절합니다. 오직 피해자의 보증금을 되찾는 일에만
-                집중합니다.
+                혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 오직 피해자만을 위해
+                존재합니다. 상대방 측의 의뢰는 정중히 거절합니다.
               </p>
               <p className="text-white font-medium">
                 지금 바로 무료 상담을 신청하세요.
                 <br />
-                당신의 전 재산, 끝까지 함께 지켜드리겠습니다.
+                당신의 재산, 끝까지 함께 지켜드리겠습니다.
               </p>
             </div>
-            <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <div className="mt-8 sm:mt-10">
               <button
-                onClick={() => openConsultation('임대차·보증금 피해 상담')}
+                onClick={() => openConsultation('부동산 피해 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
                 무료 상담 신청하기
               </button>
-              <a
-                href="#"
-                className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white text-sm font-medium rounded-full hover:border-white/70 transition-colors min-h-[48px]"
-              >
-                내용증명 바로 작성하기
-              </a>
             </div>
           </ScrollReveal>
         </div>

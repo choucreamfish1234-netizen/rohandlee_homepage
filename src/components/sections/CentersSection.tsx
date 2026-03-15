@@ -20,11 +20,11 @@ const centers = [
     alt: '서류와 펜이 있는 깔끔한 데스크 - 법률과 계약',
   },
   {
-    title: '임대차·보증금 피해 전담센터',
-    description: '전세 사기·보증금 미반환, 민형사 동시 타격으로 반드시 되찾습니다',
-    href: '/centers/lease-deposit',
+    title: '부동산 피해 전담센터',
+    description: '전세 사기·토지 매매 사기·권리금 분쟁, 민형사 동시 타격으로 반드시 되찾습니다',
+    href: '/centers/real-estate',
     image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=600&fit=crop&q=80',
-    alt: '열쇠와 집 모형 - 임대차와 보증금',
+    alt: '열쇠와 집 모형 - 부동산 피해',
   },
   {
     title: '기업경영 법무센터',

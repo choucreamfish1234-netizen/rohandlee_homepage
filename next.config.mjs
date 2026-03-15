@@ -9,6 +9,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/centers/lease-deposit',
+        destination: '/centers/real-estate',
+        permanent: true,
+      },
+    ]
+  },
 };
 
 export default nextConfig;
