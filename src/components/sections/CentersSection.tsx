@@ -45,6 +45,16 @@ const centersRow2 = [
   },
 ]
 
+const centersRow3 = [
+  {
+    title: '임대차·보증금 피해 전담센터',
+    description: '전세 사기·보증금 미반환, 민형사 동시 타격으로 반드시 되찾습니다',
+    href: '/centers/lease-deposit',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=675&fit=crop&q=80',
+    alt: '열쇠와 집 모형 - 임대차와 보증금',
+  },
+]
+
 function CenterCard({ center, index, aspectClass, imgW, imgH }: {
   center: typeof centers[0]
   index: number
@@ -99,13 +109,13 @@ export default function CentersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            5 Specialized Centers
+            6 Specialized Centers
           </p>
           <EditableText
             page="home"
             section="centers"
             fieldKey="heading"
-            defaultValue="5대 전문센터"
+            defaultValue="6대 전문센터"
             tag="h2"
             className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
           />
@@ -120,11 +130,20 @@ export default function CentersSection() {
           ))}
         </div>
 
-        {/* 하단 2개 센터 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+        {/* 중단 2개 센터 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 mb-5 sm:mb-8">
           {centersRow2.map((center, i) => (
             <ScrollReveal key={center.href} delay={i * 0.12}>
               <CenterCard center={center} index={i + 3} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {/* 하단 1개 센터 */}
+        <div className="grid grid-cols-1 gap-5 sm:gap-8">
+          {centersRow3.map((center, i) => (
+            <ScrollReveal key={center.href} delay={i * 0.12}>
+              <CenterCard center={center} index={i + 5} aspectClass="aspect-[16/9]" imgW={1200} imgH={675} />
             </ScrollReveal>
           ))}
         </div>

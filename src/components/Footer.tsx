@@ -27,6 +27,7 @@ export default function Footer() {
                 { href: '/centers/bankruptcy', label: '회생·파산 전문센터(리셋)' },
                 { href: '/centers/corporate', label: '기업경영 법무센터' },
                 { href: '/centers/it-security', label: 'IT·보안 법률센터' },
+                { href: '/centers/lease-deposit', label: '임대차·보증금 피해 전담센터' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">
@@ -52,8 +53,8 @@ export default function Footer() {
                 />
               </li>
               <li>
-                <a href="mailto:rohandlee@naver.com" className="hover:text-black transition-colors">
-                  E. rohandlee@naver.com
+                <a href="mailto:rohetlee@naver.com" className="hover:text-black transition-colors">
+                  E. rohetlee@naver.com
                 </a>
               </li>
               <li>

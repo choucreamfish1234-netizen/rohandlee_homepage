@@ -87,7 +87,7 @@ export default function DirectionsContent() {
                 page={PAGE}
                 section="info"
                 fieldKey="email"
-                defaultValue="rohandlee@naver.com"
+                defaultValue="rohetlee@naver.com"
                 tag="p"
                 className="text-sm text-gray-500 leading-relaxed mt-1"
               />
