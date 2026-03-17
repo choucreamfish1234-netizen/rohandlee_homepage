@@ -209,20 +209,29 @@ export default function AdminConsultationsPage() {
   }
 
   async function handleStatusChange(id: number, status: string) {
-    const updateData: Record<string, string> = { status }
-    if (status === 'called') {
-      updateData.called_at = new Date().toISOString()
-    }
     try {
+      // 먼저 상태만 변경
       const res = await fetch('/api/consultations', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, ...updateData }),
+        body: JSON.stringify({ id, status }),
       })
       const data = await res.json()
       if (data.error) {
         alert('상태 변경에 실패했습니다: ' + data.error)
         return
+      }
+      // 전화완료인 경우 called_at 별도 업데이트 (실패해도 상태는 이미 변경됨)
+      if (status === 'called') {
+        try {
+          await fetch('/api/consultations', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, called_at: new Date().toISOString() }),
+          })
+        } catch {
+          // called_at 업데이트 실패해도 상태 변경은 유지
+        }
       }
     } catch {
       alert('상태 변경에 실패했습니다.')
