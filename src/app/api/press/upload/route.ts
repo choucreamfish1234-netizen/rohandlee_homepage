@@ -1,13 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
-
 export async function POST(request: Request) {
   try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
     const formData = await request.formData()
     const file = formData.get('file') as File
 
@@ -20,7 +19,7 @@ export async function POST(request: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer())
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('press-images')
       .upload(fileName, buffer, {
         contentType: file.type,
@@ -37,8 +36,9 @@ export async function POST(request: Request) {
       .getPublicUrl(fileName)
 
     return NextResponse.json({ url: urlData.publicUrl })
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Upload error:', err)
-    return NextResponse.json({ error: err.message }, { status: 500 })
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
