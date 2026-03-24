@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
   <div style="border-bottom:2px solid #1B3B2F;padding-bottom:20px;margin-bottom:30px;">
     <h2 style="color:#1B3B2F;margin:0;font-size:18px;">법률사무소 로앤이</h2>
   </div>
+  <p style="margin:0 0 16px 0;font-size:12px;color:#888;line-height:1.5;">본 메일은 발신 전용 이메일로 발송된 것으로, 답장을 하실 경우에는 하단에 기재된 이메일로 회신 주시기 바랍니다.</p>
+  <hr style="border:none;border-top:1px solid #eee;margin:0 0 24px 0;">
   ${htmlBody}
   <div style="border-top:1px solid #eee;padding-top:20px;margin-top:30px;font-size:13px;color:#888;">
     <p style="margin:0;">법률사무소 로앤이 | 032-207-8788 | rohetlee@naver.com</p>
