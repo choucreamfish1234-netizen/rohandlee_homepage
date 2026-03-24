@@ -1,22 +1,39 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { supabase } from '@/lib/supabase'
 
-const pressArticles = [
-  {
-    outlet: '스타데일리뉴스',
-    title: '피해자 전담 법률사무소 로앤이, 드라마 \'아너\'와 닮은 현실 이야기',
-    url: '/blog/honor-drama-real-story-lawfirm-rohandlee',
-    date: '2026.03.19',
-  },
-  // 향후 기사 추가 시 여기에 객체 추가하면 자동 확장
-]
+interface PressArticle {
+  id: string
+  outlet: string
+  title: string
+  url: string
+  date: string
+  image_url: string | null
+  display_order: number
+}
 
 export default function PressSection() {
+  const [articles, setArticles] = useState<PressArticle[]>([])
   const scrollRef = useRef<HTMLDivElement>(null)
-  const showSlider = pressArticles.length >= 3
+
+  useEffect(() => {
+    async function fetchArticles() {
+      const { data } = await supabase
+        .from('press_articles')
+        .select('id, outlet, title, url, date, image_url, display_order')
+        .eq('visible', true)
+        .order('display_order', { ascending: true })
+      if (data) setArticles(data)
+    }
+    fetchArticles()
+  }, [])
+
+  if (articles.length === 0) return null
+
+  const showSlider = articles.length >= 3
 
   return (
     <section className="bg-[#FAFAFA] py-20">
@@ -46,8 +63,8 @@ export default function PressSection() {
               className="flex gap-6 px-4 md:px-8 lg:px-16 pb-4"
               style={{ width: 'max-content' }}
             >
-              {pressArticles.map((article, i) => (
-                <ArticleCard key={i} article={article} index={i} />
+              {articles.map((article, i) => (
+                <ArticleCard key={article.id} article={article} index={i} />
               ))}
             </div>
           </div>
@@ -68,8 +85,8 @@ export default function PressSection() {
         </>
       ) : (
         <div className="flex justify-center gap-6 px-4 md:px-8 lg:px-16">
-          {pressArticles.map((article, i) => (
-            <ArticleCard key={i} article={article} index={i} />
+          {articles.map((article, i) => (
+            <ArticleCard key={article.id} article={article} index={i} />
           ))}
         </div>
       )}
@@ -81,30 +98,54 @@ function ArticleCard({
   article,
   index,
 }: {
-  article: (typeof pressArticles)[number]
+  article: PressArticle
   index: number
 }) {
+  const isExternal = article.url.startsWith('http')
+  const cardContent = (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 h-full">
+      {article.image_url ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img
+          src={article.image_url}
+          alt={article.title}
+          className="w-full aspect-video object-cover"
+        />
+      ) : (
+        <div className="w-full aspect-video bg-[#1B3B2F] flex items-center justify-center">
+          <span className="text-white text-sm font-semibold">{article.outlet}</span>
+        </div>
+      )}
+      <div className="p-5">
+        <p className="text-sm font-semibold text-[#1B3B2F]">{article.outlet}</p>
+        <h3 className="text-lg font-medium text-gray-900 mt-2 line-clamp-2">
+          {article.title}
+        </h3>
+        <div className="flex items-center justify-between mt-4">
+          <span className="text-sm text-gray-400">{article.date}</span>
+          <span className="text-sm text-[#1B3B2F]">기사 보기 &rarr;</span>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
-      className="flex-shrink-0 w-[280px] md:w-[320px]"
+      className="flex-shrink-0 w-[280px] md:w-[320px] snap-start"
     >
-      <Link
-        href={article.url}
-        className="block bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 h-full"
-      >
-        <p className="text-sm font-semibold text-[#1B3B2F]">{article.outlet}</p>
-        <h3 className="text-lg font-medium text-gray-900 mt-3 line-clamp-2">
-          {article.title}
-        </h3>
-        <div className="flex items-center justify-between mt-6">
-          <span className="text-sm text-gray-400">{article.date}</span>
-          <span className="text-sm text-[#1B3B2F]">기사 보기 &rarr;</span>
-        </div>
-      </Link>
+      {isExternal ? (
+        <a href={article.url} target="_blank" rel="noopener noreferrer" className="block h-full">
+          {cardContent}
+        </a>
+      ) : (
+        <Link href={article.url} className="block h-full">
+          {cardContent}
+        </Link>
+      )}
     </motion.div>
   )
 }

@@ -803,6 +803,12 @@ export default function AdminDashboardPage() {
           )}
         </Link>
         <Link
+          href="/admin/press"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          언론보도
+        </Link>
+        <Link
           href="/admin/seo"
           className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
         >
