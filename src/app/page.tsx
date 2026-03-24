@@ -10,6 +10,7 @@ import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import DifferenceSection from '@/components/sections/DifferenceSection'
 import CasesSection from '@/components/sections/CasesSection'
 import LawyersSection from '@/components/sections/LawyersSection'
+import PressSection from '@/components/sections/PressSection'
 import BlogHighlights from '@/components/BlogHighlights'
 import AppSection from '@/components/sections/AppSection'
 import CtaSection from '@/components/sections/CtaSection'
@@ -37,6 +38,7 @@ export default function Home() {
       <DifferenceSection />
       <CasesSection />
       <LawyersSection />
+      <PressSection />
       <BlogHighlights />
       <AppSection />
       <CtaSection />
