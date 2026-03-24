@@ -45,7 +45,7 @@ export default function PressSection() {
         className="text-center mb-12"
       >
         <span className="text-xs tracking-widest text-gray-400 uppercase">PRESS</span>
-        <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mt-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
           언론이 주목한 법률사무소 로앤이
         </h2>
         <p className="text-sm text-gray-500 mt-3">
