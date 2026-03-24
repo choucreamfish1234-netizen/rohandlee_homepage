@@ -1,5 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
+
+const BUCKET_NAME = 'press-images'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function ensureBucket(supabase: SupabaseClient<any, any, any>) {
+  const { data: buckets } = await supabase.storage.listBuckets()
+  const exists = buckets?.some((b: { name: string }) => b.name === BUCKET_NAME)
+  if (!exists) {
+    const { error } = await supabase.storage.createBucket(BUCKET_NAME, {
+      public: true,
+      fileSizeLimit: 20 * 1024 * 1024,
+      allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    })
+    if (error && !error.message.includes('already exists')) {
+      console.error('Bucket creation error:', error)
+      return error
+    }
+  }
+  return null
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,6 +31,12 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = createClient(supabaseUrl, serviceRoleKey)
+
+    // Ensure the storage bucket exists
+    const bucketError = await ensureBucket(supabase)
+    if (bucketError) {
+      return NextResponse.json({ error: '스토리지 버킷 생성에 실패했습니다.' }, { status: 500 })
+    }
 
     const formData = await req.formData()
     const file = formData.get('file') as File | null
@@ -35,7 +61,7 @@ export async function POST(req: NextRequest) {
     const buffer = Buffer.from(arrayBuffer)
 
     const { error: uploadError } = await supabase.storage
-      .from('press-images')
+      .from(BUCKET_NAME)
       .upload(fileName, buffer, { contentType: file.type, upsert: true })
 
     if (uploadError) {
@@ -44,7 +70,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { data: urlData } = supabase.storage
-      .from('press-images')
+      .from(BUCKET_NAME)
       .getPublicUrl(fileName)
 
     return NextResponse.json({ url: urlData.publicUrl })
