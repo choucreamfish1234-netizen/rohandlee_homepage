@@ -50,8 +50,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: '파일 크기는 20MB 이하여야 합니다.' }, { status: 400 })
     }
 
-    const ext = file.name.split('.').pop() || 'jpg'
-    const fileName = `press_${Date.now()}_${file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9가-힣_-]/g, '_')}.${ext}`
+    const ext = (file.name.split('.').pop() || 'jpg').replace(/[^a-zA-Z0-9]/g, '')
+    const randomStr = Math.random().toString(36).substring(2, 8)
+    const fileName = `press_${Date.now()}_${randomStr}.${ext}`
 
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
