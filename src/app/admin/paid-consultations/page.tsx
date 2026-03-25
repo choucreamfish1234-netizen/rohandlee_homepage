@@ -217,7 +217,7 @@ export default function AdminPaidConsultationsPage() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-black">유료 상담 관리</h1>
-          <p className="text-sm text-gray-500 mt-1">래피드(Latpeed) 결제 상담을 관리합니다.</p>
+          <p className="text-sm text-gray-500 mt-1">래피드(Latpeed) 결제 및 구글 폼 접수 상담을 관리합니다.</p>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -300,12 +300,19 @@ export default function AdminPaidConsultationsPage() {
                 }`}
               >
                 <div className="col-span-1">
-                  <button
-                    onClick={() => setSelected(c)}
-                    className="text-sm font-medium text-black hover:text-[#1B3B2F] transition-colors text-left"
-                  >
-                    {c.name}
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => setSelected(c)}
+                      className="text-sm font-medium text-black hover:text-[#1B3B2F] transition-colors text-left"
+                    >
+                      {c.name}
+                    </button>
+                    {c.status === '폼접수' ? (
+                      <span className="inline-block text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-600 font-medium leading-none">폼접수</span>
+                    ) : (
+                      <span className="inline-block text-[10px] px-1.5 py-0.5 bg-emerald-50 text-emerald-600 font-medium leading-none">래피드</span>
+                    )}
+                  </div>
                   <p className="text-xs text-gray-400 sm:hidden mt-0.5">
                     {formatAmount(c.amount)} · {c.callback_status}
                   </p>
@@ -403,6 +410,11 @@ export default function AdminPaidConsultationsPage() {
             <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
                 <h2 className="text-lg font-bold text-black">{selected.name}님 유료 상담</h2>
+                {selected.status === '폼접수' ? (
+                  <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 font-medium">폼접수</span>
+                ) : (
+                  <span className="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-600 font-medium">래피드</span>
+                )}
                 <span className={`text-xs px-2 py-0.5 ${getCallbackStatusStyle(selected.callback_status).bg} ${getCallbackStatusStyle(selected.callback_status).text}`}>
                   {selected.callback_status}
                 </span>
