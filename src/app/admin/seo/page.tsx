@@ -346,6 +346,7 @@ export default function AdminSeoPage() {
       <div className="flex items-center gap-6 mb-6 border-b border-gray-200 pb-3">
         <Link href="/admin/dashboard" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">블로그 관리</Link>
         <Link href="/admin/consultations" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">상담 관리</Link>
+        <Link href="/admin/paid-consultations" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">유료 상담</Link>
         <Link href="/admin/press" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">언론보도</Link>
         <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3">SEO 관리</span>
         <Link href="/admin/analytics" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">방문자 분석</Link>
