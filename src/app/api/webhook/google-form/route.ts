@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
     console.log('Google Form webhook received:', JSON.stringify(body))
 
-    const { name, phone, email } = body
+    const { name, phone, email, formResponses } = body
 
     if (!name && !phone) {
       return NextResponse.json({ success: true, message: 'no data' })
@@ -24,13 +24,14 @@ export async function POST(request: Request) {
         .limit(1)
 
       if (existing && existing.length > 0) {
-        // 기존 래피드 결제 건에 구글 폼 정보 업데이트
+        // 기존 래피드 결제 건에 구글 폼 정보 업데이트 (raw_data에 전체 응답 포함)
         await supabaseAdmin
           .from('paid_consultations')
           .update({
             name: name || existing[0].name,
             email: email || existing[0].email,
             memo: (existing[0].memo || '') + '\n[구글폼 접수] ' + new Date().toLocaleString('ko-KR'),
+            raw_data: { ...existing[0].raw_data, formResponses, googleFormSubmittedAt: new Date().toISOString() },
           })
           .eq('id', existing[0].id)
 

@@ -265,11 +265,11 @@ export default function AdminPaidConsultationsPage() {
         ))}
       </div>
 
-      {/* Table */}
+      {/* Card List */}
       {loading ? (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="animate-pulse h-16 bg-gray-50 border border-gray-100" />
+            <div key={i} className="animate-pulse h-28 bg-gray-50 border border-gray-100 rounded-xl" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
@@ -277,89 +277,88 @@ export default function AdminPaidConsultationsPage() {
           <p className="text-gray-500 text-sm">유료 상담 내역이 없습니다.</p>
         </div>
       ) : (
-        <div className="border border-gray-100 divide-y divide-gray-100 bg-white">
-          {/* Table Header */}
-          <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-5 py-3 bg-gray-50 text-xs font-medium text-gray-500">
-            <div className="col-span-1">이름</div>
-            <div className="col-span-2">연락처</div>
-            <div className="col-span-2">이메일</div>
-            <div className="col-span-1">결제금액</div>
-            <div className="col-span-1">옵션</div>
-            <div className="col-span-2">결제일시</div>
-            <div className="col-span-1">회신상태</div>
-            <div className="col-span-2 text-right">액션</div>
-          </div>
-
+        <div className="space-y-3">
           {filtered.map((c) => {
             const ss = getCallbackStatusStyle(c.callback_status)
             return (
               <div
                 key={c.id}
-                className={`grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 px-5 py-4 hover:bg-gray-50 transition-colors items-center ${
+                className={`border border-gray-100 bg-white rounded-xl p-5 hover:shadow-sm transition-shadow ${
                   c.callback_status === '결제취소' ? 'opacity-60' : ''
                 }`}
               >
-                <div className="col-span-1">
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => setSelected(c)}
-                      className="text-sm font-medium text-black hover:text-[#1B3B2F] transition-colors text-left"
-                    >
-                      {c.name}
-                    </button>
-                    {c.status === '폼접수' ? (
-                      <span className="inline-block text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-600 font-medium leading-none">폼접수</span>
-                    ) : (
-                      <span className="inline-block text-[10px] px-1.5 py-0.5 bg-emerald-50 text-emerald-600 font-medium leading-none">래피드</span>
+                {/* Row 1: Name + Source Badge */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-base font-semibold text-black">{c.name}</span>
+                  {c.status === '폼접수' ? (
+                    <span className="text-[10px] px-1.5 py-0.5 bg-blue-50 text-blue-600 font-medium rounded">폼접수</span>
+                  ) : (
+                    <span className="text-[10px] px-1.5 py-0.5 bg-emerald-50 text-emerald-600 font-medium rounded">래피드</span>
+                  )}
+                </div>
+
+                {/* Row 2: Phone | Email */}
+                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                  <span>{c.phone}</span>
+                  <span className="text-gray-300">|</span>
+                  <span className="truncate">{c.email || '-'}</span>
+                </div>
+
+                {/* Row 3: Amount | Option | Date */}
+                <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+                  <span className="font-medium text-black">{formatAmount(c.amount)}</span>
+                  <span className="text-gray-300">|</span>
+                  <span>{c.product_option || '-'}</span>
+                  <span className="text-gray-300">|</span>
+                  <span>{formatDateTime(c.paid_at)}</span>
+                </div>
+
+                {/* Row 4: Status + Actions */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-block text-xs px-2 py-0.5 rounded ${ss.bg} ${ss.text}`}>
+                      {c.callback_status}
+                    </span>
+                    {c.callback_at && (
+                      <span className="text-xs text-gray-400">{formatDateTime(c.callback_at)}</span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-400 sm:hidden mt-0.5">
-                    {formatAmount(c.amount)} · {c.callback_status}
-                  </p>
-                </div>
-                <div className="col-span-2 hidden sm:block text-sm text-gray-600">{c.phone}</div>
-                <div className="col-span-2 hidden sm:block text-xs text-gray-600 truncate">{c.email || '-'}</div>
-                <div className="col-span-1 hidden sm:block text-sm font-medium text-black">{formatAmount(c.amount)}</div>
-                <div className="col-span-1 hidden sm:block text-xs text-gray-600">{c.product_option || '-'}</div>
-                <div className="col-span-2 hidden sm:block text-xs text-gray-400">
-                  {formatDateTime(c.paid_at)}
-                </div>
-                <div className="col-span-1 hidden sm:block">
-                  <span className={`inline-block text-xs px-2 py-0.5 ${ss.bg} ${ss.text}`}>
-                    {c.callback_status}
-                  </span>
-                  {c.callback_at && (
-                    <p className="text-xs text-gray-400 mt-0.5">{formatDateTime(c.callback_at)}</p>
-                  )}
-                </div>
-                <div className="col-span-2 flex justify-end gap-2 flex-wrap">
-                  {c.callback_status === '회신대기' && (
+                  <div className="flex items-center gap-2">
+                    {c.callback_status === '회신대기' && (
+                      <button
+                        onClick={() => handleCallback(c.id)}
+                        className="text-xs px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded transition-colors"
+                      >
+                        회신완료
+                      </button>
+                    )}
                     <button
-                      onClick={() => handleCallback(c.id)}
-                      className="text-xs px-3 py-1.5 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-colors"
+                      onClick={() => {
+                        setEditingNoteId(c.id)
+                        setNoteInput(c.notes || '')
+                      }}
+                      className="text-xs px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 rounded transition-colors"
                     >
-                      회신완료
+                      메모
                     </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      setEditingNoteId(c.id)
-                      setNoteInput(c.notes || '')
-                    }}
-                    className="text-xs px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-                  >
-                    메모
-                  </button>
-                  <button
-                    onClick={() => handleDelete(c.id)}
-                    className="text-xs px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
-                  >
-                    삭제
-                  </button>
+                    <button
+                      onClick={() => setSelected(c)}
+                      className="text-xs px-3 py-1.5 bg-[#1B3B2F] text-white hover:bg-[#152e24] rounded transition-colors"
+                    >
+                      상세보기
+                    </button>
+                    <button
+                      onClick={() => handleDelete(c.id)}
+                      className="text-xs px-3 py-1.5 bg-red-50 text-red-600 hover:bg-red-100 rounded transition-colors"
+                    >
+                      삭제
+                    </button>
+                  </div>
                 </div>
+
                 {/* Inline note display */}
                 {c.notes && editingNoteId !== c.id && (
-                  <div className="col-span-12 mt-1 px-2 py-1.5 bg-yellow-50 text-xs text-yellow-800 rounded">
+                  <div className="mt-3 px-3 py-2 bg-yellow-50 text-xs text-yellow-800 rounded-lg">
                     {c.notes}
                   </div>
                 )}
@@ -373,7 +372,7 @@ export default function AdminPaidConsultationsPage() {
       {editingNoteId !== null && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => { setEditingNoteId(null); setNoteInput('') }} />
-          <div className="relative w-full max-w-md bg-white shadow-2xl p-6">
+          <div className="relative w-full max-w-md bg-white shadow-2xl rounded-xl p-6">
             <h3 className="text-sm font-semibold text-black mb-3">메모 작성</h3>
             <textarea
               value={noteInput}
@@ -405,21 +404,21 @@ export default function AdminPaidConsultationsPage() {
       {selected && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setSelected(null)} />
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white shadow-2xl">
+          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white shadow-2xl rounded-xl">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10">
+            <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between z-10 rounded-t-xl">
               <div className="flex items-center gap-3">
-                <h2 className="text-lg font-bold text-black">{selected.name}님 유료 상담</h2>
+                <h2 className="text-lg font-bold text-black">상담 상세 정보</h2>
                 {selected.status === '폼접수' ? (
-                  <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 font-medium">폼접수</span>
+                  <span className="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 font-medium rounded">폼접수</span>
                 ) : (
-                  <span className="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-600 font-medium">래피드</span>
+                  <span className="text-xs px-2 py-0.5 bg-emerald-50 text-emerald-600 font-medium rounded">래피드</span>
                 )}
-                <span className={`text-xs px-2 py-0.5 ${getCallbackStatusStyle(selected.callback_status).bg} ${getCallbackStatusStyle(selected.callback_status).text}`}>
+                <span className={`text-xs px-2 py-0.5 rounded ${getCallbackStatusStyle(selected.callback_status).bg} ${getCallbackStatusStyle(selected.callback_status).text}`}>
                   {selected.callback_status}
                 </span>
               </div>
-              <button onClick={() => setSelected(null)} className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 transition-colors">
+              <button onClick={() => setSelected(null)} className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
                   <path d="M4 4L12 12M12 4L4 12" />
                 </svg>
@@ -427,9 +426,9 @@ export default function AdminPaidConsultationsPage() {
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Client Info */}
+              {/* Basic Info */}
               <div>
-                <h3 className="text-sm font-semibold text-black mb-3">결제 정보</h3>
+                <h3 className="text-sm font-semibold text-black mb-3">기본 정보</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">이름</span><span className="text-black font-medium">{selected.name}</span></div>
                   <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">연락처</span><a href={`tel:${selected.phone}`} className="text-[#1B3B2F] font-medium">{selected.phone}</a></div>
@@ -437,7 +436,8 @@ export default function AdminPaidConsultationsPage() {
                   <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">결제금액</span><span className="text-black font-medium">{formatAmount(selected.amount)}</span></div>
                   <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">결제수단</span><span className="text-black">{selected.payment_method || '-'}</span></div>
                   <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">상품옵션</span><span className="text-black">{selected.product_option || '-'}</span></div>
-                  <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">결제일시</span><span className="text-black">{formatDateTime(selected.paid_at)}</span></div>
+                  <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">접수일시</span><span className="text-black">{formatDateTime(selected.created_at)}</span></div>
+                  <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">출처</span><span className="text-black">{selected.status === '폼접수' ? '구글 폼' : '래피드 결제'}</span></div>
                   {selected.callback_at && (
                     <div className="flex gap-2"><span className="text-gray-400 w-20 shrink-0">회신일시</span><span className="text-black">{formatDateTime(selected.callback_at)}</span></div>
                   )}
@@ -447,13 +447,28 @@ export default function AdminPaidConsultationsPage() {
                 </div>
               </div>
 
-              {/* Forms */}
+              {/* Google Form Responses from raw_data */}
+              {Array.isArray(selected.raw_data?.formResponses) && (
+                <div>
+                  <h3 className="text-sm font-semibold text-black mb-3">상담 내용</h3>
+                  <div className="space-y-2">
+                    {(selected.raw_data.formResponses as { question: string; answer: string }[]).map((r, i) => (
+                      <div key={i} className="p-3 bg-gray-50 rounded-lg text-sm">
+                        <p className="text-xs text-gray-400 mb-1">{r.question}</p>
+                        <p className="text-black whitespace-pre-wrap">{r.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Latpeed Forms */}
               {selected.forms && selected.forms.length > 0 && (
                 <div>
                   <h3 className="text-sm font-semibold text-black mb-3">추가 정보</h3>
                   <div className="space-y-2">
                     {selected.forms.map((f, i) => (
-                      <div key={i} className="p-3 bg-gray-50 text-sm">
+                      <div key={i} className="p-3 bg-gray-50 rounded-lg text-sm">
                         <p className="text-xs text-gray-400 mb-1">{f.question}</p>
                         <p className="text-black">{f.answer}</p>
                       </div>
@@ -462,11 +477,28 @@ export default function AdminPaidConsultationsPage() {
                 </div>
               )}
 
+              {/* Raw Data (Latpeed payment details) */}
+              {selected.raw_data && !Array.isArray(selected.raw_data.formResponses) && selected.status !== '폼접수' && (
+                <div>
+                  <h3 className="text-sm font-semibold text-black mb-3">결제 상세 데이터</h3>
+                  <div className="space-y-2 text-sm">
+                    {Object.entries(selected.raw_data)
+                      .filter(([key]) => !['formResponses', 'googleFormSubmittedAt'].includes(key))
+                      .map(([key, value]) => (
+                        <div key={key} className="flex gap-2">
+                          <span className="text-gray-400 w-28 shrink-0 text-xs">{key}</span>
+                          <span className="text-black text-xs break-all">{typeof value === 'object' ? JSON.stringify(value) : String(value ?? '')}</span>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
               {/* Notes */}
               {selected.notes && (
                 <div>
                   <h3 className="text-sm font-semibold text-black mb-3">메모</h3>
-                  <div className="p-3 bg-yellow-50 text-sm text-yellow-800">{selected.notes}</div>
+                  <div className="p-3 bg-yellow-50 text-sm text-yellow-800 rounded-lg">{selected.notes}</div>
                 </div>
               )}
 
@@ -475,7 +507,7 @@ export default function AdminPaidConsultationsPage() {
                 {selected.callback_status === '회신대기' && (
                   <button
                     onClick={() => handleCallback(selected.id)}
-                    className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition-colors"
+                    className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 rounded-lg transition-colors"
                   >
                     회신완료
                   </button>
@@ -485,15 +517,15 @@ export default function AdminPaidConsultationsPage() {
                     setEditingNoteId(selected.id)
                     setNoteInput(selected.notes || '')
                   }}
-                  className="px-6 py-2.5 bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors"
+                  className="px-6 py-2.5 bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   메모 작성
                 </button>
                 <button
-                  onClick={() => handleDelete(selected.id)}
-                  className="text-xs text-red-500 hover:text-red-700 transition-colors ml-auto self-center"
+                  onClick={() => setSelected(null)}
+                  className="px-6 py-2.5 border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 rounded-lg transition-colors ml-auto"
                 >
-                  삭제
+                  닫기
                 </button>
               </div>
             </div>
