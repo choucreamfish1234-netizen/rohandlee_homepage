@@ -6,6 +6,7 @@ import FloatingButtons from '@/components/FloatingButtons'
 import ConsultationProvider from '@/components/ConsultationProvider'
 import AdminMode from '@/components/AdminMode'
 import Analytics from '@/components/Analytics'
+import TrafficTracker from '@/components/TrafficTracker'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
@@ -181,6 +182,7 @@ export default function RootLayout({
           </ConsultationProvider>
         </AdminMode>
         <Analytics />
+        <TrafficTracker />
       </body>
     </html>
   )

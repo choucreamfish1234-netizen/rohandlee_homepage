@@ -43,14 +43,27 @@ function isBot(): boolean {
 function detectReferrerType(ref: string): string {
   if (!ref) return 'direct'
   const r = ref.toLowerCase()
-  if (r.includes('naver.com')) return 'naver'
-  if (r.includes('google.')) return 'google'
-  if (r.includes('daum.net') || r.includes('search.daum')) return 'daum'
-  if (r.includes('kakao')) return 'kakao'
-  if (r.includes('lawtalk.co.kr')) return 'lawtalk'
+  // 스레드 (threads.net, threads.meta 등 — 인스타그램보다 먼저 체크)
+  if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
+  // 트위터/X (twitter.com, x.com, t.co)
+  if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co/')) return 'twitter'
+  // 인스타그램 (instagram.com, l.instagram.com)
   if (r.includes('instagram.com')) return 'instagram'
-  if (r.includes('threads.net')) return 'threads'
+  // 페이스북 (facebook.com, fb.com, l.facebook.com)
+  if (r.includes('facebook.com') || r.includes('fb.com')) return 'facebook'
+  // 네이버
+  if (r.includes('naver.com')) return 'naver'
+  // 구글
+  if (r.includes('google.')) return 'google'
+  // 다음
+  if (r.includes('daum.net') || r.includes('search.daum')) return 'daum'
+  // 카카오
+  if (r.includes('kakao')) return 'kakao'
+  // 로톡
+  if (r.includes('lawtalk.co.kr')) return 'lawtalk'
+  // 유튜브
   if (r.includes('youtube.com') || r.includes('youtu.be')) return 'youtube'
+  // 내부 이동
   if (r.includes(window.location.hostname)) return 'internal'
   return 'other'
 }

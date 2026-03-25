@@ -8,12 +8,13 @@ import {
   PieChart, Pie, Cell, BarChart, Bar, CartesianGrid,
 } from 'recharts'
 
-type Tab = 'overview' | 'channels' | 'pages' | 'devices' | 'conversions' | 'realtime'
+type Tab = 'overview' | 'channels' | 'pages' | 'devices' | 'conversions' | 'realtime' | 'traffic'
 
 const COLORS = ['#1B3B2F', '#2D6A4F', '#40916C', '#52B788', '#74C69D', '#95D5B2', '#B7E4C7', '#D8F3DC']
 const CHANNEL_LABELS: Record<string, string> = {
   naver: '네이버', google: '구글', daum: '다음', kakao: '카카오',
   lawtalk: '로톡', instagram: '인스타그램', threads: '스레드',
+  twitter: '트위터/X', facebook: '페이스북',
   youtube: '유튜브', direct: '직접 방문', other: '기타',
 }
 const EVENT_LABELS: Record<string, string> = {
@@ -100,6 +101,14 @@ export default function AdminAnalyticsPage() {
     liveFeed: { page_path: string; page_title: string; referrer_type: string; device_type: string; created_at: string }[];
   } | null>(null)
 
+  // Traffic data (visits table)
+  const [trafficDays, setTrafficDays] = useState<string>('30')
+  const [trafficData, setTrafficData] = useState<{
+    totalVisits: number;
+    channels: { name: string; count: number }[];
+    pages: { page: string; count: number }[];
+  } | null>(null)
+
   const fetchTabData = useCallback(async (t: Tab) => {
     setLoading(true)
     try {
@@ -121,19 +130,28 @@ export default function AdminAnalyticsPage() {
       } else if (t === 'realtime') {
         const res = await fetch('/api/analytics/realtime')
         setRealtime(await res.json())
+      } else if (t === 'traffic') {
+        const res = await fetch(`/api/analytics/traffic?days=${trafficDays}`)
+        setTrafficData(await res.json())
       }
     } catch (err) {
       console.error('Analytics fetch error:', err)
     } finally {
       setLoading(false)
     }
-  }, [days])
+  }, [days, trafficDays])
 
   useEffect(() => {
     const authed = sessionStorage.getItem('admin_authenticated')
     if (!authed) { router.push('/admin'); return }
     fetchTabData(tab)
   }, [tab, days, router, fetchTabData])
+
+  // Re-fetch traffic tab when period changes
+  useEffect(() => {
+    if (tab !== 'traffic') return
+    fetchTabData('traffic')
+  }, [trafficDays]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Realtime auto-refresh
   useEffect(() => {
@@ -149,6 +167,7 @@ export default function AdminAnalyticsPage() {
     { key: 'devices', label: '디바이스 분석' },
     { key: 'conversions', label: '전환 분석' },
     { key: 'realtime', label: '실시간' },
+    { key: 'traffic', label: '트래픽 분석' },
   ]
 
   return (
@@ -160,6 +179,9 @@ export default function AdminAnalyticsPage() {
         </Link>
         <Link href="/admin/consultations" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">
           상담 관리
+        </Link>
+        <Link href="/admin/paid-consultations" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">
+          유료 상담
         </Link>
         <Link href="/admin/press" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">
           언론보도
@@ -741,6 +763,130 @@ export default function AdminAnalyticsPage() {
                   )}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* ── 7. TRAFFIC (visits table) ── */}
+          {tab === 'traffic' && (
+            <div className="space-y-6">
+              {/* Period Filter */}
+              <div className="flex items-center gap-2">
+                {[
+                  { value: '0', label: '오늘' },
+                  { value: '7', label: '7일' },
+                  { value: '30', label: '30일' },
+                  { value: 'all', label: '전체' },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => { setTrafficDays(opt.value); setTrafficData(null); }}
+                    className={`px-4 py-2 text-sm rounded-lg transition-colors ${
+                      trafficDays === opt.value
+                        ? 'bg-[#1B3B2F] text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              {!trafficData ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="animate-spin w-8 h-8 border-2 border-[#1B3B2F] border-t-transparent rounded-full" />
+                </div>
+              ) : (
+                <>
+                  {/* Total */}
+                  <div className="bg-white border border-gray-200 p-4 rounded-lg inline-block">
+                    <p className="text-xs text-gray-500 mb-1">총 방문수</p>
+                    <p className="text-2xl font-bold text-black">{trafficData.totalVisits.toLocaleString()}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Donut Chart */}
+                    <div className="bg-white border border-gray-200 p-6 rounded-lg">
+                      <h3 className="text-sm font-semibold text-black mb-4">채널별 방문수</h3>
+                      {trafficData.channels.length === 0 ? (
+                        <p className="text-sm text-gray-400 py-8 text-center">데이터가 없습니다.</p>
+                      ) : (
+                        <div className="h-72">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                              <Pie
+                                data={trafficData.channels.map((c) => ({
+                                  name: CHANNEL_LABELS[c.name] || c.name,
+                                  value: c.count,
+                                }))}
+                                cx="50%" cy="50%" innerRadius={60} outerRadius={100}
+                                dataKey="value" nameKey="name"
+                                label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
+                              >
+                                {trafficData.channels.map((_, i) => (
+                                  <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                                ))}
+                              </Pie>
+                              <Tooltip />
+                            </PieChart>
+                          </ResponsiveContainer>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bar Chart */}
+                    <div className="bg-white border border-gray-200 p-6 rounded-lg">
+                      <h3 className="text-sm font-semibold text-black mb-4">채널별 막대 그래프</h3>
+                      {trafficData.channels.length === 0 ? (
+                        <p className="text-sm text-gray-400 py-8 text-center">데이터가 없습니다.</p>
+                      ) : (
+                        <div className="h-72">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                              data={trafficData.channels.map((c) => ({
+                                name: CHANNEL_LABELS[c.name] || c.name,
+                                count: c.count,
+                              }))}
+                              layout="vertical"
+                              margin={{ left: 80 }}
+                            >
+                              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                              <XAxis type="number" tick={{ fontSize: 11 }} />
+                              <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={75} />
+                              <Tooltip />
+                              <Bar dataKey="count" fill="#1B3B2F" radius={[0, 4, 4, 0]} />
+                            </BarChart>
+                          </ResponsiveContainer>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Popular Pages */}
+                  <div className="bg-white border border-gray-200 p-6 rounded-lg">
+                    <h3 className="text-sm font-semibold text-black mb-4">인기 페이지</h3>
+                    {trafficData.pages.length === 0 ? (
+                      <p className="text-sm text-gray-400">데이터가 없습니다.</p>
+                    ) : (
+                      <div className="space-y-1">
+                        {trafficData.pages.map((p, i) => {
+                          const maxCount = trafficData.pages[0]?.count || 1
+                          const pct = (p.count / maxCount) * 100
+                          return (
+                            <div key={p.page} className="flex items-center gap-3 py-1.5 border-b border-gray-50">
+                              <span className="text-xs text-gray-400 w-5 text-right">{i + 1}</span>
+                              <span className="text-sm text-gray-700 w-48 truncate">{PAGE_NAMES[p.page] || p.page}</span>
+                              <div className="flex-1 bg-gray-100 h-5 rounded overflow-hidden">
+                                <div className="h-full rounded bg-[#1B3B2F]" style={{ width: `${pct}%` }} />
+                              </div>
+                              <span className="text-sm font-medium text-black w-16 text-right">{p.count.toLocaleString()}</span>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </>
