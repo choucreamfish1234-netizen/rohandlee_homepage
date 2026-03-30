@@ -169,7 +169,7 @@ export default function RootLayout({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             'name': '법률사무소 로앤이',
-            'alternateName': '로앤이',
+            'alternateName': ['로앤이', 'Law Firm Roh & Lee'],
             'url': 'https://lawfirmrohandlee.com',
           }) }}
         />
