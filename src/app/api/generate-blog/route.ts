@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5-20250514',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 3000,
         system: systemPrompt,
         messages: [{ role: 'user', content: `주제: ${topic}\n카테고리: ${cat}\n\n위 주제로 블로그 글 본문을 작성해주세요.` }],
