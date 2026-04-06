@@ -140,6 +140,18 @@ export default function WebtoonSection() {
             ))}
           </div>
         </div>
+
+        {/* Instagram link */}
+        <div className="mt-8 text-center">
+          <a
+            href="https://www.instagram.com/lawfirm_rohandlee/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-[#1B3B2F] font-medium hover:underline transition-all"
+          >
+            로앤이 인스타그램에서 더 보기 →
+          </a>
+        </div>
       </section>
 
       {/* Image Viewer Modal */}
