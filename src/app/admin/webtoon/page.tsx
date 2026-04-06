@@ -4,41 +4,38 @@ import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-interface PressArticle {
+interface Webtoon {
   id: string
-  outlet: string
   title: string
-  url: string
-  date: string
+  description: string | null
   image_url: string | null
+  link_url: string | null
   display_order: number
   visible: boolean
   created_at: string
 }
 
 type FormData = {
-  outlet: string
   title: string
-  url: string
-  date: string
+  description: string
+  link_url: string
   image_url: string | null
   display_order: number
   visible: boolean
 }
 
 const emptyForm: FormData = {
-  outlet: '',
   title: '',
-  url: '',
-  date: '',
+  description: '',
+  link_url: '',
   image_url: null,
   display_order: 0,
   visible: true,
 }
 
-export default function AdminPressPage() {
+export default function AdminWebtoonPage() {
   const router = useRouter()
-  const [articles, setArticles] = useState<PressArticle[]>([])
+  const [webtoons, setWebtoons] = useState<Webtoon[]>([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -52,17 +49,17 @@ export default function AdminPressPage() {
       router.push('/admin')
       return
     }
-    fetchArticles()
+    fetchWebtoons()
   }, [router])
 
-  const fetchArticles = useCallback(async () => {
+  const fetchWebtoons = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetch('/api/press')
+      const res = await fetch('/api/webtoon')
       const data = await res.json()
-      if (Array.isArray(data)) setArticles(data)
+      if (Array.isArray(data)) setWebtoons(data)
     } catch (e) {
-      console.error('Failed to fetch press articles:', e)
+      console.error('Failed to fetch webtoons:', e)
     }
     setLoading(false)
   }, [])
@@ -74,43 +71,51 @@ export default function AdminPressPage() {
     setModalOpen(true)
   }
 
-  const openEditModal = (article: PressArticle) => {
-    setEditingId(article.id)
+  const openEditModal = (item: Webtoon) => {
+    setEditingId(item.id)
     setForm({
-      outlet: article.outlet,
-      title: article.title,
-      url: article.url,
-      date: article.date,
-      image_url: article.image_url,
-      display_order: article.display_order,
-      visible: article.visible,
+      title: item.title,
+      description: item.description || '',
+      link_url: item.link_url || '',
+      image_url: item.image_url,
+      display_order: item.display_order,
+      visible: item.visible,
     })
-    setImagePreview(article.image_url)
+    setImagePreview(item.image_url)
     setModalOpen(true)
   }
 
   const handleSave = async () => {
-    if (!form.outlet || !form.title || !form.url || !form.date) {
-      alert('필수 항목을 모두 입력해주세요.')
+    if (!form.title) {
+      alert('제목을 입력해주세요.')
       return
     }
     setSaving(true)
     try {
+      const payload = {
+        title: form.title,
+        description: form.description || null,
+        link_url: form.link_url || null,
+        image_url: form.image_url,
+        display_order: form.display_order,
+        visible: form.visible,
+      }
+
       if (editingId) {
-        await fetch('/api/press', {
+        await fetch('/api/webtoon', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: editingId, ...form }),
+          body: JSON.stringify({ id: editingId, ...payload }),
         })
       } else {
-        await fetch('/api/press', {
+        await fetch('/api/webtoon', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
+          body: JSON.stringify(payload),
         })
       }
       setModalOpen(false)
-      fetchArticles()
+      fetchWebtoons()
     } catch (e) {
       console.error('Save failed:', e)
       alert('저장에 실패했습니다.')
@@ -121,25 +126,25 @@ export default function AdminPressPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('정말 삭제하시겠습니까?')) return
     try {
-      await fetch('/api/press', {
+      await fetch('/api/webtoon', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       })
-      fetchArticles()
+      fetchWebtoons()
     } catch (e) {
       console.error('Delete failed:', e)
     }
   }
 
-  const handleToggleVisible = async (article: PressArticle) => {
+  const handleToggleVisible = async (item: Webtoon) => {
     try {
-      await fetch('/api/press', {
+      await fetch('/api/webtoon', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: article.id, visible: !article.visible }),
+        body: JSON.stringify({ id: item.id, visible: !item.visible }),
       })
-      fetchArticles()
+      fetchWebtoons()
     } catch (e) {
       console.error('Toggle failed:', e)
     }
@@ -153,7 +158,7 @@ export default function AdminPressPage() {
     try {
       const formData = new globalThis.FormData()
       formData.append('file', file)
-      const res = await fetch('/api/press/upload', { method: 'POST', body: formData })
+      const res = await fetch('/api/webtoon/upload', { method: 'POST', body: formData })
       const data = await res.json()
       if (data.url) {
         setForm(prev => ({ ...prev, image_url: data.url }))
@@ -170,43 +175,43 @@ export default function AdminPressPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-6 mb-6 border-b border-gray-200 pb-3">
+      <div className="flex items-center gap-6 mb-6 border-b border-gray-200 pb-3 overflow-x-auto">
         <Link
           href="/admin/dashboard"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
           블로그 관리
         </Link>
         <Link
           href="/admin/consultations"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
           상담 관리
         </Link>
         <Link
           href="/admin/paid-consultations"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
           유료 상담
         </Link>
-        <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3">
+        <Link
+          href="/admin/press"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
+        >
           언론보도
+        </Link>
+        <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3 whitespace-nowrap">
+          인스타툰
         </span>
         <Link
-          href="/admin/webtoon"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
-        >
-          인스타툰
-        </Link>
-        <Link
           href="/admin/seo"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
           SEO 관리
         </Link>
         <Link
           href="/admin/analytics"
-          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
           방문자 분석
         </Link>
@@ -215,8 +220,8 @@ export default function AdminPressPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-black">언론보도 관리</h1>
-          <p className="text-sm text-gray-500 mt-1">언론보도 기사를 관리하고 메인 페이지에 노출하세요.</p>
+          <h1 className="text-2xl font-bold text-black">인스타툰 관리</h1>
+          <p className="text-sm text-gray-500 mt-1">범죄예방 인스타툰을 관리하고 메인 페이지에 노출하세요.</p>
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -234,65 +239,63 @@ export default function AdminPressPage() {
         </div>
       </div>
 
-      {/* Article List */}
+      {/* List */}
       {loading ? (
         <p className="text-center text-gray-400 py-12">불러오는 중...</p>
-      ) : articles.length === 0 ? (
-        <p className="text-center text-gray-400 py-12">등록된 언론보도가 없습니다.</p>
+      ) : webtoons.length === 0 ? (
+        <p className="text-center text-gray-400 py-12">등록된 인스타툰이 없습니다.</p>
       ) : (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gray-50 text-left text-gray-500">
                 <th className="px-4 py-3 w-16">이미지</th>
-                <th className="px-4 py-3">매체명</th>
-                <th className="px-4 py-3">기사 제목</th>
-                <th className="px-4 py-3 w-28">날짜</th>
+                <th className="px-4 py-3">제목</th>
+                <th className="px-4 py-3">설명</th>
                 <th className="px-4 py-3 w-16 text-center">순서</th>
                 <th className="px-4 py-3 w-16 text-center">노출</th>
                 <th className="px-4 py-3 w-32 text-center">관리</th>
               </tr>
             </thead>
             <tbody>
-              {articles.map((article) => (
-                <tr key={article.id} className="border-t border-gray-100 hover:bg-gray-50">
+              {webtoons.map((item) => (
+                <tr key={item.id} className="border-t border-gray-100 hover:bg-gray-50">
                   <td className="px-4 py-3">
-                    {article.image_url ? (
+                    {item.image_url ? (
                       /* eslint-disable-next-line @next/next/no-img-element */
-                      <img src={article.image_url} alt="" className="w-12 h-8 object-cover rounded" />
+                      <img src={item.image_url} alt="" className="w-12 h-12 object-cover rounded" />
                     ) : (
-                      <div className="w-12 h-8 bg-[#1B3B2F] rounded flex items-center justify-center">
-                        <span className="text-[8px] text-white font-bold">PRESS</span>
+                      <div className="w-12 h-12 bg-[#1B3B2F] rounded flex items-center justify-center">
+                        <span className="text-[8px] text-white font-bold">TOON</span>
                       </div>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-gray-700 font-medium">{article.outlet}</td>
-                  <td className="px-4 py-3 text-gray-600 max-w-xs truncate">{article.title}</td>
-                  <td className="px-4 py-3 text-gray-400">{article.date}</td>
-                  <td className="px-4 py-3 text-center text-gray-500">{article.display_order}</td>
+                  <td className="px-4 py-3 text-gray-700 font-medium">{item.title}</td>
+                  <td className="px-4 py-3 text-gray-500 max-w-xs truncate">{item.description || '-'}</td>
+                  <td className="px-4 py-3 text-center text-gray-500">{item.display_order}</td>
                   <td className="px-4 py-3 text-center">
                     <button
-                      onClick={() => handleToggleVisible(article)}
+                      onClick={() => handleToggleVisible(item)}
                       className={`w-10 h-5 rounded-full relative transition-colors ${
-                        article.visible ? 'bg-[#1B3B2F]' : 'bg-gray-300'
+                        item.visible ? 'bg-[#1B3B2F]' : 'bg-gray-300'
                       }`}
                     >
                       <span
                         className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform ${
-                          article.visible ? 'left-5' : 'left-0.5'
+                          item.visible ? 'left-5' : 'left-0.5'
                         }`}
                       />
                     </button>
                   </td>
                   <td className="px-4 py-3 text-center">
                     <button
-                      onClick={() => openEditModal(article)}
+                      onClick={() => openEditModal(item)}
                       className="text-[#1B3B2F] hover:underline mr-3"
                     >
                       수정
                     </button>
                     <button
-                      onClick={() => handleDelete(article.id)}
+                      onClick={() => handleDelete(item.id)}
                       className="text-red-500 hover:underline"
                     >
                       삭제
@@ -310,51 +313,40 @@ export default function AdminPressPage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6">
             <h2 className="text-lg font-bold text-black mb-6">
-              {editingId ? '언론보도 수정' : '언론보도 추가'}
+              {editingId ? '인스타툰 수정' : '인스타툰 추가'}
             </h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">매체명 *</label>
-                <input
-                  type="text"
-                  value={form.outlet}
-                  onChange={(e) => setForm(prev => ({ ...prev, outlet: e.target.value }))}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B2F]"
-                  placeholder="스타데일리뉴스"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">기사 제목 *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">제목 *</label>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm(prev => ({ ...prev, title: e.target.value }))}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B2F]"
-                  placeholder="기사 제목을 입력하세요"
+                  placeholder="인스타툰 제목"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">링크 URL *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">설명</label>
                 <input
                   type="text"
-                  value={form.url}
-                  onChange={(e) => setForm(prev => ({ ...prev, url: e.target.value }))}
+                  value={form.description}
+                  onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B2F]"
-                  placeholder="/blog/slug 또는 https://..."
+                  placeholder="간단한 설명 (선택)"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">보도일 *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">인스타그램 링크</label>
                 <input
                   type="text"
-                  value={form.date}
-                  onChange={(e) => setForm(prev => ({ ...prev, date: e.target.value }))}
+                  value={form.link_url}
+                  onChange={(e) => setForm(prev => ({ ...prev, link_url: e.target.value }))}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1B3B2F]"
-                  placeholder="2026.03.19"
+                  placeholder="https://www.instagram.com/p/..."
                 />
               </div>
 
@@ -363,12 +355,12 @@ export default function AdminPressPage() {
                 {imagePreview && (
                   <div className="mb-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={imagePreview} alt="미리보기" className="w-full h-40 object-cover rounded-lg" />
+                    <img src={imagePreview} alt="미리보기" className="w-full aspect-square object-cover rounded-lg" />
                   </div>
                 )}
                 <input
                   type="file"
-                  accept="image/jpeg,image/png,image/webp"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
                   onChange={handleImageUpload}
                   className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
                 />
