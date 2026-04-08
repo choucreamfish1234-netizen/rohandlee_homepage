@@ -63,9 +63,9 @@ export async function POST(req: NextRequest) {
     const footer = `<div style="background:#f5f5f5;padding:20px;border-radius:8px;margin-top:30px;">
 <b>법률사무소 로앤이</b> | ${author}<br>
 오직 피해자만 변호합니다.<br><br>
-무료 상담: 032-207-8788<br>
 카카오톡: <a href="https://pf.kakao.com/_YxgWxcn/chat">카카오톡 상담</a><br>
-홈페이지: <a href="https://lawfirmrohandlee.com">lawfirmrohandlee.com</a>
+홈페이지: <a href="https://lawfirmrohandlee.com">lawfirmrohandlee.com</a><br>
+상담이 필요하시면 홈페이지에서 상담문의하기 버튼을 눌러주세요.
 </div>`
 
     const fullContent = naverContent + footer
