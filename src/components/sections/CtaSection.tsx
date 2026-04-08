@@ -38,7 +38,7 @@ export default function CtaSection() {
             page="home"
             section="cta"
             fieldKey="description"
-            defaultValue={'성범죄 전문 변호사의\n상담을 지금 바로 받아보세요.'}
+            defaultValue={'피해자 전문 변호사의\n상담을 지금 바로 받아보세요.'}
             tag="p"
             className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed whitespace-pre-line"
           />
