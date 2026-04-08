@@ -98,7 +98,7 @@ export async function POST() {
       general_recommendations: [
         '각 페이지에 고유한 title과 description 설정',
         '핵심 키워드를 title 앞쪽에 배치',
-        'CTA(무료 상담, 전화번호 등)를 description에 포함',
+        'CTA(상담문의하기 버튼 클릭 유도 등)를 description에 포함',
       ],
       summary: `${suggestions.filter((s) => s.suggested_title).length}개 페이지의 메타태그 최적화 제안이 생성되었습니다.`,
     }

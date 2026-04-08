@@ -46,8 +46,9 @@ export async function POST(req: NextRequest) {
 - H2 소제목 3~5개로 구조화 (각 소제목에 검색 키워드 포함)
 - 관련 법조문 반드시 인용 (조문 번호 명시). 없으면 추가
 - FAQ 섹션 3개 이상 (Q&A 형식). 없으면 추가
-- 마무리: 로앤이 상담 안내 + "무료 상담 032-207-8788"
+- 마무리: 로앤이 상담 안내 + "아래 상담문의하기 버튼을 눌러 편하게 문의해주세요"
 - 총 1500자 이상. 짧으면 내용 보강
+- **볼드**(별표 두 개) 마크다운 문법을 절대 사용하지 마세요. 강조가 필요하면 소제목(##)이나 인용 블록(>)으로 처리하세요.
 
 톤:
 - "~해요"체 통일
@@ -63,7 +64,11 @@ export async function POST(req: NextRequest) {
 - 법률사무소 로앤이, 슬로건 "오직 피해자만 변호합니다"
 - 이유림 대표변호사: 성범죄/IT/디지털성범죄 전문
 - 노채은 대표변호사: 재산범죄/사기/횡령 전문
-- 전화: 032-207-8788
+
+중요:
+- 전화번호를 절대 넣지 마세요
+- "무료 상담"이라는 표현을 사용하지 마세요
+- 글 마무리에는 "상담이 필요하시면 아래 상담문의하기 버튼을 눌러주세요"와 같이 블로그 하단 버튼 클릭을 유도하세요
 
 반드시 유효한 JSON만 응답하세요. 마크다운 코드블록(\`\`\`)을 사용하지 마세요. JSON 외에 다른 텍스트를 포함하지 마세요.`
 
@@ -139,6 +144,15 @@ JSON으로 응답해주세요:
         error: 'AI 응답에 필수 필드가 없습니다.',
       }, { status: 500 })
     }
+
+    // Post-processing: strip ** bold markers that AI may still generate
+    parsed.content = parsed.content.replace(/\*\*([^*]+)\*\*/g, '$1')
+    parsed.title = parsed.title.replace(/\*\*([^*]+)\*\*/g, '$1')
+
+    // Post-processing: remove phone numbers and "무료 상담" phrases
+    parsed.content = parsed.content.replace(/무료\s*상담[:\s]*032-207-8788/g, '상담이 필요하시면 아래 상담문의하기 버튼을 눌러주세요')
+    parsed.content = parsed.content.replace(/032-207-8788/g, '')
+    parsed.content = parsed.content.replace(/무료\s*상담/g, '상담문의')
 
     // Return optimized data WITHOUT saving (preview mode)
     return NextResponse.json({

@@ -168,7 +168,7 @@ function auditPage(
     improvements.push('title에 전문 분야와 사무소명을 함께 포함하면 효과적입니다.')
   }
   if (description && description.length >= 80 && description.length <= 170) {
-    improvements.push('description에 CTA(전화번호, 무료상담 등)를 포함하면 클릭률이 높아집니다.')
+    improvements.push('description에 CTA(상담문의하기 버튼 클릭 유도 등)를 포함하면 클릭률이 높아집니다.')
   }
 
   return {
