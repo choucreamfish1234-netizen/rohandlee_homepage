@@ -303,25 +303,25 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="flex flex-col items-center text-center"
     >
-      <div className="w-[220px] h-[220px] rounded-2xl overflow-hidden bg-gray-100 mb-5 flex-shrink-0">
+      <div className="w-[300px] h-[300px] rounded-2xl overflow-hidden bg-gray-100 mb-6 flex-shrink-0">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={`${lawyer.name} ${lawyer.title}`}
-            width={220}
-            height={220}
+            width={300}
+            height={300}
             className="w-full h-full object-cover"
           />
         ) : (
           <div className="w-full h-full bg-[#1B3B2F] flex items-center justify-center">
-            <span className="text-white text-5xl font-semibold">{initial}</span>
+            <span className="text-white text-6xl font-semibold">{initial}</span>
           </div>
         )}
       </div>
-      <h4 className="text-xl font-semibold text-gray-900">{lawyer.name}</h4>
-      <p className="text-sm text-gray-500 mt-0.5">{lawyer.title}</p>
+      <h4 className="text-2xl font-semibold text-gray-900">{lawyer.name}</h4>
+      <p className="text-base text-gray-500 mt-1">{lawyer.title}</p>
       {lawyer.specialties && (
-        <p className="mt-1.5 text-sm text-gray-400">{lawyer.specialties}</p>
+        <p className="mt-2 text-base text-gray-400">{lawyer.specialties}</p>
       )}
     </motion.div>
   )
