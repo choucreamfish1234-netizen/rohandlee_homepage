@@ -303,14 +303,14 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="flex flex-col items-center text-center"
     >
-      <div className="w-[300px] h-[300px] rounded-2xl overflow-hidden bg-gray-100 mb-6 flex-shrink-0">
+      <div className="w-[300px] aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-6 flex-shrink-0">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={`${lawyer.name} ${lawyer.title}`}
             width={300}
-            height={300}
-            className="w-full h-full object-cover"
+            height={400}
+            className="w-full h-full object-cover object-top"
           />
         ) : (
           <div className="w-full h-full bg-[#1B3B2F] flex items-center justify-center">
