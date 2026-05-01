@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
 import { EditableImage } from '@/components/Editable'
 
@@ -25,7 +26,19 @@ interface LawyerData {
   previous: string[]
 }
 
-const lawyers: LawyerData[] = [
+interface LawyerDB {
+  id: string
+  name: string
+  title: string
+  specialties: string | null
+  description: string | null
+  image_url: string | null
+  is_representative: boolean
+  display_order: number
+  visible: boolean
+}
+
+const fallbackLawyers: LawyerData[] = [
   {
     key: 'lee',
     name: '이유림',
@@ -101,6 +114,16 @@ const lawyers: LawyerData[] = [
   },
 ]
 
+const FALLBACK_IMAGE_MAP: Record<string, string> = {
+  '이유림': '/images/lawyers/lawyer-lee.svg',
+  '노채은': '/images/lawyers/lawyer-noh.svg',
+}
+
+const FALLBACK_DESC_MAP: Record<string, string> = {
+  '이유림': '끝까지 당신의 편에 서겠습니다. 피해자의 시간 앞에서 겸허히 걷겠습니다.',
+  '노채은': '무뎌진 언어 뒤에도 도저히 묻혀지지 않는 마음이 있습니다.',
+}
+
 function PreviousCareer({ items }: { items: string[] }) {
   const [open, setOpen] = useState(false)
 
@@ -143,7 +166,6 @@ function PreviousCareer({ items }: { items: string[] }) {
 function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
   return (
     <div className="max-w-md mx-auto text-center">
-      {/* Photo - scale entrance */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -163,7 +185,6 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         />
       </motion.div>
 
-      {/* Name + role + tag - fade-in after photo */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -179,7 +200,6 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </div>
       </motion.div>
 
-      {/* Description - fade-in */}
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -190,7 +210,6 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         {lawyer.description}
       </motion.p>
 
-      {/* Key cases - tags pop-in */}
       <div className="mt-8 flex flex-wrap justify-center gap-2">
         {lawyer.cases.map((tag, idx) => (
           <motion.span
@@ -206,7 +225,6 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         ))}
       </div>
 
-      {/* Education - fade-in */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -222,7 +240,6 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </div>
       </motion.div>
 
-      {/* Current positions - fade-in */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -238,12 +255,10 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </div>
       </motion.div>
 
-      {/* Previous - accordion */}
       <div className="mt-8">
         <PreviousCareer items={lawyer.previous} />
       </div>
 
-      {/* Results - sequential slide-in */}
       <div className="mt-8">
         <motion.p
           initial={{ opacity: 0 }}
@@ -273,6 +288,42 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </div>
       </div>
     </div>
+  )
+}
+
+function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
+  const imageUrl = lawyer.image_url || FALLBACK_IMAGE_MAP[lawyer.name]
+  const initial = lawyer.name.charAt(0)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="flex flex-col items-center text-center"
+    >
+      <div className="w-40 h-40 rounded-2xl overflow-hidden bg-gray-100 mb-4 flex-shrink-0">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={`${lawyer.name} ${lawyer.title}`}
+            width={160}
+            height={160}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#1B3B2F] flex items-center justify-center">
+            <span className="text-white text-4xl font-semibold">{initial}</span>
+          </div>
+        )}
+      </div>
+      <h4 className="text-lg font-semibold text-gray-900">{lawyer.name}</h4>
+      <p className="text-sm text-gray-500">{lawyer.title}</p>
+      {lawyer.specialties && (
+        <p className="mt-1 text-sm text-gray-400">{lawyer.specialties}</p>
+      )}
+    </motion.div>
   )
 }
 
@@ -312,6 +363,58 @@ const lawyerJsonLd = [
 ]
 
 export default function LawyersSection() {
+  const [representativeLawyers, setRepresentativeLawyers] = useState<LawyerData[]>(fallbackLawyers)
+  const [associateLawyers, setAssociateLawyers] = useState<LawyerDB[]>([])
+
+  useEffect(() => {
+    async function fetchLawyers() {
+      try {
+        const res = await fetch('/api/lawyers')
+        const data: LawyerDB[] = await res.json()
+        if (!Array.isArray(data) || data.length === 0) return
+
+        const visibleLawyers = data.filter((l) => l.visible)
+
+        const reps = visibleLawyers.filter((l) => l.is_representative)
+        if (reps.length > 0) {
+          const mapped = reps.map((db) => {
+            const existing = fallbackLawyers.find((f) => f.name === db.name)
+            if (existing) {
+              return {
+                ...existing,
+                description: db.description || existing.description,
+                image: db.image_url || existing.image,
+                role: db.title || existing.role,
+                specialtyTag: db.specialties || existing.specialtyTag,
+              }
+            }
+            return {
+              key: db.id,
+              name: db.name,
+              role: db.title,
+              specialtyTag: db.specialties || '',
+              description: db.description || FALLBACK_DESC_MAP[db.name] || '',
+              image: db.image_url || FALLBACK_IMAGE_MAP[db.name] || '',
+              alt: `${db.name} ${db.title} 프로필`,
+              cases: [],
+              results: [],
+              education: [],
+              current: [],
+              previous: [],
+            }
+          })
+          setRepresentativeLawyers(mapped)
+        }
+
+        const associates = visibleLawyers.filter((l) => !l.is_representative)
+        setAssociateLawyers(associates)
+      } catch {
+        // fallback data already set
+      }
+    }
+    fetchLawyers()
+  }, [])
+
   return (
     <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
       {lawyerJsonLd.map((ld, i) => (
@@ -331,11 +434,27 @@ export default function LawyersSection() {
           </h2>
         </ScrollReveal>
 
+        {/* 대표변호사 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16">
-          {lawyers.map((lawyer) => (
+          {representativeLawyers.map((lawyer) => (
             <LawyerCard key={lawyer.key} lawyer={lawyer} />
           ))}
         </div>
+
+        {/* 어소시에이트 변호사 */}
+        {associateLawyers.length > 0 && (
+          <div className="mt-12">
+            <div className="text-center mb-8">
+              <p className="text-lg text-gray-500 mb-3">함께하는 변호사</p>
+              <div className="w-16 border-t border-gray-300 mx-auto" />
+            </div>
+            <div className="flex flex-wrap justify-center gap-8">
+              {associateLawyers.map((lawyer) => (
+                <AssociateCard key={lawyer.id} lawyer={lawyer} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )

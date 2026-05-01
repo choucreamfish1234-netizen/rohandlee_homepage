@@ -349,6 +349,7 @@ export default function AdminSeoPage() {
         <Link href="/admin/paid-consultations" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">유료 상담</Link>
         <Link href="/admin/press" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">언론보도</Link>
         <Link href="/admin/webtoon" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">인스타툰</Link>
+        <Link href="/admin/lawyers" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">변호사 관리</Link>
         <span className="text-sm font-semibold text-[#1B3B2F] border-b-2 border-[#1B3B2F] pb-3 -mb-3">SEO 관리</span>
         <Link href="/admin/analytics" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3">방문자 분석</Link>
       </div>
