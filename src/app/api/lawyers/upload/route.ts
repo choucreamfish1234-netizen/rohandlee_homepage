@@ -14,17 +14,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '파일이 없습니다' }, { status: 400 })
     }
 
-    const ext = file.name.split('.').pop() || 'png'
+    const rawExt = file.name.includes('.') ? file.name.split('.').pop()!.toLowerCase().replace(/[^a-z0-9]/g, '') : ''
+    const ALLOWED = ['jpg', 'jpeg', 'png', 'webp']
+    const ext = ALLOWED.includes(rawExt) ? rawExt : 'png'
     const fileName = `lawyer_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${ext}`
 
     const buffer = Buffer.from(await file.arrayBuffer())
 
-    const { error } = await supabase.storage
+    const { data, error } = await supabase.storage
       .from('lawyer-images')
       .upload(fileName, buffer, {
         contentType: file.type,
         upsert: true,
       })
+
+    if (data) {
+      console.log('Upload success:', data.path)
+    }
 
     if (error) {
       console.error('Storage upload error:', error)
