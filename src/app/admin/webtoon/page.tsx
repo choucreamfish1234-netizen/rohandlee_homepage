@@ -291,6 +291,12 @@ export default function AdminWebtoonPage() {
           인스타툰
         </span>
         <Link
+          href="/admin/lawyers"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
+        >
+          변호사 관리
+        </Link>
+        <Link
           href="/admin/seo"
           className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3 whitespace-nowrap"
         >
