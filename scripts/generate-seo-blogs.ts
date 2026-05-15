@@ -359,7 +359,7 @@ function getRandomThumbnail(category: string, usedUrls: string[]): string {
 // ─── 시스템 프롬프트 ───
 function buildSystemPrompt(author: string): string {
   return `당신은 법률사무소 로앤이의 전문 법률 콘텐츠 작성자입니다.
-법률사무소 로앤이는 "오직 피해자만 변호합니다"를 슬로건으로 하는 피해자 전문 로펌입니다.
+법률사무소 로앤이는 "피해자 전문 로펌"을 슬로건으로 하는 피해자 전문 로펌입니다.
 
 대표변호사: 이유림(성범죄/IT/디지털성범죄 전문), 노채은(재산범죄/사기/횡령 전문)
 주소: 경기도 부천시 부일로205번길 54, 205호

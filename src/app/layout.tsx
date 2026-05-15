@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '성범죄·재산범죄 피해자 전문 변호사 이유림, 노채은. 오직 피해자만 변호합니다.  032-207-8788',
+    '성범죄·재산범죄 피해자 전문 변호사 이유림, 노채은. 피해자 전문 로펌.  032-207-8788',
   keywords: [
     '성범죄 변호사',
     '성범죄 피해자 변호사',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 오직 피해자만 변호합니다',
+    title: '성범죄·재산범죄 피해자 전문 변호사 | 법률사무소 로앤이 | 피해자 전문 로펌',
     description: '성범죄·재산범죄 피해자 전문. 로톡 평점 4.9, 후기 600+',
     images: [`${baseUrl}/og-image.png`],
   },
@@ -85,7 +85,7 @@ const jsonLd = {
   '@type': 'LegalService',
   name: '법률사무소 로앤이',
   alternateName: 'ROH & LEE LAW FIRM',
-  description: '성범죄·재산범죄 피해자 전문 법률사무소. 가해자는 변호하지 않습니다.',
+  description: '성범죄·재산범죄 피해자 전문 법률사무소. 피해자 위주의 변호, 모든 분야의 피해자를 대변합니다.',
   url: baseUrl,
   telephone: '032-207-8788',
   email: 'rohetlee@naver.com',
@@ -112,7 +112,7 @@ const jsonLd = {
   ],
   priceRange: '첫 상담 무료',
   openingHours: 'Mo-Fr 09:00-18:00',
-  slogan: '오직 피해자만 변호합니다',
+  slogan: '피해자 전문 로펌',
   areaServed: ['부천시', '인천', '서울', '경기도'],
   knowsAbout: ['성범죄 피해자 변호', '재산범죄 피해자 변호', '개인회생', '개인파산', '디지털성범죄', '스토킹'],
   employee: [
