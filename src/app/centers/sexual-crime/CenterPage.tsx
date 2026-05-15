@@ -302,7 +302,7 @@ export default function SexualCrimeCenterPage() {
         },
       ]}
       declaration={{
-        title: '가해자는 변호하지 않습니다.\n오로지 피해자만을 변호합니다.',
+        title: '피해자 위주의 변호,\n모든 분야의 피해자를 대변합니다.',
         description:
           '피해자 변호사는 고소장만 내주면 끝이라는 착각.\n로앤이 성범죄피해전문센터에서는\n피해자 변호의 처음부터 끝까지, A-Z를 책임집니다.',
       }}

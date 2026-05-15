@@ -29,7 +29,7 @@ function buildNaverPrompt(author: string): string {
 - 글 하단에 로앤이 정보 박스 포함:
   <div style="background:#f5f5f5;padding:20px;border-radius:8px;margin-top:30px;">
     <b>법률사무소 로앤이</b><br>
-    오직 피해자만 변호합니다.<br><br>
+    피해자 전문 로펌<br><br>
     카카오톡: https://pf.kakao.com/_YxgWxcn/chat<br>
     홈페이지: https://lawfirmrohandlee.com<br>
     상담이 필요하시면 홈페이지에서 상담문의하기 버튼을 눌러주세요.

@@ -18,7 +18,7 @@ export default function DeclarationSection() {
             page="home"
             section="declaration"
             fieldKey="title"
-            defaultValue={'가해자는 변호하지 않습니다.\n오로지 피해자만을 변호합니다.'}
+            defaultValue={'피해자 위주의 변호,\n모든 분야의 피해자를 대변합니다.'}
             tag="h2"
             className="text-xl sm:text-3xl font-bold text-[#1B3B2F] leading-snug whitespace-pre-line"
           />

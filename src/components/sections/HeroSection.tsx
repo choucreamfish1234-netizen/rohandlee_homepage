@@ -131,7 +131,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
           className="text-sm text-gray-400 mt-2"
         >
-          &ldquo;오직 피해자만 변호합니다&rdquo;
+          &ldquo;피해자 전문 로펌&rdquo;
         </motion.p>
 
         <motion.p

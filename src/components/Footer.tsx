@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="md:col-span-1">
             <h3 className="text-sm font-semibold text-black mb-4">법률사무소 로앤이</h3>
             <p className="text-xs text-gray-500 leading-relaxed">
-              오직 피해자만 변호합니다.<br />
+              피해자 전문 로펌<br />
               끝까지 함께하는 법률 파트너
             </p>
           </div>
