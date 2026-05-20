@@ -236,7 +236,7 @@ function VictimLawyerSection() {
             <p>
               로앤이는 <strong className="text-black">피해자 전문 사선변호사</strong>로서,
               상담부터 수사 동행, 재판, 피해 회복까지 A-Z 전 과정을 책임집니다.
-              오직 피해자만 변호하기 때문에 보다 적극적이고 전문적인 변호가 가능합니다.
+              피해자의 권리를 최우선으로 하기 때문에 보다 적극적이고 전문적인 변호가 가능합니다.
             </p>
           </div>
         </ScrollReveal>

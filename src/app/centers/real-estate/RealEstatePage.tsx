@@ -217,16 +217,16 @@ export default function RealEstatePage() {
                 규모도 가장 크고, 회복도 가장 어렵습니다.
               </p>
               <p>
-                법률사무소 로앤이는 창립 이래 단 한 번도 가해자를 변호한 적이 없습니다. 부동산
-                거래에서 신뢰를 악용해 남의 재산을 삼킨 사람은 명백한 가해자이고, 재산을 빼앗긴
-                사람은 명백한 피해자입니다.
+                부동산 거래에서 신뢰를 악용해 남의 재산을 삼킨 사람은 명백한 가해자이고, 재산을
+                빼앗긴 사람은 명백한 피해자입니다. 법률사무소 로앤이는 피해자의 권리를 최우선으로
+                합니다.
               </p>
               <p className="font-semibold text-black">
                 그래서 만들었습니다.
                 <br />
                 부동산 피해 전담센터.
                 <br />
-                오직 피해자만을 위한 센터입니다.
+                피해자 중심의 법률 서비스를 제공합니다.
               </p>
             </div>
           </ScrollReveal>
@@ -352,8 +352,8 @@ export default function RealEstatePage() {
             </h2>
             <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
               <p>
-                혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 오직 피해자만을 위해
-                존재합니다. 상대방 측의 의뢰는 정중히 거절합니다.
+                혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 피해자의 권리를
+                최우선으로 합니다.
               </p>
               <p className="text-white font-medium">
                 지금 바로 무료 상담을 신청하세요.

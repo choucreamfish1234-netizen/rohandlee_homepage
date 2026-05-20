@@ -7,7 +7,7 @@ import { Users, Smartphone, Award, Eye } from 'lucide-react'
 const differences = [
   {
     title: '피해자 전담 시스템',
-    description: '가해자 사건은 일절 수임하지 않습니다. 오직 피해자만을 위한 전략을 수립합니다.',
+    description: '피해자의 권리를 최우선으로 합니다. 피해자만을 위한 전략을 수립합니다.',
     icon: Users,
   },
   {
