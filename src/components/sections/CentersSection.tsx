@@ -20,6 +20,13 @@ const centers = [
     alt: '서류와 펜이 있는 깔끔한 데스크 - 법률과 계약',
   },
   {
+    title: '신체범죄 피해 전담센터',
+    description: '폭행·상해·스토킹·협박·가정폭력, 형사 고소와 민사 손해배상을 동시 진행합니다',
+    href: '/centers/physical-crime',
+    image: 'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&h=600&fit=crop&q=80',
+    alt: '보호와 안전을 상징하는 이미지',
+  },
+  {
     title: '부동산 피해 전담센터',
     description: '전세 사기·토지 매매 사기·권리금 분쟁, 민형사 동시 타격으로 반드시 되찾습니다',
     href: '/centers/real-estate',
@@ -100,13 +107,13 @@ export default function CentersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            6 Specialized Centers
+            7 Specialized Centers
           </p>
           <EditableText
             page="home"
             section="centers"
             fieldKey="heading"
-            defaultValue="6대 전문센터"
+            defaultValue="7대 전문센터"
             tag="h2"
             className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
           />

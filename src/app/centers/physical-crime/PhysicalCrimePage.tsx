@@ -8,68 +8,58 @@ import Script from 'next/script'
 
 const faqs = [
   {
-    question: '보증금을 돌려받지 못하고 있는데, 소송 말고 다른 방법이 있나요?',
+    question: '맞았는데 증거가 없어요. 고소 가능한가요?',
     answer:
-      '네, 있습니다. 소송 전에 내용증명 발송, 임차권등기명령, 가압류 등 다양한 법적 보전조치를 먼저 진행할 수 있습니다. 특히 임대인의 재산이 빠져나가기 전에 가압류를 신속하게 걸어두는 것이 핵심입니다. 로앤이는 소송 전 선제적 보전조치에 강점이 있습니다.',
+      'CCTV, 목격자 진술, 진단서, 문자 메시지 등 다양한 방법으로 증거를 확보할 수 있습니다. 사건 직후가 아니더라도 고소는 가능하며, 증거 수집 방법을 함께 안내해드립니다.',
   },
   {
-    question: '전세 사기로 형사 고소가 가능한가요?',
+    question: '스토킹 신고했는데 경찰이 적극적으로 안 해요.',
     answer:
-      '임대인이 처음부터 보증금을 돌려줄 의사나 능력이 없었음에도 계약을 체결했다면 사기죄(형법 제347조)에 해당할 수 있습니다. 근저당 설정 사실을 숨기거나, 이미 다른 임차인에게 이중계약을 한 경우 등이 대표적입니다.',
+      '스토킹처벌법에 따라 경찰은 즉시 응급조치를 할 의무가 있습니다. 경찰 대응이 미흡한 경우 검찰 직접 고소, 법원 접근금지 가처분 신청 등 독자적인 법적 조치를 취할 수 있습니다.',
   },
   {
-    question: '토지를 샀는데 개발이 안 되는 땅이었어요. 사기인가요?',
+    question: '가정폭력인데 이혼하지 않고도 보호받을 수 있나요?',
     answer:
-      '매도인이 개발 가능성에 대해 허위 정보를 제공하거나, 중요한 사실(개발제한구역, 군사시설보호구역 등)을 의도적으로 숨긴 경우 사기죄가 성립할 수 있습니다. 매매 당시의 정황과 계약서를 분석하여 형사 고소 및 민사 손해배상 가능 여부를 판단해드립니다.',
+      '네, 가정폭력처벌법에 따라 이혼 여부와 관계없이 피해자 보호명령, 접근금지, 퇴거 조치를 받을 수 있습니다. 피해자의 안전이 최우선이며, 향후 방향은 상담을 통해 함께 결정합니다.',
   },
   {
-    question: '상가 권리금을 받지 못하고 쫓겨났는데 구제 방법이 있나요?',
+    question: '합의금은 보통 얼마인가요?',
     answer:
-      '상가건물 임대차보호법 제10조의4에 따라 임대인이 정당한 사유 없이 권리금 회수를 방해하면 손해배상 책임이 있습니다. 권리금 회수 방해 행위가 있었다면 손해배상 청구가 가능하며, 시효는 3년입니다.',
+      '피해 정도, 치료 기간, 후유증 유무, 가해자의 전과 여부 등에 따라 크게 달라집니다. 단순 폭행은 수백만 원부터, 중상해의 경우 수천만 원 이상의 합의금이 형성됩니다. 피해자가 최대한 보상받을 수 있도록 전략적으로 협상합니다.',
   },
   {
-    question: '중개사가 중요한 사실을 알려주지 않아서 피해를 봤어요.',
+    question: '미성년자 자녀가 학교폭력을 당했어요.',
     answer:
-      '공인중개사는 중개대상물의 권리관계, 법적 제한사항 등을 성실하게 설명할 의무가 있습니다(공인중개사법 제25조). 이를 위반하여 피해가 발생한 경우 중개사 및 중개법인에 대한 손해배상 청구가 가능합니다.',
-  },
-  {
-    question: '변호사 비용이 부담됩니다.',
-    answer:
-      '무료 상담을 통해 먼저 사건의 가능성을 판단해드립니다. 비용 대비 회수 가능성이 높은 경우에만 수임을 권유드리며, 착수금 분할 등 피해자의 상황에 맞는 비용 구조를 안내해드립니다.',
+      '학교폭력예방법에 따라 학교에 신고하여 심의위원회 조치를 받을 수 있고, 동시에 가해 학생 보호자를 상대로 민사 손해배상 청구도 가능합니다. 형사 처벌이 가능한 연령(14세 이상)이면 형사 고소도 진행할 수 있습니다.',
   },
 ]
 
 const serviceAreas = [
   {
-    title: '전세·임대차 분쟁',
-    description: '보증금 미반환, 전세 사기, 계약갱신청구권 거부, 부당 퇴거 요구, 월세 분쟁, 임차권등기명령',
+    title: '폭행·상해',
+    description:
+      '주먹, 발길질, 흉기 등에 의한 신체 공격. 폭행죄(형법 제260조), 상해죄(형법 제257조) 고소, 치료비·위자료 손해배상 청구. 진단서 확보부터 합의금 협상까지 전 과정을 함께합니다.',
     icon: (
       <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
       </svg>
     ),
   },
   {
-    title: '토지·매매 분쟁',
-    description: '토지 매매 사기, 허위 개발 정보로 인한 사기, 이중매매, 소유권 분쟁, 등기 사기',
+    title: '스토킹',
+    description:
+      '반복적인 따라다니기, 연락, 감시, 대기. 스토킹처벌법에 따른 형사 고소, 접근금지 가처분 신청, 피해자 보호 조치 요청. 빠른 초기 대응이 가장 중요합니다.',
     icon: (
       <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
   },
   {
-    title: '상가·권리금 분쟁',
-    description: '권리금 회수 방해, 상가 임대차 보호법 위반, 부당한 퇴거, 원상복구 비용 과다 청구',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36c-.602 0-1.088-.487-1.088-1.088A5.912 5.912 0 017.184 14H12m1.5 7H21V3.75a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75V21m0 0H4.5" />
-      </svg>
-    ),
-  },
-  {
-    title: '중개사고',
-    description: '공인중개사의 이중계약, 허위매물, 중요 사항 미고지, 중개 과실로 인한 손해',
+    title: '협박·공갈',
+    description:
+      '해악을 고지하여 공포심을 일으키는 행위, 금품을 요구하는 행위. 협박죄(형법 제283조), 공갈죄(형법 제350조) 고소. 증거 확보 방법부터 안내해드립니다.',
     icon: (
       <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
@@ -77,11 +67,42 @@ const serviceAreas = [
     ),
   },
   {
-    title: '하자·수리 분쟁',
-    description: '누수, 곰팡이 등 하자 보수 책임 회피, 무단 출입, 생활 방해',
+    title: '가정폭력',
+    description:
+      '배우자, 동거인, 가족에 의한 신체적·정신적 폭력. 가정폭력처벌법에 따른 피해자 보호명령, 접근금지, 임시조치 신청. 피해자의 안전을 최우선으로 합니다.',
     icon: (
       <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.03A.75.75 0 015.25 17.6V6.4a.75.75 0 01.786-.6l5.384 3.03a.75.75 0 010 1.34zM15.75 7.5v9m3-6v3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+      </svg>
+    ),
+  },
+  {
+    title: '감금·체포',
+    description:
+      '불법적으로 신체의 자유를 구속하는 행위. 감금죄(형법 제276조) 고소 및 손해배상 청구.',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+      </svg>
+    ),
+  },
+  {
+    title: '데이트폭력',
+    description:
+      '연인 관계에서 발생하는 신체적·정신적 폭력, 통제, 감시. 폭행·상해·협박 등 해당 범죄로 고소하고, 접근금지 조치를 받을 수 있습니다.',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+      </svg>
+    ),
+  },
+  {
+    title: '학교폭력',
+    description:
+      '학교 내외에서 발생하는 폭행, 따돌림, 협박, 강요. 학교폭력예방법에 따른 피해자 보호 조치, 가해 학생 선도 조치, 손해배상 청구.',
+    icon: (
+      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
       </svg>
     ),
   },
@@ -90,17 +111,17 @@ const serviceAreas = [
 const legalServiceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: '법률사무소 로앤이 부동산 피해 전담센터',
+  name: '법률사무소 로앤이 신체범죄 피해 전담센터',
   description:
-    '전세 사기·보증금 미반환·토지 매매 사기·권리금 분쟁. 민사 가압류와 형사 고소 동시 진행.',
-  url: 'https://lawfirmrohandlee.com/centers/real-estate',
+    '폭행·상해·스토킹·협박·공갈·감금·가정폭력 피해자 전문. 민사 손해배상과 형사 고소를 동시 진행.',
+  url: 'https://lawfirmrohandlee.com/centers/physical-crime',
   telephone: '032-207-8788',
   areaServed: {
     '@type': 'Country',
     name: 'KR',
   },
   priceRange: '무료 상담',
-  serviceType: ['전세 사기', '보증금 반환', '토지 매매 사기', '권리금 분쟁', '임대차 분쟁', '가압류', '중개사고'],
+  serviceType: ['폭행', '상해', '스토킹', '협박', '공갈', '감금', '가정폭력', '데이트폭력', '학교폭력'],
 }
 
 const faqJsonLd = {
@@ -147,18 +168,18 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   )
 }
 
-export default function RealEstatePage() {
+export default function PhysicalCrimePage() {
   const { openConsultation } = useConsultation()
 
   return (
     <>
       <Script
-        id="real-estate-legal-service-jsonld"
+        id="physical-crime-legal-service-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
       />
       <Script
-        id="real-estate-faq-jsonld"
+        id="physical-crime-faq-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
@@ -172,23 +193,21 @@ export default function RealEstatePage() {
           className="text-center max-w-3xl mx-auto"
         >
           <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">
-            부동산 피해 전담센터
+            신체범죄 피해 전담센터
           </p>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-            빼앗긴 보증금, 속아 산 땅,
+            맞아도 되는 사람은 없습니다.
             <br />
-            사라진 권리금.
-            <br />
-            <span className="text-[#1B3B2F]">부동산 피해, 끝까지 되찾습니다.</span>
+            <span className="text-[#1B3B2F]">당신의 몸과 안전, 법으로 지킵니다.</span>
           </h1>
           <p className="mt-6 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-            전세 사기부터 토지 매매 사기, 상가 권리금 분쟁까지.
+            폭행, 상해, 스토킹, 협박, 공갈, 감금, 가정폭력.
             <br />
-            부동산을 둘러싼 모든 피해, 로앤이가 민사와 형사로 동시에 추적합니다.
+            신체와 안전을 위협하는 모든 범죄, 로앤이가 피해자의 편에서 끝까지 싸웁니다.
           </p>
           <div className="mt-8">
             <button
-              onClick={() => openConsultation('부동산 피해 상담')}
+              onClick={() => openConsultation('신체범죄 피해 상담')}
               className="inline-flex items-center justify-center px-8 py-3.5 bg-[#1B3B2F] text-white text-sm font-medium rounded-full hover:bg-[#153126] transition-colors min-h-[48px]"
             >
               무료 상담 신청하기
@@ -202,31 +221,28 @@ export default function RealEstatePage() {
         <div className="max-w-3xl mx-auto px-4">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              왜 로앤이가 부동산 피해 전담센터를 만들었는가
+              왜 로앤이가 신체범죄 전담센터를 만들었는가
             </h2>
           </ScrollReveal>
           <ScrollReveal>
             <div className="space-y-6 text-sm sm:text-base text-gray-600 leading-relaxed">
               <p>
-                전 재산이었습니다. 2년 동안 모아 마련한 전세보증금이 돌아오지 않습니다. 10년 모은
-                돈으로 산 토지가 개발 불가능한 땅이었습니다. 10년 운영한 가게의 권리금을 한 푼도
-                받지 못하고 쫓겨났습니다. 믿었던 중개사가 이중계약을 맺고 사라졌습니다.
+                갑자기 주먹이 날아왔습니다. 이유도 없이, 혹은 사소한 시비로. 병원에 다녀왔지만
+                상대방은 사과 한마디 없습니다. &ldquo;맞을 짓을 했겠지&rdquo;라는 주변의 시선에
+                오히려 피해자가 움츠러듭니다.
               </p>
               <p>
-                부동산은 대부분의 사람에게 인생에서 가장 큰 돈이 오가는 거래입니다. 그래서 피해
-                규모도 가장 크고, 회복도 가장 어렵습니다.
+                매일 밤 협박 문자가 옵니다. 집 앞에서 기다리고 있는 사람이 있습니다. 무서워서
+                신고했지만 경찰은 &ldquo;일단 지켜보겠다&rdquo;고만 합니다.
               </p>
               <p>
-                부동산 거래에서 신뢰를 악용해 남의 재산을 삼킨 사람은 명백한 가해자이고, 재산을
-                빼앗긴 사람은 명백한 피해자입니다. 법률사무소 로앤이는 피해자의 권리를 최우선으로
-                합니다.
+                신체범죄 피해자는 몸의 상처와 마음의 상처를 동시에 안고 삽니다. 그리고 너무 많은
+                피해자가 제대로 된 법적 보호를 받지 못한 채 혼자 견디고 있습니다.
               </p>
               <p className="font-semibold text-black">
-                그래서 만들었습니다.
-                <br />
-                부동산 피해 전담센터.
-                <br />
-                피해자 중심의 법률 서비스를 제공합니다.
+                법률사무소 로앤이는 피해자의 권리를 최우선으로 합니다. 신체범죄 피해 전담센터는
+                폭력의 피해자가 정당한 보호와 보상을 받을 수 있도록, 가해자에게 확실한 법적 책임을
+                묻기 위해 만들었습니다.
               </p>
             </div>
           </ScrollReveal>
@@ -263,18 +279,16 @@ export default function RealEstatePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-6">
-              타 로펌이 할 수 없는, 로앤이만의 전략
+              로앤이만의 전략
             </h2>
             <p className="text-sm sm:text-base text-gray-500 text-center max-w-2xl mx-auto leading-relaxed mb-16">
-              일반 로펌은 민사소송 하나만 겁니다. 소장을 넣고 기다립니다. 그동안 상대방은 재산을
-              빼돌립니다.
+              일반 로펌은 형사 고소만 하고 결과를 기다립니다. 로앤이는 다릅니다.
               <br />
-              로앤이는 다릅니다. 두 개의 칼날이 동시에 움직입니다.
+              두 개의 칼날이 동시에 움직입니다.
             </p>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            {/* 카드1 - 민사 */}
             <ScrollReveal delay={0}>
               <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
                 <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
@@ -293,17 +307,15 @@ export default function RealEstatePage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-bold text-black mb-3">
-                  이유림 변호사 — 데이터로 재산을 먼저 잠근다
+                  이유림 변호사 — 증거를 확보하고 보호 조치를 선제 실행한다
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  소송 전에 승부를 결정짓습니다. 등기부, 재산조회, 금융거래 흐름을 분석하여
-                  가압류·가처분을 선제적으로 집행합니다. 상대방이 재산을 숨길 틈을 주지
-                  않습니다. IT 기술을 직접 활용하는 변호사이기에 가능한 속도입니다.
+                  CCTV 확보, 진단서 발급, 디지털 증거 수집을 신속하게 진행합니다. 스토킹·가정폭력의
+                  경우 접근금지 가처분, 피해자 보호명령을 먼저 받아 피해자의 안전을 확보합니다.
                 </p>
               </div>
             </ScrollReveal>
 
-            {/* 카드2 - 형사 */}
             <ScrollReveal delay={0.12}>
               <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
                 <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
@@ -322,24 +334,16 @@ export default function RealEstatePage() {
                   </svg>
                 </div>
                 <h3 className="text-lg font-bold text-black mb-3">
-                  노채은 변호사 — 형사 고소로 숨통을 조인다
+                  노채은 변호사 — 형사 고소와 민사 손해배상을 동시에 추진한다
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  부동산 거래에서의 기망 행위는 사기죄에 해당합니다. 노채은 변호사는 재산범죄
-                  전담 변호사로서 상대방의 범죄 구조를 파헤치고, 형사 고소로 직접 타격합니다.
-                  형사 압박이 들어가는 순간, 민사 협상의 판이 완전히 달라집니다.
+                  가해자에게 형사 처벌과 민사 배상 책임을 동시에 묻습니다. 형사 압박이 들어가는
+                  순간 합의 협상의 주도권이 피해자에게 넘어옵니다. 합의금 협상도 피해자가 최대한
+                  보상받을 수 있도록 전략적으로 진행합니다.
                 </p>
               </div>
             </ScrollReveal>
           </div>
-
-          <ScrollReveal>
-            <p className="mt-12 sm:mt-16 text-center text-sm sm:text-base font-semibold text-black">
-              민사로 재산을 잠그고, 형사로 숨통을 조이는 입체 전략.
-              <br />
-              이것이 로앤이 부동산 피해 전담센터의 방식입니다.
-            </p>
-          </ScrollReveal>
         </div>
       </section>
 
@@ -348,22 +352,22 @@ export default function RealEstatePage() {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold">
-              부동산 피해, 반드시 되찾으실 수 있습니다.
+              폭력 앞에서 혼자 견디지 마세요.
             </h2>
             <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
               <p>
-                혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 피해자의 권리를
-                최우선으로 합니다.
+                맞아도 되는 사람은 없고, 협박에 굴복할 이유도 없습니다. 로앤이 신체범죄 피해
+                전담센터가 가해자에게 확실한 법적 책임을 묻겠습니다.
               </p>
               <p className="text-white font-medium">
                 지금 바로 무료 상담을 신청하세요.
                 <br />
-                당신의 재산, 끝까지 함께 지켜드리겠습니다.
+                당신의 안전, 끝까지 함께 지키겠습니다.
               </p>
             </div>
             <div className="mt-8 sm:mt-10">
               <button
-                onClick={() => openConsultation('부동산 피해 상담')}
+                onClick={() => openConsultation('신체범죄 피해 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
                 무료 상담 신청하기
