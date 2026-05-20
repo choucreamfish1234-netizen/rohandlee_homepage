@@ -30,7 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/centers/bankruptcy`,
+      url: `${baseUrl}/centers/asset-recovery`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/centers/damages`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
