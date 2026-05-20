@@ -16,6 +16,11 @@ const nextConfig = {
         destination: '/centers/real-estate',
         permanent: true,
       },
+      {
+        source: '/centers/bankruptcy',
+        destination: '/centers/asset-recovery',
+        permanent: true,
+      },
     ]
   },
 };
