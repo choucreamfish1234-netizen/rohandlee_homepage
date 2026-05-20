@@ -24,6 +24,7 @@ export default function Footer() {
               {[
                 { href: '/centers/sexual-crime', label: '성범죄 피해 전문센터' },
                 { href: '/centers/property-crime', label: '재산범죄 피해 전문센터' },
+                { href: '/centers/physical-crime', label: '신체범죄 피해 전담센터' },
                 { href: '/centers/bankruptcy', label: '회생·파산 전문센터(리셋)' },
                 { href: '/centers/corporate', label: '기업경영 법무센터' },
                 { href: '/centers/it-security', label: 'IT·보안 법률센터' },
