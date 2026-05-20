@@ -36,9 +36,9 @@ export default function Home() {
       <TagsSection />
       <ProcessSection />
       <TestimonialsSection />
+      <LawyersSection />
       <DifferenceSection />
       <CasesSection />
-      <LawyersSection />
       <PressSection />
       <WebtoonSection />
       <BlogHighlights />
