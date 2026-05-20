@@ -11,9 +11,10 @@ const PAGES = [
   { path: '/directions', name: '오시는 길' },
   { path: '/centers/sexual-crime', name: '성범죄 센터' },
   { path: '/centers/property-crime', name: '재산범죄 센터' },
-  { path: '/centers/it-security', name: 'IT보안 센터' },
+  { path: '/centers/it-security', name: '개인정보보호센터' },
   { path: '/centers/corporate', name: '기업법무 센터' },
-  { path: '/centers/bankruptcy', name: '회생/파산 센터' },
+  { path: '/centers/asset-recovery', name: '재산회복 센터' },
+  { path: '/centers/damages', name: '손해배상 센터' },
 ]
 
 const SYSTEM_PROMPT = `법률사무소 로앤이의 SEO 메타태그 최적화 전문가입니다.

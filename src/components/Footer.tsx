@@ -24,7 +24,7 @@ export default function Footer() {
               {[
                 { href: '/centers/sexual-crime', label: '성범죄 피해 전문센터' },
                 { href: '/centers/property-crime', label: '재산범죄 피해 전문센터' },
-                { href: '/centers/it-security', label: 'IT·보안 법률센터' },
+                { href: '/centers/it-security', label: '개인정보보호센터' },
                 { href: '/centers/real-estate', label: '부동산 피해 전담센터' },
                 { href: '/centers/asset-recovery', label: '재산회복 전담센터' },
                 { href: '/centers/damages', label: '손해배상 전담센터' },

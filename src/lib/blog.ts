@@ -28,7 +28,7 @@ export const CATEGORIES = [
   '재산범죄',
   '회생파산',
   '기업법무',
-  'IT보안',
+  '개인정보보호',
   '법률상식',
   '일반',
 ] as const
@@ -38,7 +38,7 @@ export const CATEGORY_THUMBNAILS: Record<string, string> = {
   '재산범죄': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
   '회생파산': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=450&fit=crop&q=80',
   '기업법무': 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80',
-  'IT보안': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
+  '개인정보보호': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
   '법률상식': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
   '일반': 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
 }
@@ -105,7 +105,7 @@ export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
     'https://cdn.pixabay.com/photo/2015/01/08/18/30/entrepreneur-593371_960_720.jpg',
     'https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_960_720.jpg',
   ],
-  'IT보안': [
+  '개인정보보호': [
     // Unsplash
     'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop&q=80',

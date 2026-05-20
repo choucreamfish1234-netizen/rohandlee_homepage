@@ -10,7 +10,6 @@ interface Center {
   href: string
   image: string
   alt: string
-  comingSoon?: boolean
 }
 
 const centers: Center[] = [
@@ -34,10 +33,9 @@ const centers: Center[] = [
     href: '/centers/physical-crime',
     image: 'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&h=600&fit=crop&q=80',
     alt: '보호와 안전을 상징하는 이미지',
-    comingSoon: true,
   },
   {
-    title: 'IT·보안 법률센터',
+    title: '개인정보보호센터',
     description: '디지털 시대의 법적 보호막이 되겠습니다',
     href: '/centers/it-security',
     image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop&q=80',
@@ -77,48 +75,6 @@ function CenterCard({ center, index }: {
   center: Center
   index: number
 }) {
-  if (center.comingSoon) {
-    return (
-      <div className="block">
-        <div className="border-t-[3px] border-gray-300 bg-white relative">
-          <div className="aspect-[4/3] overflow-hidden relative">
-            <EditableImage
-              page="home"
-              section="centers"
-              fieldKey={`center-${index}-image`}
-              defaultSrc={center.image}
-              alt={center.alt}
-              width={800}
-              height={600}
-              className="w-full h-full object-cover opacity-50"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-500/70 via-gray-500/20 to-transparent pointer-events-none" />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="bg-gray-600/80 text-white text-xs font-medium px-4 py-1.5 rounded-full">
-                준비 중
-              </span>
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 pointer-events-none">
-              <h3 className="text-base sm:text-lg font-semibold text-white/70 drop-shadow-sm">
-                {center.title}
-              </h3>
-            </div>
-          </div>
-          <div className="p-4 sm:p-5">
-            <EditableText
-              page="home"
-              section="centers"
-              fieldKey={`center-${index}-desc`}
-              defaultValue={center.description}
-              tag="p"
-              className="text-sm text-gray-300"
-            />
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <Link href={center.href} className="group block">
       <div className="border-t-[3px] border-[#1B3B2F] bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
