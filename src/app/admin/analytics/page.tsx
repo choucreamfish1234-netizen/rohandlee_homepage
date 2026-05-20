@@ -26,7 +26,7 @@ const PAGE_NAMES: Record<string, string> = {
   '/': '메인', '/blog': '블로그', '/cases': '성공사례', '/consultation': '무료 상담',
   '/directions': '오시는 길', '/centers/sexual-crime': '성범죄 센터',
   '/centers/property-crime': '재산범죄 센터', '/centers/bankruptcy': '회생/파산 센터',
-  '/centers/corporate': '기업법무 센터', '/centers/it-security': 'IT보안 센터',
+  '/centers/corporate': '기업법무 센터', '/centers/it-security': '개인정보보호센터',
 }
 
 function fmtDuration(s: number) {

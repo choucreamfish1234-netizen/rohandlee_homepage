@@ -37,7 +37,7 @@ const centers: Center[] = [
     comingSoon: true,
   },
   {
-    title: 'IT·보안 법률센터',
+    title: '개인정보보호센터',
     description: '디지털 시대의 법적 보호막이 되겠습니다',
     href: '/centers/it-security',
     image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop&q=80',

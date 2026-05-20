@@ -156,7 +156,7 @@ function ITSecurityCustomSection() {
               Case Results
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
-              IT·보안 센터 성공사례
+              개인정보보호센터 성공사례
             </h2>
           </ScrollReveal>
 
@@ -249,11 +249,11 @@ export default function ITSecurityCenterPage() {
   return (
     <CenterPageTemplate
       pagePath="centers/it-security"
-      centerName="IT·보안 법률센터"
-      subtitle="IT·보안 법률센터"
-      ctaLabel="IT보안 법률 상담"
+      centerName="개인정보보호센터"
+      subtitle="개인정보보호센터"
+      ctaLabel="개인정보보호 상담"
       ctaHref="/consultation"
-      defaultCaseType="IT·보안 법률 상담"
+      defaultCaseType="개인정보보호 상담"
       services={[
         {
           title: '해킹 피해 대응',
@@ -289,27 +289,27 @@ export default function ITSecurityCenterPage() {
       declaration={{
         title: '디지털 범죄는\n디지털로 대응합니다.',
         description:
-          '기술과 법률의 융합.\n로앤이 IT·보안 법률센터가 디지털 세상의 정의를 세웁니다.',
+          '기술과 법률의 융합.\n로앤이 개인정보보호센터가 디지털 세상의 정의를 세웁니다.',
       }}
       customSection={<ITSecurityCustomSection />}
       lawyers={[
         {
           name: '이유림',
           role: '대표변호사',
-          specialty: 'IT·보안 법률 전문 변호사',
+          specialty: '개인정보보호 전문 변호사',
           quote: '디지털 시대의 새로운 위협에\n법률로 대응하겠습니다.',
           image: '/images/lawyers/lawyer-lee.svg',
         },
         {
           name: '노채은',
           role: '대표변호사',
-          specialty: 'IT·보안 법률 전문 변호사',
+          specialty: '개인정보보호 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
           image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
       ctaTitle="디지털 피해, 혼자 대응하지 마세요."
-      ctaDescription="IT·보안 법률 전문가의 상담을 받아보세요."
+      ctaDescription="개인정보보호 전문가의 상담을 받아보세요."
     />
   )
 }

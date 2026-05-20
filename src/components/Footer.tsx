@@ -27,7 +27,7 @@ export default function Footer() {
                 { href: '/centers/real-estate', label: '부동산 피해 전담센터' },
                 { href: '/centers/asset-recovery', label: '재산회복 전담센터' },
                 { href: '/centers/damages', label: '손해배상 전담센터' },
-                { href: '/centers/it-security', label: 'IT·보안 법률센터' },
+                { href: '/centers/it-security', label: '개인정보보호센터' },
                 { href: '/centers/corporate', label: '기업경영 법무센터' },
               ].map((link) => (
                 <li key={link.href}>
