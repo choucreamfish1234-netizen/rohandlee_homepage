@@ -809,6 +809,12 @@ export default function AdminDashboardPage() {
           유료 상담
         </Link>
         <Link
+          href="/admin/cases"
+          className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
+        >
+          성공사례
+        </Link>
+        <Link
           href="/admin/press"
           className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors pb-3 -mb-3"
         >
