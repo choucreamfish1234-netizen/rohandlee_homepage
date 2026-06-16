@@ -199,9 +199,9 @@ export default function CasesList() {
             transition={{ duration: 0.3 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {filteredCases.map((c, i) => (
-              <ScrollReveal key={c.id} delay={i * 0.1}>
-                <div className="group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+            {filteredCases.map((c, i) => {
+              const cardContent = (
+                <div className="group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full">
                   {/* Image area */}
                   <div className="relative aspect-[16/9] overflow-hidden rounded-t-xl">
                     <Image
@@ -217,7 +217,7 @@ export default function CasesList() {
                     {canEdit && (
                       <div
                         className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer bg-black/0 hover:bg-black/40 transition-all"
-                        onClick={() => setImagePopupId(imagePopupId === c.id ? null : c.id)}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setImagePopupId(imagePopupId === c.id ? null : c.id) }}
                       >
                         <div className="opacity-0 group-hover:opacity-100 hover:!opacity-100 transition-opacity flex flex-col items-center">
                           <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth="1.5">
@@ -233,7 +233,7 @@ export default function CasesList() {
                     {imagePopupId === c.id && (
                       <div
                         className="absolute bottom-0 left-0 right-0 bg-white p-4 shadow-lg z-10"
-                        onClick={e => e.stopPropagation()}
+                        onClick={e => { e.preventDefault(); e.stopPropagation() }}
                       >
                         <div className="flex gap-2">
                           <button
@@ -314,10 +314,28 @@ export default function CasesList() {
                         {c.summary}
                       </p>
                     )}
+
+                    {!canEdit && (
+                      <span className="inline-flex items-center mt-4 text-xs text-gray-400 group-hover:text-[#1B3B2F] transition-colors">
+                        자세히 보기 <span className="ml-1">&rarr;</span>
+                      </span>
+                    )}
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              )
+
+              return (
+                <ScrollReveal key={c.id} delay={i * 0.1}>
+                  {canEdit ? (
+                    cardContent
+                  ) : (
+                    <Link href={`/cases/${c.slug || c.id}`} className="block h-full">
+                      {cardContent}
+                    </Link>
+                  )}
+                </ScrollReveal>
+              )
+            })}
           </motion.div>
         </AnimatePresence>
 

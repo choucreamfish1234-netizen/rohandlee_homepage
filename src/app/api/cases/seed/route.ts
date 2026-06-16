@@ -21,18 +21,26 @@ export async function POST() {
         sql: `-- Supabase SQL Editor에서 실행해주세요:
 CREATE TABLE IF NOT EXISTS success_cases (
   id SERIAL PRIMARY KEY,
+  slug TEXT UNIQUE,
   tag TEXT NOT NULL,
   category TEXT NOT NULL,
   title TEXT NOT NULL,
   summary TEXT NOT NULL,
+  content TEXT,
   badge TEXT NOT NULL,
   badge_color TEXT NOT NULL,
   tag_color TEXT NOT NULL,
   image_url TEXT NOT NULL,
   sort_order INTEGER DEFAULT 0,
+  published BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- 기존 테이블에 컬럼 추가 시:
+-- ALTER TABLE success_cases ADD COLUMN IF NOT EXISTS slug TEXT UNIQUE;
+-- ALTER TABLE success_cases ADD COLUMN IF NOT EXISTS content TEXT;
+-- ALTER TABLE success_cases ADD COLUMN IF NOT EXISTS published BOOLEAN DEFAULT true;
 
 ALTER TABLE success_cases ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public read" ON success_cases FOR SELECT USING (true);
