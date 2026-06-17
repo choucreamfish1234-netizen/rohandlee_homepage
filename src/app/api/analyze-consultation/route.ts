@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
-      return NextResponse.json({ error: 'API 키가 설정되지 않았습니다.' }, { status: 500 })
+      return NextResponse.json({ error: '[1단계] ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다. Vercel 환경변수를 확인해주세요.' }, { status: 500 })
     }
 
     // 1. Fetch consultation data
@@ -22,8 +22,12 @@ export async function POST(req: NextRequest) {
       .eq('id', consultationId)
       .single()
 
-    if (fetchError || !consultation) {
-      return NextResponse.json({ error: '상담 데이터를 찾을 수 없습니다.' }, { status: 404 })
+    if (fetchError) {
+      return NextResponse.json({ error: `[2단계] 상담 데이터 조회 실패: ${fetchError.message}` }, { status: 500 })
+    }
+
+    if (!consultation) {
+      return NextResponse.json({ error: `[2단계] 상담 ID ${consultationId}에 해당하는 데이터가 없습니다.` }, { status: 404 })
     }
 
     // 2. Call Claude API
@@ -98,20 +102,26 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
 상담 내용: ${consultation.content || '내용 없음'}
 접수일: ${consultation.created_at}`
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 4096,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userPrompt }],
-      }),
-    })
+    let response: Response
+    try {
+      response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-6',
+          max_tokens: 4096,
+          system: systemPrompt,
+          messages: [{ role: 'user', content: userPrompt }],
+        }),
+      })
+    } catch (fetchErr) {
+      const msg = fetchErr instanceof Error ? fetchErr.message : String(fetchErr)
+      return NextResponse.json({ error: `[3단계] Claude API 네트워크 오류: ${msg}` }, { status: 500 })
+    }
 
     if (!response.ok) {
       const err = await response.text()
@@ -120,13 +130,24 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
       try {
         const errJson = JSON.parse(err)
         detail = errJson?.error?.message || ''
-      } catch { detail = err.substring(0, 200) }
-      return NextResponse.json({ error: `AI 분석 실패 (${response.status}): ${detail || '알 수 없는 오류'}` }, { status: 500 })
+      } catch { detail = err.substring(0, 300) }
+      return NextResponse.json({ error: `[3단계] Claude API 오류 (${response.status}): ${detail || '알 수 없는 오류'}` }, { status: 500 })
     }
 
     const data = await response.json()
     const text = data.content?.[0]?.text || ''
-    const parsed = parseAIResponse(text)
+
+    if (!text) {
+      return NextResponse.json({ error: '[4단계] Claude API 응답이 비어있습니다.' }, { status: 500 })
+    }
+
+    let parsed
+    try {
+      parsed = parseAIResponse(text)
+    } catch (parseErr) {
+      const msg = parseErr instanceof Error ? parseErr.message : String(parseErr)
+      return NextResponse.json({ error: `[4단계] AI 응답 파싱 실패: ${msg}` }, { status: 500 })
+    }
 
     // 3. Update consultation in Supabase
     const { error: updateError } = await supabaseAdmin
@@ -142,7 +163,7 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
 
     if (updateError) {
       console.error('Supabase update error:', updateError)
-      return NextResponse.json({ error: '분석 결과 저장에 실패했습니다.' }, { status: 500 })
+      return NextResponse.json({ error: `[5단계] 분석 결과 저장 실패: ${updateError.message}` }, { status: 500 })
     }
 
     return NextResponse.json({
@@ -155,6 +176,7 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
     })
   } catch (error) {
     console.error('Analyze consultation error:', error)
-    return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 })
+    const message = error instanceof Error ? error.message : '알 수 없는 오류'
+    return NextResponse.json({ error: `서버 오류: ${message}` }, { status: 500 })
   }
 }
