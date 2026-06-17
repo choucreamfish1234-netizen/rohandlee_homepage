@@ -115,8 +115,13 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
 
     if (!response.ok) {
       const err = await response.text()
-      console.error('Claude API error:', err)
-      return NextResponse.json({ error: 'AI 분석에 실패했습니다.' }, { status: 500 })
+      console.error('Claude API error:', response.status, err)
+      let detail = ''
+      try {
+        const errJson = JSON.parse(err)
+        detail = errJson?.error?.message || ''
+      } catch { detail = err.substring(0, 200) }
+      return NextResponse.json({ error: `AI 분석 실패 (${response.status}): ${detail || '알 수 없는 오류'}` }, { status: 500 })
     }
 
     const data = await response.json()
