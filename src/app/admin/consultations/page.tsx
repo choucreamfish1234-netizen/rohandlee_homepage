@@ -150,7 +150,14 @@ export default function AdminConsultationsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ consultationId: id }),
       })
-      const data = await res.json()
+      const text = await res.text()
+      let data
+      try {
+        data = JSON.parse(text)
+      } catch {
+        alert(`서버 오류 (${res.status}): ${text.substring(0, 300)}`)
+        return
+      }
       if (data.error) {
         alert(data.error)
         return
@@ -158,8 +165,8 @@ export default function AdminConsultationsPage() {
       await fetchConsultations()
       const refreshed = await supabase.from('consultations').select('*').eq('id', id).single()
       if (refreshed.data) openDetail(refreshed.data as Consultation)
-    } catch {
-      alert('AI 분석에 실패했습니다.')
+    } catch (e) {
+      alert(`AI 분석 실패: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
       setAnalyzing(null)
     }
