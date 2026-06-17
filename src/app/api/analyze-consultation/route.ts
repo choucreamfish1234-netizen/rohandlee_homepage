@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
 
 export async function POST(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 1. Fetch consultation data
-    const { data: consultation, error: fetchError } = await supabase
+    const { data: consultation, error: fetchError } = await supabaseAdmin
       .from('consultations')
       .select('*')
       .eq('id', consultationId)
@@ -106,7 +106,7 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 4096,
         system: systemPrompt,
         messages: [{ role: 'user', content: userPrompt }],
@@ -124,7 +124,7 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
     const parsed = parseAIResponse(text)
 
     // 3. Update consultation in Supabase
-    const { error: updateError } = await supabase
+    const { error: updateError } = await supabaseAdmin
       .from('consultations')
       .update({
         ai_analysis: { ...parsed.analysis, email_subject: parsed.email_subject },
