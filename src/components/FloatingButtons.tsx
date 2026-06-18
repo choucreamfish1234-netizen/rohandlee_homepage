@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackConversion } from '@/lib/track-conversion'
 
 const KAKAO_CHAT_URL = 'https://pf.kakao.com/_YxgWxcn/chat'
 
@@ -48,6 +49,7 @@ export default function FloatingButtons() {
               href={KAKAO_CHAT_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackConversion('kakao_click')}
               className="w-14 h-14 bg-[#FEE500] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
               aria-label="카카오톡 상담"
             >
@@ -63,6 +65,7 @@ export default function FloatingButtons() {
           {/* 전화 상담 */}
           <a
             href="tel:032-207-8788"
+            onClick={() => trackConversion('phone_click')}
             className="w-14 h-14 bg-black rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
             aria-label="전화 상담"
           >

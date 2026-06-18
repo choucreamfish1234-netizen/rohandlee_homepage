@@ -12,12 +12,14 @@ type Tab = 'overview' | 'channels' | 'pages' | 'devices' | 'conversions' | 'real
 
 const COLORS = ['#1B3B2F', '#2D6A4F', '#40916C', '#52B788', '#74C69D', '#95D5B2', '#B7E4C7', '#D8F3DC']
 const CHANNEL_LABELS: Record<string, string> = {
-  naver: '네이버', google: '구글', daum: '다음', kakao: '카카오',
+  naver: '네이버', naver_app: '네이버앱', google: '구글', daum: '다음', kakao: '카카오',
   lawtalk: '로톡', instagram: '인스타그램', threads: '스레드',
   twitter: '트위터/X', facebook: '페이스북',
   youtube: '유튜브', direct: '직접 방문', other: '기타',
 }
 const EVENT_LABELS: Record<string, string> = {
+  consultation_open: '상담 팝업 열기', email_consultation_select: '이메일 상담 선택',
+  rapid_consultation_click: '바로 상담(래피드) 클릭',
   form_open: '상담폼 열기', form_submit: '상담 신청', kakao_click: '카카오톡 클릭',
   phone_click: '전화 클릭', blog_read: '블로그 읽기', case_view: '사례 조회',
   center_view: '센터 조회', cta_click: 'CTA 클릭',
