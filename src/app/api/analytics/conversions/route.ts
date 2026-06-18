@@ -9,48 +9,65 @@ export async function GET(req: NextRequest) {
     since.setDate(since.getDate() - days)
     const sinceISO = since.toISOString()
 
-    const [{ data: events }, { count: totalSessions }, { data: eventSessions }] =
-      await Promise.all([
-        // All conversion events
-        supabaseAdmin
-          .from('consultation_events')
-          .select('event_type, event_label, page_path, referrer_type, device_type, created_at')
-          .gte('created_at', sinceISO),
+    const [
+      { data: convEvents },
+      { data: legacyEvents },
+      { count: totalSessions },
+    ] = await Promise.all([
+      supabaseAdmin
+        .from('conversion_events')
+        .select('event_type, page, referrer, channel, created_at')
+        .gte('created_at', sinceISO),
 
-        // Total sessions for conversion rate
-        supabaseAdmin
-          .from('visitor_sessions')
-          .select('id', { count: 'exact', head: true })
-          .gte('started_at', sinceISO),
+      supabaseAdmin
+        .from('consultation_events')
+        .select('event_type, event_label, page_path, referrer_type, device_type, created_at')
+        .gte('created_at', sinceISO),
 
-        // Sessions with events (for channel conversion)
-        supabaseAdmin
-          .from('consultation_events')
-          .select('session_id, referrer_type, event_type')
-          .gte('created_at', sinceISO),
-      ])
+      supabaseAdmin
+        .from('visitor_sessions')
+        .select('id', { count: 'exact', head: true })
+        .gte('started_at', sinceISO),
+    ])
 
-    // Event type counts (funnel)
-    const funnelTypes = ['form_open', 'form_submit', 'kakao_click', 'phone_click']
-    const funnel = funnelTypes.map((type) => ({
-      type,
-      count: events?.filter((e) => e.event_type === type).length || 0,
-    }))
+    const allEvents = [
+      ...(convEvents || []).map(e => ({
+        event_type: e.event_type,
+        page: e.page || '',
+        channel: e.channel || 'direct',
+      })),
+      ...(legacyEvents || []).map(e => ({
+        event_type: e.event_type,
+        page: e.page_path || '',
+        channel: e.referrer_type || 'direct',
+      })),
+    ]
 
-    // All event type counts
+    const funnelTypes = [
+      'consultation_open', 'email_consultation_select', 'rapid_consultation_click',
+      'form_submit', 'kakao_click', 'phone_click',
+      'form_open',
+    ]
+    const funnel = funnelTypes
+      .map(type => ({
+        type,
+        count: allEvents.filter(e => e.event_type === type).length,
+      }))
+      .filter(f => f.count > 0)
+
     const eventMap: Record<string, number> = {}
-    events?.forEach((e) => {
+    allEvents.forEach(e => {
       eventMap[e.event_type] = (eventMap[e.event_type] || 0) + 1
     })
     const eventCounts = Object.entries(eventMap)
       .sort((a, b) => b[1] - a[1])
       .map(([type, count]) => ({ type, count }))
 
-    // Conversion paths (which pages lead to conversions)
+    const conversionTypes = ['form_submit', 'kakao_click', 'phone_click', 'rapid_consultation_click']
     const pathMap: Record<string, number> = {}
-    events?.forEach((e) => {
-      if (['form_submit', 'kakao_click', 'phone_click'].includes(e.event_type)) {
-        pathMap[e.page_path] = (pathMap[e.page_path] || 0) + 1
+    allEvents.forEach(e => {
+      if (conversionTypes.includes(e.event_type)) {
+        pathMap[e.page] = (pathMap[e.page] || 0) + 1
       }
     })
     const conversionPaths = Object.entries(pathMap)
@@ -58,13 +75,12 @@ export async function GET(req: NextRequest) {
       .slice(0, 10)
       .map(([path, count]) => ({ path, count }))
 
-    // Channel performance
     const channelConv: Record<string, { sessions: number; conversions: number }> = {}
-    eventSessions?.forEach((e) => {
-      const ch = e.referrer_type || 'direct'
+    allEvents.forEach(e => {
+      const ch = e.channel || 'direct'
       if (!channelConv[ch]) channelConv[ch] = { sessions: 0, conversions: 0 }
       channelConv[ch].sessions++
-      if (['form_submit', 'kakao_click', 'phone_click'].includes(e.event_type)) {
+      if (conversionTypes.includes(e.event_type)) {
         channelConv[ch].conversions++
       }
     })
@@ -76,16 +92,10 @@ export async function GET(req: NextRequest) {
       }))
       .sort((a, b) => b.conversions - a.conversions)
 
-    // Blog contribution (blog_read events that lead to conversions in same session)
-    const blogSessions = new Set(
-      events?.filter((e) => e.event_type === 'blog_read').map((e) => e.page_path)
-    )
-
+    const totalConversions = allEvents.filter(e => conversionTypes.includes(e.event_type)).length
     const overallRate =
       totalSessions && totalSessions > 0
-        ? parseFloat(
-            (((events?.filter((e) => ['form_submit', 'kakao_click', 'phone_click'].includes(e.event_type)).length || 0) / totalSessions) * 100).toFixed(1)
-          )
+        ? parseFloat(((totalConversions / totalSessions) * 100).toFixed(1))
         : 0
 
     return NextResponse.json({
@@ -93,7 +103,6 @@ export async function GET(req: NextRequest) {
       eventCounts,
       conversionPaths,
       channelPerformance,
-      blogContribution: blogSessions.size,
       overallConversionRate: overallRate,
       totalSessions: totalSessions || 0,
     })

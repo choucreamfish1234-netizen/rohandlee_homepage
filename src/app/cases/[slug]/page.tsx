@@ -17,8 +17,12 @@ export async function generateStaticParams() {
     .select('slug')
     .eq('published', true)
 
-  const dbSlugs = (cases || []).map(c => ({ slug: c.slug }))
-  const defaultSlugs = DEFAULT_CASES.map(c => ({ slug: c.slug }))
+  const dbSlugs = (cases || [])
+    .filter(c => c.slug && typeof c.slug === 'string')
+    .map(c => ({ slug: c.slug as string }))
+  const defaultSlugs = DEFAULT_CASES
+    .filter(c => c.slug && typeof c.slug === 'string')
+    .map(c => ({ slug: c.slug as string }))
 
   const allSlugs = new Map<string, { slug: string }>()
   for (const s of [...defaultSlugs, ...dbSlugs]) {

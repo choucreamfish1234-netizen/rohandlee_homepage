@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useCallback } from 'react'
+import { trackConversion } from '@/lib/track-conversion'
 
 interface ConsultationSelectModalProps {
   isOpen: boolean
@@ -106,7 +107,7 @@ export default function ConsultationSelectModal({
                   href="https://www.latpeed.com/products/vy4Pu"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={onClose}
+                  onClick={() => { trackConversion('rapid_consultation_click'); onClose() }}
                   className="w-full px-6 py-4 rounded-xl text-left transition-all hover:bg-gray-50 border-2"
                   style={{ borderColor: '#1B3B2F' }}
                 >

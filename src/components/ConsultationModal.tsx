@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
+import { trackConversion } from '@/lib/track-conversion'
 
 const caseTypeOptions = [
   '성범죄 피해 상담',
@@ -116,6 +117,7 @@ export default function ConsultationModal({
         ])
 
       if (supabaseError) throw supabaseError
+      trackConversion('form_submit')
       setSubmitted(true)
       setTimeout(() => {
         onClose()

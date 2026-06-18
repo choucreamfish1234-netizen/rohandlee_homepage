@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 import ConsultationModal from './ConsultationModal'
 import ConsultationSelectModal from './ConsultationSelectModal'
+import { trackConversion } from '@/lib/track-conversion'
 
 interface ConsultationContextValue {
   openConsultation: (defaultCaseType?: string) => void
@@ -28,10 +29,12 @@ export default function ConsultationProvider({
   const openConsultation = useCallback((defaultCaseType?: string) => {
     setCaseType(defaultCaseType || '')
     setIsSelectOpen(true)
+    trackConversion('consultation_open')
   }, [])
 
   const handleSelectEmail = useCallback(() => {
     setIsSelectOpen(false)
+    trackConversion('email_consultation_select')
     setTimeout(() => {
       setIsFormOpen(true)
     }, 200)
