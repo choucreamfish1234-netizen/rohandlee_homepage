@@ -112,7 +112,7 @@ D등급 (수임 불가): 성범죄 가해자 변호 요청 (이것만 수임 불
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-6',
           max_tokens: 4096,
           system: systemPrompt,
           messages: [{ role: 'user', content: userPrompt }],
