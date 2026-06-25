@@ -15,7 +15,7 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
   const { openConsultation } = useConsultation()
 
   useEffect(() => {
-    if (initialCase) return
+    if (initialCase?.content) return
 
     async function fetchCase() {
       try {
@@ -25,8 +25,10 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
           setCaseData(data.case)
         }
       } catch {
-        const fallback = DEFAULT_CASES.find(c => c.slug === slug)
-        if (fallback) setCaseData(fallback)
+        if (!initialCase) {
+          const fallback = DEFAULT_CASES.find(c => c.slug === slug)
+          if (fallback) setCaseData(fallback)
+        }
       } finally {
         setLoading(false)
       }
