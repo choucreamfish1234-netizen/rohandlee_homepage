@@ -13,37 +13,36 @@ export async function GET(_req: NextRequest, context: RouteContext) {
   const decodedSlug = decodeURIComponent(slug)
 
   try {
-    const { data, error } = await supabaseAdmin
+    // 1. slug로 검색
+    const { data: bySlug } = await supabaseAdmin
       .from('success_cases')
       .select('*')
       .eq('slug', decodedSlug)
-      .eq('published', true)
       .maybeSingle()
 
-    if (data) {
-      return NextResponse.json({ case: data, source: 'database' })
+    if (bySlug) {
+      return NextResponse.json({ case: bySlug, source: 'database' })
     }
 
-    if (!data) {
-      const fallback = await supabaseAdmin
+    // 2. id로 검색 (숫자인 경우)
+    const numId = parseInt(decodedSlug)
+    if (!isNaN(numId)) {
+      const { data: byId } = await supabaseAdmin
         .from('success_cases')
         .select('*')
-        .eq('slug', decodedSlug)
+        .eq('id', numId)
         .maybeSingle()
 
-      if (fallback.data) {
-        return NextResponse.json({ case: fallback.data, source: 'database' })
+      if (byId) {
+        return NextResponse.json({ case: byId, source: 'database' })
       }
     }
-
-    if (error) {
-      console.error('Case fetch error:', error.message)
-    }
   } catch {
-    // DB not available, try fallback
+    // DB not available
   }
 
-  const fallbackCase = DEFAULT_CASES.find(c => c.slug === decodedSlug)
+  // 3. DEFAULT_CASES 폴백
+  const fallbackCase = DEFAULT_CASES.find(c => c.slug === decodedSlug || String(c.id) === decodedSlug)
   if (fallbackCase) {
     return NextResponse.json({ case: fallbackCase, source: 'hardcoded' })
   }
