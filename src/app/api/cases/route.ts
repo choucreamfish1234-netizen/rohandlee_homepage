@@ -75,7 +75,8 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   try {
     const body = await req.json()
-    const { id, ...updates } = body
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, slug: _slug, ...updates } = body
 
     if (!id) {
       return NextResponse.json({ error: 'ID가 필요합니다.' }, { status: 400 })
