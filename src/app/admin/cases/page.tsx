@@ -146,9 +146,8 @@ function AdminCasesPage() {
     }
 
     setSaving(true)
-    const casePayload = {
+    const casePayload: Record<string, unknown> = {
       title: title.trim(),
-      slug: slug.trim() || generateSlug(title),
       tag: tag.trim() || category,
       category,
       summary: summary.trim(),
@@ -158,6 +157,10 @@ function AdminCasesPage() {
       tag_color: tagColor,
       image_url: imageUrl.trim() || getRandomCaseImage(category),
       published,
+    }
+
+    if (!editId) {
+      casePayload.slug = slug.trim() || generateSlug(title)
     }
 
     try {
@@ -441,11 +444,21 @@ function AdminCasesPage() {
           <input
             type="text"
             value={slug}
-            onChange={e => setSlug(e.target.value)}
+            onChange={e => { if (!editId) setSlug(e.target.value) }}
             placeholder="url-slug"
-            className="flex-1 px-3 py-2 border border-gray-200 text-xs text-gray-600 focus:outline-none focus:border-[#1B3B2F] transition-colors"
+            readOnly={!!editId}
+            className={`flex-1 px-3 py-2 border text-xs focus:outline-none transition-colors ${
+              editId
+                ? 'border-gray-100 text-gray-400 bg-gray-50 cursor-not-allowed'
+                : 'border-gray-200 text-gray-600 focus:border-[#1B3B2F]'
+            }`}
           />
         </div>
+        {editId && (
+          <p className="text-[11px] text-amber-600">
+            SEO 보호: 기존 성공사례의 URL(slug)은 검색엔진 노출에 영향을 주므로 변경할 수 없습니다.
+          </p>
+        )}
         <textarea
           value={summary}
           onChange={e => setSummary(e.target.value)}
