@@ -6,82 +6,98 @@ import CaseDetailContent from './CaseDetailContent'
 const baseUrl = 'https://lawfirmrohandlee.com'
 
 export const revalidate = 3600
+export const dynamicParams = true
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
+async function findCase(slugOrId: string) {
+  // 1. slug로 검색
+  const { data: bySlug } = await supabaseAdmin
+    .from('success_cases')
+    .select('*')
+    .eq('slug', slugOrId)
+    .maybeSingle()
+
+  if (bySlug) return bySlug
+
+  // 2. id로 검색 (숫자인 경우)
+  const numId = parseInt(slugOrId)
+  if (!isNaN(numId)) {
+    const { data: byId } = await supabaseAdmin
+      .from('success_cases')
+      .select('*')
+      .eq('id', numId)
+      .maybeSingle()
+
+    if (byId) return byId
+  }
+
+  // 3. DEFAULT_CASES 폴백
+  return DEFAULT_CASES.find(c => c.slug === slugOrId || String(c.id) === slugOrId) || null
+}
+
 export async function generateStaticParams() {
   const { data: cases } = await supabaseAdmin
     .from('success_cases')
-    .select('slug')
+    .select('slug, id')
     .eq('published', true)
 
-  const dbSlugs = (cases || [])
-    .filter(c => c.slug && typeof c.slug === 'string')
-    .map(c => ({ slug: c.slug as string }))
-  const defaultSlugs = DEFAULT_CASES
-    .filter(c => c.slug && typeof c.slug === 'string')
-    .map(c => ({ slug: c.slug as string }))
+  const slugs: { slug: string }[] = []
+  const seen = new Set<string>()
 
-  const allSlugs = new Map<string, { slug: string }>()
-  for (const s of [...defaultSlugs, ...dbSlugs]) {
-    allSlugs.set(s.slug, s)
+  for (const c of cases || []) {
+    if (c.slug && typeof c.slug === 'string' && !seen.has(c.slug)) {
+      slugs.push({ slug: c.slug })
+      seen.add(c.slug)
+    }
+    const idStr = String(c.id)
+    if (!seen.has(idStr)) {
+      slugs.push({ slug: idStr })
+      seen.add(idStr)
+    }
   }
 
-  return Array.from(allSlugs.values())
+  for (const c of DEFAULT_CASES) {
+    if (c.slug && !seen.has(c.slug)) {
+      slugs.push({ slug: c.slug })
+      seen.add(c.slug)
+    }
+  }
+
+  return slugs
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
-  let title = ''
-  let description = ''
-  let imageUrl = ''
+  const caseData = await findCase(decodedSlug)
 
-  const { data } = await supabaseAdmin
-    .from('success_cases')
-    .select('title, summary, image_url')
-    .eq('slug', decodedSlug)
-    .maybeSingle()
-
-  if (data) {
-    title = data.title
-    description = data.summary
-    imageUrl = data.image_url
-  } else {
-    const fallback = DEFAULT_CASES.find(c => c.slug === decodedSlug)
-    if (fallback) {
-      title = fallback.title
-      description = fallback.summary
-      imageUrl = fallback.image_url
-    }
-  }
-
-  if (!title) {
+  if (!caseData) {
     return { title: '성공사례 | 법률사무소 로앤이' }
   }
 
   return {
-    title: `${title} | 법률사무소 로앤이 성공사례`,
-    description,
+    title: `${caseData.title} | 법률사무소 로앤이 성공사례`,
+    description: caseData.summary,
     alternates: {
-      canonical: `${baseUrl}/cases/${decodedSlug}`,
+      canonical: `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
     },
     openGraph: {
-      title,
-      description,
+      title: caseData.title,
+      description: caseData.summary,
       type: 'article',
-      images: imageUrl ? [imageUrl] : [`${baseUrl}/og-image.png`],
-      url: `${baseUrl}/cases/${decodedSlug}`,
+      images: caseData.image_url ? [caseData.image_url] : [`${baseUrl}/og-image.png`],
+      url: `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
       siteName: '법률사무소 로앤이',
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
-      images: imageUrl ? [imageUrl] : [`${baseUrl}/og-image.png`],
+      title: caseData.title,
+      description: caseData.summary,
+      images: caseData.image_url ? [caseData.image_url] : [`${baseUrl}/og-image.png`],
     },
   }
 }
@@ -90,22 +106,7 @@ export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
-  let caseData = null
-
-  const { data } = await supabaseAdmin
-    .from('success_cases')
-    .select('*')
-    .eq('slug', decodedSlug)
-    .maybeSingle()
-
-  if (data) {
-    caseData = data
-  } else {
-    const fallback = DEFAULT_CASES.find(c => c.slug === decodedSlug)
-    if (fallback) {
-      caseData = fallback
-    }
-  }
+  const caseData = await findCase(decodedSlug)
 
   const jsonLd = caseData ? {
     '@context': 'https://schema.org',
@@ -120,7 +121,7 @@ export default async function Page({ params }: Props) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${baseUrl}/cases/${decodedSlug}`,
+      '@id': `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
     },
     isAccessibleForFree: true,
     inLanguage: 'ko',
