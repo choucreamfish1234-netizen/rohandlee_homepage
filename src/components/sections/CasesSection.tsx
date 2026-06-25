@@ -1,53 +1,31 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
-import { EditableText, EditableImage } from '@/components/Editable'
-
-const cases = [
-  {
-    slug: 'voicephishing-not-guilty',
-    tag: '보이스피싱',
-    title: '보이스피싱 현금 수거책, 경찰 단계 불송치(무죄)',
-    description: '치밀한 무죄 변론으로 경찰 단계에서 불송치 결정을 이끌어냈습니다.',
-    badge: '불송치(무죄)',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    tagColor: 'bg-emerald-50 text-emerald-600',
-    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=500&fit=crop&q=80',
-  },
-  {
-    slug: 'sexual-crime-8years',
-    tag: '성범죄',
-    title: '특수강간·감금 등 9개 혐의, 징역 8년 선고',
-    description: '구속 수사 관철, 집요한 서면 제출로 엄벌을 이끌어냈습니다.',
-    badge: '징역 8년',
-    badgeColor: 'bg-red-50 text-red-700 border-red-200',
-    tagColor: 'bg-red-50 text-red-600',
-    image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
-  },
-  {
-    slug: 'jeonse-full-recovery',
-    tag: '전세사기',
-    title: '전세보증금 3억 원 전액 회수 성공',
-    description: '긴급 가압류 신청과 민·형사 병행으로 보증금 전액을 회수했습니다.',
-    badge: '전액 회수',
-    badgeColor: 'bg-blue-50 text-blue-700 border-blue-200',
-    tagColor: 'bg-blue-50 text-blue-600',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop&q=80',
-  },
-  {
-    slug: 'stalking-imprisonment',
-    tag: '스토킹',
-    title: '지속적 스토킹 행위, 접근금지 명령 및 실형 선고',
-    description: '피해자 보호명령 신청과 함께 가해자에 대한 엄벌을 이끌어냈습니다.',
-    badge: '실형 선고',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200',
-    tagColor: 'bg-amber-50 text-amber-600',
-    image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&h=500&fit=crop&q=80',
-  },
-]
+import { EditableText } from '@/components/Editable'
+import { type SuccessCase, DEFAULT_CASES } from '@/lib/cases'
 
 export default function CasesSection() {
+  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES.slice(0, 4))
+
+  useEffect(() => {
+    async function fetchCases() {
+      try {
+        const res = await fetch('/api/cases')
+        const data = await res.json()
+        if (data.cases && data.cases.length > 0) {
+          const published = data.cases.filter((c: SuccessCase) => c.published !== false)
+          setCases(published.slice(0, 4))
+        }
+      } catch {
+        // keep DEFAULT_CASES
+      }
+    }
+    fetchCases()
+  }, [])
+
   return (
     <section className="py-12 sm:py-20 bg-[#f5f8f6]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,48 +45,36 @@ export default function CasesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
           {cases.map((c, i) => (
-            <ScrollReveal key={i} delay={i * 0.15}>
-              <Link href={`/cases/${c.slug}`} className="group block h-full">
+            <ScrollReveal key={c.id || i} delay={i * 0.15}>
+              <Link href={`/cases/${c.slug || c.id}`} className="group block h-full">
                 <div className="bg-white border border-gray-100 overflow-hidden hover:border-gray-200 transition-all duration-300 h-full flex flex-col relative">
 
                   <div className="aspect-[16/10] overflow-hidden">
-                    <EditableImage
-                      page="home"
-                      section="cases"
-                      fieldKey={`case-${i}-image`}
-                      defaultSrc={c.image}
+                    <Image
+                      src={c.image_url}
                       alt={c.title}
                       width={800}
                       height={500}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      unoptimized
                     />
                   </div>
 
                   <div className="p-5 sm:p-10 flex flex-col flex-1">
-                    <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tagColor} mb-5`}>
+                    <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tag_color} mb-5`}>
                       {c.tag}
                     </span>
 
-                    <EditableText
-                      page="home"
-                      section="cases"
-                      fieldKey={`case-${i}-title`}
-                      defaultValue={c.title}
-                      tag="h3"
-                      className="text-lg sm:text-xl font-bold text-black leading-snug mb-3 group-hover:text-[#1B3B2F] transition-colors"
-                    />
+                    <h3 className="text-lg sm:text-xl font-bold text-black leading-snug mb-3 group-hover:text-[#1B3B2F] transition-colors">
+                      {c.title}
+                    </h3>
 
-                    <EditableText
-                      page="home"
-                      section="cases"
-                      fieldKey={`case-${i}-desc`}
-                      defaultValue={c.description}
-                      tag="p"
-                      className="text-sm text-gray-500 leading-relaxed mb-8 flex-1"
-                    />
+                    <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-1">
+                      {c.summary}
+                    </p>
 
                     <div className="flex items-center justify-between">
-                      <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border shadow-sm ${c.badgeColor}`}>
+                      <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border shadow-sm ${c.badge_color}`}>
                         {c.badge}
                       </div>
                       <span className="text-xs text-gray-400 group-hover:text-[#1B3B2F] transition-colors">
