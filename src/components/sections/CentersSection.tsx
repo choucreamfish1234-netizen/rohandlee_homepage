@@ -63,11 +63,11 @@ const centers: Center[] = [
     alt: '병원과 치료 이미지 - 손해배상',
   },
   {
-    title: '기업경영 법무센터',
-    description: '기업 운영의 법적 리스크를 사전 차단합니다',
-    href: '/centers/corporate',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80',
-    alt: '고층 빌딩을 올려다 본 모습',
+    title: '학교폭력 전문센터',
+    description: '피해학생의 권리 회복, 학폭위·민사·형사 병행 대응',
+    href: '/centers/school-violence',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&q=80',
+    alt: '학교 복도 - 학교폭력 피해 보호',
   },
 ]
 
