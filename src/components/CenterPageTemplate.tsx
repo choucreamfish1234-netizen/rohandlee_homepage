@@ -29,6 +29,7 @@ interface CenterPageTemplateProps {
   pagePath: string
   centerName: string
   subtitle: string
+  heroDescription?: string
   ctaLabel: string
   ctaHref?: string
   services: Service[]
@@ -48,6 +49,7 @@ export default function CenterPageTemplate({
   pagePath,
   centerName,
   subtitle,
+  heroDescription,
   ctaLabel,
   services,
   caseExamples,
@@ -88,6 +90,11 @@ export default function CenterPageTemplate({
               className="text-gray-400"
             />
           </h1>
+          {heroDescription && (
+            <p className="mt-6 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto whitespace-pre-line">
+              {heroDescription}
+            </p>
+          )}
           <div className="mt-8">
             <button
               onClick={handleCtaClick}
