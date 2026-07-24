@@ -384,22 +384,6 @@ export default function SchoolViolenceCenterPage() {
           '한 번의 용기가 반복되는 피해를 끊습니다.\n로앤이 학교폭력 전문센터가 끝까지 함께합니다.',
       }}
       customSection={<SchoolViolenceCustomSection />}
-      lawyers={[
-        {
-          name: '이유림',
-          role: '대표변호사',
-          specialty: '피해자 전문 변호사',
-          quote: '피해학생이 다시 안전하게\n학교생활을 할 수 있도록 끝까지 싸웁니다.',
-          image: '/images/lawyers/lawyer-lee.svg',
-        },
-        {
-          name: '노채은',
-          role: '대표변호사',
-          specialty: '피해자 전문 변호사',
-          quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
-          image: '/images/lawyers/lawyer-noh.svg',
-        },
-      ]}
       ctaTitle="학교폭력, 더 이상 혼자 견디지 마세요."
       ctaDescription="피해학생 전문 변호사가 끝까지 함께합니다."
     />
