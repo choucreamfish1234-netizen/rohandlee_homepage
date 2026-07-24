@@ -17,7 +17,8 @@ export default function CasesSection() {
         const data = await res.json()
         if (data.cases && data.cases.length > 0) {
           const published = data.cases.filter((c: SuccessCase) => c.published !== false)
-          setCases(published.slice(0, 4))
+          const featured = published.filter((c: SuccessCase) => c.featured)
+          setCases(featured.length > 0 ? featured.slice(0, 4) : published.slice(0, 4))
         }
       } catch {
         // keep DEFAULT_CASES

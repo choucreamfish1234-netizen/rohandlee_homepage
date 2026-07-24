@@ -192,6 +192,21 @@ function AdminCasesPage() {
     }
   }
 
+  const handleToggleFeatured = async (id: number, featured: boolean) => {
+    try {
+      const res = await fetch('/api/cases', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, featured }),
+      })
+      const data = await res.json()
+      if (data.error) throw new Error(data.error)
+      setCases(prev => prev.map(c => c.id === id ? { ...c, featured } : c))
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '변경에 실패했습니다.')
+    }
+  }
+
   const handleDelete = async (id: number) => {
     if (!confirm('정말 삭제하시겠습니까?')) return
     try {
@@ -327,6 +342,21 @@ function AdminCasesPage() {
           </button>
         </div>
 
+        {/* 메인 노출 선택 안내 */}
+        {!loading && cases.length > 0 && (
+          <div className="flex items-center gap-3 mb-4 px-4 py-3 bg-[#f8faf9] border border-gray-100 rounded">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1B3B2F" strokeWidth="2" className="flex-shrink-0">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+            <p className="text-xs text-gray-600">
+              <strong className="text-[#1B3B2F]">메인 노출</strong> 체크박스로 홈페이지 메인에 표시할 성공사례를 선택하세요. (최대 4개 권장)
+              <span className="text-gray-400 ml-1">
+                ({cases.filter(c => c.featured).length}개 선택됨)
+              </span>
+            </p>
+          </div>
+        )}
+
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
@@ -341,6 +371,21 @@ function AdminCasesPage() {
           <div className="border border-gray-100 divide-y divide-gray-100 bg-white">
             {cases.map(c => (
               <div key={c.id} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors">
+                <button
+                  onClick={() => handleToggleFeatured(c.id, !c.featured)}
+                  className="flex-shrink-0"
+                  title={c.featured ? '메인 노출 해제' : '메인에 노출'}
+                >
+                  {c.featured ? (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#1B3B2F" stroke="#1B3B2F" strokeWidth="1.5">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                    </svg>
+                  ) : (
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                    </svg>
+                  )}
+                </button>
                 <div className="w-16 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
                   <Image
                     src={c.image_url}
@@ -364,6 +409,9 @@ function AdminCasesPage() {
                       <span className="text-[10px] px-2 py-0.5 bg-blue-50 text-blue-600">상세글 있음</span>
                     ) : (
                       <span className="text-[10px] px-2 py-0.5 bg-gray-50 text-gray-400">상세글 없음</span>
+                    )}
+                    {c.featured && (
+                      <span className="text-[10px] px-2 py-0.5 bg-[#1B3B2F]/10 text-[#1B3B2F] font-semibold">메인 노출</span>
                     )}
                   </div>
                   <p className="text-sm font-medium text-black truncate">{c.title}</p>

@@ -12,6 +12,7 @@ export interface SuccessCase {
   image_url: string
   sort_order: number
   published: boolean
+  featured?: boolean
 }
 
 // Case image pools - law/court themed ONLY, NO face closeups
