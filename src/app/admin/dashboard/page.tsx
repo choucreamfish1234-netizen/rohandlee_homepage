@@ -15,16 +15,20 @@ interface GeneratedTopic {
   slug?: string
 }
 
+const CENTER_CATEGORIES = [
+  { key: '성범죄', label: '성범죄 피해자 전담', author: '이유림 변호사' },
+  { key: '재산범죄', label: '재산범죄 피해자 전담', author: '노채은 변호사' },
+  { key: '신체범죄', label: '신체범죄 피해 전담', author: '이유림 변호사' },
+  { key: '개인정보보호', label: '개인정보보호', author: '노채은 변호사' },
+  { key: '부동산', label: '부동산 피해 전담', author: '노채은 변호사' },
+  { key: '재산회복', label: '재산회복 전담', author: '노채은 변호사' },
+  { key: '손해배상', label: '손해배상 전담', author: '이유림 변호사' },
+  { key: '학교폭력', label: '학교폭력 전문', author: '이유림 변호사' },
+]
+
 function getAuthorByCategory(category: string): string {
-  switch (category) {
-    case '재산범죄':
-    case '회생파산':
-      return '노채은 변호사'
-    case '성범죄':
-    case '일반':
-    default:
-      return '이유림 변호사'
-  }
+  const found = CENTER_CATEGORIES.find(c => c.key === category)
+  return found?.author || '이유림 변호사'
 }
 
 function generateSlug(title: string): string {
@@ -98,6 +102,8 @@ export default function AdminDashboardPage() {
   const [generatedTopics, setGeneratedTopics] = useState<GeneratedTopic[]>([])
   const [topicGenerating, setTopicGenerating] = useState(false)
   const [existingPostCount, setExistingPostCount] = useState<number>(0)
+  const [showCategoryPicker, setShowCategoryPicker] = useState(false)
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set())
 
   // Delete all state
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -357,8 +363,15 @@ export default function AdminDashboardPage() {
     }
   }
 
-  async function handleBulkGenerate() {
+  function handleBulkGenerateClick() {
     if (bulkRunning || topicGenerating) return
+    setSelectedCategories(new Set())
+    setShowCategoryPicker(true)
+  }
+
+  async function handleBulkGenerate(categories: string[]) {
+    if (bulkRunning || topicGenerating) return
+    setShowCategoryPicker(false)
 
     // === 1단계: AI 주제 생성 ===
     setTopicGenerating(true)
@@ -368,7 +381,11 @@ export default function AdminDashboardPage() {
     setBulkCurrent('주제 생성 중...')
 
     try {
-      const res = await fetch('/api/generate-topics', { method: 'POST' })
+      const res = await fetch('/api/generate-topics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories }),
+      })
       const data = await res.json()
 
       if (!data.success || !data.topics || data.topics.length === 0) {
@@ -900,7 +917,7 @@ export default function AdminDashboardPage() {
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <button
-            onClick={handleBulkGenerate}
+            onClick={handleBulkGenerateClick}
             disabled={bulkRunning || topicGenerating}
             className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded"
           >
@@ -1279,6 +1296,62 @@ export default function AdminDashboardPage() {
               >
                 {seoApplying ? '적용 중...' : '적용'}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Category Picker Modal */}
+      {showCategoryPicker && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowCategoryPicker(false)}>
+          <div className="bg-white rounded-xl p-8 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-black mb-2">블로그 주제 카테고리 선택</h3>
+            <p className="text-sm text-gray-500 mb-6">
+              생성할 주제의 카테고리를 선택하세요. 선택한 카테고리에서 균등하게 30개 주제가 생성됩니다.
+            </p>
+            <div className="space-y-2 mb-6">
+              {CENTER_CATEGORIES.map(cat => (
+                <label key={cat.key} className={`flex items-center gap-3 px-4 py-3 border rounded cursor-pointer transition-colors ${selectedCategories.has(cat.key) ? 'border-[#1B3B2F] bg-[#1B3B2F]/5' : 'border-gray-200 hover:bg-gray-50'}`}>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.has(cat.key)}
+                    onChange={() => {
+                      setSelectedCategories(prev => {
+                        const next = new Set(prev)
+                        if (next.has(cat.key)) next.delete(cat.key)
+                        else next.add(cat.key)
+                        return next
+                      })
+                    }}
+                    className="w-4 h-4 accent-[#1B3B2F]"
+                  />
+                  <div className="flex-1">
+                    <span className="text-sm font-medium text-black">{cat.label}</span>
+                    <span className="text-xs text-gray-400 ml-2">({cat.author})</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => {
+                  if (selectedCategories.size === CENTER_CATEGORIES.length) setSelectedCategories(new Set())
+                  else setSelectedCategories(new Set(CENTER_CATEGORIES.map(c => c.key)))
+                }}
+                className="text-xs text-[#1B3B2F] font-medium hover:underline"
+              >
+                {selectedCategories.size === CENTER_CATEGORIES.length ? '전체 해제' : '전체 선택'}
+              </button>
+              <div className="flex items-center gap-3">
+                <button onClick={() => setShowCategoryPicker(false)} className="px-5 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors rounded">취소</button>
+                <button
+                  onClick={() => handleBulkGenerate(Array.from(selectedCategories))}
+                  disabled={selectedCategories.size === 0}
+                  className="px-5 py-2.5 bg-[#1B3B2F] text-white text-sm font-medium hover:bg-[#1B3B2F]/90 disabled:opacity-50 transition-colors rounded"
+                >
+                  {selectedCategories.size > 0 ? `${selectedCategories.size}개 카테고리로 30개 생성` : '카테고리를 선택하세요'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
