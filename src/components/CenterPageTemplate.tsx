@@ -38,7 +38,7 @@ interface CenterPageTemplateProps {
     title: string
     description: string
   }
-  lawyers: Lawyer[]
+  lawyers?: Lawyer[]
   ctaTitle: string
   ctaDescription: string
   customSection?: React.ReactNode
@@ -262,6 +262,7 @@ export default function CenterPageTemplate({
       )}
 
       {/* 담당 변호사 */}
+      {lawyers && lawyers.length > 0 && (
       <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <ScrollReveal>
@@ -324,6 +325,7 @@ export default function CenterPageTemplate({
           </div>
         </div>
       </section>
+      )}
 
       {/* CTA */}
       <section className="py-16 sm:py-28 md:py-40 bg-black text-white">
