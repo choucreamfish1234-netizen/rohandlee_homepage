@@ -12,7 +12,7 @@ const PAGES = [
   { path: '/centers/sexual-crime', name: '성범죄 센터' },
   { path: '/centers/property-crime', name: '재산범죄 센터' },
   { path: '/centers/it-security', name: '개인정보보호센터' },
-  { path: '/centers/corporate', name: '기업법무 센터' },
+  { path: '/centers/school-violence', name: '학교폭력 전문센터' },
   { path: '/centers/asset-recovery', name: '재산회복 센터' },
   { path: '/centers/damages', name: '손해배상 센터' },
 ]
