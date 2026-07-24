@@ -342,6 +342,7 @@ export default function SchoolViolenceCenterPage() {
       pagePath="centers/school-violence"
       centerName="학교폭력 전문센터"
       subtitle="학교폭력 전문센터"
+      heroDescription={'학교폭력은 반복됩니다.\n"한 번만 참자"는 생각이 두 번째, 세 번째 피해로 이어집니다.\n첫 번째 신고가 내 아이를 지키는 가장 확실한 방법입니다.'}
       ctaLabel="학교폭력 상담 예약"
       ctaHref="/consultation"
       defaultCaseType="학교폭력 상담"
