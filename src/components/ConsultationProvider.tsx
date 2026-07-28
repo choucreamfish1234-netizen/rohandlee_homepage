@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import ConsultationModal from './ConsultationModal'
 import ConsultationSelectModal from './ConsultationSelectModal'
 import { trackConversion } from '@/lib/track-conversion'
@@ -31,6 +31,13 @@ export default function ConsultationProvider({
     setIsSelectOpen(true)
     trackConversion('consultation_open')
   }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('consult') === '1') {
+      openConsultation()
+    }
+  }, [openConsultation])
 
   const handleSelectEmail = useCallback(() => {
     setIsSelectOpen(false)
