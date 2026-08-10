@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { getPageSeo } from '@/lib/seo'
 import HeroSection from '@/components/sections/HeroSection'
 import StatsBar from '@/components/sections/StatsBar'
@@ -8,13 +9,14 @@ import TagsSection from '@/components/sections/TagsSection'
 import ProcessSection from '@/components/sections/ProcessSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
 import DifferenceSection from '@/components/sections/DifferenceSection'
-import CasesSection from '@/components/sections/CasesSection'
 import LawyersSection from '@/components/sections/LawyersSection'
-import PressSection from '@/components/sections/PressSection'
-import WebtoonSection from '@/components/sections/WebtoonSection'
-import BlogHighlights from '@/components/BlogHighlights'
-import AppSection from '@/components/sections/AppSection'
 import CtaSection from '@/components/sections/CtaSection'
+
+const CasesSection = dynamic(() => import('@/components/sections/CasesSection'), { ssr: true })
+const PressSection = dynamic(() => import('@/components/sections/PressSection'), { ssr: true })
+const WebtoonSection = dynamic(() => import('@/components/sections/WebtoonSection'), { ssr: true })
+const BlogHighlights = dynamic(() => import('@/components/BlogHighlights'), { ssr: true })
+const AppSection = dynamic(() => import('@/components/sections/AppSection'), { ssr: true })
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/', {

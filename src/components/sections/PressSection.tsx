@@ -110,6 +110,9 @@ function ArticleCard({
           src={article.image_url}
           alt={article.title}
           className="w-full aspect-video object-cover"
+          loading="lazy"
+          width={640}
+          height={360}
         />
       ) : (
         <div className="w-full aspect-video bg-[#1B3B2F] flex items-center justify-center">
