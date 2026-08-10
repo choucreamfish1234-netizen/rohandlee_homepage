@@ -8,6 +8,7 @@ import ConsultationProvider from '@/components/ConsultationProvider'
 import AdminMode from '@/components/AdminMode'
 import Analytics from '@/components/Analytics'
 import TrafficTracker from '@/components/TrafficTracker'
+import { FIRM_STATS } from '@/lib/firm-stats'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -136,8 +137,8 @@ const jsonLd = {
   ],
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '600',
+    ratingValue: FIRM_STATS.ratingValue,
+    reviewCount: FIRM_STATS.reviewCountText,
     bestRating: '5',
   },
   sameAs: [

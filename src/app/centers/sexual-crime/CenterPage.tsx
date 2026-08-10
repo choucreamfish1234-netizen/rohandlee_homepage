@@ -6,6 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
 import CenterCases from './CenterCases'
 import FAQAccordion from './FAQAccordion'
+import { FIRM_STATS } from '@/lib/firm-stats'
 
 const reviews = [
   {
@@ -192,8 +193,8 @@ function TrustIndicators() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
-            { value: '4.9', suffix: ' ★', label: '로톡 평점' },
-            { value: '600', suffix: '+', label: '상담 후기' },
+            { value: FIRM_STATS.ratingValue, suffix: ' ★', label: '로톡 평점' },
+            { value: FIRM_STATS.reviewCountText, suffix: '+', label: '상담 후기' },
             { value: '100', suffix: '%', label: '피해자 전담률' },
             { value: '', suffix: '무료', label: '첫 상담' },
           ].map((item, i) => (
