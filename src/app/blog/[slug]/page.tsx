@@ -96,27 +96,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title = title.substring(0, maxTitleLen - 1).replace(/[,\s·\-—]+$/, '') + '…'
   }
 
+  const pageUrl = `${baseUrl}/blog/${decodedSlug}`
+  const ogImage = post.thumbnail_url
+    ? { url: post.thumbnail_url, width: 1200, height: 630, alt: post.title }
+    : { url: `${baseUrl}/og-image.png`, width: 1200, height: 630, alt: '법률사무소 로앤이' }
+
   return {
     title,
     description,
     alternates: {
-      canonical: `${baseUrl}/blog/${decodedSlug}`,
+      canonical: pageUrl,
     },
     openGraph: {
+      type: 'article',
       title: post.title,
       description,
-      type: 'article',
+      url: pageUrl,
+      siteName: '법률사무소 로앤이',
+      locale: 'ko_KR',
       publishedTime: post.created_at,
       authors: [post.author || '이유림 변호사'],
-      images: post.thumbnail_url ? [post.thumbnail_url] : [`${baseUrl}/og-image.png`],
-      url: `${baseUrl}/blog/${decodedSlug}`,
-      siteName: '법률사무소 로앤이',
+      images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description,
-      images: post.thumbnail_url ? [post.thumbnail_url] : [`${baseUrl}/og-image.png`],
+      images: [ogImage.url],
     },
     robots: {
       index: true,
