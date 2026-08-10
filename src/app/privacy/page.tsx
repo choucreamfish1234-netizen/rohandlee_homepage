@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: '개인정보처리방침',
   description: '법률사무소 로앤이 개인정보처리방침',
+  alternates: { canonical: 'https://lawfirmrohandlee.com/privacy' },
 }
 
 export default function PrivacyPage() {
