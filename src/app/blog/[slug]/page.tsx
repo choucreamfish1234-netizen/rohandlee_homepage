@@ -6,6 +6,57 @@ import ViewCounter from '@/components/ViewCounter'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
+function extractPlainText(content: string): string {
+  return content
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/\*(.+?)\*/g, '$1')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[(.+?)\]\(.*?\)/g, '$1')
+    .replace(/^>\s*/gm, '')
+    .replace(/^[-*]\s+/gm, '')
+    .replace(/^(\d+)\.\s+/gm, '')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/<[^>]*>/g, '')
+    .replace(/---+/g, '')
+    .replace(/\n{2,}/g, '\n')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function buildDescription(post: { seo_description?: string | null; meta_description?: string | null; excerpt?: string | null; content?: string | null; title?: string }): string {
+  const candidates = [
+    post.seo_description,
+    post.meta_description,
+    post.excerpt,
+  ]
+
+  for (const c of candidates) {
+    if (c && c.trim().length >= 40) return c.trim().substring(0, 160)
+  }
+
+  if (post.content) {
+    let plain = extractPlainText(post.content)
+    if (post.title) {
+      const titleEscaped = post.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      plain = plain.replace(new RegExp('^' + titleEscaped + '\\s*'), '')
+    }
+    const sentences = plain.split(/(?<=[.!?다요죠니까])\s+/)
+    let desc = ''
+    for (const s of sentences) {
+      if (s.trim().length < 10) continue
+      if ((desc + ' ' + s).trim().length > 160) break
+      desc = (desc + ' ' + s).trim()
+      if (desc.length >= 80) break
+    }
+    if (desc.length >= 40) return desc
+    if (plain.length > 0) return plain.substring(0, 160)
+  }
+
+  return '법률사무소 로앤이 법률 블로그에서 자세한 내용을 확인하세요.'
+}
+
 export const revalidate = 3600
 
 interface Props {
@@ -37,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: '법률정보' }
   }
 
-  const description = post.seo_description || post.meta_description || post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || '법률사무소 로앤이 블로그'
+  const description = buildDescription(post)
   const suffix = ' | 법률사무소 로앤이'
   const maxTitleLen = 60 - suffix.length
   let title = post.title
