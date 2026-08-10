@@ -42,14 +42,21 @@ export async function getPageSeo(
   const ogTitle = (hasOldBucheon(seo?.og_title ?? null) ? null : seo?.og_title) || defaults.ogTitle || title
   const ogDescription = (hasOldBucheon(seo?.og_description ?? null) ? null : seo?.og_description) || defaults.ogDescription || description
 
+  const baseUrl = 'https://lawfirmrohandlee.com'
+  const canonical = pagePath === '/' ? baseUrl : `${baseUrl}${pagePath}`
+
   return {
     title,
     description,
     ...(keywords ? { keywords: keywords.split(',').map((k) => k.trim()) } : {}),
+    alternates: {
+      canonical,
+    },
     openGraph: {
       title: ogTitle,
       description: ogDescription,
-      images: [{ url: 'https://lawfirmrohandlee.com/og-image.png', width: 1200, height: 630 }],
+      url: canonical,
+      images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
     },
     robots: {
       index: true,

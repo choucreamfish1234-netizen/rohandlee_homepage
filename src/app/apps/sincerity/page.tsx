@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     '이유림 변호사',
     '노채은 변호사',
   ],
+  alternates: { canonical: 'https://lawfirmrohandlee.com/apps/sincerity' },
   openGraph: {
     title: '진심의무게 - AI 탄원서 작성 서비스 | 법률사무소 로앤이',
     description:
