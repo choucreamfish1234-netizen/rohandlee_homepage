@@ -21,7 +21,7 @@ export default function BlogHighlights() {
         .eq('status', 'published')
         .lte('published_at', new Date().toISOString())
         .order('view_count', { ascending: false })
-        .limit(10)
+        .limit(6)
       if (data) setPosts(data)
     }
     fetchPosts()
@@ -44,7 +44,7 @@ export default function BlogHighlights() {
               className="snap-start flex-shrink-0 w-[260px] md:w-[320px] bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-md transition-shadow">
               <div className="aspect-[16/10] overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={post.thumbnail_url || '/og-image.png'} alt={post.title} className="w-full h-full object-cover" />
+                <img src={post.thumbnail_url || '/og-image.png'} alt={post.title} className="w-full h-full object-cover" loading="lazy" width={640} height={400} />
                 {i === 0 && <span className="absolute top-3 left-3 bg-[#1B3B2F] text-white text-xs px-2 py-0.5 rounded-full">BEST</span>}
               </div>
               <div className="p-4">

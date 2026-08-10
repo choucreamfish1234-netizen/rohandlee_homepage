@@ -75,6 +75,10 @@ export default function HeroSection() {
                 src={img.url}
                 alt="법률사무소 로앤이"
                 className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={i === 0 ? 'high' : undefined}
                 style={{
                   transform: currentIndex === i ? 'scale(1.03)' : 'scale(1)',
                   transition: 'transform 5s ease-out',

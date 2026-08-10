@@ -212,6 +212,9 @@ function WebtoonCard({
             src={coverImage}
             alt={item.title}
             className="w-full aspect-[4/5] object-cover"
+            loading="lazy"
+            width={400}
+            height={500}
             draggable={false}
           />
         ) : (
