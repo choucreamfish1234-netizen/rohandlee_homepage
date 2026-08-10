@@ -6,7 +6,7 @@ import BlogListClient from './BlogListClient'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/blog', {
-    title: '법률 블로그',
+    title: '법률정보',
     description: '법률사무소 로앤이 법률 블로그. 성범죄·재산범죄·학교폭력·부동산·손해배상 등 피해자를 위한 법률 정보와 판례 분석을 전달합니다.',
     ogTitle: '법률 블로그 | 법률사무소 로앤이',
     ogDescription: '성범죄·재산범죄·학교폭력·부동산·손해배상 등 피해자를 위한 법률 정보.',

@@ -34,11 +34,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .maybeSingle()
 
   if (!post) {
-    return { title: '블로그 | 법률사무소 로앤이' }
+    return { title: '법률정보' }
   }
 
   const description = post.seo_description || post.meta_description || post.excerpt || post.content?.replace(/<[^>]*>/g, '').substring(0, 160) || '법률사무소 로앤이 블로그'
-  const title = post.title
+  const suffix = ' | 법률사무소 로앤이'
+  const maxTitleLen = 60 - suffix.length
+  let title = post.title
+  if (title.length > maxTitleLen) {
+    title = title.substring(0, maxTitleLen - 1).replace(/[,\s·\-—]+$/, '') + '…'
+  }
 
   return {
     title,
