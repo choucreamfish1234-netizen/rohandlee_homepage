@@ -78,12 +78,21 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
-  const { data: post } = await supabaseAdmin
+  let { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('title, excerpt, meta_description, seo_description, thumbnail_url, author, created_at, content')
     .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
+
+  if (!post) {
+    const fallback = await supabaseAdmin
+      .from('blog_posts')
+      .select('title, excerpt, meta_description, seo_description, thumbnail_url, author, created_at, content')
+      .eq('slug', decodedSlug)
+      .maybeSingle()
+    post = fallback.data
+  }
 
   if (!post) {
     return {
@@ -139,12 +148,21 @@ export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
-  const { data: post } = await supabaseAdmin
+  let { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
     .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
+
+  if (!post) {
+    const fallback = await supabaseAdmin
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', decodedSlug)
+      .maybeSingle()
+    post = fallback.data
+  }
 
   if (!post) {
     notFound()
