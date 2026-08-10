@@ -53,9 +53,12 @@ export async function getPageSeo(
       canonical,
     },
     openGraph: {
+      type: 'website',
       title: ogTitle,
       description: ogDescription,
       url: canonical,
+      siteName: '법률사무소 로앤이',
+      locale: 'ko_KR',
       images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
     },
     robots: {
