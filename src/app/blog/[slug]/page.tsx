@@ -1,4 +1,5 @@
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import type { BlogPost } from '@/lib/blog'
 import BlogPostContent from './BlogPostContent'
@@ -85,7 +86,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .maybeSingle()
 
   if (!post) {
-    return { title: '법률정보' }
+    return {
+      title: '게시글을 찾을 수 없습니다',
+      robots: { index: false, follow: false },
+    }
   }
 
   const description = buildDescription(post)
@@ -135,41 +139,21 @@ export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
-  // 1차: published 필터로 조회
-  let { data: post, error } = await supabaseAdmin
+  const { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
     .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
 
-  // 2차: published 필터 실패 시 status 필터 없이 재시도
   if (!post) {
-    const fallback = await supabaseAdmin
-      .from('blog_posts')
-      .select('*')
-      .eq('slug', decodedSlug)
-      .maybeSingle()
-
-    if (fallback.data) {
-      console.log('Blog post found without status filter:', {
-        slug: decodedSlug,
-        status: fallback.data.status,
-        published_at: fallback.data.published_at,
-      })
-      post = fallback.data
-    }
-    if (fallback.error) {
-      error = fallback.error
-    }
+    notFound()
   }
 
-  if (error) {
-    console.error('Blog post fetch error:', error.message, '| slug:', decodedSlug)
-  }
+  const postDescription = buildDescription(post)
 
   // Author info mapping for JSON-LD
-  const authorName = post?.author || '이유림 변호사'
+  const authorName = post.author || '이유림 변호사'
   const isLeeYurim = authorName.includes('이유림')
   const authorJsonLd = {
     '@type': 'Person' as const,
@@ -205,18 +189,23 @@ export default async function Page({ params }: Props) {
     return faqs
   }
 
-  // Determine about topic based on category
-  const aboutTopic = post ? (() => {
+  const aboutTopic = (() => {
     switch (post.category) {
       case '성범죄': return '성범죄 피해자 법률 상담'
       case '재산범죄': return '재산범죄 피해 법률 상담'
-      case '회생파산': return '개인회생·파산 법률 상담'
+      case '신체범죄': return '신체범죄 피해 법률 상담'
+      case '부동산': return '부동산 피해 법률 상담'
+      case '학교폭력': return '학교폭력 피해 법률 상담'
+      case '손해배상': return '손해배상 법률 상담'
+      case '재산회복': return '재산회복 법률 상담'
+      case '개인정보보호': return '개인정보보호 법률 상담'
       default: return '법률 상담'
     }
-  })() : null
+  })()
 
-  // JSON-LD Article structured data (GEO-enhanced)
-  const jsonLd = post ? {
+  const pageUrl = `${baseUrl}/blog/${decodedSlug}`
+
+  const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
@@ -229,10 +218,10 @@ export default async function Page({ params }: Props) {
     datePublished: post.created_at,
     dateModified: post.updated_at || post.created_at,
     image: post.thumbnail_url || undefined,
-    description: post.seo_description || post.meta_description || post.excerpt || '',
+    description: postDescription,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${baseUrl}/blog/${decodedSlug}`,
+      '@id': pageUrl,
     },
     about: {
       '@type': 'Thing',
@@ -240,10 +229,9 @@ export default async function Page({ params }: Props) {
     },
     isAccessibleForFree: true,
     inLanguage: 'ko',
-  } : null
+  }
 
-  // FAQPage schema (if content has Q&A section)
-  const faqs = post ? extractFaqFromContent(post.content || '') : []
+  const faqs = extractFaqFromContent(post.content || '')
   const faqJsonLd = faqs.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -259,20 +247,18 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {faqJsonLd && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
-      {post && <ViewCounter postId={post.id} />}
-      <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost | null} />
+      <ViewCounter postId={post.id} />
+      <BlogPostContent slug={decodedSlug} initialPost={post as BlogPost} />
     </>
   )
 }
