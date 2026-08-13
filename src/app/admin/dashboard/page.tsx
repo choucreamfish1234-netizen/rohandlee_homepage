@@ -183,6 +183,11 @@ export default function AdminDashboardPage() {
     if (!error) {
       setPosts((prev) => prev.filter((p) => p.id !== id))
       setStats((prev) => ({ ...prev, total: prev.total - 1 }))
+      fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paths: ['/blog'] }),
+      }).catch(() => {})
     }
     setDeleting(null)
   }
@@ -517,6 +522,11 @@ export default function AdminDashboardPage() {
       setBulkDone(true)
       setBulkCurrent(stopRef.current ? '중지됨' : '완료!')
       setBulkRunning(false)
+      fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paths: ['/blog'] }),
+      }).catch(() => {})
       fetchData()
     } catch (err) {
       alert(`오류 발생: ${err instanceof Error ? err.message : '알 수 없는 오류'}`)
