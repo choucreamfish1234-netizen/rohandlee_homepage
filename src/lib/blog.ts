@@ -156,8 +156,7 @@ export async function getPublishedPosts({
     .from('blog_posts')
     .select('*', { count: 'exact' })
     .eq('status', 'published')
-    .lte('published_at', new Date().toISOString())
-    .order('published_at', { ascending: false })
+    .order('published_at', { ascending: false, nullsFirst: false })
 
   if (category && category !== '전체') {
     query = query.eq('category', category)
@@ -185,7 +184,6 @@ export async function getFeaturedPosts() {
     .from('blog_posts')
     .select('*')
     .eq('status', 'published')
-    .lte('published_at', new Date().toISOString())
     .order('is_featured', { ascending: false })
     .order('view_count', { ascending: false })
     .limit(3)

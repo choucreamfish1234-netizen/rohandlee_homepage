@@ -20,14 +20,12 @@ export default async function Page() {
     .from('blog_posts')
     .select('*')
     .eq('status', 'published')
-    .lte('published_at', new Date().toISOString())
-    .order('published_at', { ascending: false })
+    .order('published_at', { ascending: false, nullsFirst: false })
 
   const { data: featured } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
     .eq('status', 'published')
-    .lte('published_at', new Date().toISOString())
     .order('is_featured', { ascending: false })
     .order('view_count', { ascending: false })
     .limit(3)
