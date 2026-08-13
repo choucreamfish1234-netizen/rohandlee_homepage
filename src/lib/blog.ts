@@ -32,6 +32,7 @@ export const CATEGORIES = [
   '재산회복',
   '손해배상',
   '학교폭력',
+  '법률정보',
 ] as const
 
 export const CATEGORY_THUMBNAILS: Record<string, string> = {
@@ -43,9 +44,9 @@ export const CATEGORY_THUMBNAILS: Record<string, string> = {
   '재산회복': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
   '손해배상': 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=450&fit=crop&q=80',
   '학교폭력': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80',
+  '법률정보': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
 }
 
-// Category-based image pools (Unsplash, Pexels, Pixabay 혼합)
 export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
   '성범죄': [
     'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
@@ -98,6 +99,12 @@ export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=450&fit=crop&q=80',
     'https://images.unsplash.com/photo-1577896851231-70ef18881571?w=800&h=450&fit=crop&q=80',
+  ],
+  '법률정보': [
+    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&h=450&fit=crop&q=80',
+    'https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80',
   ],
 }
 
