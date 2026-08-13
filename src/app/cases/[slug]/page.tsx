@@ -114,11 +114,17 @@ export default async function Page({ params }: Props) {
     headline: caseData.title,
     description: caseData.summary,
     image: caseData.image_url,
+    author: {
+      '@type': 'Organization',
+      name: '법률사무소 로앤이',
+    },
     publisher: {
       '@type': 'Organization',
       name: '법률사무소 로앤이',
       url: baseUrl,
     },
+    datePublished: caseData.created_at || undefined,
+    dateModified: caseData.updated_at || caseData.created_at || undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
