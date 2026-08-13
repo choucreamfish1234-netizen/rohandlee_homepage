@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const decodedSlug = decodeURIComponent(slug)
   let { data: post } = await supabaseAdmin
     .from('blog_posts')
-    .select('title, excerpt, meta_description, seo_description, thumbnail_url, author, created_at, content')
+    .select('*')
     .eq('slug', decodedSlug)
     .eq('status', 'published')
     .maybeSingle()
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) {
     const fallback = await supabaseAdmin
       .from('blog_posts')
-      .select('title, excerpt, meta_description, seo_description, thumbnail_url, author, created_at, content')
+      .select('*')
       .eq('slug', decodedSlug)
       .maybeSingle()
     post = fallback.data
