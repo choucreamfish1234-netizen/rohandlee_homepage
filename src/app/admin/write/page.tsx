@@ -153,6 +153,14 @@ function AdminWritePage() {
         const { error } = await createPost(postData)
         if (error) throw error
       }
+      if (saveStatus === 'published') {
+        const slug = postData.slug || ''
+        fetch('/api/revalidate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paths: ['/blog', `/blog/${slug}`] }),
+        }).catch(() => {})
+      }
       router.push('/admin/dashboard')
     } catch {
       alert('저장에 실패했습니다. 다시 시도해주세요.')
