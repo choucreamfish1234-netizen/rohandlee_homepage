@@ -8,7 +8,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import { useAdmin } from '@/components/AdminMode'
 import { type SuccessCase, DEFAULT_CASES, getRandomCaseImage } from '@/lib/cases'
 
-const categories = ['전체', '성범죄', '재산범죄', '스토킹', '보이스피싱', '전세사기']
+const categories = ['전체', '성범죄', '재산범죄', '스토킹', '보이스피싱', '전세사기', '학교폭력']
 
 export default function CasesList() {
   const { isEditMode } = useAdmin()

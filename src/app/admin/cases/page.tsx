@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm'
 import Image from 'next/image'
 import { type SuccessCase, CASE_IMAGE_POOLS, getRandomCaseImage } from '@/lib/cases'
 
-const CATEGORIES = ['성범죄', '보이스피싱', '전세사기', '스토킹', '재산범죄', '일반']
+const CATEGORIES = ['성범죄', '보이스피싱', '전세사기', '스토킹', '재산범죄', '학교폭력', '일반']
 
 const BADGE_PRESETS: Record<string, { badge_color: string; tag_color: string }> = {
   '성범죄': { badge_color: 'bg-red-50 text-red-700 border-red-200', tag_color: 'bg-red-50 text-red-600' },
@@ -16,6 +16,7 @@ const BADGE_PRESETS: Record<string, { badge_color: string; tag_color: string }> 
   '전세사기': { badge_color: 'bg-blue-50 text-blue-700 border-blue-200', tag_color: 'bg-blue-50 text-blue-600' },
   '스토킹': { badge_color: 'bg-amber-50 text-amber-700 border-amber-200', tag_color: 'bg-amber-50 text-amber-600' },
   '재산범죄': { badge_color: 'bg-emerald-50 text-emerald-700 border-emerald-200', tag_color: 'bg-emerald-50 text-emerald-600' },
+  '학교폭력': { badge_color: 'bg-violet-50 text-violet-700 border-violet-200', tag_color: 'bg-violet-50 text-violet-600' },
   '일반': { badge_color: 'bg-gray-50 text-gray-700 border-gray-200', tag_color: 'bg-gray-50 text-gray-600' },
 }
 
