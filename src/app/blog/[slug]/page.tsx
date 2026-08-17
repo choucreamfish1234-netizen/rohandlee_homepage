@@ -177,6 +177,7 @@ export default async function Page({ params }: Props) {
     '@type': 'Book' as const,
     name: '피해자 감별사회',
     publisher: { '@type': 'Organization' as const, name: '박영사' },
+    url: 'https://product.kyobobook.co.kr/detail/S000220843163',
   }
   const authorJsonLd = {
     '@type': 'Person' as const,

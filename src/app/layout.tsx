@@ -130,6 +130,7 @@ const jsonLd = {
         '@type': 'Book',
         name: '피해자 감별사회',
         publisher: { '@type': 'Organization', name: '박영사' },
+        url: 'https://product.kyobobook.co.kr/detail/S000220843163',
       },
     },
     {
@@ -142,6 +143,7 @@ const jsonLd = {
         '@type': 'Book',
         name: '피해자 감별사회',
         publisher: { '@type': 'Organization', name: '박영사' },
+        url: 'https://product.kyobobook.co.kr/detail/S000220843163',
       },
     },
   ],
