@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import { type SuccessCase } from '@/lib/cases'
+import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
 
 const PRACTICE_AREAS = [
   '성폭력 피해자 대리',
@@ -44,6 +45,13 @@ export default function LeeYurimProfile() {
   const { openConsultation } = useConsultation()
   const [cases, setCases] = useState<SuccessCase[]>([])
   const [blogPosts, setBlogPosts] = useState<{ id: number; title: string; slug: string; category: string }[]>([])
+  const [profileImage, setProfileImage] = useState(getFallbackImage('이유림'))
+
+  useEffect(() => {
+    fetchLawyerImages().then(imgs => {
+      if (imgs['이유림']) setProfileImage(imgs['이유림'])
+    })
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -91,12 +99,13 @@ export default function LeeYurimProfile() {
         >
           <div className="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden bg-gray-100 shadow-lg">
             <Image
-              src="/images/lawyers/lawyer-lee.svg"
+              src={profileImage}
               alt="이유림 대표변호사"
               width={128}
               height={128}
               className="w-full h-full object-cover"
               priority
+              unoptimized
             />
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">이유림</h1>

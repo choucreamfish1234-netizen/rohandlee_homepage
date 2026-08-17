@@ -1,10 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import { useConsultation } from '@/components/ConsultationProvider'
+import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
 import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
 import CenterCases from './CenterCases'
@@ -194,6 +195,14 @@ function CrimeTypesSection() {
 
 export default function SexualCrimeCenterPage() {
   const { openConsultation } = useConsultation()
+  const [leeImage, setLeeImage] = useState(getFallbackImage('이유림'))
+
+  useEffect(() => {
+    fetchLawyerImages().then(imgs => {
+      if (imgs['이유림']) setLeeImage(imgs['이유림'])
+    })
+  }, [])
+
   return (
     <CenterPageTemplate
       pagePath="centers/sexual-crime"
@@ -299,11 +308,12 @@ export default function SexualCrimeCenterPage() {
                 <div className="text-center max-w-xs mx-auto">
                   <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
                     <Image
-                      src="/images/lawyers/lawyer-lee.svg"
+                      src={leeImage}
                       alt="이유림 대표변호사"
                       width={600}
                       height={800}
                       className="w-full h-full object-cover"
+                      unoptimized
                     />
                   </div>
                   <h3 className="text-xl font-bold text-black">이유림 <span className="font-sans text-base font-normal text-gray-400">대표변호사</span></h3>

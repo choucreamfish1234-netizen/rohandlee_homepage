@@ -135,7 +135,7 @@ export default function TestimonialsSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center text-sm text-black font-medium hover:text-accent transition-colors"
             >
-              로톡에서 600+개의 후기 보기 <span className="ml-1">&rarr;</span>
+              로톡에서 200+개의 후기 보기 <span className="ml-1">&rarr;</span>
             </a>
           </div>
         </ScrollReveal>
