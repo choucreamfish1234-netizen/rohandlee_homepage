@@ -2,7 +2,9 @@
 
 import { useRef } from 'react'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
+import { useConsultation } from '@/components/ConsultationProvider'
 import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
 import CenterCases from './CenterCases'
@@ -191,14 +193,52 @@ function CrimeTypesSection() {
 }
 
 export default function SexualCrimeCenterPage() {
+  const { openConsultation } = useConsultation()
   return (
     <CenterPageTemplate
       pagePath="centers/sexual-crime"
       centerName="성범죄 피해 전문센터"
       subtitle="성범죄 피해자 전담센터"
-      ctaLabel="무료 상담 신청하기"
+      ctaLabel="상담 신청하기"
       ctaHref="/consultation"
       defaultCaseType="성범죄 피해 상담"
+      customHero={
+        <section className="min-h-[55vh] sm:min-h-[65vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
+              국내1호 종합 피해자 중심 로펌
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+              성범죄 피해자 전담센터
+            </h1>
+            <p className="mt-6 text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
+              당신은 아무 잘못도 하지 않았습니다.<br />
+              법정이 피해자를 의심하는 구조를, 우리는 알고 있습니다.<br />
+              《피해자 감별사회》를 쓴 변호사가 직접 대리합니다.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
+              <span>형사 고소부터 민사 손해배상까지</span>
+              <span className="text-gray-300">|</span>
+              <span>파생 피해 원스톱 해결</span>
+              <span className="text-gray-300">|</span>
+              <span>이유림·노채은 변호사</span>
+            </div>
+            <div className="mt-8">
+              <button
+                onClick={() => openConsultation('성범죄 피해 상담')}
+                className="inline-flex items-center justify-center px-8 py-3.5 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors min-h-[48px]"
+              >
+                상담 신청하기
+              </button>
+            </div>
+          </motion.div>
+        </section>
+      }
       services={[
         {
           title: '가해자 연락 전면 대리',

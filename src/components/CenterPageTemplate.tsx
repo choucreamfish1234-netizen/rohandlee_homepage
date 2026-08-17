@@ -42,6 +42,7 @@ interface CenterPageTemplateProps {
   ctaTitle: string
   ctaDescription: string
   customSection?: React.ReactNode
+  customHero?: React.ReactNode
   defaultCaseType?: string
 }
 
@@ -58,6 +59,7 @@ export default function CenterPageTemplate({
   ctaTitle,
   ctaDescription,
   customSection,
+  customHero,
   defaultCaseType,
 }: CenterPageTemplateProps) {
   const { openConsultation } = useConsultation()
@@ -65,6 +67,7 @@ export default function CenterPageTemplate({
   return (
     <>
       {/* 히어로 */}
+      {customHero ? customHero : (
       <section className="min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -105,6 +108,7 @@ export default function CenterPageTemplate({
           </div>
         </motion.div>
       </section>
+      )}
 
       {/* 서비스 그리드 */}
       <section className="py-16 sm:py-28 md:py-40 bg-white">
