@@ -9,6 +9,7 @@ import CenterCases from './CenterCases'
 import FAQAccordion from './FAQAccordion'
 import VictimSocietySection from './VictimSocietySection'
 import OneStopCrimeSection from './OneStopCrimeSection'
+import ChooseLawyerSection from './ChooseLawyerSection'
 import SincerityAppSection from './SincerityAppSection'
 
 const reviews = [
@@ -275,6 +276,7 @@ export default function SexualCrimeCenterPage() {
             </div>
           </section>
 
+          <ChooseLawyerSection />
           <CrimeTypesSection />
           <ProcessTimeline />
           <CenterCases />
