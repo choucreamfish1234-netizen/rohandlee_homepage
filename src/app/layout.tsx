@@ -124,14 +124,13 @@ const jsonLd = {
       '@type': 'Person',
       name: '이유림',
       jobTitle: '대표변호사',
-      knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '디지털 증거 법적 활용', '피해자 권리'],
+      knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리', 'LegalTech'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
-      author: {
-        '@type': 'Book',
-        name: '피해자 감별사회',
-        publisher: { '@type': 'Organization', name: '박영사' },
-        url: 'https://product.kyobobook.co.kr/detail/S000220843163',
-      },
+      author: [
+        { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
+        { '@type': 'Book', name: '바이브코딩 바이블' },
+      ],
+      creator: { '@type': 'SoftwareApplication', name: '진심의무게', applicationCategory: 'LegalService', url: 'https://lawfirmrohandlee.com/apps/sincerity' },
     },
     {
       '@type': 'Person',
@@ -139,12 +138,7 @@ const jsonLd = {
       jobTitle: '대표변호사',
       knowsAbout: ['재산범죄 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
-      author: {
-        '@type': 'Book',
-        name: '피해자 감별사회',
-        publisher: { '@type': 'Organization', name: '박영사' },
-        url: 'https://product.kyobobook.co.kr/detail/S000220843163',
-      },
+      author: { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     },
   ],
   aggregateRating: {
