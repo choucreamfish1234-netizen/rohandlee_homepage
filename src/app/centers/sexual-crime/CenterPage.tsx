@@ -9,7 +9,6 @@ import FAQAccordion from './FAQAccordion'
 import VictimSocietySection from './VictimSocietySection'
 import OneStopCrimeSection from './OneStopCrimeSection'
 import SincerityAppSection from './SincerityAppSection'
-import { FIRM_STATS } from '@/lib/firm-stats'
 
 const reviews = [
   {
@@ -189,66 +188,6 @@ function CrimeTypesSection() {
   )
 }
 
-// ── 신뢰 지표 섹션 ──
-function TrustIndicators() {
-  return (
-    <section className="py-16 bg-[#1B3B2F]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { value: FIRM_STATS.ratingValue, suffix: ' ★', label: '로톡 평점' },
-            { value: FIRM_STATS.reviewCountText, suffix: '+', label: '상담 후기' },
-            { value: '100', suffix: '%', label: '피해자 전담률' },
-            { value: '', suffix: '무료', label: '첫 상담' },
-          ].map((item, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <div>
-                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
-                  {item.value}{item.suffix}
-                </p>
-                <p className="mt-2 text-xs sm:text-sm text-white/60">{item.label}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── 피해자 국선변호사 안내 ──
-function VictimLawyerSection() {
-  return (
-    <section className="py-28 sm:py-40 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            Victim Advocate
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-8">
-            피해자 국선변호사 제도 안내
-          </h2>
-          <div className="space-y-6 text-sm text-gray-600 leading-relaxed">
-            <p>
-              성범죄 피해자는 <strong className="text-black">「성폭력범죄의 처벌 등에 관한 특례법」</strong>에 따라
-              국가가 지정하는 국선변호사의 조력을 무료로 받을 수 있습니다.
-            </p>
-            <div className="bg-gray-50 rounded-xl p-6 space-y-3">
-              <p><strong className="text-black">국선변호사:</strong> 국가 지정, 비용 무료, 변호사 선택 불가</p>
-              <p><strong className="text-black">사선변호사:</strong> 피해자가 직접 선임, 전문성 선택 가능, 적극적 맞춤형 변호</p>
-            </div>
-            <p>
-              로앤이는 <strong className="text-black">피해자 전문 사선변호사</strong>로서,
-              상담부터 수사 동행, 재판, 피해 회복까지 A-Z 전 과정을 책임집니다.
-              피해자의 권리를 최우선으로 하기 때문에 보다 적극적이고 전문적인 변호가 가능합니다.
-            </p>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  )
-}
-
 export default function SexualCrimeCenterPage() {
   return (
     <CenterPageTemplate
@@ -306,15 +245,13 @@ export default function SexualCrimeCenterPage() {
         },
       ]}
       declaration={{
-        title: '피해자 위주의 변호,\n모든 분야의 피해자를 대변합니다.',
+        title: '성범죄 피해자를 위한\n전문 법률 서비스',
         description:
-          '피해자 변호사는 고소장만 내주면 끝이라는 착각.\n로앤이 성범죄피해전문센터에서는\n피해자 변호의 처음부터 끝까지, A-Z를 책임집니다.',
+          '고소 단계부터 수사 동행, 재판, 손해배상까지\n피해자의 곁에서 끝까지 함께합니다.',
       }}
       customSection={
         <>
           <CrimeTypesSection />
-          <TrustIndicators />
-          <VictimLawyerSection />
           <ProcessTimeline />
           <CenterCases />
           <VictimSocietySection />
