@@ -24,7 +24,7 @@ interface LawyerData {
   education: string[]
   current: string[]
   previous: string[]
-  publications?: string[]
+  publications?: { title: string; url?: string }[]
 }
 
 interface LawyerDB {
@@ -77,7 +77,7 @@ const fallbackLawyers: LawyerData[] = [
       '법무법인 심앤이 소속변호사',
     ],
     publications: [
-      '《피해자 감별사회》 공저 (박영사) — 베스트셀러',
+      { title: '《피해자 감별사회》 공저 (박영사) — 베스트셀러', url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     ],
   },
   {
@@ -116,7 +116,7 @@ const fallbackLawyers: LawyerData[] = [
       '법률사무소 청인',
     ],
     publications: [
-      '《피해자 감별사회》 공저 (박영사) — 베스트셀러',
+      { title: '《피해자 감별사회》 공저 (박영사) — 베스트셀러', url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     ],
   },
 ]
@@ -276,8 +276,12 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         >
           <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">저서</p>
           <div className="space-y-1">
-            {lawyer.publications.map((item) => (
-              <p key={item} className="text-sm text-gray-700">{item}</p>
+            {lawyer.publications.map((pub) => (
+              pub.url ? (
+                <a key={pub.title} href={pub.url} target="_blank" rel="noopener noreferrer" className="block text-sm text-gray-700 hover:text-[#1B3B2F] transition-colors">{pub.title}</a>
+              ) : (
+                <p key={pub.title} className="text-sm text-gray-700">{pub.title}</p>
+              )
             ))}
           </div>
         </motion.div>
@@ -360,6 +364,7 @@ const bookJsonLd = {
   ],
   publisher: { '@type': 'Organization', name: '박영사' },
   inLanguage: 'ko',
+  url: 'https://product.kyobobook.co.kr/detail/S000220843163',
 }
 
 const lawyerJsonLd = [
