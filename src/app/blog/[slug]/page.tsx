@@ -173,6 +173,11 @@ export default async function Page({ params }: Props) {
   // Author info mapping for JSON-LD
   const authorName = post.author || '이유림 변호사'
   const isLeeYurim = authorName.includes('이유림')
+  const bookRef = {
+    '@type': 'Book' as const,
+    name: '피해자 감별사회',
+    publisher: { '@type': 'Organization' as const, name: '박영사' },
+  }
   const authorJsonLd = {
     '@type': 'Person' as const,
     name: isLeeYurim ? '이유림' : '노채은',
@@ -182,8 +187,9 @@ export default async function Page({ params }: Props) {
       name: '법률사무소 로앤이',
     },
     knowsAbout: isLeeYurim
-      ? ['성범죄 피해자 변호', '디지털 증거 법적 활용', '피해자 국선변호', '불법촬영', '스토킹']
+      ? ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리']
       : ['보이스피싱 피해 구제', '전세사기', '개인회생', '개인파산'],
+    author: bookRef,
   }
 
   // Extract FAQ from markdown content for FAQPage schema

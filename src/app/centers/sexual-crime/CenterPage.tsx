@@ -322,8 +322,8 @@ export default function SexualCrimeCenterPage() {
         {
           name: '이유림',
           role: '대표변호사',
-          specialty: '성범죄 피해자 전문 변호사',
-          quote: '끝까지 당신의 편에 서겠습니다.\n피해자의 시간 앞에서 겸허히 걷겠습니다.',
+          specialty: '성범죄 피해자 전문 변호사 · 베스트셀러 《피해자 감별사회》 공동저자',
+          quote: '성폭력·스토킹·디지털성범죄 피해자를 대리하며,\n피해자다움과 강간 신화의 문제를 실무와 저술로 다루고 있습니다.',
           image: '/images/lawyers/lawyer-lee.svg',
         },
       ]}

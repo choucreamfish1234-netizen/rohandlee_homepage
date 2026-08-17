@@ -354,8 +354,8 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
           <p className="font-medium text-gray-900">이유림 변호사</p>
           <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
           <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-            충북대학교 법학전문대학원 졸업. 서울지방변호사회 국선변호사.
-            디지털성범죄 피해와 디지털 증거의 법적 활용을 다루는 피해자 전문 변호사.
+            성폭력·스토킹·디지털성범죄 피해자를 대리하며, 피해자다움과 강간 신화의 문제를 다룬
+            베스트셀러 《피해자 감별사회》 공동저자(박영사).
           </p>
         </div>
       </div>

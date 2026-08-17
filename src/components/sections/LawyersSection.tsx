@@ -24,6 +24,7 @@ interface LawyerData {
   education: string[]
   current: string[]
   previous: string[]
+  publications?: string[]
 }
 
 interface LawyerDB {
@@ -75,6 +76,9 @@ const fallbackLawyers: LawyerData[] = [
       '법무법인 로웨이 파트너변호사',
       '법무법인 심앤이 소속변호사',
     ],
+    publications: [
+      '《피해자 감별사회》 공저 (박영사) — 베스트셀러',
+    ],
   },
   {
     key: 'noh',
@@ -110,6 +114,9 @@ const fallbackLawyers: LawyerData[] = [
     ],
     previous: [
       '법률사무소 청인',
+    ],
+    publications: [
+      '《피해자 감별사회》 공저 (박영사) — 베스트셀러',
     ],
   },
 ]
@@ -259,6 +266,23 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         <PreviousCareer items={lawyer.previous} />
       </div>
 
+      {lawyer.publications && lawyer.publications.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.7, ease: 'easeOut' }}
+          className="mt-8"
+        >
+          <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">저서</p>
+          <div className="space-y-1">
+            {lawyer.publications.map((item) => (
+              <p key={item} className="text-sm text-gray-700">{item}</p>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
       <div className="mt-8">
         <motion.p
           initial={{ opacity: 0 }}
@@ -327,6 +351,17 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
   )
 }
 
+const bookJsonLd = {
+  '@type': 'Book',
+  name: '피해자 감별사회',
+  author: [
+    { '@type': 'Person', name: '이유림' },
+    { '@type': 'Person', name: '노채은' },
+  ],
+  publisher: { '@type': 'Organization', name: '박영사' },
+  inLanguage: 'ko',
+}
+
 const lawyerJsonLd = [
   {
     '@context': 'https://schema.org',
@@ -334,7 +369,7 @@ const lawyerJsonLd = [
     name: '이유림',
     jobTitle: '대표변호사',
     worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    knowsAbout: ['성범죄 피해자 변호', '디지털 증거 법적 활용', '디지털성범죄', '피해자 국선변호', '불법촬영', '스토킹'],
+    knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '디지털 증거 법적 활용', '피해자 권리'],
     alumniOf: [
       { '@type': 'CollegeOrUniversity', name: '한국외국어대학교' },
       { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },
@@ -343,6 +378,7 @@ const lawyerJsonLd = [
       { '@type': 'Organization', name: '서울지방변호사회' },
       { '@type': 'Organization', name: '대한난민지원변호사단' },
     ],
+    author: bookJsonLd,
   },
   {
     '@context': 'https://schema.org',
@@ -359,6 +395,7 @@ const lawyerJsonLd = [
       { '@type': 'Organization', name: '대법원 국선변호인' },
       { '@type': 'Organization', name: '한국소비자원 소송지원 변호사' },
     ],
+    author: bookJsonLd,
   },
 ]
 
