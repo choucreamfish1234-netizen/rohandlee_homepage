@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 function useCountUp(end: number, duration = 1800) {
@@ -56,6 +57,27 @@ const fadeUp = {
 }
 
 export default function VictimSocietySection() {
+  const [bookCover, setBookCover] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchCover() {
+      try {
+        const { createClient } = await import('@supabase/supabase-js')
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+        )
+        const { data } = await supabase
+          .from('site_settings')
+          .select('value')
+          .eq('key', 'book_cover_image')
+          .maybeSingle()
+        if (data?.value) setBookCover(data.value)
+      } catch { /* ignore */ }
+    }
+    fetchCover()
+  }, [])
+
   return (
     <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,7 +145,16 @@ export default function VictimSocietySection() {
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={6} className="text-center mt-14">
           <p className="text-lg font-medium text-black">법정이 피해자를 의심하는 구조를 아는 변호사가,</p>
           <p className="text-lg font-medium text-black mt-1">그 의심을 정면으로 반박하는 변호를 합니다.</p>
-          <div className="mt-8">
+          <div className="my-8 flex justify-center">
+            <div className="w-48 aspect-[3/4] rounded-lg shadow-lg overflow-hidden bg-gray-100">
+              {bookCover ? (
+                <Image src={bookCover} alt="피해자 감별사회 표지" width={192} height={256} className="w-full h-full object-cover" unoptimized />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-sm text-gray-400">표지 이미지</div>
+              )}
+            </div>
+          </div>
+          <div className="mt-4">
             <a
               href="https://product.kyobobook.co.kr/detail/S000220843163"
               target="_blank"

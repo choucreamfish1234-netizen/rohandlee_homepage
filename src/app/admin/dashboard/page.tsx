@@ -1109,6 +1109,36 @@ export default function AdminDashboardPage() {
         )}
       </div>
 
+      {/* Book Cover Image Setting */}
+      <div className="mb-8 p-6 border border-gray-200 bg-gray-50 rounded-lg">
+        <h2 className="text-sm font-bold text-black mb-3">《피해자 감별사회》 표지 이미지</h2>
+        <p className="text-xs text-gray-500 mb-4">성범죄센터 페이지에 표시될 책 표지 이미지를 업로드하세요.</p>
+        <div className="flex items-center gap-4">
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={async (e) => {
+              const file = e.target.files?.[0]
+              if (!file) return
+              try {
+                const formData = new FormData()
+                formData.append('file', file)
+                const uploadRes = await fetch('/api/upload-image', { method: 'POST', body: formData })
+                const uploadData = await uploadRes.json()
+                if (uploadData.error) { alert(uploadData.error); return }
+                await fetch('/api/site-settings', {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ key: 'book_cover_image', value: uploadData.url }),
+                })
+                alert('표지 이미지가 업로드되었습니다.')
+              } catch { alert('업로드 실패') }
+            }}
+            className="text-xs"
+          />
+        </div>
+      </div>
+
       {/* GEO Rewrite Section */}
       <div className="mb-8 p-6 border border-purple-200 bg-purple-50/50 rounded-lg">
         <h2 className="text-sm font-bold text-purple-900 mb-1">GEO 리라이트</h2>
