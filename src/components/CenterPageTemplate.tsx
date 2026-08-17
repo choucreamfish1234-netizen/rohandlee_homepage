@@ -34,7 +34,7 @@ interface CenterPageTemplateProps {
   ctaHref?: string
   services: Service[]
   caseExamples?: CaseExample[]
-  declaration: {
+  declaration?: {
     title: string
     description: string
   }
@@ -219,29 +219,31 @@ export default function CenterPageTemplate({
       )}
 
       {/* 선언문 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <ScrollReveal>
-            <EditableText
-              page={pagePath}
-              section="declaration"
-              fieldKey="title"
-              defaultValue={declaration.title}
-              tag="h2"
-              className="text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line"
-            />
-            <div className="mt-8 w-16 h-px bg-accent mx-auto" />
-            <EditableText
-              page={pagePath}
-              section="declaration"
-              fieldKey="description"
-              defaultValue={declaration.description}
-              tag="p"
-              className="mt-8 text-gray-500 leading-relaxed whitespace-pre-line"
-            />
-          </ScrollReveal>
-        </div>
-      </section>
+      {declaration && (
+        <section className="py-16 sm:py-28 md:py-40 bg-white">
+          <div className="max-w-3xl mx-auto px-4 text-center">
+            <ScrollReveal>
+              <EditableText
+                page={pagePath}
+                section="declaration"
+                fieldKey="title"
+                defaultValue={declaration.title}
+                tag="h2"
+                className="text-2xl sm:text-3xl font-bold text-black leading-snug whitespace-pre-line"
+              />
+              <div className="mt-8 w-16 h-px bg-accent mx-auto" />
+              <EditableText
+                page={pagePath}
+                section="declaration"
+                fieldKey="description"
+                defaultValue={declaration.description}
+                tag="p"
+                className="mt-8 text-gray-500 leading-relaxed whitespace-pre-line"
+              />
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
 
       {/* 의뢰인 후기 또는 커스텀 섹션 */}
       {customSection ? customSection : (

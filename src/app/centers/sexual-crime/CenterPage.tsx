@@ -245,11 +245,6 @@ export default function SexualCrimeCenterPage() {
           image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop&q=80',
         },
       ]}
-      declaration={{
-        title: '성범죄 피해자를 위한\n전문 법률 서비스',
-        description:
-          '고소 단계부터 수사 동행, 재판, 손해배상까지\n피해자의 곁에서 끝까지 함께합니다.',
-      }}
       customSection={
         <>
           {/* 전담 변호사 — 최상단 */}
