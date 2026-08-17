@@ -78,6 +78,10 @@ const personJsonLd = {
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
   },
   url: `${baseUrl}/lawyers/lee-yurim`,
+  sameAs: [
+    'https://www.lawtalk.co.kr/directory/profile/8292-이유림/review',
+    'https://product.kyobobook.co.kr/detail/S000220843163',
+  ],
 }
 
 export default function Page() {

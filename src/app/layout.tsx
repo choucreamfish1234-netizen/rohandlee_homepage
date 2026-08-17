@@ -88,7 +88,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
   name: '법률사무소 로앤이',
-  alternateName: 'ROH & LEE LAW FIRM',
+  alternateName: 'ROH&LEE',
   description: '성범죄·재산범죄 피해자 전문 법률사무소. 피해자 위주의 변호, 모든 분야의 피해자를 대변합니다.',
   url: baseUrl,
   telephone: '032-207-8788',
@@ -150,6 +150,7 @@ const jsonLd = {
   sameAs: [
     'https://www.lawtalk.co.kr/directory/profile/8292-이유림/review',
     'https://pf.kakao.com/_YxgWxcn',
+    'https://www.instagram.com/lawfirm_rohandlee/',
   ],
 }
 
@@ -187,7 +188,7 @@ export default function RootLayout({
             '@context': 'https://schema.org',
             '@type': 'WebSite',
             'name': '법률사무소 로앤이',
-            'alternateName': ['로앤이', 'Law Firm Roh & Lee'],
+            'alternateName': ['로앤이', 'ROH&LEE'],
             'url': 'https://lawfirmrohandlee.com',
           }) }}
         />
