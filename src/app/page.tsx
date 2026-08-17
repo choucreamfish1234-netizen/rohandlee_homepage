@@ -5,6 +5,7 @@ import HeroSection from '@/components/sections/HeroSection'
 import StatsBar from '@/components/sections/StatsBar'
 import DeclarationSection from '@/components/sections/DeclarationSection'
 import CentersSection from '@/components/sections/CentersSection'
+import FirstMoverSection from '@/components/sections/FirstMoverSection'
 import OneStopSection from '@/components/sections/OneStopSection'
 import TagsSection from '@/components/sections/TagsSection'
 import ProcessSection from '@/components/sections/ProcessSection'
@@ -49,6 +50,7 @@ export default function Home() {
       <HeroSection />
       <StatsBar />
       <DeclarationSection />
+      <FirstMoverSection />
       <CentersSection />
       <OneStopSection />
       <TagsSection />
