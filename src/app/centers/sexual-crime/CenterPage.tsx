@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
@@ -193,7 +194,7 @@ export default function SexualCrimeCenterPage() {
     <CenterPageTemplate
       pagePath="centers/sexual-crime"
       centerName="성범죄 피해 전문센터"
-      subtitle="성범죄 피해자를 위한 전문 법률 서비스"
+      subtitle="성범죄 피해자 전담센터"
       ctaLabel="무료 상담 신청하기"
       ctaHref="/consultation"
       defaultCaseType="성범죄 피해 상담"
@@ -251,6 +252,34 @@ export default function SexualCrimeCenterPage() {
       }}
       customSection={
         <>
+          {/* 전담 변호사 — 최상단 */}
+          <section className="py-16 sm:py-28 md:py-40 bg-white">
+            <div className="max-w-5xl mx-auto px-4 text-center">
+              <ScrollReveal>
+                <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">Assigned Lawyer</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-black mb-16">성범죄 피해 전문센터 전담 변호사</h2>
+              </ScrollReveal>
+              <ScrollReveal delay={0.15}>
+                <div className="text-center max-w-xs mx-auto">
+                  <div className="w-full aspect-[3/4] max-w-xs mx-auto bg-gray-100 overflow-hidden mb-8 shadow-sm">
+                    <Image
+                      src="/images/lawyers/lawyer-lee.svg"
+                      alt="이유림 대표변호사"
+                      width={600}
+                      height={800}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-black">이유림 <span className="font-sans text-base font-normal text-gray-400">대표변호사</span></h3>
+                  <p className="mt-1 text-sm text-[#1B3B2F] font-medium">성범죄 피해자 전문 변호사 · 베스트셀러 《피해자 감별사회》 공동저자</p>
+                  <p className="mt-5 text-sm text-gray-400 leading-relaxed whitespace-pre-line">
+                    {'성폭력·스토킹·디지털성범죄 피해자를 대리하며,\n피해자다움과 강간 신화의 문제를 실무와 저술로 다루고 있습니다.'}
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+          </section>
+
           <CrimeTypesSection />
           <ProcessTimeline />
           <CenterCases />
@@ -261,15 +290,6 @@ export default function SexualCrimeCenterPage() {
           <ReviewsSection />
         </>
       }
-      lawyers={[
-        {
-          name: '이유림',
-          role: '대표변호사',
-          specialty: '성범죄 피해자 전문 변호사 · 베스트셀러 《피해자 감별사회》 공동저자',
-          quote: '성폭력·스토킹·디지털성범죄 피해자를 대리하며,\n피해자다움과 강간 신화의 문제를 실무와 저술로 다루고 있습니다.',
-          image: '/images/lawyers/lawyer-lee.svg',
-        },
-      ]}
       ctaTitle="혼자 앓지 마세요. 지금 전문가와 이야기하세요."
       ctaDescription="성범죄 전담 변호사에게 지금 바로 상담을 신청하세요."
     />
