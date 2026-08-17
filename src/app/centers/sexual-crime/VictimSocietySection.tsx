@@ -1,81 +1,129 @@
 'use client'
 
-import ScrollReveal from '@/components/ScrollReveal'
+import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 
-const stats = [
-  { value: '18건', label: '100명 신고 시 실형', color: 'text-red-600' },
-  { value: '5%', label: '성범죄 무죄율', color: 'text-red-600' },
-  { value: '1.4%', label: '무고죄 유죄율', color: 'text-[#1B3B2F]' },
-]
+function useCountUp(end: number, duration = 1800) {
+  const [count, setCount] = useState(end)
+  const [animated, setAnimated] = useState(false)
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    if (!ref.current || animated) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !animated) {
+          setAnimated(true)
+          setCount(0)
+          const startTime = Date.now()
+          const timer = setInterval(() => {
+            const elapsed = Date.now() - startTime
+            const progress = Math.min(elapsed / duration, 1)
+            const eased = 1 - Math.pow(1 - progress, 3)
+            setCount(Math.round(eased * end))
+            if (progress >= 1) clearInterval(timer)
+          }, 16)
+        }
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [animated, end, duration])
+
+  return { count, ref }
+}
+
+function StatNumber({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const { count, ref } = useCountUp(value)
+  return (
+    <div className="text-center">
+      <span ref={ref} className="text-4xl sm:text-5xl font-bold text-[#1B3B2F]">
+        {count}{suffix}
+      </span>
+      <p className="text-sm text-gray-500 mt-2">{label}</p>
+    </div>
+  )
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.1, ease: 'easeOut' as const },
+  }),
+}
 
 export default function VictimSocietySection() {
   return (
-    <section className="py-28 sm:py-40 bg-white">
+    <section className="py-20 sm:py-32 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            Authority
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-12">
-            우리는 &lsquo;피해자 감별사회&rsquo;에서 살고 있습니다
-          </h2>
-        </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <div className="text-base text-gray-700 leading-8 space-y-5">
-            <p className="text-lg font-medium text-black">
+        {/* 영역1: 도입 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-center">
+          <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">From the Book</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-black leading-snug">
+            우리는 &lsquo;피해자 감별사회&rsquo;에서<br className="sm:hidden" /> 살고 있습니다
+          </h2>
+          <div className="w-16 h-px bg-[#1B3B2F] mx-auto my-8" />
+        </motion.div>
+
+        {/* 영역2: 인용문 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1} className="max-w-2xl mx-auto">
+          <div className="bg-[#F8F8F8] rounded-2xl p-8 sm:p-10 text-center">
+            <svg className="w-8 h-8 text-[#1B3B2F]/30 mx-auto mb-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <p className="text-xl sm:text-2xl italic text-gray-800 leading-relaxed">
               &ldquo;변호사님, 저는 정말 피해자가 맞나요?&rdquo;
             </p>
-            <p>이유림 변호사가 상담실에서 가장 많이 듣는 질문입니다.</p>
-            <p className="text-gray-500 text-sm leading-7">
-              성폭력을 당하고도 자신이 피해자인지 의심하는 사람들.<br />
-              인터넷에서 &ldquo;유죄추정 사회&rdquo;라는 말을 보고 신고를 포기하는 사람들.<br />
-              &ldquo;그 사람 인생은 생각 안 해요?&rdquo;라는 말에 죄책감을 느끼는 사람들.
-            </p>
-            <p>
-              이유림·노채은 변호사는 이 구조적 문제를 박영사 베스트셀러<br className="hidden sm:inline" />
-              《피해자 감별사회: 법정은 왜 피해자를 의심하는가》에서 분석했습니다.
-            </p>
+            <p className="text-sm text-gray-500 mt-4">이유림 변호사가 상담실에서 가장 많이 듣는 질문</p>
           </div>
-        </ScrollReveal>
+        </motion.div>
 
-        <ScrollReveal delay={0.2}>
-          <div className="mt-10 bg-[#f8faf9] border border-gray-100 rounded-2xl p-8">
-            <p className="text-sm font-semibold text-[#1B3B2F] mb-6">《피해자 감별사회》가 밝힌 현실</p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-              {stats.map(s => (
-                <div key={s.label} className="text-center">
-                  <p className={`text-2xl sm:text-3xl font-bold ${s.color}`}>{s.value}</p>
-                  <p className="text-xs text-gray-500 mt-1">{s.label}</p>
-                </div>
-              ))}
+        {/* 영역3: 설명 텍스트 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2} className="max-w-xl mx-auto mt-14 text-center space-y-4">
+          <p className="text-lg text-gray-700">성폭력을 당하고도 자신이 피해자인지 의심하는 사람들.</p>
+          <p className="text-lg text-gray-700">인터넷에서 &lsquo;유죄추정 사회&rsquo;라는 말을 보고 신고를 포기하는 사람들.</p>
+          <p className="text-lg text-gray-700">&lsquo;그 사람 인생은 생각 안 해요?&rsquo;라는 말에 죄책감을 느끼는 사람들.</p>
+        </motion.div>
+
+        {/* 영역4: 책 소개 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3} className="text-center mt-14">
+          <p className="text-base text-gray-600 mb-6">이유림·노채은 변호사는 이 구조적 문제를 분석했습니다.</p>
+          <div className="inline-block border-2 border-[#1B3B2F] rounded-xl px-6 sm:px-8 py-4">
+            <p className="text-base sm:text-lg font-bold text-[#1B3B2F]">《피해자 감별사회: 법정은 왜 피해자를 의심하는가》</p>
+            <p className="text-xs text-gray-500 mt-1">박영사 출간 · 베스트셀러</p>
+          </div>
+        </motion.div>
+
+        {/* 영역5: 통계 3개 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={4} className="mt-16">
+          <div className="flex justify-center gap-10 sm:gap-16">
+            <StatNumber value={18} suffix="건" label="100명 신고 시 실형" />
+            <StatNumber value={5} suffix="%" label="성범죄 무죄율" />
+            <div className="text-center">
+              <span className="text-4xl sm:text-5xl font-bold text-[#1B3B2F]">1.4%</span>
+              <p className="text-sm text-gray-500 mt-2">무고죄 유죄율</p>
             </div>
-            <ul className="space-y-2 text-sm text-gray-600">
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 w-1.5 h-1.5 bg-[#1B3B2F] rounded-full flex-shrink-0" />
-                성폭력 신고 32,824건 중 기소는 13,284건(40.5%), 불기소 59.5%
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 w-1.5 h-1.5 bg-[#1B3B2F] rounded-full flex-shrink-0" />
-                &ldquo;성범죄 무고가 80%&rdquo;라는 주장의 실체: 실제 무고죄 유죄율 1.4%, 성범죄 허위신고 기소율 0.78%
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 w-1.5 h-1.5 bg-[#1B3B2F] rounded-full flex-shrink-0" />
-                성폭력 피해자 70%가 동결반응(freeze), 42%가 사후에도 가해자와 관계 지속(트라우마 본딩)
-              </li>
-            </ul>
           </div>
-        </ScrollReveal>
+        </motion.div>
 
-        <ScrollReveal delay={0.3}>
-          <p className="mt-10 text-base text-gray-700 leading-8">
-            법정이 피해자를 의심하는 구조를 아는 변호사가,<br className="hidden sm:inline" />
-            그 의심을 정면으로 반박하는 변호를 합니다.
-          </p>
-          <p className="mt-4 text-sm text-gray-500">
-            법률사무소 로앤이의 이유림 변호사는 박영사 베스트셀러 《피해자 감별사회》의 공동저자로, 수사와 재판에서 피해자가 겪는 구조적 불합리를 분석하고 이를 실무에서 직접 반박하는 변호를 수행한다.
-          </p>
-          <div className="mt-6">
+        {/* 영역6: 부연 통계 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5} className="max-w-2xl mx-auto mt-12">
+          <div className="bg-gray-50 rounded-lg p-6 text-center space-y-2">
+            <p className="text-sm text-gray-500 leading-relaxed">성폭력 신고 32,824건 중 기소 13,284건(40.5%), 불기소 59.5%</p>
+            <p className="text-sm text-gray-500 leading-relaxed">&lsquo;성범죄 무고 80%&rsquo; 주장의 실체: 허위신고 기소율 0.78%</p>
+            <p className="text-sm text-gray-500 leading-relaxed">성폭력 피해자 70%가 동결반응, 42%가 사후에도 가해자와 관계 지속</p>
+          </div>
+        </motion.div>
+
+        {/* 영역7: 마무리 */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={6} className="text-center mt-14">
+          <p className="text-lg font-medium text-black">법정이 피해자를 의심하는 구조를 아는 변호사가,</p>
+          <p className="text-lg font-medium text-black mt-1">그 의심을 정면으로 반박하는 변호를 합니다.</p>
+          <div className="mt-8">
             <a
               href="https://product.kyobobook.co.kr/detail/S000220843163"
               target="_blank"
@@ -85,7 +133,12 @@ export default function VictimSocietySection() {
               《피해자 감별사회》 더 알아보기 &rarr;
             </a>
           </div>
-        </ScrollReveal>
+        </motion.div>
+
+        {/* 영역8: GEO 완결문장 */}
+        <p className="sr-only">
+          법률사무소 로앤이의 이유림 변호사는 박영사 베스트셀러 《피해자 감별사회》의 공동저자로, 수사와 재판에서 피해자가 겪는 구조적 불합리를 분석하고 이를 실무에서 직접 반박하는 변호를 수행한다.
+        </p>
       </div>
     </section>
   )
