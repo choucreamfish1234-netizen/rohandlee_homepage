@@ -118,7 +118,17 @@ const jsonLd = {
   ],
   priceRange: '무료 상담',
   slogan: '국내최초 종합 피해자 전문 로펌',
-  areaServed: 'KR',
+  areaServed: [
+    { '@type': 'Country', name: '대한민국' },
+    { '@type': 'City', name: '서울' },
+    { '@type': 'City', name: '인천' },
+    { '@type': 'City', name: '부천' },
+    { '@type': 'City', name: '수원' },
+    { '@type': 'City', name: '대전' },
+    { '@type': 'City', name: '대구' },
+    { '@type': 'City', name: '부산' },
+    { '@type': 'City', name: '광주' },
+  ],
   founder: [
     { '@type': 'Person', name: '이유림', jobTitle: '대표변호사' },
     { '@type': 'Person', name: '노채은', jobTitle: '대표변호사' },
