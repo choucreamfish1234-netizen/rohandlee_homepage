@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
-import { EditableImage } from '@/components/Editable'
 
 interface CaseResult {
   case_name: string
@@ -185,15 +184,13 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-8"
       >
-        <EditableImage
-          page="home"
-          section="lawyers"
-          fieldKey={`lawyer-${lawyer.key}-photo`}
-          defaultSrc={lawyer.image}
+        <Image
+          src={lawyer.image}
           alt={lawyer.alt}
           width={600}
           height={800}
           className="w-full h-full object-cover"
+          unoptimized
         />
       </motion.div>
 
@@ -365,6 +362,7 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
             width={300}
             height={400}
             className="w-full h-full object-cover object-top"
+            unoptimized
           />
         ) : (
           <div className="w-full h-full bg-[#1B3B2F] flex items-center justify-center">
