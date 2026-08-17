@@ -81,7 +81,7 @@ export default function StatsBar() {
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">
-            <StatItem label="피해자 전담률" end={100} suffix="%" />
+            <StatItem label="전문센터" end={8} suffix="대" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">

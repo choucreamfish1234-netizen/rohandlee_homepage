@@ -120,10 +120,20 @@ export default function HeroSection() {
 
       {/* Text below slider */}
       <div className="text-center px-5 sm:px-4 mt-8 sm:mt-12 md:mt-16">
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
+        >
+          <span className="inline-block text-xs font-semibold px-4 py-1.5 bg-[#1B3B2F] text-white rounded-full mb-5">
+            국내최초 종합 피해자 전문 로펌
+          </span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           className="text-2xl md:text-4xl font-medium tracking-tight text-gray-900"
         >
           법률사무소 로앤이
@@ -132,20 +142,11 @@ export default function HeroSection() {
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
-          className="text-sm text-gray-400 mt-2"
+          transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+          className="text-sm sm:text-base text-gray-500 mt-5 leading-relaxed"
         >
-          &ldquo;피해자 전문 로펌&rdquo;
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.35, ease: 'easeOut' }}
-          className="text-base md:text-lg text-gray-500 mt-6 leading-relaxed"
-        >
-          당신의 잃어버린 일상을 되찾을 때까지,<br />
-          로앤이가 끝까지 함께 합니다.
+          성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 강제집행<br />
+          모든 피해자를 한 곳에서. 8대 전문센터가 함께합니다.
         </motion.p>
 
         <motion.div

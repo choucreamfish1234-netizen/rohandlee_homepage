@@ -122,14 +122,10 @@ export default function CentersSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             8 Specialized Centers
           </p>
-          <EditableText
-            page="home"
-            section="centers"
-            fieldKey="heading"
-            defaultValue="8대 전문센터"
-            tag="h2"
-            className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
-          />
+          <p className="text-xs font-semibold text-[#1B3B2F] text-center mb-3">국내 유일, 피해자를 위한</p>
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
+            8대 전문센터
+          </h2>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8">
