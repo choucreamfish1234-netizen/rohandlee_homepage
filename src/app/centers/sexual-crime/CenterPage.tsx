@@ -277,8 +277,8 @@ export default function SexualCrimeCenterPage() {
           image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop&q=80',
         },
         {
-          title: '증거 보전 및 디지털 포렌식',
-          description: '휴대폰, 영상 등 디지털 증거를 확보하고 포렌식 절차를 진행합니다.',
+          title: '디지털 증거 보전 및 포렌식 절차 조력',
+          description: '휴대폰, 영상, 대화내역 등 디지털 증거의 보전 방법을 안내하고, 필요 시 전문 포렌식 업체와 협업하여 법적 활용을 조력합니다.',
           image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop&q=80',
         },
         {

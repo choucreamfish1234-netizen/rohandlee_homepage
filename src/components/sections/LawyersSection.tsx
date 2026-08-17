@@ -53,7 +53,7 @@ const fallbackLawyers: LawyerData[] = [
     ],
     results: [
       { case_name: '강도강간 등 고소대리', result: '징역 8년 선고' },
-      { case_name: '카메라이용촬영물', result: '압수수색 및 디지털 포렌식 다수 진행' },
+      { case_name: '카메라이용촬영물', result: '압수수색 및 디지털 증거 확보 조력 다수' },
       { case_name: '재산범죄 고소대리', result: '다수 송치' },
       { case_name: '민사 손해배상소송', result: '다수 승소' },
     ],
@@ -334,7 +334,7 @@ const lawyerJsonLd = [
     name: '이유림',
     jobTitle: '대표변호사',
     worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    knowsAbout: ['성범죄 피해자 변호', '디지털 포렌식', 'IT 법률', '피해자 국선변호', '불법촬영', '스토킹'],
+    knowsAbout: ['성범죄 피해자 변호', '디지털 증거 법적 활용', '디지털성범죄', '피해자 국선변호', '불법촬영', '스토킹'],
     alumniOf: [
       { '@type': 'CollegeOrUniversity', name: '한국외국어대학교' },
       { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },

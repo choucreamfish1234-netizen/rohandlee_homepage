@@ -310,7 +310,7 @@ export default function PhysicalCrimePage() {
                   이유림 변호사 — 증거를 확보하고 보호 조치를 선제 실행한다
                 </h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  CCTV 확보, 진단서 발급, 디지털 증거 수집을 신속하게 진행합니다. 스토킹·가정폭력의
+                  CCTV 확보, 진단서 발급, 디지털 증거 보전을 신속하게 조력합니다. 스토킹·가정폭력의
                   경우 접근금지 가처분, 피해자 보호명령을 먼저 받아 피해자의 안전을 확보합니다.
                 </p>
               </div>
