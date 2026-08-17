@@ -6,6 +6,9 @@ import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
 import CenterCases from './CenterCases'
 import FAQAccordion from './FAQAccordion'
+import VictimSocietySection from './VictimSocietySection'
+import OneStopCrimeSection from './OneStopCrimeSection'
+import SincerityAppSection from './SincerityAppSection'
 import { FIRM_STATS } from '@/lib/firm-stats'
 
 const reviews = [
@@ -314,6 +317,9 @@ export default function SexualCrimeCenterPage() {
           <VictimLawyerSection />
           <ProcessTimeline />
           <CenterCases />
+          <VictimSocietySection />
+          <OneStopCrimeSection />
+          <SincerityAppSection />
           <FAQAccordion />
           <ReviewsSection />
         </>
@@ -328,7 +334,7 @@ export default function SexualCrimeCenterPage() {
         },
       ]}
       ctaTitle="혼자 앓지 마세요. 지금 전문가와 이야기하세요."
-      ctaDescription="성범죄 전담 변호사의 무료 상담을 지금 바로 받아보세요."
+      ctaDescription="성범죄 전담 변호사에게 지금 바로 상담을 신청하세요."
     />
   )
 }
