@@ -23,6 +23,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
+    ...['rape','molestation','intoxication','minors','family','hidden-camera','distribution','deepfake','online','workplace','stalking','std'].map(slug => ({
+      url: `${baseUrl}/centers/sexual-crime/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
+    ...['investigation','trial','appeal','settlement','damages','cost-recovery','false-accusation','evidence','statute-of-limitations'].map(slug => ({
+      url: `${baseUrl}/centers/sexual-crime/guide/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     {
       url: `${baseUrl}/centers/property-crime`,
       lastModified: new Date(),
