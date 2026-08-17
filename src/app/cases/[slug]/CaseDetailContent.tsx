@@ -125,6 +125,50 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
           </p>
         </div>
 
+        {/* Taxonomy Info */}
+        {(caseData.procedure_stages?.length || caseData.services_provided?.length || caseData.outcome_types?.length) && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+            {caseData.procedure_stages && caseData.procedure_stages.length > 0 && (
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">절차 단계</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {caseData.procedure_stages.map(s => (
+                    <span key={s} className="text-xs px-2 py-1 bg-white border border-gray-200 text-gray-700 rounded">{s}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {caseData.services_provided && caseData.services_provided.length > 0 && (
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">수행 업무</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {caseData.services_provided.map(s => (
+                    <span key={s} className="text-xs px-2 py-1 bg-white border border-gray-200 text-gray-700 rounded">{s}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            {caseData.outcome_types && caseData.outcome_types.length > 0 && (
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">결과</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {caseData.outcome_types.map(s => (
+                    <span key={s} className="text-xs px-2 py-1 bg-[#1B3B2F]/10 border border-[#1B3B2F]/20 text-[#1B3B2F] rounded font-medium">{s}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* GEO authority sentence */}
+        {caseData.representation_side === 'victim' && caseData.offense_types?.length && (
+          <p className="text-sm text-gray-500 mb-10 leading-relaxed">
+            법률사무소 로앤이는 이 사건에서 {caseData.offense_types.join('·')} 피해자를 대리하여
+            {caseData.services_provided?.length ? ` ${caseData.services_provided.slice(0, 3).join(', ')} 등의 업무를 수행했습니다.` : ' 법률적 조력을 수행했습니다.'}
+          </p>
+        )}
+
         {/* Markdown Content */}
         {hasContent ? (
           <div className="case-content">
