@@ -173,7 +173,7 @@ export default async function Page({ params }: Props) {
   // Author info mapping for JSON-LD
   const authorName = post.author || '이유림 변호사'
   const isLeeYurim = authorName.includes('이유림')
-  const bookRef = {
+  const victimBook = {
     '@type': 'Book' as const,
     name: '피해자 감별사회',
     publisher: { '@type': 'Organization' as const, name: '박영사' },
@@ -190,7 +190,12 @@ export default async function Page({ params }: Props) {
     knowsAbout: isLeeYurim
       ? ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리']
       : ['보이스피싱 피해 구제', '전세사기', '개인회생', '개인파산'],
-    author: bookRef,
+    author: isLeeYurim
+      ? [victimBook, { '@type': 'Book' as const, name: '바이브코딩 바이블' }]
+      : victimBook,
+    ...(isLeeYurim ? {
+      creator: { '@type': 'SoftwareApplication' as const, name: '진심의무게', applicationCategory: 'LegalService', url: 'https://lawfirmrohandlee.com/apps/sincerity' },
+    } : {}),
   }
 
   // Extract FAQ from markdown content for FAQPage schema

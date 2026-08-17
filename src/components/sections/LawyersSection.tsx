@@ -25,6 +25,7 @@ interface LawyerData {
   current: string[]
   previous: string[]
   publications?: { title: string; url?: string }[]
+  legaltech?: { title: string; url?: string }[]
 }
 
 interface LawyerDB {
@@ -78,6 +79,10 @@ const fallbackLawyers: LawyerData[] = [
     ],
     publications: [
       { title: '《피해자 감별사회》 공저 (박영사) — 베스트셀러', url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
+      { title: '《바이브코딩 바이블》 저', url: '' },
+    ],
+    legaltech: [
+      { title: '《진심의 무게》 — 엄벌탄원서 무료 생성 애플리케이션 (직접 개발)', url: '/apps/sincerity' },
     ],
   },
   {
@@ -287,6 +292,27 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         </motion.div>
       )}
 
+      {lawyer.legaltech && lawyer.legaltech.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.75, ease: 'easeOut' }}
+          className="mt-8"
+        >
+          <p className="text-xs tracking-widest text-gray-300 uppercase mb-2">법률과 기술</p>
+          <div className="space-y-1">
+            {lawyer.legaltech.map((item) => (
+              item.url ? (
+                <a key={item.title} href={item.url} className="block text-sm text-gray-700 hover:text-[#1B3B2F] transition-colors">{item.title}</a>
+              ) : (
+                <p key={item.title} className="text-sm text-gray-700">{item.title}</p>
+              )
+            ))}
+          </div>
+        </motion.div>
+      )}
+
       <div className="mt-8">
         <motion.p
           initial={{ opacity: 0 }}
@@ -355,7 +381,7 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
   )
 }
 
-const bookJsonLd = {
+const victimBookJsonLd = {
   '@type': 'Book',
   name: '피해자 감별사회',
   author: [
@@ -367,6 +393,23 @@ const bookJsonLd = {
   url: 'https://product.kyobobook.co.kr/detail/S000220843163',
 }
 
+const vibeCodingBookJsonLd = {
+  '@type': 'Book',
+  name: '바이브코딩 바이블',
+  author: { '@type': 'Person', name: '이유림' },
+  inLanguage: 'ko',
+}
+
+const sincerityAppJsonLd = {
+  '@type': 'SoftwareApplication',
+  name: '진심의무게',
+  applicationCategory: 'LegalService',
+  operatingSystem: 'Web',
+  description: '범죄피해자의 엄벌탄원서 작성을 돕는 무료 생성 애플리케이션',
+  url: 'https://lawfirmrohandlee.com/apps/sincerity',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'KRW' },
+}
+
 const lawyerJsonLd = [
   {
     '@context': 'https://schema.org',
@@ -374,7 +417,7 @@ const lawyerJsonLd = [
     name: '이유림',
     jobTitle: '대표변호사',
     worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '디지털 증거 법적 활용', '피해자 권리'],
+    knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리', 'LegalTech'],
     alumniOf: [
       { '@type': 'CollegeOrUniversity', name: '한국외국어대학교' },
       { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },
@@ -383,7 +426,8 @@ const lawyerJsonLd = [
       { '@type': 'Organization', name: '서울지방변호사회' },
       { '@type': 'Organization', name: '대한난민지원변호사단' },
     ],
-    author: bookJsonLd,
+    author: [victimBookJsonLd, vibeCodingBookJsonLd],
+    creator: sincerityAppJsonLd,
   },
   {
     '@context': 'https://schema.org',
@@ -400,7 +444,7 @@ const lawyerJsonLd = [
       { '@type': 'Organization', name: '대법원 국선변호인' },
       { '@type': 'Organization', name: '한국소비자원 소송지원 변호사' },
     ],
-    author: bookJsonLd,
+    author: victimBookJsonLd,
   },
 ]
 

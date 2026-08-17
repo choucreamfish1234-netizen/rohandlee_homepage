@@ -354,8 +354,8 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
           <p className="font-medium text-gray-900">이유림 변호사</p>
           <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
           <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-            성폭력·스토킹·디지털성범죄 피해자를 대리하며, 피해자다움과 강간 신화의 문제를 다룬
-            베스트셀러 《피해자 감별사회》 공동저자(박영사).
+            성폭력·스토킹·디지털성범죄 피해자를 대리하며, 베스트셀러 《피해자 감별사회》 공동저자(박영사).
+            피해자 지원 앱 《진심의 무게》를 직접 개발. 《바이브코딩 바이블》 저자.
           </p>
         </div>
       </div>
