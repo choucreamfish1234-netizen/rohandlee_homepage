@@ -39,10 +39,10 @@ function StatNumber({ value, suffix, label }: { value: number; suffix: string; l
   const { count, ref } = useCountUp(value)
   return (
     <div className="text-center">
-      <span ref={ref} className="text-4xl sm:text-5xl font-bold text-[#1B3B2F]">
+      <span ref={ref} className="text-2xl sm:text-5xl font-bold text-[#1B3B2F]">
         {count}{suffix}
       </span>
-      <p className="text-sm text-gray-500 mt-2">{label}</p>
+      <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">{label}</p>
     </div>
   )
 }
@@ -85,7 +85,7 @@ export default function VictimSocietySection() {
         {/* 영역1: 도입 */}
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={0} className="text-center">
           <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">From the Book</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-black leading-snug">
+          <h2 className="text-2xl sm:text-3xl font-bold text-black leading-snug">
             우리는 &lsquo;피해자 감별사회&rsquo;에서<br className="sm:hidden" /> 살고 있습니다
           </h2>
           <div className="w-16 h-px bg-[#1B3B2F] mx-auto my-8" />
@@ -122,12 +122,12 @@ export default function VictimSocietySection() {
 
         {/* 영역5: 통계 3개 */}
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={4} className="mt-16">
-          <div className="flex justify-center gap-10 sm:gap-16">
+          <div className="grid grid-cols-3 gap-4 sm:gap-16 max-w-lg sm:max-w-none mx-auto">
             <StatNumber value={18} suffix="건" label="100명 신고 시 실형" />
             <StatNumber value={5} suffix="%" label="성범죄 무죄율" />
             <div className="text-center">
-              <span className="text-4xl sm:text-5xl font-bold text-[#1B3B2F]">1.4%</span>
-              <p className="text-sm text-gray-500 mt-2">무고죄 유죄율</p>
+              <span className="text-2xl sm:text-5xl font-bold text-[#1B3B2F]">1.4%</span>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">무고죄 유죄율</p>
             </div>
           </div>
         </motion.div>
@@ -159,7 +159,7 @@ export default function VictimSocietySection() {
               href="https://product.kyobobook.co.kr/detail/S000220843163"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-[#1B3B2F] font-medium hover:underline"
+              className="inline-flex items-center text-sm text-[#1B3B2F] font-medium hover:underline py-3"
             >
               《피해자 감별사회》 더 알아보기 &rarr;
             </a>

@@ -47,15 +47,10 @@ export default function ChooseLawyerSection() {
               여기서 문제가 생깁니다.
             </p>
             <p className="text-gray-500 text-sm sm:text-base leading-7">
-              피해자인 당신이 상담을 받은 그 로펌에,<br />
-              내일은 당신의 가해자가 찾아갈 수 있습니다.<br />
-              같은 로펌이 피해자와 가해자를 동시에 받지는 않지만,<br />
-              당신의 사건을 거절하고 가해자의 사건을 수임할 수는 있습니다.<br />
-              수임료가 더 크니까요.
+              피해자인 당신이 상담을 받은 그 로펌에, 내일은 당신의 가해자가 찾아갈 수 있습니다. 같은 로펌이 피해자와 가해자를 동시에 받지는 않지만, 당신의 사건을 거절하고 가해자의 사건을 수임할 수는 있습니다. 수임료가 더 크니까요.
             </p>
             <p className="font-semibold text-[#1B3B2F]">
-              그래서 확인해야 합니다.<br />
-              그 로펌이 피해자를 위한 곳인지, 가해자를 위한 곳인지.
+              그래서 확인해야 합니다. 그 로펌이 피해자를 위한 곳인지, 가해자를 위한 곳인지.
             </p>
           </div>
         </ScrollReveal>
@@ -79,11 +74,9 @@ export default function ChooseLawyerSection() {
 
         {/* 마무리 */}
         <ScrollReveal delay={0.4}>
-          <div className="max-w-2xl mx-auto mt-14 bg-[#1B3B2F] rounded-xl px-8 py-6 text-center">
+          <div className="max-w-2xl mx-auto mt-14 bg-[#1B3B2F] rounded-xl px-5 sm:px-8 py-6 text-center">
             <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-              로앤이 성범죄센터는 성범죄 가해자의 사건을 수임하지 않습니다.<br />
-              《피해자 감별사회》를 쓴 변호사가,<br />
-              법정에서 피해자가 의심받는 구조를 정면으로 반박합니다.
+              로앤이 성범죄센터는 성범죄 가해자의 사건을 수임하지 않습니다. 《피해자 감별사회》를 쓴 변호사가, 법정에서 피해자가 의심받는 구조를 정면으로 반박합니다.
             </p>
             <p className="mt-4 text-xl font-bold text-white">당신의 이야기는 안전합니다.</p>
           </div>

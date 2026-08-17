@@ -91,7 +91,7 @@ function ReviewsSection() {
         <div className="relative">
           <button
             onClick={() => scroll('left')}
-            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
+            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
             aria-label="이전 후기"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ function ReviewsSection() {
           </button>
           <button
             onClick={() => scroll('right')}
-            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
+            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
             aria-label="다음 후기"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,9 +225,9 @@ export default function SexualCrimeCenterPage() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
               성범죄 피해자 전담센터
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
-              당신은 아무 잘못도 하지 않았습니다.<br />
-              법정이 피해자를 의심하는 구조를, 우리는 알고 있습니다.<br />
+            <p className="mt-6 text-sm sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
+              당신은 아무 잘못도 하지 않았습니다.<br className="hidden sm:inline" />
+              법정이 피해자를 의심하는 구조를, 우리는 알고 있습니다.<br className="hidden sm:inline" />
               《피해자 감별사회》를 쓴 변호사가 직접 대리합니다.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
@@ -298,7 +298,7 @@ export default function SexualCrimeCenterPage() {
       customSection={
         <>
           {/* 전담 변호사 — 최상단 */}
-          <section className="py-16 sm:py-28 md:py-16 sm:py-24 bg-white">
+          <section className="py-12 sm:py-20 bg-white">
             <div className="max-w-5xl mx-auto px-4 text-center">
               <ScrollReveal>
                 <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">Assigned Lawyer</p>

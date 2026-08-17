@@ -79,7 +79,7 @@ function AccordionItem({ faq, index }: { faq: FAQ; index: number }) {
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className="overflow-hidden"
           >
-            <div className="pb-6 pl-10 pr-10">
+            <div className="pb-6 pl-4 pr-4 sm:pl-10 sm:pr-10">
               <p className="text-sm text-gray-500 leading-relaxed">
                 {faq.answer}
               </p>

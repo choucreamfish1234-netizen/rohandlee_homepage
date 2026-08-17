@@ -25,7 +25,7 @@ export default function SincerityAppSection() {
             <div className="mt-6">
               <Link
                 href="/apps/sincerity"
-                className="text-sm text-[#1B3B2F] font-medium hover:underline"
+                className="inline-flex items-center text-sm text-[#1B3B2F] font-medium hover:underline py-3"
               >
                 진심의 무게 바로가기 &rarr;
               </Link>

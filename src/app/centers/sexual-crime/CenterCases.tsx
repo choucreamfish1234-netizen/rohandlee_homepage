@@ -90,7 +90,7 @@ export default function CenterCases() {
           <div className="text-center mt-12">
             <Link
               href="/cases"
-              className="inline-flex items-center text-sm text-gray-500 hover:text-black transition-colors"
+              className="inline-flex items-center text-sm text-gray-500 hover:text-black transition-colors py-3"
             >
               피해자 대리 사례 전체 보기
               <span className="ml-1">&rarr;</span>
