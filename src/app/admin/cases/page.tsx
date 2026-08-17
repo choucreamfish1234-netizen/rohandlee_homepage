@@ -6,7 +6,7 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Image from 'next/image'
-import { type SuccessCase, CASE_IMAGE_POOLS, getRandomCaseImage } from '@/lib/cases'
+import { type SuccessCase, CASE_IMAGE_POOLS, getRandomCaseImage, PRACTICE_AREAS, OFFENSE_TYPE_OPTIONS, PROCEDURE_STAGE_OPTIONS, SERVICE_OPTIONS, OUTCOME_OPTIONS } from '@/lib/cases'
 
 const CATEGORIES = ['성범죄', '보이스피싱', '전세사기', '스토킹', '재산범죄', '학교폭력', '일반']
 
@@ -65,6 +65,19 @@ function AdminCasesPage() {
   const contentFileInputRef = useRef<HTMLInputElement>(null)
   const [contentUploading, setContentUploading] = useState(false)
 
+  // Taxonomy state
+  const [practiceArea, setPracticeArea] = useState('')
+  const [representationSide, setRepresentationSide] = useState<'victim' | 'defendant'>('victim')
+  const [offenseTypes, setOffenseTypes] = useState<string[]>([])
+  const [procedureStages, setProcedureStages] = useState<string[]>([])
+  const [servicesProvided, setServicesProvided] = useState<string[]>([])
+  const [outcomeTypes, setOutcomeTypes] = useState<string[]>([])
+  const [challenge, setChallenge] = useState('')
+  const [strategyText, setStrategyText] = useState('')
+  const [resultDetail, setResultDetail] = useState('')
+  const [lawyerIds, setLawyerIds] = useState<string[]>([])
+  const [anonymizationReviewed, setAnonymizationReviewed] = useState(false)
+
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
       router.push('/admin')
@@ -120,6 +133,17 @@ function AdminCasesPage() {
         setBadgeColor(found.badge_color)
         setTagColor(found.tag_color)
         setImageUrl(found.image_url)
+        setPracticeArea(found.practice_area || '')
+        setRepresentationSide(found.representation_side || 'victim')
+        setOffenseTypes(found.offense_types || [])
+        setProcedureStages(found.procedure_stages || [])
+        setServicesProvided(found.services_provided || [])
+        setOutcomeTypes(found.outcome_types || [])
+        setChallenge(found.challenge || '')
+        setStrategyText(found.strategy || '')
+        setResultDetail(found.result_detail || '')
+        setLawyerIds(found.lawyer_ids || [])
+        setAnonymizationReviewed(found.anonymization_reviewed || false)
         setMode('edit')
       }
     } catch {
@@ -138,6 +162,17 @@ function AdminCasesPage() {
     setBadgeColor('bg-emerald-50 text-emerald-700 border-emerald-200')
     setTagColor('bg-emerald-50 text-emerald-600')
     setImageUrl('')
+    setPracticeArea('')
+    setRepresentationSide('victim')
+    setOffenseTypes([])
+    setProcedureStages([])
+    setServicesProvided([])
+    setOutcomeTypes([])
+    setChallenge('')
+    setStrategyText('')
+    setResultDetail('')
+    setLawyerIds([])
+    setAnonymizationReviewed(false)
   }
 
   const handleSave = async (published: boolean) => {
@@ -158,6 +193,18 @@ function AdminCasesPage() {
       tag_color: tagColor,
       image_url: imageUrl.trim() || getRandomCaseImage(category),
       published,
+      practice_area: practiceArea || null,
+      representation_side: representationSide,
+      offense_types: offenseTypes.length > 0 ? offenseTypes : null,
+      procedure_stages: procedureStages.length > 0 ? procedureStages : null,
+      services_provided: servicesProvided.length > 0 ? servicesProvided : null,
+      outcome_types: outcomeTypes.length > 0 ? outcomeTypes : null,
+      lawyer_ids: lawyerIds.length > 0 ? lawyerIds : null,
+      challenge: challenge.trim() || null,
+      strategy: strategyText.trim() || null,
+      result_detail: resultDetail.trim() || null,
+      anonymization_reviewed: anonymizationReviewed,
+      status: published ? 'published' : 'draft',
     }
 
     if (!editId) {
@@ -657,6 +704,96 @@ function AdminCasesPage() {
                 />
               </div>
             )}
+          </div>
+
+          {/* Taxonomy Section */}
+          <div className="pt-4 border-t border-gray-100">
+            <p className="text-xs font-bold text-gray-700 mb-3">사례 분류 (선택)</p>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">분야</label>
+                <select value={practiceArea} onChange={e => setPracticeArea(e.target.value)} className="w-full px-3 py-2 border border-gray-200 text-xs focus:outline-none focus:border-[#1B3B2F] bg-white">
+                  <option value="">선택</option>
+                  {PRACTICE_AREAS.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">대리 측</label>
+                <select value={representationSide} onChange={e => setRepresentationSide(e.target.value as 'victim' | 'defendant')} className="w-full px-3 py-2 border border-gray-200 text-xs focus:outline-none focus:border-[#1B3B2F] bg-white">
+                  <option value="victim">피해자</option>
+                  <option value="defendant">피고인/피의자</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">범죄유형 (복수 선택)</label>
+                <div className="max-h-32 overflow-y-auto border border-gray-200 p-2 space-y-1">
+                  {OFFENSE_TYPE_OPTIONS.map(o => (
+                    <label key={o} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={offenseTypes.includes(o)} onChange={() => setOffenseTypes(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {o}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">절차 단계 (복수 선택)</label>
+                <div className="max-h-32 overflow-y-auto border border-gray-200 p-2 space-y-1">
+                  {PROCEDURE_STAGE_OPTIONS.map(o => (
+                    <label key={o} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={procedureStages.includes(o)} onChange={() => setProcedureStages(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {o}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">수행 업무 (복수 선택)</label>
+                <div className="max-h-32 overflow-y-auto border border-gray-200 p-2 space-y-1">
+                  {SERVICE_OPTIONS.map(o => (
+                    <label key={o} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={servicesProvided.includes(o)} onChange={() => setServicesProvided(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {o}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">결과 (복수 선택)</label>
+                <div className="max-h-32 overflow-y-auto border border-gray-200 p-2 space-y-1">
+                  {OUTCOME_OPTIONS.map(o => (
+                    <label key={o} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={outcomeTypes.includes(o)} onChange={() => setOutcomeTypes(prev => prev.includes(o) ? prev.filter(x => x !== o) : [...prev, o])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {o}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">담당 변호사</label>
+                <div className="flex gap-3">
+                  {['이유림', '노채은'].map(name => (
+                    <label key={name} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={lawyerIds.includes(name)} onChange={() => setLawyerIds(prev => prev.includes(name) ? prev.filter(x => x !== name) : [...prev, name])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {name}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 text-[11px] text-gray-600 cursor-pointer">
+                  <input type="checkbox" checked={anonymizationReviewed} onChange={e => setAnonymizationReviewed(e.target.checked)} className="w-3 h-3 accent-[#1B3B2F]" />
+                  <span className="font-medium">익명화 검토 완료</span>
+                </label>
+              </div>
+            </div>
           </div>
 
           <div className="pt-4 border-t border-gray-100">

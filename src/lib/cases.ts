@@ -13,7 +13,75 @@ export interface SuccessCase {
   sort_order: number
   published: boolean
   featured?: boolean
+  created_at?: string
+  updated_at?: string
+
+  practice_area?: string
+  representation_side?: 'victim' | 'defendant'
+  offense_types?: string[]
+  procedure_stages?: string[]
+  services_provided?: string[]
+  outcome_types?: string[]
+  lawyer_ids?: string[]
+  challenge?: string
+  strategy?: string
+  result_detail?: string
+  seo_title?: string
+  seo_description?: string
+  anonymization_reviewed?: boolean
+  status?: 'draft' | 'privacy_review' | 'approved' | 'published'
 }
+
+export const PRACTICE_AREAS = [
+  { value: 'sexual_crime', label: '성범죄' },
+  { value: 'stalking', label: '스토킹' },
+  { value: 'digital_sex_crime', label: '디지털성범죄' },
+  { value: 'property_crime', label: '재산범죄' },
+  { value: 'school_violence', label: '학교폭력' },
+  { value: 'real_estate', label: '부동산' },
+  { value: 'physical_crime', label: '신체범죄' },
+  { value: 'damages', label: '손해배상' },
+  { value: 'other', label: '기타' },
+] as const
+
+export const OFFENSE_TYPE_OPTIONS = [
+  '강간', '준강간', '강제추행', '준강제추행',
+  '업무상위력에 의한 추행', '업무상위력에 의한 간음',
+  '친족관계 성폭력', '아동·청소년 대상 성범죄',
+  '불법촬영', '촬영물 유포', '유포 협박',
+  '딥페이크', '온라인 성적 괴롭힘',
+  '스토킹', '데이트폭력', '가정폭력',
+  '사기', '횡령', '배임', '보이스피싱', '전세사기',
+  '폭행', '상해', '협박', '명예훼손',
+  '학교폭력',
+  '기타',
+] as const
+
+export const PROCEDURE_STAGE_OPTIONS = [
+  '고소 전 상담', '증거 정리', '고소장 작성 및 제출',
+  '경찰 수사', '피해자 조사 동석', '검찰 수사',
+  '불송치 이의신청', '재정신청',
+  '형사재판', '피해자 의견 제출', '증인신문 대비',
+  '합의', '손해배상', '항소심', '학폭위·심의위',
+] as const
+
+export const SERVICE_OPTIONS = [
+  '고소장 작성', '법률의견서 제출', '피해자 조사 동석',
+  '진술 정리', '증거 정리 및 제출', '디지털 증거 보전 조력',
+  '수사기관 의견 제출', '피해자 의견서 제출',
+  '합의 협상 대리', '가해자 연락 차단·대리',
+  '공판 피해자 대리', '손해배상 청구',
+  '2차 가해 대응', '무고·명예훼손 역공 대응',
+  '접근금지 가처분', '보호조치 확보',
+] as const
+
+export const OUTCOME_OPTIONS = [
+  '입건', '송치', '기소', '구속',
+  '유죄', '실형', '집행유예', '벌금',
+  '불송치', '무죄',
+  '합의', '손해배상 인정', '접근금지 등 보호조치',
+  '보호처분',
+] as const
 
 // Case image pools - law/court themed ONLY, NO face closeups
 export const CASE_IMAGE_POOLS: Record<string, string[]> = {

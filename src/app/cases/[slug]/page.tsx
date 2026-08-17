@@ -79,24 +79,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: '성공사례 | 법률사무소 로앤이' }
   }
 
+  const metaTitle = caseData.seo_title || caseData.title
+  const metaDesc = caseData.seo_description || caseData.summary
+  const pageUrl = `${baseUrl}/cases/${caseData.slug || decodedSlug}`
+
   return {
-    title: `${caseData.title} | 법률사무소 로앤이 성공사례`,
-    description: caseData.summary,
+    title: metaTitle,
+    description: metaDesc,
     alternates: {
-      canonical: `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
+      canonical: pageUrl,
     },
     openGraph: {
-      title: caseData.title,
-      description: caseData.summary,
+      title: metaTitle,
+      description: metaDesc,
       type: 'article',
       images: caseData.image_url ? [caseData.image_url] : [`${baseUrl}/og-image.png`],
-      url: `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
+      url: pageUrl,
       siteName: '법률사무소 로앤이',
+      locale: 'ko_KR',
     },
     twitter: {
       card: 'summary_large_image',
-      title: caseData.title,
-      description: caseData.summary,
+      title: metaTitle,
+      description: metaDesc,
       images: caseData.image_url ? [caseData.image_url] : [`${baseUrl}/og-image.png`],
     },
   }
@@ -108,11 +113,16 @@ export default async function Page({ params }: Props) {
 
   const caseData = await findCase(decodedSlug)
 
+  const seoDesc = caseData?.seo_description || caseData?.summary || ''
+  const aboutTopics = caseData?.offense_types?.length
+    ? caseData.offense_types.map((t: string) => ({ '@type': 'Thing', name: t }))
+    : undefined
+
   const jsonLd = caseData ? {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: caseData.title,
-    description: caseData.summary,
+    headline: caseData.seo_title || caseData.title,
+    description: seoDesc,
     image: caseData.image_url,
     author: {
       '@type': 'Organization',
@@ -129,6 +139,7 @@ export default async function Page({ params }: Props) {
       '@type': 'WebPage',
       '@id': `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
     },
+    ...(aboutTopics ? { about: aboutTopics } : {}),
     isAccessibleForFree: true,
     inLanguage: 'ko',
   } : null
