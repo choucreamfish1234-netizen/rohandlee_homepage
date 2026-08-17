@@ -54,6 +54,11 @@ export default function FirstMoverSection() {
 
         {/* 1단: "최초"의 의미 */}
         <ScrollReveal>
+          <h2 className="text-xl sm:text-3xl font-bold text-[#1B3B2F] leading-snug text-center mb-10">
+            국내 1호 종합 피해자 전문 로펌
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal delay={0.1}>
           <div className="text-center text-base sm:text-lg text-gray-700 leading-8 sm:leading-9 space-y-5">
             <p>
               로앤이가 처음인 것은 &ldquo;피해자 변호&rdquo;가 아닙니다.<br />
@@ -75,7 +80,7 @@ export default function FirstMoverSection() {
         </ScrollReveal>
       </div>
 
-      {/* 2단: 무엇이 최초인가 */}
+      {/* 2단: 무엇이 1호인가 */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
         <ScrollReveal>
           <h3 className="text-lg sm:text-2xl font-bold text-center text-black mb-12">
