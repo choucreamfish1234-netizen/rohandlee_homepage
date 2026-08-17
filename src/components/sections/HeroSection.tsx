@@ -125,7 +125,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <span className="inline-block text-xs font-semibold px-4 py-1.5 bg-[#1B3B2F] text-white rounded-full mb-5">
+          <span className="inline-block text-sm sm:text-base font-bold px-6 py-2.5 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
             국내최초 종합 피해자 전문 로펌
           </span>
         </motion.div>
