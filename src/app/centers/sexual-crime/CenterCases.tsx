@@ -1,47 +1,39 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
-
-interface CaseCard {
-  tag: string
-  title: string
-  result: string
-  resultColor: 'red' | 'green' | 'blue'
-  image: string
-}
-
-const cases: CaseCard[] = [
-  {
-    tag: '성범죄',
-    title: '특수강간·감금 등 9개 혐의, 징역 8년 선고',
-    result: '징역 8년',
-    resultColor: 'red',
-    image: 'https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&h=500&fit=crop&q=80',
-  },
-  {
-    tag: '스토킹',
-    title: '지속적 스토킹 행위에 대한 접근금지 명령 및 실형 선고',
-    result: '실형 선고',
-    resultColor: 'red',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop&q=80',
-  },
-]
-
-const colorMap = {
-  red: 'bg-red-50 text-red-600 border-red-200',
-  green: 'bg-green-50 text-green-600 border-green-200',
-  blue: 'bg-blue-50 text-blue-600 border-blue-200',
-}
-
-const tagColorMap = {
-  red: 'bg-red-50 text-red-500',
-  green: 'bg-green-50 text-green-500',
-  blue: 'bg-blue-50 text-blue-500',
-}
+import { type SuccessCase, DEFAULT_CASES } from '@/lib/cases'
 
 export default function CenterCases() {
+  const [cases, setCases] = useState<SuccessCase[]>([])
+
+  useEffect(() => {
+    async function fetchCases() {
+      try {
+        const res = await fetch('/api/cases')
+        const data = await res.json()
+        const all: SuccessCase[] = data.cases || []
+        const filtered = all.filter(c =>
+          c.published !== false &&
+          c.representation_side === 'victim' &&
+          (c.practice_area === 'sexual_crime' || c.practice_area === 'stalking' || c.practice_area === 'digital_sex_crime' ||
+           c.category === '성범죄' || c.category === '스토킹')
+        )
+        setCases(filtered.slice(0, 4))
+      } catch {
+        const fallback = DEFAULT_CASES.filter(c =>
+          c.category === '성범죄' || c.category === '스토킹'
+        )
+        setCases(fallback.slice(0, 4))
+      }
+    }
+    fetchCases()
+  }, [])
+
+  if (cases.length === 0) return null
+
   return (
     <section className="py-40 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,42 +42,46 @@ export default function CenterCases() {
             Cases
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
-            성범죄 센터 성공사례
+            성범죄 피해자 대리 사례
           </h2>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {cases.map((c, i) => (
-            <ScrollReveal key={i} delay={i * 0.15}>
-              <div className="border border-gray-200 overflow-hidden hover:border-gray-400 transition-colors duration-300">
-                {/* 이미지 */}
-                <div className="aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={c.image}
-                    alt={c.title}
-                    width={800}
-                    height={500}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div className="p-8">
-                  {/* 태그 */}
-                  <span className={`inline-block text-xs font-medium px-3 py-1 ${tagColorMap[c.resultColor]} mb-5`}>
-                    {c.tag}
-                  </span>
-
-                  {/* 제목 */}
-                  <h3 className="text-lg font-semibold text-black leading-snug mb-6">
-                    {c.title}
-                  </h3>
-
-                  {/* 결과 뱃지 */}
-                  <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border ${colorMap[c.resultColor]}`}>
-                    {c.result}
+            <ScrollReveal key={c.id} delay={i * 0.15}>
+              <Link href={`/cases/${c.slug || c.id}`} className="group block">
+                <div className="border border-gray-200 overflow-hidden hover:border-gray-400 transition-colors duration-300">
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={c.image_url}
+                      alt={c.title}
+                      width={800}
+                      height={500}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="p-8">
+                    <span className={`inline-block text-xs font-medium px-3 py-1 ${c.tag_color} mb-3`}>
+                      {c.representation_side === 'victim' ? '피해자 대리' : c.tag}
+                    </span>
+                    {c.procedure_stages && c.procedure_stages.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {c.procedure_stages.slice(0, 3).map(s => (
+                          <span key={s} className="text-[10px] px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded">{s}</span>
+                        ))}
+                      </div>
+                    )}
+                    <h3 className="text-lg font-semibold text-black leading-snug mb-6 group-hover:text-[#1B3B2F] transition-colors">
+                      {c.title}
+                    </h3>
+                    <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border ${c.badge_color}`}>
+                      {c.badge}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </ScrollReveal>
           ))}
         </div>
@@ -96,7 +92,7 @@ export default function CenterCases() {
               href="/cases"
               className="inline-flex items-center text-sm text-gray-500 hover:text-black transition-colors"
             >
-              전체 성공사례 보기
+              피해자 대리 사례 전체 보기
               <span className="ml-1">&rarr;</span>
             </Link>
           </div>
