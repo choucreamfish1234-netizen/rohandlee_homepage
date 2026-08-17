@@ -35,7 +35,7 @@ export default function CenterCases() {
   if (cases.length === 0) return null
 
   return (
-    <section className="py-40 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">

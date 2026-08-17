@@ -111,7 +111,7 @@ export default function CenterPageTemplate({
       )}
 
       {/* 서비스 그리드 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
+      <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <EditableText
@@ -168,7 +168,7 @@ export default function CenterPageTemplate({
 
       {/* 사례 */}
       {caseExamples && caseExamples.length > 0 && (
-        <section className="py-16 sm:py-28 md:py-40 bg-gray-50">
+        <section className="py-12 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <EditableText
@@ -224,7 +224,7 @@ export default function CenterPageTemplate({
 
       {/* 선언문 */}
       {declaration && (
-        <section className="py-16 sm:py-28 md:py-40 bg-white">
+        <section className="py-12 sm:py-20 bg-white">
           <div className="max-w-3xl mx-auto px-4 text-center">
             <ScrollReveal>
               <EditableText
@@ -251,7 +251,7 @@ export default function CenterPageTemplate({
 
       {/* 의뢰인 후기 또는 커스텀 섹션 */}
       {customSection ? customSection : (
-        <section className="py-16 sm:py-28 md:py-40 bg-gray-50">
+        <section className="py-12 sm:py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <div className="text-center mb-16">
@@ -269,7 +269,7 @@ export default function CenterPageTemplate({
 
       {/* 담당 변호사 */}
       {lawyers && lawyers.length > 0 && (
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
+      <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <ScrollReveal>
             <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
@@ -334,7 +334,7 @@ export default function CenterPageTemplate({
       )}
 
       {/* CTA */}
-      <section className="py-16 sm:py-28 md:py-40 bg-black text-white">
+      <section className="py-12 sm:py-20 bg-black text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <EditableText

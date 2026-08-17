@@ -19,7 +19,7 @@ const checkpoints = [
 
 export default function ChooseLawyerSection() {
   return (
-    <section className="py-20 sm:py-32 bg-[#FAFAFA]">
+    <section className="py-16 sm:py-24 bg-[#FAFAFA]">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* 도입부 */}

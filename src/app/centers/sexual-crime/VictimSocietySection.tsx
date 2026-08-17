@@ -57,7 +57,7 @@ const fadeUp = {
 
 export default function VictimSocietySection() {
   return (
-    <section className="py-20 sm:py-32 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* 영역1: 도입 */}
