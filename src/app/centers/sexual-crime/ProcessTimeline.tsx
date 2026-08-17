@@ -42,7 +42,7 @@ const steps = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
       </svg>
     ),
-    description: '디지털 포렌식, 영상 확보, 목격자 진술 등 증거를 보전하고 보강합니다.',
+    description: '영상 확보, 목격자 진술 등 증거를 보전하고, 필요 시 전문 포렌식 업체와 협업하여 디지털 증거를 보강합니다.',
   },
   {
     step: 5,

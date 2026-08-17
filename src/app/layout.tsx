@@ -124,7 +124,7 @@ const jsonLd = {
       '@type': 'Person',
       name: '이유림',
       jobTitle: '대표변호사',
-      knowsAbout: ['성범죄 피해자 변호', '디지털 포렌식', '피해자 국선변호', '불법촬영', '스토킹', 'IT 법률'],
+      knowsAbout: ['성범죄 피해자 변호', '디지털 증거 법적 활용', '디지털성범죄', '피해자 국선변호', '불법촬영', '스토킹'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
     },
     {

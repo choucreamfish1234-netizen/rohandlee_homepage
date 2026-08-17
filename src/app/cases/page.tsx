@@ -32,8 +32,8 @@ const casesJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'Review',
     itemReviewed: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    name: '카메라이용촬영물 압수수색 및 디지털 포렌식',
-    description: '불법촬영 피해 사건에서 압수수색 및 디지털 포렌식을 통해 증거를 확보한 사례',
+    name: '카메라이용촬영물 압수수색 및 디지털 증거 확보 조력',
+    description: '불법촬영 피해 사건에서 압수수색 및 전문 포렌식 업체 협업을 통해 디지털 증거를 확보한 사례',
     author: { '@type': 'Organization', name: '법률사무소 로앤이' },
   },
   {
