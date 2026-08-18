@@ -58,6 +58,8 @@ const fadeUp = {
 
 export default function VictimSocietySection() {
   const [bookCover, setBookCover] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     async function fetchCover() {
@@ -77,6 +79,48 @@ export default function VictimSocietySection() {
     }
     fetchCover()
   }, [])
+
+  function handleCoverClick(e: React.MouseEvent) {
+    if (e.ctrlKey && e.shiftKey) {
+      e.preventDefault()
+      fileInputRef.current?.click()
+    }
+  }
+
+  async function resizeAndUpload(file: File) {
+    setUploading(true)
+    try {
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        const img = new window.Image()
+        img.onload = () => {
+          let w = img.width
+          let h = img.height
+          const max = 800
+          if (w > max) { h = Math.round(h * (max / w)); w = max }
+          const canvas = document.createElement('canvas')
+          canvas.width = w
+          canvas.height = h
+          const ctx = canvas.getContext('2d')
+          if (!ctx) { reject(new Error('Canvas 미지원')); return }
+          ctx.drawImage(img, 0, 0, w, h)
+          canvas.toBlob(b => b ? resolve(b) : reject(new Error('Blob 생성 실패')), 'image/jpeg', 0.85)
+        }
+        img.onerror = reject
+        img.src = URL.createObjectURL(file)
+      })
+
+      const formData = new FormData()
+      formData.append('file', blob, `book_cover_${Date.now()}.jpg`)
+      formData.append('key', 'book_cover_image')
+
+      const res = await fetch('/api/upload/site-image', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (data.error) { alert(data.error); return }
+      setBookCover(data.url)
+      alert('업로드 완료')
+    } catch { alert('업로드 실패') }
+    finally { setUploading(false) }
+  }
 
   return (
     <section className="py-16 sm:py-24 bg-white">
@@ -146,13 +190,27 @@ export default function VictimSocietySection() {
           <p className="text-lg font-medium text-black">법정이 피해자를 의심하는 구조를 아는 변호사가,</p>
           <p className="text-lg font-medium text-black mt-1">그 의심을 정면으로 반박하는 변호를 합니다.</p>
           <div className="my-8 flex justify-center">
-            <div className="w-48 aspect-[3/4] rounded-lg shadow-lg overflow-hidden bg-gray-100">
-              {bookCover ? (
+            <div
+              className="w-48 aspect-[3/4] rounded-lg shadow-lg overflow-hidden bg-gray-100 cursor-default"
+              onClick={handleCoverClick}
+            >
+              {uploading ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-6 h-6 border-2 border-[#1B3B2F]/30 border-t-[#1B3B2F] rounded-full animate-spin" />
+                </div>
+              ) : bookCover ? (
                 <Image src={bookCover} alt="피해자 감별사회 표지" width={192} height={256} className="w-full h-full object-cover" unoptimized />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-sm text-gray-400">표지 이미지</div>
               )}
             </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              onChange={e => { const f = e.target.files?.[0]; if (f) resizeAndUpload(f); e.target.value = '' }}
+            />
           </div>
           <div className="mt-4">
             <a
