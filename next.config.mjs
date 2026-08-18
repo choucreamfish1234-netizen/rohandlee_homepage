@@ -21,6 +21,11 @@ const nextConfig = {
         destination: '/centers/asset-recovery',
         permanent: true,
       },
+      {
+        source: '/blog/%EB%B2%95%EC%9D%B8-%ED%8C%8C%EC%82%B0-vs-%EA%B0%9C%EC%9D%B8-%ED%8C%8C%EC%82%B0-%EC%82%AC%EC%97%85-%EC%8B%A4%ED%8C%A8-%ED%9B%84-%EC%84%A0%ED%83%9D-%EA%B8%B0%EC%A4%80',
+        destination: '/blog/corporate-vs-personal-bankruptcy',
+        permanent: true,
+      },
     ]
   },
 };
