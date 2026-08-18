@@ -1,43 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import Script from 'next/script'
-
-const faqs = [
-  {
-    question: '보증금을 돌려받지 못하고 있는데, 소송 말고 다른 방법이 있나요?',
-    answer:
-      '네, 있습니다. 소송 전에 내용증명 발송, 임차권등기명령, 가압류 등 다양한 법적 보전조치를 먼저 진행할 수 있습니다. 특히 임대인의 재산이 빠져나가기 전에 가압류를 신속하게 걸어두는 것이 핵심입니다. 로앤이는 소송 전 선제적 보전조치에 강점이 있습니다.',
-  },
-  {
-    question: '전세 사기로 형사 고소가 가능한가요?',
-    answer:
-      '임대인이 처음부터 보증금을 돌려줄 의사나 능력이 없었음에도 계약을 체결했다면 사기죄(형법 제347조)에 해당할 수 있습니다. 근저당 설정 사실을 숨기거나, 이미 다른 임차인에게 이중계약을 한 경우 등이 대표적입니다.',
-  },
-  {
-    question: '토지를 샀는데 개발이 안 되는 땅이었어요. 사기인가요?',
-    answer:
-      '매도인이 개발 가능성에 대해 허위 정보를 제공하거나, 중요한 사실(개발제한구역, 군사시설보호구역 등)을 의도적으로 숨긴 경우 사기죄가 성립할 수 있습니다. 매매 당시의 정황과 계약서를 분석하여 형사 고소 및 민사 손해배상 가능 여부를 판단해드립니다.',
-  },
-  {
-    question: '상가 권리금을 받지 못하고 쫓겨났는데 구제 방법이 있나요?',
-    answer:
-      '상가건물 임대차보호법 제10조의4에 따라 임대인이 정당한 사유 없이 권리금 회수를 방해하면 손해배상 책임이 있습니다. 권리금 회수 방해 행위가 있었다면 손해배상 청구가 가능하며, 시효는 3년입니다.',
-  },
-  {
-    question: '중개사가 중요한 사실을 알려주지 않아서 피해를 봤어요.',
-    answer:
-      '공인중개사는 중개대상물의 권리관계, 법적 제한사항 등을 성실하게 설명할 의무가 있습니다(공인중개사법 제25조). 이를 위반하여 피해가 발생한 경우 중개사 및 중개법인에 대한 손해배상 청구가 가능합니다.',
-  },
-  {
-    question: '변호사 비용이 부담됩니다.',
-    answer:
-      '무료 상담을 통해 먼저 사건의 가능성을 판단해드립니다. 비용 대비 회수 가능성이 높은 경우에만 수임을 권유드리며, 착수금 분할 등 피해자의 상황에 맞는 비용 구조를 안내해드립니다.',
-  },
-]
+import RealEstateCrimeTypes from './RealEstateCrimeTypes'
+import WhyRohandleeRE from './WhyRohandleeRE'
+import UrgentGuide from './UrgentGuide'
+import RealEstateFaq from './RealEstateFaq'
 
 const serviceAreas = [
   {
@@ -103,50 +73,6 @@ const legalServiceJsonLd = {
   serviceType: ['전세 사기', '보증금 반환', '토지 매매 사기', '권리금 분쟁', '임대차 분쟁', '가압류', '중개사고'],
 }
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-}
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border-b border-gray-200">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left"
-      >
-        <span className="text-sm sm:text-base font-medium text-black pr-4">{question}</span>
-        <svg
-          className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="pb-5 text-sm text-gray-500 leading-relaxed">{answer}</p>
-      </motion.div>
-    </div>
-  )
-}
-
 export default function RealEstatePage() {
   const { openConsultation } = useConsultation()
 
@@ -156,11 +82,6 @@ export default function RealEstatePage() {
         id="real-estate-legal-service-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
-      />
-      <Script
-        id="real-estate-faq-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* 히어로 섹션 */}
@@ -373,23 +294,10 @@ export default function RealEstatePage() {
         </div>
       </section>
 
-      {/* FAQ 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              자주 묻는 질문
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div>
-              {faqs.map((faq, i) => (
-                <FAQItem key={i} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <RealEstateCrimeTypes />
+      <WhyRohandleeRE />
+      <UrgentGuide />
+      <RealEstateFaq />
     </>
   )
 }
