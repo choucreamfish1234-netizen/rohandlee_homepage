@@ -1,33 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import Script from 'next/script'
-
-const faqs = [
-  {
-    question: '보험사 합의금이 적은 것 같은데, 더 받을 수 있나요?',
-    answer:
-      '보험사는 자체 기준으로 최소한의 합의금을 제시합니다. 실제 치료비, 휴업 손해, 위자료, 후유장해 보상을 정확하게 산정하면 보험사 제시액의 2~3배 이상 받는 경우도 많습니다.',
-  },
-  {
-    question: '의료사고인지 아닌지 어떻게 알 수 있나요?',
-    answer:
-      '치료 결과가 예상과 크게 다르거나, 설명 없이 추가 시술을 받았거나, 수술 후 비정상적인 합병증이 발생한 경우 의료 과실이 있을 수 있습니다. 의료 기록을 분석하여 과실 여부를 판단해드립니다.',
-  },
-  {
-    question: '산재 신청을 회사가 안 해줘요.',
-    answer:
-      '산재 신청은 근로자 본인이 직접 할 수 있습니다. 회사 동의가 필요 없습니다. 로앤이가 산재 신청서 작성부터 승인까지 전 과정을 대리합니다.',
-  },
-  {
-    question: '사고가 발생한 지 오래되었는데 소송이 가능한가요?',
-    answer:
-      '손해배상 청구의 소멸시효는 사고를 안 날로부터 3년, 사고 발생일로부터 10년입니다. 시효가 임박한 경우에도 긴급 조치가 가능하니 빨리 상담받으시는 것이 좋습니다.',
-  },
-]
+import DamagesCrimeTypes from './DamagesCrimeTypes'
+import WhyRohandleeDmg from './WhyRohandleeDmg'
+import InsuranceGuide from './InsuranceGuide'
+import DamagesFaq from './DamagesFaq'
 
 const serviceAreas = [
   {
@@ -98,50 +78,6 @@ const legalServiceJsonLd = {
   serviceType: ['교통사고', '의료사고', '산업재해', '제조물책임', '손해배상'],
 }
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-}
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border-b border-gray-200">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left"
-      >
-        <span className="text-sm sm:text-base font-medium text-black pr-4">{question}</span>
-        <svg
-          className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="pb-5 text-sm text-gray-500 leading-relaxed">{answer}</p>
-      </motion.div>
-    </div>
-  )
-}
-
 export default function DamagesPage() {
   const { openConsultation } = useConsultation()
 
@@ -152,33 +88,33 @@ export default function DamagesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
       />
-      <Script
-        id="damages-faq-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
 
       {/* 히어로 섹션 */}
-      <section className="min-h-[60vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-[#FAFAFA]">
+      <section className="min-h-[55vh] sm:min-h-[65vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">
+          <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
+            최초의 종합 피해자 중심 로펌
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             손해배상 전담센터
-          </p>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-            누군가의 잘못으로 입은 피해,
-            <br />
-            <span className="text-[#1B3B2F]">정당한 보상을 받을 권리가 있습니다.</span>
           </h1>
-          <p className="mt-6 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-            교통사고, 의료사고, 산업재해, 제조물 결함.
-            <br />
-            모든 손해에는 책임져야 할 사람이 있습니다. 로앤이가 끝까지 물을 것입니다.
+          <p className="mt-6 text-sm sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
+            보험사가 제시하는 합의금, 그대로 받지 마세요.<br className="hidden sm:inline" />
+            누군가의 잘못으로 입은 피해에는 정당한 보상이 있습니다.<br className="hidden sm:inline" />
+            로앤이는 보험사와 가해자를 동시에 상대합니다.
           </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
+            <span>교통사고·의료사고·산재·제조물</span>
+            <span className="text-gray-300">|</span>
+            <span>보험사 저가 합의 거부 + 형사 고소 병행</span>
+            <span className="text-gray-300">|</span>
+            <span>이유림·노채은 변호사</span>
+          </div>
           <div className="mt-8">
             <button
               onClick={() => openConsultation('손해배상 상담')}
@@ -346,23 +282,10 @@ export default function DamagesPage() {
         </div>
       </section>
 
-      {/* FAQ 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              자주 묻는 질문
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div>
-              {faqs.map((faq, i) => (
-                <FAQItem key={i} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <DamagesCrimeTypes />
+      <WhyRohandleeDmg />
+      <InsuranceGuide />
+      <DamagesFaq />
     </>
   )
 }
