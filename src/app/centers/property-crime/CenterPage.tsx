@@ -4,6 +4,9 @@ import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ProcessTimeline from './ProcessTimeline'
 import FAQAccordion from './FAQAccordion'
 import Testimonials from './Testimonials'
+import CrimeTypesGrid from './CrimeTypesGrid'
+import WhyRohandlee from './WhyRohandlee'
+import PropertyFaq from './PropertyFaq'
 
 export default function PropertyCrimeCenterPage() {
   return (
@@ -81,7 +84,7 @@ export default function PropertyCrimeCenterPage() {
           image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
-      customSection={<><ProcessTimeline /><FAQAccordion /><Testimonials /></>}
+      customSection={<><CrimeTypesGrid /><ProcessTimeline /><WhyRohandlee /><FAQAccordion /><Testimonials /><PropertyFaq /></>}
       ctaTitle="재산범죄는 속도가 생명입니다."
       ctaDescription="범인이 재산을 숨기기 전에, 지금 바로 상담하세요."
     />
