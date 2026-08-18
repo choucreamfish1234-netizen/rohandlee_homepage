@@ -9,54 +9,6 @@ import WhyRohandleeRE from './WhyRohandleeRE'
 import UrgentGuide from './UrgentGuide'
 import RealEstateFaq from './RealEstateFaq'
 
-const serviceAreas = [
-  {
-    title: '전세·임대차 분쟁',
-    description: '보증금 미반환, 전세 사기, 계약갱신청구권 거부, 부당 퇴거 요구, 월세 분쟁, 임차권등기명령',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
-      </svg>
-    ),
-  },
-  {
-    title: '토지·매매 분쟁',
-    description: '토지 매매 사기, 허위 개발 정보로 인한 사기, 이중매매, 소유권 분쟁, 등기 사기',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
-      </svg>
-    ),
-  },
-  {
-    title: '상가·권리금 분쟁',
-    description: '권리금 회수 방해, 상가 임대차 보호법 위반, 부당한 퇴거, 원상복구 비용 과다 청구',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36c-.602 0-1.088-.487-1.088-1.088A5.912 5.912 0 017.184 14H12m1.5 7H21V3.75a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75V21m0 0H4.5" />
-      </svg>
-    ),
-  },
-  {
-    title: '중개사고',
-    description: '공인중개사의 이중계약, 허위매물, 중요 사항 미고지, 중개 과실로 인한 손해',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-      </svg>
-    ),
-  },
-  {
-    title: '하자·수리 분쟁',
-    description: '누수, 곰팡이 등 하자 보수 책임 회피, 무단 출입, 생활 방해',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.03A.75.75 0 015.25 17.6V6.4a.75.75 0 01.786-.6l5.384 3.03a.75.75 0 010 1.34zM15.75 7.5v9m3-6v3" />
-      </svg>
-    ),
-  },
-]
-
 const legalServiceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
@@ -154,31 +106,6 @@ export default function RealEstatePage() {
         </div>
       </section>
 
-      {/* 취급 분야 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-[#FAFAFA]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-16">
-              이런 피해를 다룹니다
-            </h2>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {serviceAreas.map((area, i) => (
-              <ScrollReveal key={area.title} delay={i * 0.1}>
-                <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
-                  <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
-                    {area.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-black mb-3">{area.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{area.description}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 차별점 섹션 */}
       <section className="py-16 sm:py-28 md:py-40 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -264,40 +191,33 @@ export default function RealEstatePage() {
         </div>
       </section>
 
-      {/* CTA 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-[#1B3B2F] text-white">
+      <RealEstateCrimeTypes />
+      <WhyRohandleeRE />
+      <UrgentGuide />
+      <RealEstateFaq />
+
+      {/* CTA 섹션 — 맨 하단 */}
+      <section className="py-16 sm:py-24 bg-[#1B3B2F] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold">
               부동산 피해, 반드시 되찾으실 수 있습니다.
             </h2>
             <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
-              <p>
-                혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 피해자의 권리를
-                최우선으로 합니다.
-              </p>
-              <p className="text-white font-medium">
-                지금 바로 무료 상담을 신청하세요.
-                <br />
-                당신의 재산, 끝까지 함께 지켜드리겠습니다.
-              </p>
+              <p>혼자 싸우지 마세요. 로앤이 부동산 피해 전담센터는 피해자의 권리를 최우선으로 합니다.</p>
+              <p className="text-white font-medium">당신의 재산, 끝까지 함께 지켜드리겠습니다.</p>
             </div>
-            <div className="mt-8 sm:mt-10">
+            <div className="mt-8">
               <button
                 onClick={() => openConsultation('부동산 피해 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                무료 상담 신청하기
+                상담 신청하기
               </button>
             </div>
           </ScrollReveal>
         </div>
       </section>
-
-      <RealEstateCrimeTypes />
-      <WhyRohandleeRE />
-      <UrgentGuide />
-      <RealEstateFaq />
     </>
   )
 }
