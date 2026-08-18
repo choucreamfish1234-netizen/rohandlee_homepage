@@ -253,39 +253,33 @@ export default function DamagesPage() {
         </div>
       </section>
 
-      {/* CTA 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-[#1B3B2F] text-white">
+      <DamagesCrimeTypes />
+      <WhyRohandleeDmg />
+      <InsuranceGuide />
+      <DamagesFaq />
+
+      {/* CTA 섹션 — 맨 하단 */}
+      <section className="py-16 sm:py-24 bg-[#1B3B2F] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
             <h2 className="text-2xl sm:text-3xl font-bold">
               사고 후 혼자 보험사와 싸우고 계신가요?
             </h2>
             <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
-              <p>
-                회사가 산재 처리를 거부하고 있나요?
-              </p>
-              <p className="text-white font-medium">
-                피해자에게는 정당한 보상을 받을 권리가 있습니다.
-                <br />
-                로앤이 손해배상센터가 그 권리를 지켜드리겠습니다.
-              </p>
+              <p>회사가 산재 처리를 거부하고 있나요?</p>
+              <p className="text-white font-medium">피해자에게는 정당한 보상을 받을 권리가 있습니다. 로앤이 손해배상센터가 그 권리를 지켜드리겠습니다.</p>
             </div>
-            <div className="mt-8 sm:mt-10">
+            <div className="mt-8">
               <button
                 onClick={() => openConsultation('손해배상 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                무료 상담 신청하기
+                상담 신청하기
               </button>
             </div>
           </ScrollReveal>
         </div>
       </section>
-
-      <DamagesCrimeTypes />
-      <WhyRohandleeDmg />
-      <InsuranceGuide />
-      <DamagesFaq />
     </>
   )
 }
