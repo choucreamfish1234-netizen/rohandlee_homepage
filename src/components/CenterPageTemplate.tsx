@@ -43,6 +43,7 @@ interface CenterPageTemplateProps {
   ctaDescription: string
   customSection?: React.ReactNode
   customHero?: React.ReactNode
+  preServiceSection?: React.ReactNode
   defaultCaseType?: string
 }
 
@@ -60,6 +61,7 @@ export default function CenterPageTemplate({
   ctaDescription,
   customSection,
   customHero,
+  preServiceSection,
   defaultCaseType,
 }: CenterPageTemplateProps) {
   const { openConsultation } = useConsultation()
@@ -109,6 +111,8 @@ export default function CenterPageTemplate({
         </motion.div>
       </section>
       )}
+
+      {preServiceSection}
 
       {/* 서비스 그리드 */}
       <section className="py-12 sm:py-20 bg-white">

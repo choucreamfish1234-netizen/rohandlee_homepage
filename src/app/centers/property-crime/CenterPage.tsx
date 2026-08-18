@@ -1,14 +1,16 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
+import { useConsultation } from '@/components/ConsultationProvider'
 import ProcessTimeline from './ProcessTimeline'
-import FAQAccordion from './FAQAccordion'
 import Testimonials from './Testimonials'
 import CrimeTypesGrid from './CrimeTypesGrid'
 import WhyRohandlee from './WhyRohandlee'
 import PropertyFaq from './PropertyFaq'
 
 export default function PropertyCrimeCenterPage() {
+  const { openConsultation } = useConsultation()
   return (
     <CenterPageTemplate
       pagePath="centers/property-crime"
@@ -17,6 +19,43 @@ export default function PropertyCrimeCenterPage() {
       ctaLabel="피해금 회복 가능성 진단"
       ctaHref="/consultation"
       defaultCaseType="재산범죄 피해 상담"
+      customHero={
+        <section className="min-h-[55vh] sm:min-h-[65vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
+              최초의 종합 피해자 중심 로펌
+            </span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
+              재산범죄 피해 전문센터
+            </h1>
+            <p className="mt-6 text-sm sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
+              고소장만 써주고 끝나는 곳이 많습니다.<br className="hidden sm:inline" />
+              로앤이는 형사 고소부터 가압류, 강제집행, 피해금 회수까지.<br className="hidden sm:inline" />
+              돈을 돌려받아야 끝입니다.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
+              <span>사기·횡령·배임·보이스피싱</span>
+              <span className="text-gray-300">|</span>
+              <span>형사 고소 + 재산 추적 동시 진행</span>
+              <span className="text-gray-300">|</span>
+              <span>노채은·이유림 변호사</span>
+            </div>
+            <div className="mt-8">
+              <button
+                onClick={() => openConsultation('재산범죄 피해 상담')}
+                className="inline-flex items-center justify-center px-8 py-3.5 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors min-h-[48px]"
+              >
+                피해금 회복 가능성 진단
+              </button>
+            </div>
+          </motion.div>
+        </section>
+      }
       services={[
         {
           title: '긴급 가압류 신청',
@@ -84,7 +123,8 @@ export default function PropertyCrimeCenterPage() {
           image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
-      customSection={<><CrimeTypesGrid /><ProcessTimeline /><WhyRohandlee /><FAQAccordion /><Testimonials /><PropertyFaq /></>}
+      preServiceSection={<CrimeTypesGrid />}
+      customSection={<><ProcessTimeline /><WhyRohandlee /><Testimonials /><PropertyFaq /></>}
       ctaTitle="재산범죄는 속도가 생명입니다."
       ctaDescription="범인이 재산을 숨기기 전에, 지금 바로 상담하세요."
     />
