@@ -118,7 +118,7 @@ export default function AppSection() {
                 />
                 <div className="mt-6 flex flex-wrap justify-center gap-2">
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">서류 자동수집</span>
-                  <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">회생파산 전문</span>
+                  <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">재산회복 전문</span>
                   <span className="px-3 py-1 bg-white text-xs text-gray-600 border border-gray-200">원스톱 지원</span>
                 </div>
               </div>

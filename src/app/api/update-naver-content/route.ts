@@ -5,7 +5,7 @@ import { parseAIResponse } from '@/lib/parse-ai-response'
 function getAuthorByCategory(category: string): string {
   switch (category) {
     case '재산범죄':
-    case '회생파산':
+    case '재산회복':
       return '노채은 변호사'
     case '성범죄':
     case '일반':

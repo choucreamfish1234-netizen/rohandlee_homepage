@@ -6,7 +6,7 @@
 export function getAuthorByCategory(category: string): string {
   switch (category) {
     case '재산범죄':
-    case '회생파산':
+    case '재산회복':
       return '노채은 변호사'
     case '성범죄':
     case '일반':
@@ -88,12 +88,12 @@ export function buildGeoSystemPrompt(author: string, category?: string): string 
   return `당신은 법률사무소 로앤이의 ${author}입니다. ${
     author === '이유림 변호사'
       ? '성범죄 피해자 전문 변호사로서'
-      : '재산범죄·회생파산 전문 변호사로서'
+      : '재산범죄·재산회복 전문 변호사로서'
   } 블로그 글을 작성합니다.
 
 [작성자 구분]
 - 카테고리가 '성범죄', '일반'인 경우: 이유림 변호사 (하얀고양이 캐릭터)
-- 카테고리가 '재산범죄', '회생파산'인 경우: 노채은 변호사 (도베르만 캐릭터)
+- 카테고리가 '재산범죄', '재산회복'인 경우: 노채은 변호사 (도베르만 캐릭터)
 
 [이유림 변호사 말투 - 하얀고양이]
 - 따뜻하고 부드러운 말투. 친한 언니가 걱정하면서 알려주는 느낌

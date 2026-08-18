@@ -367,7 +367,7 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
       <Image src="/images/lawyers/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
       <div className="text-center sm:text-left">
         <p className="font-medium text-gray-900">노채은 변호사</p>
-        <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·회생파산 전문</p>
+        <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·재산회복 전문</p>
         <p className="text-xs text-gray-400 mt-1 leading-relaxed">
           경북대학교 법학전문대학원 졸업. 대법원 국선변호인.
           보이스피싱·전세사기 피해 구제 및 개인회생·파산에 정통한 전문 변호사.

@@ -14,7 +14,7 @@ const SITE_PAGES = [
     name: '블로그',
     hasH1: true,
     defaultTitle: '법률 블로그',
-    defaultDescription: '법률사무소 로앤이 법률 블로그. 성범죄·재산범죄·회생파산 등 법률 정보와 판례 분석, 법률 상식을 알기 쉽게 전달합니다.',
+    defaultDescription: '법률사무소 로앤이 법률 블로그. 성범죄·재산범죄·재산회복 등 법률 정보와 판례 분석, 법률 상식을 알기 쉽게 전달합니다.',
   },
   {
     path: '/cases',
@@ -60,9 +60,9 @@ const SITE_PAGES = [
   },
   {
     path: '/centers/rehabilitation',
-    name: '회생파산 센터',
+    name: '재산회복 센터',
     hasH1: true,
-    defaultTitle: '개인회생·개인파산 전문 변호사 | 회생파산 상담 | 로앤이',
+    defaultTitle: '개인회생·개인파산 전문 변호사 | 재산회복 상담 | 로앤이',
     defaultDescription: '개인회생 신청부터 면책까지 전 과정 대행. 개인회생 vs 개인파산 비교 상담. 월 변제금 최소화. 채무 탕감 전문. 법률사무소 로앤이.',
   },
 ]
