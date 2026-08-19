@@ -4,6 +4,7 @@ import { useState } from 'react'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 /* ── 패키지 데이터 ── */
 const packages = [
@@ -195,6 +196,8 @@ function CorporateCustomSection() {
           </div>
         </div>
       </section>
+
+      <CenterCasesDB centerSlug="corporate" title="기업법무 성공사례" />
 
       {/* FAQ */}
       <section className="py-28 sm:py-40 bg-gray-50">
