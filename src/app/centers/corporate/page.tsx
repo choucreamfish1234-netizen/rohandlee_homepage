@@ -4,11 +4,11 @@ import CenterPage from './CenterPage'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/centers/corporate', {
-    title: '기업경영 법무센터',
-    description: '스타트업·중소기업 법인설립, 계약서 검토, 주주 간 분쟁 해결. 기업 운영의 법적 리스크를 사전에 차단합니다. 무료 상담 032-207-8788.',
-    keywords: '기업 변호사, 법인설립, 계약서 검토, 주주분쟁, 스타트업 변호사, 기업법무',
-    ogTitle: '기업경영 법무센터 | 법률사무소 로앤이',
-    ogDescription: '스타트업·중소기업 법인설립, 계약서 검토, 주주 간 분쟁 해결.',
+    title: '기업법무·개인정보보호센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    description: '기업 법률자문, 계약 분쟁, 개인정보 침해, 정보보호 컨설팅. 법률사무소 로앤이. 상담 032-207-8788',
+    keywords: '기업 변호사, 법인설립, 계약서 검토, 주주분쟁, 스타트업 변호사, 기업법무, 개인정보보호법, 개인정보 침해, 정보보호 컨설팅',
+    ogTitle: '기업법무·개인정보보호센터 | 법률사무소 로앤이',
+    ogDescription: '기업 법률자문, 계약 분쟁, 개인정보 침해, 정보보호 컨설팅.',
   })
 }
 

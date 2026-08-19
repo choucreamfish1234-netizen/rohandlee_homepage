@@ -24,11 +24,12 @@ export default function Footer() {
               {[
                 { href: '/centers/sexual-crime', label: '성범죄 피해 전문센터' },
                 { href: '/centers/property-crime', label: '재산범죄 피해 전문센터' },
-                { href: '/centers/it-security', label: '개인정보보호센터' },
+                { href: '/centers/physical-crime', label: '신체범죄 피해 전담센터' },
+                { href: '/centers/divorce', label: '이혼·가사 전담센터' },
                 { href: '/centers/real-estate', label: '부동산 피해 전담센터' },
                 { href: '/centers/asset-recovery', label: '재산회복 전담센터' },
                 { href: '/centers/damages', label: '손해배상 전담센터' },
-                { href: '/centers/school-violence', label: '학교폭력 전문센터' },
+                { href: '/centers/corporate', label: '기업법무·개인정보보호센터' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">

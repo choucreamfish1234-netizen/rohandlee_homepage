@@ -35,11 +35,11 @@ const centers: Center[] = [
     alt: '보호와 안전을 상징하는 이미지',
   },
   {
-    title: '개인정보보호센터',
-    description: '디지털 시대의 법적 보호막이 되겠습니다',
-    href: '/centers/it-security',
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop&q=80',
-    alt: '코드가 흐르는 화면 - 디지털과 기술',
+    title: '이혼·가사 전담센터',
+    description: '이혼 소송, 양육권, 재산분할, 위자료, 가정폭력 이혼',
+    href: '/centers/divorce',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop&q=80',
+    alt: '법률 서류 - 이혼 가사',
   },
   {
     title: '부동산 피해 전담센터',
@@ -63,11 +63,11 @@ const centers: Center[] = [
     alt: '병원과 치료 이미지 - 손해배상',
   },
   {
-    title: '학교폭력 전문센터',
-    description: '피해학생의 권리 회복, 학폭위·민사·형사 병행 대응',
-    href: '/centers/school-violence',
-    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&q=80',
-    alt: '학교 복도 - 학교폭력 피해 보호',
+    title: '기업법무·개인정보보호센터',
+    description: '기업 법률자문, 계약 분쟁, 개인정보 침해, 정보보호 컨설팅',
+    href: '/centers/corporate',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80',
+    alt: '고층 빌딩 - 기업법무',
   },
 ]
 

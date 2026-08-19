@@ -26,6 +26,11 @@ const nextConfig = {
         destination: '/blog/corporate-vs-personal-bankruptcy',
         permanent: true,
       },
+      {
+        source: '/centers/it-security',
+        destination: '/centers/corporate',
+        permanent: true,
+      },
     ]
   },
 };

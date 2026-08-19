@@ -54,13 +54,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/centers/school-violence`,
+      url: `${baseUrl}/centers/divorce`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/centers/it-security`,
+      url: `${baseUrl}/centers/school-violence`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/centers/corporate`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
