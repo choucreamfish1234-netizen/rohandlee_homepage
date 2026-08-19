@@ -22,6 +22,9 @@ const faqJsonLd = {
     { '@type': 'Question', name: '재산분할 비율은 어떻게 정해지나요?', acceptedAnswer: { '@type': 'Answer', text: '혼인 기간, 각자의 기여도, 양육 부담 등을 종합적으로 고려합니다. 전업주부의 경우에도 가사노동의 기여가 인정됩니다.' } },
     { '@type': 'Question', name: '양육비를 안 주면 어떻게 하나요?', acceptedAnswer: { '@type': 'Answer', text: '양육비 이행명령을 신청하고, 불이행 시 감치, 급여 압류, 재산 강제집행이 가능합니다.' } },
     { '@type': 'Question', name: '외도 증거가 없어도 위자료를 받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '직접적인 증거가 없더라도 정황 증거(카톡, 신용카드 내역, 위치 기록 등)로 입증 가능합니다.' } },
+    { '@type': 'Question', name: '전업주부인데 재산분할을 받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네. 대법원은 전업주부의 가사노동도 재산 형성에 대한 기여로 인정합니다. 통상 30~50%를 인정받습니다.' } },
+    { '@type': 'Question', name: '상간자 위자료는 얼마나 받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '판례상 통상 1,000만 원에서 3,000만 원 사이이며, 교제 기간, 혼인 파탄 기여도 등에 따라 달라집니다.' } },
+    { '@type': 'Question', name: '전국에서 상담받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네, 전화·화상·온라인 상담이 가능합니다. 로앤이는 전국 어디든 출장 대응합니다.' } },
   ],
 }
 
