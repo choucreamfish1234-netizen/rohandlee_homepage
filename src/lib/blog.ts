@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { getRandomImage, getImagePool } from '@/data/random-images'
 
 export interface BlogPost {
   id: number
@@ -47,93 +48,18 @@ export const CATEGORY_THUMBNAILS: Record<string, string> = {
   '법률정보': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
 }
 
-export const CATEGORY_IMAGE_POOLS: Record<string, string[]> = {
-  '성범죄': [
-    'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-  ],
-  '재산범죄': [
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-  ],
-  '신체범죄': [
-    'https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-  ],
-  '개인정보보호': [
-    'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1563986768609-322da13575f2?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&h=450&fit=crop&q=80',
-  ],
-  '부동산': [
-    'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
-  ],
-  '재산회복': [
-    'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-  ],
-  '손해배상': [
-    'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-  ],
-  '학교폭력': [
-    'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1577896851231-70ef18881571?w=800&h=450&fit=crop&q=80',
-  ],
-  '법률정보': [
-    'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&h=450&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80',
-  ],
-}
-
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80'
 
 export function getCategoryThumbnail(category: string): string {
   return CATEGORY_THUMBNAILS[category] || FALLBACK_IMAGE
 }
 
-/**
- * Get a random thumbnail from the category image pool,
- * excluding already-used URLs to ensure diversity.
- * Cycles through the pool if all images have been used.
- */
 export function getRandomThumbnail(category: string, usedUrls: string[] = []): string {
-  const pool = CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['성범죄']
-  const available = pool.filter((url) => !usedUrls.includes(url))
-  if (available.length > 0) {
-    return available[Math.floor(Math.random() * available.length)]
-  }
-  // All used — cycle: pick random from full pool
-  return pool[Math.floor(Math.random() * pool.length)]
+  return getRandomImage(category, usedUrls)
 }
 
-/**
- * Get the image pool for a category.
- */
 export function getCategoryImagePool(category: string): string[] {
-  return CATEGORY_IMAGE_POOLS[category] || CATEGORY_IMAGE_POOLS['성범죄']
+  return getImagePool(category)
 }
 
 export function getReadingTime(content: string): number {
