@@ -8,6 +8,7 @@ import Testimonials from './Testimonials'
 import CrimeTypesGrid from './CrimeTypesGrid'
 import WhyRohandlee from './WhyRohandlee'
 import PropertyFaq from './PropertyFaq'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 export default function PropertyCrimeCenterPage() {
   const { openConsultation } = useConsultation()
@@ -124,7 +125,7 @@ export default function PropertyCrimeCenterPage() {
         },
       ]}
       preServiceSection={<CrimeTypesGrid />}
-      customSection={<><ProcessTimeline /><WhyRohandlee /><Testimonials /><PropertyFaq /></>}
+      customSection={<><ProcessTimeline /><WhyRohandlee /><CenterCasesDB centerSlug="property-crime" title="재산범죄 피해자 대리 성공사례" /><Testimonials /><PropertyFaq /></>}
       ctaTitle="재산범죄는 속도가 생명입니다."
       ctaDescription="범인이 재산을 숨기기 전에, 지금 바로 상담하세요."
     />

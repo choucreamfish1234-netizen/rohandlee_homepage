@@ -8,6 +8,7 @@ import DamagesCrimeTypes from './DamagesCrimeTypes'
 import WhyRohandleeDmg from './WhyRohandleeDmg'
 import InsuranceGuide from './InsuranceGuide'
 import DamagesFaq from './DamagesFaq'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 const serviceAreas = [
   {
@@ -256,6 +257,7 @@ export default function DamagesPage() {
       <DamagesCrimeTypes />
       <WhyRohandleeDmg />
       <InsuranceGuide />
+      <CenterCasesDB centerSlug="damages" title="손해배상 성공사례" />
       <DamagesFaq />
 
       {/* CTA 섹션 — 맨 하단 */}

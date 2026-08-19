@@ -30,7 +30,19 @@ export interface SuccessCase {
   seo_description?: string
   anonymization_reviewed?: boolean
   status?: 'draft' | 'privacy_review' | 'approved' | 'published'
+  center_categories?: string[]
 }
+
+export const CENTER_CATEGORY_OPTIONS = [
+  { value: 'sexual-crime', label: '성범죄센터' },
+  { value: 'property-crime', label: '재산범죄센터' },
+  { value: 'physical-crime', label: '신체범죄센터' },
+  { value: 'real-estate', label: '부동산센터' },
+  { value: 'damages', label: '손해배상센터' },
+  { value: 'asset-recovery', label: '재산회복센터' },
+  { value: 'privacy', label: '개인정보보호센터' },
+  { value: 'school-violence', label: '학교폭력센터' },
+] as const
 
 export const PRACTICE_AREAS = [
   { value: 'sexual_crime', label: '성범죄' },

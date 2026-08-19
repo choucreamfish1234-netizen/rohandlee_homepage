@@ -6,7 +6,7 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Image from 'next/image'
-import { type SuccessCase, CASE_IMAGE_POOLS, getRandomCaseImage, PRACTICE_AREAS, OFFENSE_TYPE_OPTIONS, PROCEDURE_STAGE_OPTIONS, SERVICE_OPTIONS, OUTCOME_OPTIONS } from '@/lib/cases'
+import { type SuccessCase, CASE_IMAGE_POOLS, getRandomCaseImage, PRACTICE_AREAS, OFFENSE_TYPE_OPTIONS, PROCEDURE_STAGE_OPTIONS, SERVICE_OPTIONS, OUTCOME_OPTIONS, CENTER_CATEGORY_OPTIONS } from '@/lib/cases'
 
 const CATEGORIES = ['성범죄', '보이스피싱', '전세사기', '스토킹', '재산범죄', '학교폭력', '일반']
 
@@ -77,6 +77,7 @@ function AdminCasesPage() {
   const [resultDetail, setResultDetail] = useState('')
   const [lawyerIds, setLawyerIds] = useState<string[]>([])
   const [anonymizationReviewed, setAnonymizationReviewed] = useState(false)
+  const [centerCategories, setCenterCategories] = useState<string[]>([])
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -144,6 +145,7 @@ function AdminCasesPage() {
         setResultDetail(found.result_detail || '')
         setLawyerIds(found.lawyer_ids || [])
         setAnonymizationReviewed(found.anonymization_reviewed || false)
+        setCenterCategories(found.center_categories || [])
         setMode('edit')
       }
     } catch {
@@ -173,6 +175,7 @@ function AdminCasesPage() {
     setResultDetail('')
     setLawyerIds([])
     setAnonymizationReviewed(false)
+    setCenterCategories([])
   }
 
   const handleSave = async (published: boolean) => {
@@ -205,6 +208,7 @@ function AdminCasesPage() {
       result_detail: resultDetail.trim() || null,
       anonymization_reviewed: anonymizationReviewed,
       status: published ? 'published' : 'draft',
+      center_categories: centerCategories.length > 0 ? centerCategories : null,
     }
 
     if (!editId) {
@@ -782,6 +786,18 @@ function AdminCasesPage() {
                     <label key={name} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
                       <input type="checkbox" checked={lawyerIds.includes(name)} onChange={() => setLawyerIds(prev => prev.includes(name) ? prev.filter(x => x !== name) : [...prev, name])} className="w-3 h-3 accent-[#1B3B2F]" />
                       {name}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] text-gray-500 mb-1">관련 센터 (복수 선택)</label>
+                <div className="max-h-28 overflow-y-auto border border-gray-200 p-2 space-y-1">
+                  {CENTER_CATEGORY_OPTIONS.map(o => (
+                    <label key={o.value} className="flex items-center gap-1.5 text-[11px] text-gray-600 cursor-pointer">
+                      <input type="checkbox" checked={centerCategories.includes(o.value)} onChange={() => setCenterCategories(prev => prev.includes(o.value) ? prev.filter(x => x !== o.value) : [...prev, o.value])} className="w-3 h-3 accent-[#1B3B2F]" />
+                      {o.label}
                     </label>
                   ))}
                 </div>

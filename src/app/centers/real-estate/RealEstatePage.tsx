@@ -8,6 +8,7 @@ import RealEstateCrimeTypes from './RealEstateCrimeTypes'
 import WhyRohandleeRE from './WhyRohandleeRE'
 import UrgentGuide from './UrgentGuide'
 import RealEstateFaq from './RealEstateFaq'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 const legalServiceJsonLd = {
   '@context': 'https://schema.org',
@@ -194,6 +195,7 @@ export default function RealEstatePage() {
       <RealEstateCrimeTypes />
       <WhyRohandleeRE />
       <UrgentGuide />
+      <CenterCasesDB centerSlug="real-estate" title="부동산 피해 성공사례" />
       <RealEstateFaq />
 
       {/* CTA 섹션 — 맨 하단 */}

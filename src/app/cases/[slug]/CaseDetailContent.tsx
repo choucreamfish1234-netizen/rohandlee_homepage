@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { type SuccessCase, DEFAULT_CASES } from '@/lib/cases'
+import { type SuccessCase, DEFAULT_CASES, CENTER_CATEGORY_OPTIONS } from '@/lib/cases'
 import { useConsultation } from '@/components/ConsultationProvider'
 
 export default function CaseDetailContent({ slug, initialCase }: { slug: string; initialCase?: SuccessCase | null }) {
@@ -89,9 +89,23 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
         </div>
 
         {/* Tag Badge */}
-        <span className={`inline-block text-xs font-semibold px-4 py-1.5 mb-5 ${caseData.tag_color}`}>
+        <span className={`inline-block text-xs font-semibold px-4 py-1.5 mb-3 ${caseData.tag_color}`}>
           {caseData.tag}
         </span>
+
+        {/* Center Category Badges */}
+        {caseData.center_categories && caseData.center_categories.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-5">
+            {caseData.center_categories.map((cat: string) => {
+              const info = CENTER_CATEGORY_OPTIONS.find(o => o.value === cat)
+              return info ? (
+                <Link key={cat} href={`/centers/${cat}`} className="text-[10px] font-medium px-2.5 py-1 bg-[#1B3B2F]/8 text-[#1B3B2F] rounded-full hover:bg-[#1B3B2F]/15 transition-colors">
+                  {info.label}
+                </Link>
+              ) : null
+            })}
+          </div>
+        )}
 
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-black leading-tight mb-6">
