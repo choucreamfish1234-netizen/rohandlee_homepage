@@ -2,13 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
-import { EditableText } from '@/components/Editable'
-import { type SuccessCase, DEFAULT_CASES } from '@/lib/cases'
+import { type SuccessCase, DEFAULT_CASES, CENTER_CATEGORY_OPTIONS } from '@/lib/cases'
 
 export default function CasesSection() {
-  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES.slice(0, 4))
+  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES.filter(c => c.featured).slice(0, 8))
 
   useEffect(() => {
     async function fetchCases() {
@@ -16,12 +14,16 @@ export default function CasesSection() {
         const res = await fetch('/api/cases')
         const data = await res.json()
         if (data.cases && data.cases.length > 0) {
-          const published = data.cases.filter((c: SuccessCase) => c.published !== false)
-          const featured = published.filter((c: SuccessCase) => c.featured)
-          setCases(featured.length > 0 ? featured.slice(0, 4) : published.slice(0, 4))
+          const published = (data.cases as SuccessCase[]).filter(c => c.published !== false)
+          const featured = published.filter(c => c.featured)
+          if (featured.length > 0) {
+            setCases(featured.slice(0, 8))
+          } else {
+            setCases(published.slice(0, 8))
+          }
         }
       } catch {
-        // keep DEFAULT_CASES
+        // keep fallback
       }
     }
     fetchCases()
@@ -34,54 +36,43 @@ export default function CasesSection() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
             Results
           </p>
-          <EditableText
-            page="home"
-            section="cases"
-            fieldKey="heading"
-            defaultValue="결과로 증명합니다."
-            tag="h2"
-            className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20"
-          />
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
+            결과로 증명합니다.
+          </h2>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {cases.map((c, i) => (
-            <ScrollReveal key={c.id || i} delay={i * 0.15}>
+            <ScrollReveal key={c.id || i} delay={i * 0.1}>
               <Link href={`/cases/${c.slug || c.id}`} className="group block h-full">
-                <div className="bg-white border border-gray-100 overflow-hidden hover:border-gray-200 transition-all duration-300 h-full flex flex-col relative">
+                <div className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-300 transition-all duration-300 h-full flex flex-col">
+                  <div className="p-5 sm:p-6 flex flex-col flex-1">
+                    {/* Center category badges */}
+                    {c.center_categories && c.center_categories.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {c.center_categories.map((cat: string) => {
+                          const info = CENTER_CATEGORY_OPTIONS.find(o => o.value === cat)
+                          return info ? (
+                            <span key={cat} className="text-[10px] font-medium px-2 py-0.5 bg-[#1B3B2F] text-white rounded-full">{info.label}</span>
+                          ) : null
+                        })}
+                      </div>
+                    ) : (
+                      <span className={`self-start inline-block text-[10px] font-medium px-2.5 py-0.5 ${c.tag_color} rounded-full mb-3`}>
+                        {c.tag}
+                      </span>
+                    )}
 
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={c.image_url}
-                      alt={c.title}
-                      width={800}
-                      height={500}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                      unoptimized
-                    />
-                  </div>
-
-                  <div className="p-5 sm:p-10 flex flex-col flex-1">
-                    <span className={`self-start inline-block text-xs font-medium px-3 py-1 ${c.tag_color} mb-5`}>
-                      {c.tag}
-                    </span>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-black leading-snug mb-3 group-hover:text-[#1B3B2F] transition-colors">
+                    <h3 className="text-base sm:text-lg font-semibold text-black leading-snug mb-2 group-hover:text-[#1B3B2F] transition-colors line-clamp-2">
                       {c.title}
                     </h3>
 
-                    <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-1">
+                    <p className="text-sm text-gray-500 leading-relaxed mb-4 flex-1 line-clamp-2">
                       {c.summary}
                     </p>
 
-                    <div className="flex items-center justify-between">
-                      <div className={`inline-flex items-center text-sm font-semibold px-4 py-2 border shadow-sm ${c.badge_color}`}>
-                        {c.badge}
-                      </div>
-                      <span className="text-xs text-gray-400 group-hover:text-[#1B3B2F] transition-colors">
-                        자세히 보기 &rarr;
-                      </span>
+                    <div className={`self-start inline-flex items-center text-xs font-bold px-3 py-1.5 border ${c.badge_color}`}>
+                      {c.badge}
                     </div>
                   </div>
                 </div>
