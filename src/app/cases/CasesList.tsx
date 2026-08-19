@@ -315,15 +315,21 @@ export default function CasesList() {
                       </p>
                     )}
 
-                    {c.representation_side === 'victim' && (
-                      <span className="inline-block mt-3 text-[10px] font-medium px-2 py-0.5 bg-[#1B3B2F]/8 text-[#1B3B2F] rounded">피해자 대리</span>
-                    )}
-                    {c.procedure_stages && c.procedure_stages.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {c.procedure_stages.slice(0, 3).map((s: string) => (
-                          <span key={s} className="text-[10px] px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded">{s}</span>
+                    {c.offense_types && c.offense_types.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-3">
+                        {c.offense_types.slice(0, 3).map((s: string) => (
+                          <span key={s} className="text-[10px] px-2 py-0.5 bg-[#1B3B2F] text-white rounded-full">{s}</span>
                         ))}
+                        {c.offense_types.length > 3 && (
+                          <span className="text-[10px] px-2 py-0.5 bg-gray-200 text-gray-600 rounded-full">+{c.offense_types.length - 3}</span>
+                        )}
                       </div>
+                    )}
+                    {c.outcome_types && c.outcome_types.length > 0 && (
+                      <p className="mt-2 text-xs font-bold text-[#1B3B2F]">{c.outcome_types.join(' · ')}</p>
+                    )}
+                    {c.lawyer_ids && c.lawyer_ids.length > 0 && (
+                      <p className="mt-1 text-[10px] text-gray-400">담당: {c.lawyer_ids.join(', ')}</p>
                     )}
 
                     {!canEdit && (

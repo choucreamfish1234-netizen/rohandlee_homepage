@@ -81,11 +81,22 @@ export default function CenterCasesDB({ centerSlug, title = '성공사례', maxI
                         <span className="text-[10px] px-2 py-0.5 bg-blue-50 text-blue-600 rounded">복합 사례</span>
                       )}
                     </div>
+                    {c.offense_types && c.offense_types.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {c.offense_types.slice(0, 3).map((s: string) => (
+                          <span key={s} className="text-[10px] px-2 py-0.5 bg-[#1B3B2F] text-white rounded-full">{s}</span>
+                        ))}
+                      </div>
+                    )}
                     <h3 className="text-base font-semibold text-black group-hover:text-[#1B3B2F] transition-colors mb-2 line-clamp-2">{c.title}</h3>
-                    <p className="text-sm text-gray-500 line-clamp-2 mb-3">{c.summary}</p>
-                    <div className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 border ${c.badge_color}`}>
-                      {c.badge}
-                    </div>
+                    {c.outcome_types && c.outcome_types.length > 0 ? (
+                      <p className="text-xs font-bold text-[#1B3B2F]">{c.outcome_types.join(' · ')}</p>
+                    ) : (
+                      <div className={`inline-flex items-center text-xs font-semibold px-3 py-1.5 border ${c.badge_color}`}>{c.badge}</div>
+                    )}
+                    {c.lawyer_ids && c.lawyer_ids.length > 0 && (
+                      <p className="mt-1 text-[10px] text-gray-400">담당: {c.lawyer_ids.join(', ')}</p>
+                    )}
                   </div>
                 </div>
               </Link>

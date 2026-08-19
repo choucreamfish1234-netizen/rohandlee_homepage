@@ -139,39 +139,53 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
           </p>
         </div>
 
-        {/* Taxonomy Info */}
-        {(caseData.procedure_stages?.length || caseData.services_provided?.length || caseData.outcome_types?.length) && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-            {caseData.procedure_stages && caseData.procedure_stages.length > 0 && (
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">절차 단계</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {caseData.procedure_stages.map(s => (
-                    <span key={s} className="text-xs px-2 py-1 bg-white border border-gray-200 text-gray-700 rounded">{s}</span>
-                  ))}
+        {/* Case Meta Summary Card */}
+        {(caseData.offense_types?.length || caseData.services_provided?.length || caseData.procedure_stages?.length || caseData.outcome_types?.length || caseData.lawyer_ids?.length) && (
+          <div className="bg-[#F8F8F8] rounded-xl p-5 sm:p-6 mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {caseData.offense_types && caseData.offense_types.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">범죄유형</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {caseData.offense_types.map((s: string) => (
+                      <span key={s} className="text-[10px] px-2 py-0.5 bg-[#1B3B2F] text-white rounded-full font-medium">{s}</span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {caseData.services_provided && caseData.services_provided.length > 0 && (
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">수행 업무</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {caseData.services_provided.map(s => (
-                    <span key={s} className="text-xs px-2 py-1 bg-white border border-gray-200 text-gray-700 rounded">{s}</span>
-                  ))}
+              )}
+              {caseData.services_provided && caseData.services_provided.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">수행 업무</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {caseData.services_provided.map((s: string) => (
+                      <span key={s} className="text-[10px] px-2 py-0.5 bg-[#1B3B2F]/10 text-[#1B3B2F] rounded-full">{s}</span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            {caseData.outcome_types && caseData.outcome_types.length > 0 && (
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">결과</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {caseData.outcome_types.map(s => (
-                    <span key={s} className="text-xs px-2 py-1 bg-[#1B3B2F]/10 border border-[#1B3B2F]/20 text-[#1B3B2F] rounded font-medium">{s}</span>
-                  ))}
+              )}
+              {caseData.procedure_stages && caseData.procedure_stages.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">절차 단계</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {caseData.procedure_stages.map((s: string) => (
+                      <span key={s} className="text-[10px] px-2 py-0.5 bg-gray-200 text-gray-700 rounded-full">{s}</span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+              {caseData.outcome_types && caseData.outcome_types.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">결과</p>
+                  <p className="text-base font-bold text-[#1B3B2F]">{caseData.outcome_types.join(' · ')}</p>
+                </div>
+              )}
+              {caseData.lawyer_ids && caseData.lawyer_ids.length > 0 && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">담당 변호사</p>
+                  <p className="text-sm font-medium text-black">{caseData.lawyer_ids.join(', ')}</p>
+                </div>
+              )}
+            </div>
           </div>
         )}
 

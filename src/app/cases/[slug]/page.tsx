@@ -79,13 +79,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: '성공사례 | 법률사무소 로앤이' }
   }
 
-  const metaTitle = caseData.seo_title || caseData.title
-  const metaDesc = caseData.seo_description || caseData.summary
+  const offenseStr = caseData.offense_types?.length ? caseData.offense_types.join('·') : ''
+  const outcomeStr = caseData.outcome_types?.length ? caseData.outcome_types.join('·') : ''
+  const autoTitle = offenseStr && outcomeStr
+    ? `${offenseStr} ${outcomeStr} 사례`
+    : caseData.title
+  const metaTitle = caseData.seo_title || autoTitle
+  const autoDesc = caseData.seo_description || (
+    offenseStr
+      ? `법률사무소 로앤이가 ${offenseStr} 사건에서 ${caseData.services_provided?.slice(0, 2).join(', ') || '법률 조력'}을 수행하여 ${outcomeStr || caseData.badge}을 이끌어낸 사례입니다.`
+      : caseData.summary
+  )
+  const metaDesc = autoDesc
   const pageUrl = `${baseUrl}/cases/${caseData.slug || decodedSlug}`
 
   return {
     title: metaTitle,
     description: metaDesc,
+    keywords: caseData.offense_types || [],
     alternates: {
       canonical: pageUrl,
     },
@@ -113,21 +124,22 @@ export default async function Page({ params }: Props) {
 
   const caseData = await findCase(decodedSlug)
 
-  const seoDesc = caseData?.seo_description || caseData?.summary || ''
-  const aboutTopics = caseData?.offense_types?.length
+  const ldOffenses = caseData?.offense_types?.length
     ? caseData.offense_types.map((t: string) => ({ '@type': 'Thing', name: t }))
     : undefined
+  const ldAuthor = caseData?.lawyer_ids?.length
+    ? caseData.lawyer_ids.map((name: string) => ({ '@type': 'Person', name, worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' } }))
+    : { '@type': 'Organization', name: '법률사무소 로앤이' }
+  const ldDesc = caseData?.seo_description || caseData?.summary || ''
 
   const jsonLd = caseData ? {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: caseData.seo_title || caseData.title,
-    description: seoDesc,
+    description: ldDesc,
     image: caseData.image_url,
-    author: {
-      '@type': 'Organization',
-      name: '법률사무소 로앤이',
-    },
+    ...(caseData.offense_types?.length ? { keywords: caseData.offense_types.join(', ') } : {}),
+    author: ldAuthor,
     publisher: {
       '@type': 'Organization',
       name: '법률사무소 로앤이',
@@ -139,7 +151,7 @@ export default async function Page({ params }: Props) {
       '@type': 'WebPage',
       '@id': `${baseUrl}/cases/${caseData.slug || decodedSlug}`,
     },
-    ...(aboutTopics ? { about: aboutTopics } : {}),
+    ...(ldOffenses ? { about: ldOffenses } : {}),
     isAccessibleForFree: true,
     inLanguage: 'ko',
   } : null
