@@ -1,38 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import Script from 'next/script'
+import CenterCasesDB from '@/components/CenterCasesDB'
+import DatingViolenceRoadmap from './DatingViolenceRoadmap'
+import WhyRohandleePC from './WhyRohandleePC'
+import EmergencySection from './EmergencySection'
+import PhysicalCrimeFaq from './PhysicalCrimeFaq'
 
-const faqs = [
-  {
-    question: '맞았는데 증거가 없어요. 고소 가능한가요?',
-    answer:
-      'CCTV, 목격자 진술, 진단서, 문자 메시지 등 다양한 방법으로 증거를 확보할 수 있습니다. 사건 직후가 아니더라도 고소는 가능하며, 증거 수집 방법을 함께 안내해드립니다.',
-  },
-  {
-    question: '스토킹 신고했는데 경찰이 적극적으로 안 해요.',
-    answer:
-      '스토킹처벌법에 따라 경찰은 즉시 응급조치를 할 의무가 있습니다. 경찰 대응이 미흡한 경우 검찰 직접 고소, 법원 접근금지 가처분 신청 등 독자적인 법적 조치를 취할 수 있습니다.',
-  },
-  {
-    question: '가정폭력인데 이혼하지 않고도 보호받을 수 있나요?',
-    answer:
-      '네, 가정폭력처벌법에 따라 이혼 여부와 관계없이 피해자 보호명령, 접근금지, 퇴거 조치를 받을 수 있습니다. 피해자의 안전이 최우선이며, 향후 방향은 상담을 통해 함께 결정합니다.',
-  },
-  {
-    question: '합의금은 보통 얼마인가요?',
-    answer:
-      '피해 정도, 치료 기간, 후유증 유무, 가해자의 전과 여부 등에 따라 크게 달라집니다. 단순 폭행은 수백만 원부터, 중상해의 경우 수천만 원 이상의 합의금이 형성됩니다. 피해자가 최대한 보상받을 수 있도록 전략적으로 협상합니다.',
-  },
-  {
-    question: '미성년자 자녀가 학교폭력을 당했어요.',
-    answer:
-      '학교폭력예방법에 따라 학교에 신고하여 심의위원회 조치를 받을 수 있고, 동시에 가해 학생 보호자를 상대로 민사 손해배상 청구도 가능합니다. 형사 처벌이 가능한 연령(14세 이상)이면 형사 고소도 진행할 수 있습니다.',
-  },
-]
 
 const serviceAreas = [
   {
@@ -124,49 +101,6 @@ const legalServiceJsonLd = {
   serviceType: ['폭행', '상해', '스토킹', '협박', '공갈', '감금', '가정폭력', '데이트폭력', '학교폭력'],
 }
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-}
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border-b border-gray-200">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left"
-      >
-        <span className="text-sm sm:text-base font-medium text-black pr-4">{question}</span>
-        <svg
-          className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="pb-5 text-sm text-gray-500 leading-relaxed">{answer}</p>
-      </motion.div>
-    </div>
-  )
-}
 
 export default function PhysicalCrimePage() {
   const { openConsultation } = useConsultation()
@@ -177,11 +111,6 @@ export default function PhysicalCrimePage() {
         id="physical-crime-legal-service-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
-      />
-      <Script
-        id="physical-crime-faq-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* 히어로 섹션 */}
@@ -377,23 +306,11 @@ export default function PhysicalCrimePage() {
         </div>
       </section>
 
-      {/* FAQ 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              자주 묻는 질문
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div>
-              {faqs.map((faq, i) => (
-                <FAQItem key={i} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <DatingViolenceRoadmap />
+      <WhyRohandleePC />
+      <CenterCasesDB centerSlug="physical-crime" title="신체범죄 피해 성공사례" />
+      <EmergencySection />
+      <PhysicalCrimeFaq />
     </>
   )
 }
