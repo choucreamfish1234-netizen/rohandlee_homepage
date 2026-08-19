@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 /* ── 개인정보보호법 카드 ── */
 const privacyCards = [
@@ -28,26 +28,6 @@ const stats = [
   { value: '200+', label: '개인정보 관련 자문 건수' },
   { value: '100%', label: '과징금 감경 달성률' },
   { value: '72h', label: '긴급 대응 체계' },
-]
-
-/* ── 성공사례 ── */
-const cases = [
-  {
-    tag: '개인정보유출',
-    title: '고객 DB 10만 건 유출 사고, 과징금 80% 감경',
-    summary: '신속한 사고 대응과 재발 방지 체계 구축으로 과징금을 대폭 감경받았습니다.',
-    badge: '과징금 80% 감경',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=450&fit=crop&q=80',
-  },
-  {
-    tag: '해킹',
-    title: '기업 서버 해킹 피해, 가해자 검거 및 손해배상 3억 원',
-    summary: '전문 포렌식 업체와의 협업 및 수사기관 협력을 통해 가해자를 검거하고 손해배상을 이끌어냈습니다.',
-    badge: '손해배상 3억',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop&q=80',
-  },
 ]
 
 /* ── 프로세스 ── */
@@ -148,49 +128,7 @@ function ITSecurityCustomSection() {
         </div>
       </section>
 
-      {/* 성공사례 */}
-      <section className="py-28 sm:py-40 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal>
-            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-              Case Results
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-16">
-              개인정보보호 센터 성공사례
-            </h2>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {cases.map((c, i) => (
-              <ScrollReveal key={i} delay={i * 0.12}>
-                <div className="group overflow-hidden rounded-2xl border border-gray-100 hover:border-gray-300 hover:shadow-lg transition-all duration-300">
-                  <div className="aspect-[16/9] overflow-hidden">
-                    <Image
-                      src={c.image}
-                      alt={c.title}
-                      width={800}
-                      height={450}
-                      className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                  <div className="p-6 sm:p-8">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                      <span className="text-xs text-gray-400 tracking-wide uppercase">{c.tag}</span>
-                      <span className={`inline-flex self-start px-3 py-1 text-xs font-medium border rounded-full ${c.badgeColor}`}>
-                        {c.badge}
-                      </span>
-                    </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-black leading-snug group-hover:text-accent transition-colors duration-300">
-                      {c.title}
-                    </h3>
-                    <p className="mt-3 text-sm text-gray-500 leading-relaxed">{c.summary}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <CenterCasesDB centerSlug="it-security" title="개인정보보호 센터 성공사례" />
 
       {/* 디지털 피해 대응 프로세스 */}
       <section className="py-28 sm:py-40 bg-gray-50">

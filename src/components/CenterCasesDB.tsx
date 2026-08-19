@@ -11,6 +11,17 @@ interface Props {
   maxItems?: number
 }
 
+const SLUG_TO_CATEGORIES: Record<string, string[]> = {
+  'sexual-crime': ['성범죄', '스토킹'],
+  'property-crime': ['보이스피싱', '재산범죄'],
+  'physical-crime': ['신체범죄'],
+  'real-estate': ['전세사기', '부동산'],
+  'damages': ['손해배상'],
+  'asset-recovery': ['재산회복'],
+  'it-security': ['개인정보보호'],
+  'school-violence': ['학교폭력'],
+}
+
 export default function CenterCasesDB({ centerSlug, title = '성공사례', maxItems = 6 }: Props) {
   const [cases, setCases] = useState<SuccessCase[]>([])
 
@@ -20,13 +31,26 @@ export default function CenterCasesDB({ centerSlug, title = '성공사례', maxI
         const res = await fetch('/api/cases')
         const data = await res.json()
         const all: SuccessCase[] = data.cases || []
-        const filtered = all.filter(c =>
-          c.published !== false &&
+        const published = all.filter(c => c.published !== false)
+
+        // 1차: center_categories 기반 필터
+        const byCenter = published.filter(c =>
           c.center_categories &&
           Array.isArray(c.center_categories) &&
           c.center_categories.includes(centerSlug)
         )
-        setCases(filtered.slice(0, maxItems))
+
+        if (byCenter.length > 0) {
+          setCases(byCenter.slice(0, maxItems))
+          return
+        }
+
+        // 2차 fallback: category 기반 필터
+        const fallbackCats = SLUG_TO_CATEGORIES[centerSlug] || []
+        if (fallbackCats.length > 0) {
+          const byCat = published.filter(c => fallbackCats.includes(c.category))
+          setCases(byCat.slice(0, maxItems))
+        }
       } catch { /* keep empty */ }
     }
     fetchCases()

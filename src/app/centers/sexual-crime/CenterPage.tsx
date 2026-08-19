@@ -8,7 +8,7 @@ import { useConsultation } from '@/components/ConsultationProvider'
 import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
 import ScrollReveal from '@/components/ScrollReveal'
 import ProcessTimeline from './ProcessTimeline'
-import CenterCases from './CenterCases'
+import CenterCasesDB from '@/components/CenterCasesDB'
 import FAQAccordion from './FAQAccordion'
 import VictimSocietySection from './VictimSocietySection'
 import OneStopCrimeSection from './OneStopCrimeSection'
@@ -329,7 +329,7 @@ export default function SexualCrimeCenterPage() {
           <ChooseLawyerSection />
           <CrimeTypesSection />
           <ProcessTimeline />
-          <CenterCases />
+          <CenterCasesDB centerSlug="sexual-crime" title="성범죄 피해자 대리 성공사례" />
           <VictimSocietySection />
           <OneStopCrimeSection />
           <SincerityAppSection />
