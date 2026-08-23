@@ -19,6 +19,7 @@ const CENTER_CATEGORIES = [
   { key: '성범죄', label: '성범죄 피해자 전담', author: '이유림 변호사' },
   { key: '재산범죄', label: '재산범죄 피해자 전담', author: '노채은 변호사' },
   { key: '신체범죄', label: '신체범죄 피해 전담', author: '이유림 변호사' },
+  { key: '명예훼손', label: '악플·명예훼손 전담', author: '이유림 변호사' },
   { key: '개인정보보호', label: '개인정보보호', author: '이유림 변호사' },
   { key: '부동산', label: '부동산 피해 전담', author: '노채은 변호사' },
   { key: '재산회복', label: '재산회복 전담', author: '노채은 변호사' },
