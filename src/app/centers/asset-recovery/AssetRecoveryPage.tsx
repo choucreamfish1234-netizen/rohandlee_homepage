@@ -94,7 +94,6 @@ const legalServiceJsonLd = {
     '@type': 'Country',
     name: 'KR',
   },
-  priceRange: '무료 상담',
   serviceType: ['가압류', '가처분', '강제집행', '압류추심', '재산조회', '재산명시'],
 }
 

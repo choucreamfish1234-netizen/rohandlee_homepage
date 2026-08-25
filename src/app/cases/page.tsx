@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/cases', {
     title: '성공사례',
     description: '법률사무소 로앤이의 성공사례. 보이스피싱 불송치, 성범죄 엄벌, 회생인가 등 실제 사건 결과로 증명합니다. 200건 이상 의뢰인 후기.',
-    ogTitle: '성공사례 | 법률사무소 로앤이',
+    ogTitle: '성공사례',
     ogDescription: '보이스피싱 불송치, 성범죄 엄벌, 회생인가 등 실제 사건 결과로 증명합니다.',
   })
 }
@@ -14,35 +14,35 @@ export async function generateMetadata(): Promise<Metadata> {
 const casesJsonLd = [
   {
     '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    name: '강도강간 등 고소대리 - 징역 8년 선고',
+    '@type': 'Article',
+    headline: '강도강간 등 고소대리 — 징역 8년 선고',
     description: '성범죄 피해자 고소대리를 통해 가해자에게 징역 8년이 선고된 사례',
-    author: { '@type': 'Organization', name: '법률사무소 로앤이' },
+    author: { '@type': 'Person', name: '이유림', jobTitle: '변호사', worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' } },
+    publisher: { '@type': 'LegalService', name: '법률사무소 로앤이' },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    name: '보이스피싱 수거책 불송치',
+    '@type': 'Article',
+    headline: '보이스피싱 수거책 불송치',
     description: '보이스피싱 수거책 혐의를 받은 의뢰인의 불송치 결정을 이끌어낸 사례',
-    author: { '@type': 'Organization', name: '법률사무소 로앤이' },
+    author: { '@type': 'Person', name: '노채은', jobTitle: '변호사', worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' } },
+    publisher: { '@type': 'LegalService', name: '법률사무소 로앤이' },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    name: '카메라이용촬영물 압수수색 및 디지털 증거 확보 조력',
-    description: '불법촬영 피해 사건에서 압수수색 및 전문 포렌식 업체 협업을 통해 디지털 증거를 확보한 사례',
-    author: { '@type': 'Organization', name: '법률사무소 로앤이' },
+    '@type': 'Article',
+    headline: '카메라이용촬영물 압수수색 및 디지털 증거 확보 조력',
+    description: '불법촬영 피해 사건에서 압수수색 및 디지털 증거를 확보한 사례',
+    author: { '@type': 'Person', name: '이유림', jobTitle: '변호사', worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' } },
+    publisher: { '@type': 'LegalService', name: '법률사무소 로앤이' },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'Review',
-    itemReviewed: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    name: '폭처법상 공동상해 정식재판청구 무죄',
+    '@type': 'Article',
+    headline: '폭처법상 공동상해 정식재판청구 무죄',
     description: '폭력행위등처벌에관한법률 공동상해 혐의에 대해 무죄 판결을 이끌어낸 사례',
-    author: { '@type': 'Organization', name: '법률사무소 로앤이' },
+    author: { '@type': 'Person', name: '노채은', jobTitle: '변호사', worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' } },
+    publisher: { '@type': 'LegalService', name: '법률사무소 로앤이' },
   },
 ]
 

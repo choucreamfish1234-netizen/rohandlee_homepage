@@ -75,14 +75,9 @@ export default function DirectionsContent() {
             <div className="bg-gray-50 p-8 border border-gray-100 text-center">
               <p className="text-2xl mb-4">📞</p>
               <h3 className="text-sm font-semibold text-black mb-3">연락처</h3>
-              <EditableText
-                page={PAGE}
-                section="info"
-                fieldKey="phone"
-                defaultValue="032-207-8788"
-                tag="p"
-                className="text-sm text-gray-500 leading-relaxed"
-              />
+              <p className="text-sm text-gray-500 leading-relaxed">
+                <a href="tel:032-207-8788" className="hover:text-black transition-colors">032-207-8788</a>
+              </p>
               <EditableText
                 page={PAGE}
                 section="info"

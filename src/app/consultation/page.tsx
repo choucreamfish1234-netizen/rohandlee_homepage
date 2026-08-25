@@ -6,7 +6,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/consultation', {
     title: '상담 안내',
     description: '법률사무소 로앤이 상담 안내. 성범죄·재산범죄·신체범죄·부동산·손해배상·학교폭력 등 8대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788 또는 온라인 상담.',
-    ogTitle: '상담 안내 | 법률사무소 로앤이',
+    ogTitle: '상담 안내',
     ogDescription: '8대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788.',
   })
 }
@@ -31,7 +31,7 @@ export default function Page() {
             </div>
             <div className="p-4 bg-gray-50 rounded-xl">
               <p className="text-sm font-semibold text-black mb-1">전화 상담</p>
-              <p className="text-xs text-gray-500">032-207-8788로 전화하시면 바로 상담이 가능합니다.</p>
+              <p className="text-xs text-gray-500"><a href="tel:032-207-8788" className="hover:text-black transition-colors">032-207-8788</a>로 전화하시면 바로 상담이 가능합니다.</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-xl">
               <p className="text-sm font-semibold text-black mb-1">카카오톡 상담</p>

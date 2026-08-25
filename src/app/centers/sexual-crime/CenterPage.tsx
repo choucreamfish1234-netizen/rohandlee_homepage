@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
@@ -333,6 +334,57 @@ export default function SexualCrimeCenterPage() {
           <VictimSocietySection />
           <OneStopCrimeSection />
           <SincerityAppSection />
+
+          {/* 유형별·가이드 페이지 내부링크 */}
+          <section className="py-16 sm:py-24 bg-white">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <ScrollReveal>
+                <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">Explore</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-12">성범죄 유형별 상세 안내</h2>
+              </ScrollReveal>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                {[
+                  { name: '강간', slug: 'rape' },
+                  { name: '강제추행', slug: 'molestation' },
+                  { name: '준강간·준강제추행', slug: 'intoxication' },
+                  { name: '미성년자 대상 성범죄', slug: 'minors' },
+                  { name: '친족 성폭력', slug: 'family' },
+                  { name: '불법촬영(몰카)', slug: 'hidden-camera' },
+                  { name: '촬영물 유포', slug: 'distribution' },
+                  { name: '딥페이크', slug: 'deepfake' },
+                  { name: '온라인 성범죄', slug: 'online' },
+                  { name: '직장 내 성범죄', slug: 'workplace' },
+                  { name: '스토킹', slug: 'stalking' },
+                  { name: '성병 감염', slug: 'std' },
+                ].map(item => (
+                  <Link key={item.slug} href={`/centers/sexual-crime/${item.slug}`} className="block p-4 border border-gray-100 rounded-lg hover:border-[#1B3B2F]/30 hover:bg-[#1B3B2F]/5 transition-colors text-center">
+                    <span className="text-sm font-medium text-black">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+              <ScrollReveal delay={0.1}>
+                <h3 className="text-lg font-bold text-black mt-12 mb-6 text-center">피해자 가이드</h3>
+              </ScrollReveal>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[
+                  { name: '수사 절차 안내', slug: 'investigation' },
+                  { name: '재판 절차', slug: 'trial' },
+                  { name: '항소·상고', slug: 'appeal' },
+                  { name: '합의 가이드', slug: 'settlement' },
+                  { name: '손해배상 청구', slug: 'damages' },
+                  { name: '비용 회수', slug: 'cost-recovery' },
+                  { name: '무고 대응', slug: 'false-accusation' },
+                  { name: '증거 확보', slug: 'evidence' },
+                  { name: '공소시효', slug: 'statute-of-limitations' },
+                ].map(item => (
+                  <Link key={item.slug} href={`/centers/sexual-crime/guide/${item.slug}`} className="block p-4 border border-gray-100 rounded-lg hover:border-[#1B3B2F]/30 hover:bg-[#1B3B2F]/5 transition-colors text-center">
+                    <span className="text-sm font-medium text-black">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <FAQAccordion />
           <ReviewsSection />
         </>

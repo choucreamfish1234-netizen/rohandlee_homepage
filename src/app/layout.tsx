@@ -8,7 +8,6 @@ import ConsultationProvider from '@/components/ConsultationProvider'
 import AdminMode from '@/components/AdminMode'
 import Analytics from '@/components/Analytics'
 import TrafficTracker from '@/components/TrafficTracker'
-import { FIRM_STATS } from '@/lib/firm-stats'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 8대 전문센터 운영. 민형사 동시 타격 입체 전략. 무료 상담 032-207-8788',
+    '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 8대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
   keywords: [
     '국내최초 종합 피해자 전문 로펌',
     '피해자 전문 변호사',
@@ -48,7 +47,7 @@ export const metadata: Metadata = {
     url: baseUrl,
     siteName: '법률사무소 로앤이',
     title: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
-    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 8대 전문센터, 민형사 동시 타격. 무료 상담 032-207-8788',
+    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 8대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
@@ -116,7 +115,6 @@ const jsonLd = {
       closes: '18:00',
     },
   ],
-  priceRange: '무료 상담',
   slogan: '국내최초 종합 피해자 전문 로펌',
   areaServed: [
     { '@type': 'Country', name: '대한민국' },
@@ -170,12 +168,6 @@ const jsonLd = {
       author: { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     },
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: FIRM_STATS.ratingValue,
-    reviewCount: FIRM_STATS.reviewCountText,
-    bestRating: '5',
-  },
   sameAs: [
     'https://www.lawtalk.co.kr/directory/profile/8292-이유림/review',
     'https://pf.kakao.com/_YxgWxcn',

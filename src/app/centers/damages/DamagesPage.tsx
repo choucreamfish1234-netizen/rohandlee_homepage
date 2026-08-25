@@ -75,7 +75,6 @@ const legalServiceJsonLd = {
     '@type': 'Country',
     name: 'KR',
   },
-  priceRange: '무료 상담',
   serviceType: ['교통사고', '의료사고', '산업재해', '제조물책임', '손해배상'],
 }
 

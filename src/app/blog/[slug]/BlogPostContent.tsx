@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Breadcrumb from '@/components/Breadcrumb'
 import {
   type BlogPost,
   getPostBySlug,
@@ -100,11 +101,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         className="max-w-3xl mx-auto px-4 sm:px-6 md:px-0"
       >
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-400 mb-8">
-          <Link href="/blog" className="hover:text-black transition-colors">블로그</Link>
-          <span>/</span>
-          <Link href={`/blog?category=${post.category}`} className="hover:text-black transition-colors">{post.category}</Link>
-        </div>
+        <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '블로그', href: '/blog' }, { name: post.title }]} />
 
         {/* Category Badge */}
         <span className="inline-block text-xs font-semibold px-4 py-1.5 bg-[#1B3B2F] text-white rounded-full mb-5">
