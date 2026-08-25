@@ -41,7 +41,7 @@ export default function NationwideSection() {
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-white/40 uppercase text-center mb-4">Nationwide</p>
           <h2 className="text-xl sm:text-3xl font-bold text-center text-white mb-3">
-            부천에 본사, 전국에서 찾아오는 로펌
+            전국에서 찾아오는 로펌
           </h2>
           <p className="text-center text-white/50 text-sm mb-10 sm:mb-16">
             거리는 사건에 아무 지장이 없습니다
