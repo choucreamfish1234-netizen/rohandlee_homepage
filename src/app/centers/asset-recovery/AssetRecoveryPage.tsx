@@ -90,7 +90,7 @@ export default function AssetRecoveryPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B3B2F]/5 border border-[#1B3B2F]/10 mb-6">
-            <span className="text-[10px] font-semibold tracking-wider text-[#1B3B2F] uppercase">최초의 종합 피해자 중심 로펌</span>
+            <span className="text-[10px] font-semibold tracking-wider text-[#1B3B2F] uppercase">국내최초 종합 피해자 중심 로펌</span>
           </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             재산회복 전담센터
@@ -234,7 +234,7 @@ export default function AssetRecoveryPage() {
         </div>
       </section>
 
-      <p className="sr-only">법률사무소 로앤이 재산회복 전담센터는 가압류, 가처분, 강제집행, 예금 압류, 급여 압류, 부동산 경매, 채권추심, 재산조회, 재산명시를 수행하며, 최초의 종합 피해자 중심 로펌으로서 사기 형사 고소와 재산 강제 회수를 동시에 진행한다.</p>
+      <p className="sr-only">법률사무소 로앤이 재산회복 전담센터는 가압류, 가처분, 강제집행, 예금 압류, 급여 압류, 부동산 경매, 채권추심, 재산조회, 재산명시를 수행하며, 국내최초 종합 피해자 중심 로펌으로서 사기 형사 고소와 재산 강제 회수를 동시에 진행한다.</p>
     </>
   )
 }

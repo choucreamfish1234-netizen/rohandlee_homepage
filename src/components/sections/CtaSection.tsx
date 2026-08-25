@@ -29,7 +29,7 @@ export default function CtaSection() {
 
         <ScrollReveal delay={0.1}>
           <p className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed">
-            최초의 종합 피해자 중심 로펌. 9대 전문센터가 함께합니다.
+            국내최초 종합 피해자 중심 로펌. 9대 전문센터가 함께합니다.
           </p>
         </ScrollReveal>
 
