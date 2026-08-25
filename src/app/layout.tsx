@@ -16,13 +16,13 @@ const baseUrl = 'https://lawfirmrohandlee.com'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
+    default: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
+    '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
   keywords: [
-    '국내최초 종합 피해자 전문 로펌',
+    '국내최초 종합 피해자 중심 로펌',
     '피해자 전문 변호사',
     '성범죄 피해자 변호사',
     '재산범죄 피해자 변호사',
@@ -46,13 +46,13 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: baseUrl,
     siteName: '법률사무소 로앤이',
-    title: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
+    title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
     description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 9대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
+    title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
     description: '모든 피해를 한 곳에서. 9대 전문센터 운영. 민형사 동시 타격 입체 전략.',
     images: [`${baseUrl}/og-image.png`],
   },
@@ -90,7 +90,7 @@ const jsonLd = {
   '@type': 'LegalService',
   name: '법률사무소 로앤이',
   alternateName: 'ROH&LEE',
-  description: '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 분야의 피해자를 전문으로 대리합니다.',
+  description: '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 분야의 피해자를 전문으로 대리합니다.',
   url: baseUrl,
   telephone: '+82-32-207-8788',
   email: 'rohetlee@naver.com',
@@ -115,7 +115,7 @@ const jsonLd = {
       closes: '18:00',
     },
   ],
-  slogan: '국내최초 종합 피해자 전문 로펌',
+  slogan: '국내최초 종합 피해자 중심 로펌',
   areaServed: [
     { '@type': 'Country', name: '대한민국' },
     { '@type': 'City', name: '서울' },

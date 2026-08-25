@@ -98,7 +98,7 @@ export default function DamagesPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
-            최초의 종합 피해자 중심 로펌
+            국내최초 종합 피해자 중심 로펌
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             손해배상 전담센터

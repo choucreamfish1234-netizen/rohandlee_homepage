@@ -5,7 +5,7 @@ import { Users, Smartphone, Award, Eye, Layers, Zap } from 'lucide-react'
 
 const differences = [
   {
-    title: '국내최초 종합 피해자 전문',
+    title: '국내최초 종합 피해자 중심 로펌',
     description: '성범죄부터 강제집행까지, 모든 피해를 한 곳에서 대리하는 종합 피해자 전문 로펌입니다.',
     icon: Users,
   },
