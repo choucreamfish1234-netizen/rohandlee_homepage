@@ -12,11 +12,14 @@ type Tab = 'overview' | 'channels' | 'pages' | 'devices' | 'conversions' | 'real
 
 const COLORS = ['#1B3B2F', '#2D6A4F', '#40916C', '#52B788', '#74C69D', '#95D5B2', '#B7E4C7', '#D8F3DC']
 const CHANNEL_LABELS: Record<string, string> = {
-  naver: '네이버', naver_app: '네이버앱', google: '구글', daum: '다음', kakao: '카카오',
+  gemini: 'Gemini', chatgpt: 'ChatGPT', perplexity: 'Perplexity', copilot: 'Copilot', claude: 'Claude',
+  naver: '네이버', naver_app: '네이버앱', google: '구글', daum: '다음', bing: 'Bing', kakao: '카카오',
   lawtalk: '로톡', instagram: '인스타그램', threads: '스레드',
   twitter: '트위터/X', facebook: '페이스북',
-  youtube: '유튜브', direct: '직접 방문', other: '기타',
+  youtube: '유튜브', naver_blog: '네이버 블로그', naver_cafe: '네이버 카페',
+  direct: '직접 방문', other: '기타',
 }
+const AI_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude']
 const EVENT_LABELS: Record<string, string> = {
   consultation_open: '상담 팝업 열기', email_consultation_select: '이메일 상담 선택',
   rapid_consultation_click: '바로 상담(래피드) 클릭',
@@ -805,11 +808,46 @@ export default function AdminAnalyticsPage() {
                 </div>
               ) : (
                 <>
-                  {/* Total */}
-                  <div className="bg-white border border-gray-200 p-4 rounded-lg inline-block">
-                    <p className="text-xs text-gray-500 mb-1">총 방문수</p>
-                    <p className="text-2xl font-bold text-black">{trafficData.totalVisits.toLocaleString()}</p>
+                  {/* Total + AI Search */}
+                  <div className="flex flex-wrap gap-4">
+                    <div className="bg-white border border-gray-200 p-4 rounded-lg">
+                      <p className="text-xs text-gray-500 mb-1">총 방문수</p>
+                      <p className="text-2xl font-bold text-black">{trafficData.totalVisits.toLocaleString()}</p>
+                    </div>
+                    {(() => {
+                      const aiChannels = trafficData.channels.filter((c: { name: string; count: number }) => AI_CHANNELS.includes(c.name))
+                      const aiTotal = aiChannels.reduce((sum: number, c: { count: number }) => sum + c.count, 0)
+                      const aiPct = trafficData.totalVisits > 0 ? ((aiTotal / trafficData.totalVisits) * 100).toFixed(1) : '0'
+                      return (
+                        <div className="bg-purple-50 border border-purple-200 p-4 rounded-lg">
+                          <p className="text-xs text-purple-600 mb-1">AI 검색 유입</p>
+                          <p className="text-2xl font-bold text-purple-700">{aiTotal.toLocaleString()} <span className="text-sm font-normal">({aiPct}%)</span></p>
+                        </div>
+                      )
+                    })()}
                   </div>
+
+                  {/* AI Search Breakdown */}
+                  {(() => {
+                    const aiChannels = trafficData.channels.filter((c: { name: string; count: number }) => AI_CHANNELS.includes(c.name))
+                    if (aiChannels.length === 0) return null
+                    return (
+                      <div className="bg-white border border-purple-200 p-6 rounded-lg">
+                        <h3 className="text-sm font-semibold text-purple-700 mb-4">AI 검색 유입 상세</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                          {AI_CHANNELS.map(ch => {
+                            const found = aiChannels.find((c: { name: string }) => c.name === ch)
+                            return (
+                              <div key={ch} className="text-center p-3 bg-purple-50 rounded-lg">
+                                <p className="text-xs text-gray-500">{CHANNEL_LABELS[ch] || ch}</p>
+                                <p className="text-lg font-bold text-purple-700">{found ? found.count.toLocaleString() : '0'}</p>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )
+                  })()}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Donut Chart */}

@@ -17,13 +17,22 @@ function detectChannel(): string {
   if (/Twitter/i.test(ua)) return 'twitter'
 
   const r = document.referrer.toLowerCase()
+  // AI 검색 (최우선)
+  if (r.includes('gemini.google') || r.includes('bard.google')) return 'gemini'
+  if (r.includes('chat.openai') || r.includes('chatgpt')) return 'chatgpt'
+  if (r.includes('perplexity')) return 'perplexity'
+  if (r.includes('copilot.microsoft') || r.includes('bing.com/chat')) return 'copilot'
+  if (r.includes('claude.ai')) return 'claude'
+  // SNS
   if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
   if (r.includes('instagram.com')) return 'instagram'
   if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co')) return 'twitter'
   if (r.includes('facebook.com') || r.includes('fb.com')) return 'facebook'
+  // 검색
   if (r.includes('naver.com')) return 'naver'
   if (r.includes('google.')) return 'google'
   if (r.includes('daum.net')) return 'daum'
+  if (r.includes('bing.')) return 'bing'
   if (r.includes('kakao')) return 'kakao'
   if (r.includes('lawtalk.co.kr')) return 'lawtalk'
   if (r.includes('youtube.com') || r.includes('youtu.be')) return 'youtube'
