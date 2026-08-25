@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getPageSeo } from '@/lib/seo'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/lawyers', {
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-const lawyers = [
+const fallbackLawyers = [
   {
     name: '이유림',
     role: '대표변호사',
@@ -31,7 +32,28 @@ const lawyers = [
   },
 ]
 
-export default function Page() {
+export default async function Page() {
+  let lawyers = fallbackLawyers
+
+  try {
+    const { data } = await supabaseAdmin
+      .from('lawyers')
+      .select('name, image_url')
+      .in('name', ['이유림', '노채은'])
+
+    if (data) {
+      const dbMap = Object.fromEntries(
+        data.filter(l => l.image_url).map(l => [l.name, l.image_url])
+      )
+      lawyers = fallbackLawyers.map(l => ({
+        ...l,
+        image: dbMap[l.name] || l.image,
+      }))
+    }
+  } catch {
+    // fallback to hardcoded images
+  }
+
   return (
     <section className="py-20 sm:py-28">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

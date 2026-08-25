@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Breadcrumb from '@/components/Breadcrumb'
+import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
 import {
   type BlogPost,
   getPostBySlug,
@@ -23,6 +24,11 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
   const [loading, setLoading] = useState(!initialPost)
   const [adjacent, setAdjacent] = useState<{ prev: { title: string; slug: string } | null; next: { title: string; slug: string } | null }>({ prev: null, next: null })
   const [related, setRelated] = useState<BlogPost[]>([])
+  const [lawyerImages, setLawyerImages] = useState<Record<string, string>>({ '이유림': getFallbackImage('이유림'), '노채은': getFallbackImage('노채은') })
+
+  useEffect(() => {
+    fetchLawyerImages().then(setLawyerImages)
+  }, [])
   const { openConsultation } = useConsultation()
 
   useEffect(() => {
@@ -297,7 +303,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         </div>
 
         {/* Author Profile Box */}
-        <AuthorProfileBox author={post.author} category={post.category} />
+        <AuthorProfileBox author={post.author} category={post.category} images={lawyerImages} />
       </motion.article>
 
       {/* Related Posts */}
@@ -340,13 +346,13 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
   )
 }
 
-function AuthorProfileBox({ author, category }: { author: string; category: string }) {
+function AuthorProfileBox({ author, category, images }: { author: string; category: string; images: Record<string, string> }) {
   const isLee = author?.includes('이유림') || ['성범죄', '일반'].includes(category)
 
   if (isLee) {
     return (
       <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-        <Image src="/images/lawyers/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+        <Image src={images['이유림'] || '/images/lawyers/lawyer-lee.svg'} alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
         <div className="text-center sm:text-left">
           <p className="font-medium text-gray-900">이유림 변호사</p>
           <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
@@ -361,7 +367,7 @@ function AuthorProfileBox({ author, category }: { author: string; category: stri
 
   return (
     <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-      <Image src="/images/lawyers/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
+      <Image src={images['노채은'] || '/images/lawyers/lawyer-noh.svg'} alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
       <div className="text-center sm:text-left">
         <p className="font-medium text-gray-900">노채은 변호사</p>
         <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·재산회복 전문</p>

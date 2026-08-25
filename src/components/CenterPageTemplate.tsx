@@ -1,9 +1,11 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import { EditableText, EditableImage } from '@/components/Editable'
+import { fetchLawyerImages } from '@/lib/lawyer-image'
 
 interface Service {
   title: string
@@ -66,6 +68,12 @@ export default function CenterPageTemplate({
 }: CenterPageTemplateProps) {
   const { openConsultation } = useConsultation()
   const handleCtaClick = () => openConsultation(defaultCaseType)
+  const [lawyerImages, setLawyerImages] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    fetchLawyerImages().then(setLawyerImages)
+  }, [])
+
   return (
     <>
       {/* 히어로 */}
@@ -293,7 +301,7 @@ export default function CenterPageTemplate({
                       page={pagePath}
                       section="lawyers"
                       fieldKey={`lawyer-${i}-image`}
-                      defaultSrc={lawyer.image}
+                      defaultSrc={lawyerImages[lawyer.name] || lawyer.image}
                       alt={`${lawyer.name} ${lawyer.role}`}
                       width={600}
                       height={800}

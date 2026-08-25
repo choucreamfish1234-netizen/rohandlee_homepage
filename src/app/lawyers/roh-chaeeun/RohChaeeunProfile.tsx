@@ -1,9 +1,12 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
+import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
+
 const practiceAreas = [
   { title: '사기 피해 대리', desc: '투자사기, 중고거래사기, 코인사기 등 모든 유형의 사기 피해자를 대리하여 형사 고소부터 피해금 회수까지.' },
   { title: '횡령·배임 피해 대리', desc: '회사 자금 횡령, 업무상 배임 피해자를 대리하여 증거 확보, 고소, 손해배상 청구.' },
@@ -20,6 +23,14 @@ const career = [
 ]
 
 export default function RohChaeeunProfile() {
+  const [profileImage, setProfileImage] = useState(getFallbackImage('노채은'))
+
+  useEffect(() => {
+    fetchLawyerImages().then(images => {
+      if (images['노채은']) setProfileImage(images['노채은'])
+    })
+  }, [])
+
   return (
     <>
       <section className="min-h-[50vh] flex flex-col items-center justify-center px-5 bg-[#FAFAFA]">
@@ -31,7 +42,7 @@ export default function RohChaeeunProfile() {
         >
           <div className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200">
             <Image
-              src="/images/lawyers/lawyer-noh.svg"
+              src={profileImage}
               alt="노채은 변호사"
               width={160}
               height={160}
