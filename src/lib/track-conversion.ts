@@ -23,19 +23,30 @@ function detectChannel(): string {
   if (r.includes('perplexity')) return 'perplexity'
   if (r.includes('copilot.microsoft') || r.includes('bing.com/chat')) return 'copilot'
   if (r.includes('claude.ai')) return 'claude'
+  if (r.includes('search.daum.net/ai') || r.includes('ai.kakao')) return 'kakao_ai'
+  if (r.includes('clova') || r.includes('clovax')) return 'clova_x'
+  // 네이버 세부
+  if (r.includes('blog.naver')) return 'naver_blog'
+  if (r.includes('cafe.naver')) return 'naver_cafe'
+  if (r.includes('kin.naver')) return 'naver_kin'
+  if (r.includes('map.naver')) return 'naver_map'
   // SNS
   if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
   if (r.includes('instagram.com')) return 'instagram'
   if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co')) return 'twitter'
   if (r.includes('facebook.com') || r.includes('fb.com')) return 'facebook'
-  // 검색
-  if (r.includes('naver.com')) return 'naver'
-  if (r.includes('google.')) return 'google'
-  if (r.includes('daum.net')) return 'daum'
-  if (r.includes('bing.')) return 'bing'
-  if (r.includes('kakao')) return 'kakao'
-  if (r.includes('lawtalk.co.kr')) return 'lawtalk'
+  if (r.includes('tiktok')) return 'tiktok'
   if (r.includes('youtube.com') || r.includes('youtu.be')) return 'youtube'
+  // 검색엔진
+  if (r.includes('google.')) return 'google'
+  if (r.includes('naver')) return 'naver'
+  if (r.includes('daum') || r.includes('search.kakao')) return 'daum'
+  if (r.includes('bing')) return 'bing'
+  if (r.includes('yahoo')) return 'yahoo'
+  if (r.includes('kakao')) return 'kakao'
+  // 법률 플랫폼
+  if (r.includes('lawtalk')) return 'lawtalk'
+  if (r.includes('lawpeople')) return 'lawpeople'
   if (!r) return 'direct'
   return 'other'
 }
