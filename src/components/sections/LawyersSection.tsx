@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 
 interface CaseResult {
@@ -124,6 +125,11 @@ const fallbackLawyers: LawyerData[] = [
     ],
   },
 ]
+
+const LAWYER_PROFILE_URL: Record<string, string> = {
+  '이유림': '/lawyers/lee-yurim',
+  '노채은': '/lawyers/roh-chaeeun',
+}
 
 const FALLBACK_IMAGE_MAP: Record<string, string> = {
   '이유림': '/images/lawyers/lawyer-lee.svg',
@@ -263,6 +269,17 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
           ))}
         </div>
       </motion.div>
+
+      {LAWYER_PROFILE_URL[lawyer.name] && (
+        <div className="mt-6">
+          <Link
+            href={LAWYER_PROFILE_URL[lawyer.name]}
+            className="inline-flex items-center gap-1 text-sm text-[#1B3B2F] font-medium hover:underline transition-colors"
+          >
+            프로필 보기 &rarr;
+          </Link>
+        </div>
+      )}
 
       <div className="mt-8">
         <PreviousCareer items={lawyer.previous} />

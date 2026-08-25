@@ -8,6 +8,8 @@ import { useConsultation } from './ConsultationProvider'
 const navLinks = [
   { href: '/#centers', label: '사무실 소개' },
   { href: '/#lawyers', label: '변호사 소개' },
+  { href: '/centers/school-violence', label: '학교폭력센터' },
+  { href: '/consultation', label: '상담 안내' },
   { href: '/cases', label: '성공사례' },
   { href: '/directions', label: '오시는 길' },
   { href: '/blog', label: '블로그' },

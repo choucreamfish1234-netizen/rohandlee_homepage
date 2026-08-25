@@ -20,7 +20,7 @@ const differences = [
     icon: Layers,
   },
   {
-    title: '8대 전문센터',
+    title: '9대 전문센터',
     description: '각 분야 전문 변호사가 전담합니다. 사건 유형에 맞는 최적의 센터에서 전문성을.',
     icon: Award,
   },

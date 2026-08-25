@@ -146,7 +146,7 @@ export default function HeroSection() {
           className="text-sm sm:text-base text-gray-500 mt-5 leading-relaxed"
         >
           성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 강제집행<br />
-          모든 피해를 한 곳에서. 8대 전문센터가 함께합니다.
+          모든 피해를 한 곳에서. 9대 전문센터가 함께합니다.
         </motion.p>
 
         <motion.div
