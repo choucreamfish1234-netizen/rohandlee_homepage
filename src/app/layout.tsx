@@ -150,8 +150,10 @@ const jsonLd = {
   employee: [
     {
       '@type': 'Person',
+      '@id': `${baseUrl}/lawyers/lee-yurim`,
       name: '이유림',
       jobTitle: '대표변호사',
+      url: `${baseUrl}/lawyers/lee-yurim`,
       knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리', 'LegalTech'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: [
@@ -162,8 +164,10 @@ const jsonLd = {
     },
     {
       '@type': 'Person',
+      '@id': `${baseUrl}/lawyers/roh-chaeeun`,
       name: '노채은',
       jobTitle: '대표변호사',
+      url: `${baseUrl}/lawyers/roh-chaeeun`,
       knowsAbout: ['재산범죄 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },

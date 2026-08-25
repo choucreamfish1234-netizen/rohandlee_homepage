@@ -36,11 +36,15 @@ const personJsonLd = {
     '전세사기 피해자 대리',
     '재산범죄',
   ],
+  '@id': `${baseUrl}/lawyers/roh-chaeeun`,
   alumniOf: [
-    { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },
+    { '@type': 'CollegeOrUniversity', name: '중앙대학교' },
+    { '@type': 'CollegeOrUniversity', name: '경북대학교 법학전문대학원' },
   ],
   memberOf: [
     { '@type': 'Organization', name: '인천지방변호사회' },
+    { '@type': 'Organization', name: '대법원 국선변호인' },
+    { '@type': 'Organization', name: '한국소비자원 소송지원 변호사' },
   ],
   author: {
     '@type': 'Book',

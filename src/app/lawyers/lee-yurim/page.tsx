@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 const personJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${baseUrl}/lawyers/lee-yurim`,
   name: '이유림',
   jobTitle: '대표변호사',
   worksFor: {
