@@ -69,6 +69,13 @@ const centers: Center[] = [
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&q=80',
     alt: '고층 빌딩 - 기업법무',
   },
+  {
+    title: '학교폭력 전문센터',
+    description: '피해학생 보호·가해학생 선도조치·손해배상',
+    href: '/centers/school-violence',
+    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop&q=80',
+    alt: '학교 교실 - 학교폭력 전문 법률 지원',
+  },
 ]
 
 function CenterCard({ center, index }: {
@@ -120,11 +127,11 @@ export default function CentersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            8 Specialized Centers
+            9 Specialized Centers
           </p>
           <p className="text-xs font-semibold text-[#1B3B2F] text-center mb-3">국내 유일, 피해자를 위한</p>
           <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            8대 전문센터
+            9대 전문센터
           </h2>
         </ScrollReveal>
 

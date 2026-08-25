@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -8,59 +8,52 @@ import {
   type BlogPost,
   CATEGORIES,
   getCategoryImagePool,
-  getReadingTime,
   formatDate,
 } from '@/lib/blog'
 
-const POSTS_PER_PAGE = 9
+function buildHref(page: number, category: string) {
+  const params = new URLSearchParams()
+  if (page > 1) params.set('page', String(page))
+  if (category !== '전체') params.set('category', category)
+  const qs = params.toString()
+  return qs ? `/blog?${qs}` : '/blog'
+}
 
 export default function BlogListClient({
-  initialPosts,
-  initialFeatured,
+  posts,
+  featured,
+  currentPage,
+  totalPages,
+  totalCount,
+  currentCategory,
 }: {
-  initialPosts: BlogPost[]
-  initialFeatured: BlogPost[]
+  posts: BlogPost[]
+  featured: BlogPost[]
+  currentPage: number
+  totalPages: number
+  totalCount: number
+  currentCategory: string
 }) {
-  const [featured] = useState<BlogPost[]>(initialFeatured)
-  const [category, setCategory] = useState('전체')
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [page, setPage] = useState(1)
 
-  // Derive pagination from filtered posts
-  const filteredPosts = useMemo(() => {
-    let result = initialPosts
-    if (category !== '전체') {
-      result = result.filter(p => p.category === category)
-    }
-    if (debouncedSearch) {
-      const q = debouncedSearch.toLowerCase()
-      result = result.filter(p =>
-        p.title.toLowerCase().includes(q) || p.content.toLowerCase().includes(q)
-      )
-    }
-    return result
-  }, [initialPosts, category, debouncedSearch])
-
-  const totalCount = filteredPosts.length
-  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
-  const pagedPosts = filteredPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE)
-
-  // Debounce search
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedSearch(search), 300)
     return () => clearTimeout(timer)
   }, [search])
 
-  // Reset page when category/search changes
-  useEffect(() => {
-    setPage(1)
-  }, [category, debouncedSearch])
+  const displayPosts = debouncedSearch
+    ? posts.filter(p =>
+        p.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+        (p.excerpt && p.excerpt.toLowerCase().includes(debouncedSearch.toLowerCase()))
+      )
+    : posts
+
+  const showFeatured = featured.length > 0 && !debouncedSearch && currentCategory === '전체' && currentPage === 1
 
   return (
     <section className="py-20 sm:py-28">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -73,8 +66,7 @@ export default function BlogListClient({
           </p>
         </motion.div>
 
-        {/* Featured Posts TOP 3 */}
-        {featured.length > 0 && !debouncedSearch && category === '전체' && page === 1 && (
+        {showFeatured && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -94,6 +86,7 @@ export default function BlogListClient({
                       alt={post.title}
                       width={800}
                       height={500}
+                      priority
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
@@ -107,8 +100,6 @@ export default function BlogListClient({
                   <div className="mt-2 flex items-center gap-3 text-xs text-gray-400">
                     <span>{formatDate(post.published_at || post.created_at)}</span>
                     <span>·</span>
-                    <span>{getReadingTime(post.content)}분 읽기</span>
-                    <span>·</span>
                     <span>조회 {post.view_count}</span>
                   </div>
                 </Link>
@@ -117,14 +108,12 @@ export default function BlogListClient({
           </motion.div>
         )}
 
-        {/* Search & Category Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className="mb-10"
         >
-          {/* Search */}
           <div className="relative mb-6">
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="8" />
@@ -139,30 +128,28 @@ export default function BlogListClient({
             />
           </div>
 
-          {/* Categories */}
-          <div className="flex flex-wrap gap-2">
+          <nav aria-label="카테고리 필터" className="flex flex-wrap gap-2">
             {CATEGORIES.map((cat) => (
-              <button
+              <Link
                 key={cat}
-                onClick={() => setCategory(cat)}
-                className={`px-4 py-2.5 text-xs font-medium transition-colors min-h-[40px] ${
-                  category === cat
+                href={buildHref(1, cat)}
+                className={`px-4 py-2.5 text-xs font-medium transition-colors min-h-[40px] inline-flex items-center ${
+                  currentCategory === cat
                     ? 'bg-[#1B3B2F] text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {cat}
-              </button>
+              </Link>
             ))}
-          </div>
+          </nav>
         </motion.div>
 
-        {/* Results count */}
         <p className="text-xs text-gray-400 mb-6">
           총 {totalCount}개의 글
         </p>
 
-        {pagedPosts.length === 0 ? (
+        {displayPosts.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -187,10 +174,9 @@ export default function BlogListClient({
           </motion.div>
         ) : (
           <>
-            {/* Post Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <AnimatePresence mode="wait">
-                {pagedPosts.map((post, i) => (
+                {displayPosts.map((post, i) => (
                   <motion.div
                     key={post.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -219,8 +205,6 @@ export default function BlogListClient({
                           )}
                           <div className="mt-4 flex items-center gap-3 text-xs text-gray-400">
                             <span>{formatDate(post.published_at || post.created_at)}</span>
-                            <span>·</span>
-                            <span>{getReadingTime(post.content)}분</span>
                           </div>
                         </div>
                       </div>
@@ -230,37 +214,46 @@ export default function BlogListClient({
               </AnimatePresence>
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2 sm:gap-2">
-                <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
-                >
-                  이전
-                </button>
+              <nav aria-label="페이지 탐색" className="mt-12 flex justify-center items-center gap-2">
+                {currentPage > 1 ? (
+                  <Link
+                    href={buildHref(currentPage - 1, currentCategory)}
+                    className="px-4 py-2.5 text-sm border border-gray-200 hover:bg-gray-50 transition-colors min-h-[44px] inline-flex items-center"
+                  >
+                    이전
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2.5 text-sm border border-gray-200 opacity-30 min-h-[44px] inline-flex items-center">
+                    이전
+                  </span>
+                )}
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <button
+                  <Link
                     key={p}
-                    onClick={() => setPage(p)}
-                    className={`w-11 h-11 text-sm font-medium transition-colors ${
-                      page === p
+                    href={buildHref(p, currentCategory)}
+                    className={`w-11 h-11 text-sm font-medium transition-colors inline-flex items-center justify-center ${
+                      currentPage === p
                         ? 'bg-[#1B3B2F] text-white'
                         : 'border border-gray-200 hover:bg-gray-50'
                     }`}
                   >
                     {p}
-                  </button>
+                  </Link>
                 ))}
-                <button
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                  className="px-4 py-2.5 text-sm border border-gray-200 disabled:opacity-30 hover:bg-gray-50 transition-colors min-h-[44px]"
-                >
-                  다음
-                </button>
-              </div>
+                {currentPage < totalPages ? (
+                  <Link
+                    href={buildHref(currentPage + 1, currentCategory)}
+                    className="px-4 py-2.5 text-sm border border-gray-200 hover:bg-gray-50 transition-colors min-h-[44px] inline-flex items-center"
+                  >
+                    다음
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2.5 text-sm border border-gray-200 opacity-30 min-h-[44px] inline-flex items-center">
+                    다음
+                  </span>
+                )}
+              </nav>
             )}
           </>
         )}

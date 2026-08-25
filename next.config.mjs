@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  trailingSlash: false,
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -8,6 +9,19 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+    ]
   },
   async redirects() {
     return [
@@ -27,8 +41,34 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/lawyers/noh-chaeeun',
+        destination: '/lawyers/roh-chaeeun',
+        permanent: true,
+      },
+      {
         source: '/centers/it-security',
         destination: '/centers/corporate',
+        permanent: true,
+      },
+      // 중복 블로그 글 통합 리다이렉트
+      {
+        source: '/blog/:slug(.*중고거래.*사기.*환불.*|.*secondhand.*fraud.*refund.*)',
+        destination: '/blog/secondhand-trade-fraud-prosecution',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug(.*국선변호사.*활용.*|.*public-defender-usage.*)',
+        destination: '/blog/sexual-violence-victim-public-defender',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug(.*개인회생.*신청.*자격.*가능.*|.*personal-rehabilitation-eligibility.*)',
+        destination: '/blog/personal-rehabilitation-procedure',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug(.*보이스피싱.*환급.*늦지.*|.*voice-phishing.*refund.*not-late.*)',
+        destination: '/blog/voice-phishing-cash-collector-punishment',
         permanent: true,
       },
     ]

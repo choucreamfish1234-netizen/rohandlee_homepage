@@ -4,10 +4,10 @@ import CenterPage from './CenterPage'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/centers/sexual-crime', {
-    title: '성범죄 피해자 전담센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    title: '성범죄 피해자 전담센터',
     description: '강간·강제추행·불법촬영·딥페이크·스토킹. 형사 고소부터 민사 손해배상, 접근금지 가처분, 파생 피해까지 원스톱 해결. 이유림 변호사, 《피해자 감별사회》 저자. 상담 032-207-8788',
     keywords: '성범죄 변호사, 성범죄 피해자 변호사, 성폭행 변호사, 성추행 변호사, 강제추행 변호사, 불법촬영 변호사, 몰카 변호사, 디지털성범죄, 리벤지포르노, 딥페이크, 스토킹 변호사, 피해자 국선변호사',
-    ogTitle: '성범죄 피해자 전담센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    ogTitle: '성범죄 피해자 전담센터',
     ogDescription: '강간·강제추행·불법촬영·딥페이크·스토킹. 형사 고소부터 손해배상까지 원스톱. 《피해자 감별사회》 저자 이유림 변호사.',
   })
 }

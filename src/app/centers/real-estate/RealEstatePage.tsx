@@ -22,7 +22,6 @@ const legalServiceJsonLd = {
     '@type': 'Country',
     name: 'KR',
   },
-  priceRange: '무료 상담',
   serviceType: ['전세 사기', '보증금 반환', '토지 매매 사기', '권리금 분쟁', '임대차 분쟁', '가압류', '중개사고'],
 }
 

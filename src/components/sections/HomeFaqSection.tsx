@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 
 const faqs = [
@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: '성범죄 피해를 당했는데 어디에 상담해야 하나요?',
-    a: '법률사무소 로앤이 성범죄 피해자 전담센터에서 무료 상담을 받으실 수 있습니다. 강간, 강제추행, 불법촬영, 디지털성범죄, 스토킹 등 모든 성범죄 피해에 대해 전담 변호사가 상담합니다. 전화 032-207-8788 또는 온라인 상담을 이용하세요.',
+    a: <>법률사무소 로앤이 성범죄 피해자 전담센터에서 무료 상담을 받으실 수 있습니다. 강간, 강제추행, 불법촬영, 디지털성범죄, 스토킹 등 모든 성범죄 피해에 대해 전담 변호사가 상담합니다. 전화 <a href="tel:032-207-8788" className="underline hover:text-black transition-colors">032-207-8788</a> 또는 온라인 상담을 이용하세요.</>,
   },
   {
     q: '사기를 당했는데 돈을 돌려받을 수 있나요?',
@@ -30,7 +30,7 @@ const faqs = [
   },
 ]
 
-function FaqItem({ q, a }: { q: string; a: string }) {
+function FaqItem({ q, a }: { q: string; a: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   return (
     <div className="border-b border-gray-200">

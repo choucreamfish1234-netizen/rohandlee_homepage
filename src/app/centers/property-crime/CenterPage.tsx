@@ -94,23 +94,6 @@ export default function PropertyCrimeCenterPage() {
           image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&h=600&fit=crop&q=80',
         },
       ]}
-      caseExamples={[
-        {
-          title: '투자 리딩방 사기',
-          description: '피해금 2억 원 전액 회수에 성공',
-          image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop&q=80',
-        },
-        {
-          title: '보이스피싱 피해',
-          description: '인출책 검거 및 손해배상 소송 승소',
-          image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop&q=80',
-        },
-        {
-          title: '업무상 횡령',
-          description: '합의금 5천만 원 달성',
-          image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=600&fit=crop&q=80',
-        },
-      ]}
       declaration={{
         title: '재산범죄는 속도가 생명입니다.',
         description: '범인이 돈을 쓰기 전에 막아야 합니다.\n로앤이는 사건 접수 즉시 가압류부터 진행합니다.',

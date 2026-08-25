@@ -30,7 +30,7 @@ export default function OneStopSection() {
             하나의 피해, 여러 개의 법적 문제.<br className="sm:hidden" /> 로앤이는 한 번에 해결합니다.
           </h2>
           <p className="text-center text-sm text-gray-500 mb-12 sm:mb-16 max-w-2xl mx-auto">
-            현실의 피해는 하나의 법률 분야에 한정되지 않습니다. 로앤이의 8대 전문센터가 협력하여 민사·형사를 동시에 진행합니다.
+            현실의 피해는 하나의 법률 분야에 한정되지 않습니다. 로앤이의 9대 전문센터가 협력하여 민사·형사를 동시에 진행합니다.
           </p>
         </ScrollReveal>
 

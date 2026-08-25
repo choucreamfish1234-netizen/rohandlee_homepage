@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Breadcrumb from '@/components/Breadcrumb'
 import { type SuccessCase, DEFAULT_CASES, CENTER_CATEGORY_OPTIONS } from '@/lib/cases'
 import { useConsultation } from '@/components/ConsultationProvider'
 
@@ -82,11 +83,7 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
         className="max-w-3xl mx-auto px-4 sm:px-6 md:px-0"
       >
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-400 mb-8">
-          <Link href="/cases" className="hover:text-black transition-colors">성공사례</Link>
-          <span>/</span>
-          <span>{caseData.tag}</span>
-        </div>
+        <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '성공사례', href: '/cases' }, { name: caseData.title }]} />
 
         {/* Tag Badge */}
         <span className={`inline-block text-xs font-semibold px-4 py-1.5 mb-3 ${caseData.tag_color}`}>

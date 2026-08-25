@@ -181,8 +181,10 @@ export default async function Page({ params }: Props) {
   }
   const authorJsonLd = {
     '@type': 'Person' as const,
+    '@id': isLeeYurim ? 'https://lawfirmrohandlee.com/lawyers/lee-yurim' : 'https://lawfirmrohandlee.com/lawyers/roh-chaeeun',
     name: isLeeYurim ? '이유림' : '노채은',
-    jobTitle: isLeeYurim ? '성범죄 피해자 전문 변호사' : '재산범죄 피해자 전문 변호사',
+    url: isLeeYurim ? 'https://lawfirmrohandlee.com/lawyers/lee-yurim' : 'https://lawfirmrohandlee.com/lawyers/roh-chaeeun',
+    jobTitle: '대표변호사',
     affiliation: {
       '@type': 'LegalService' as const,
       name: '법률사무소 로앤이',

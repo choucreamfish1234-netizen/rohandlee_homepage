@@ -926,7 +926,7 @@ export default function SincerityContent() {
               무료로 작성 시작하기
             </a>
             <p className="mt-4 text-sm text-white/60">
-              032-207-8788
+              <a href="tel:032-207-8788" className="hover:text-white transition-colors">032-207-8788</a>
             </p>
           </motion.div>
         </div>

@@ -4,10 +4,10 @@ import DivorcePage from './DivorcePage'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/centers/divorce', {
-    title: '이혼·가사 전담센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    title: '이혼·가사 전담센터',
     description: '이혼 소송, 양육권, 재산분할, 위자료, 가정폭력 이혼, 국제이혼. 피해자 중심의 이혼 전문 변호. 법률사무소 로앤이. 상담 032-207-8788',
     keywords: '이혼 변호사, 이혼 소송 비용, 양육권 변호사, 재산분할 방법, 위자료 청구, 협의이혼 절차, 가정폭력 이혼, 국제이혼, 양육비 청구, 이혼 전 재산 보전',
-    ogTitle: '이혼·가사 전담센터 | 로앤이',
+    ogTitle: '이혼·가사 전담센터',
     ogDescription: '이혼 소송, 양육권, 재산분할, 위자료, 가정폭력 이혼. 상담 032-207-8788',
   })
 }

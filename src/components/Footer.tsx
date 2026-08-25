@@ -30,6 +30,7 @@ export default function Footer() {
                 { href: '/centers/asset-recovery', label: '재산회복 전담센터' },
                 { href: '/centers/damages', label: '손해배상 전담센터' },
                 { href: '/centers/corporate', label: '기업법무·개인정보보호센터' },
+                { href: '/centers/school-violence', label: '학교폭력 전문센터' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">
@@ -45,14 +46,9 @@ export default function Footer() {
             <h4 className="text-xs font-semibold text-black mb-4">연락처</h4>
             <ul className="space-y-2 text-xs text-gray-500">
               <li>
-                <EditableText
-                  page="home"
-                  section="footer"
-                  fieldKey="phone"
-                  defaultValue="T. 032-207-8788"
-                  tag="span"
-                  className="hover:text-black transition-colors"
-                />
+                <a href="tel:032-207-8788" className="hover:text-black transition-colors">
+                  T. 032-207-8788
+                </a>
               </li>
               <li>
                 <a href="mailto:rohetlee@naver.com" className="hover:text-black transition-colors">

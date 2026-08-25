@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Breadcrumb from '@/components/Breadcrumb'
+import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
 import {
   type BlogPost,
   getPostBySlug,
@@ -22,6 +24,11 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
   const [loading, setLoading] = useState(!initialPost)
   const [adjacent, setAdjacent] = useState<{ prev: { title: string; slug: string } | null; next: { title: string; slug: string } | null }>({ prev: null, next: null })
   const [related, setRelated] = useState<BlogPost[]>([])
+  const [lawyerImages, setLawyerImages] = useState<Record<string, string>>({ '이유림': getFallbackImage('이유림'), '노채은': getFallbackImage('노채은') })
+
+  useEffect(() => {
+    fetchLawyerImages().then(setLawyerImages)
+  }, [])
   const { openConsultation } = useConsultation()
 
   useEffect(() => {
@@ -100,11 +107,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         className="max-w-3xl mx-auto px-4 sm:px-6 md:px-0"
       >
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs text-gray-400 mb-8">
-          <Link href="/blog" className="hover:text-black transition-colors">블로그</Link>
-          <span>/</span>
-          <Link href={`/blog?category=${post.category}`} className="hover:text-black transition-colors">{post.category}</Link>
-        </div>
+        <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '블로그', href: '/blog' }, { name: post.title }]} />
 
         {/* Category Badge */}
         <span className="inline-block text-xs font-semibold px-4 py-1.5 bg-[#1B3B2F] text-white rounded-full mb-5">
@@ -300,7 +303,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
         </div>
 
         {/* Author Profile Box */}
-        <AuthorProfileBox author={post.author} category={post.category} />
+        <AuthorProfileBox author={post.author} category={post.category} images={lawyerImages} />
       </motion.article>
 
       {/* Related Posts */}
@@ -343,35 +346,57 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
   )
 }
 
-function AuthorProfileBox({ author, category }: { author: string; category: string }) {
-  const isLee = author?.includes('이유림') || ['성범죄', '일반'].includes(category)
+const CATEGORY_TO_CENTER: Record<string, { name: string; href: string }> = {
+  '성범죄': { name: '성범죄 피해자 전담센터', href: '/centers/sexual-crime' },
+  '재산범죄': { name: '재산범죄 피해자 전담센터', href: '/centers/property-crime' },
+  '신체범죄': { name: '신체범죄 피해 전담센터', href: '/centers/physical-crime' },
+  '명예훼손': { name: '성범죄 피해자 전담센터', href: '/centers/sexual-crime' },
+  '부동산': { name: '부동산 피해 전담센터', href: '/centers/real-estate' },
+  '재산회복': { name: '재산회복 전담센터', href: '/centers/asset-recovery' },
+  '손해배상': { name: '손해배상 전담센터', href: '/centers/damages' },
+  '학교폭력': { name: '학교폭력 전문센터', href: '/centers/school-violence' },
+  '채무구제': { name: '재산회복 전담센터', href: '/centers/asset-recovery' },
+}
 
-  if (isLee) {
-    return (
-      <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-        <Image src="/images/lawyers/lawyer-lee.svg" alt="이유림 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
-        <div className="text-center sm:text-left">
-          <p className="font-medium text-gray-900">이유림 변호사</p>
-          <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 성범죄 피해자 전문</p>
-          <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-            성폭력·스토킹·디지털성범죄 피해자를 대리하며, 베스트셀러 《피해자 감별사회》 공동저자(박영사).
-            피해자 지원 앱 《진심의 무게》를 직접 개발. 《바이브코딩 바이블》 저자.
-          </p>
-        </div>
-      </div>
-    )
-  }
+function AuthorProfileBox({ author, category, images }: { author: string; category: string; images: Record<string, string> }) {
+  const isLee = author?.includes('이유림') || ['성범죄', '일반'].includes(category)
+  const name = isLee ? '이유림' : '노채은'
+  const profileUrl = isLee ? '/lawyers/lee-yurim' : '/lawyers/roh-chaeeun'
+  const specialty = isLee ? '성범죄 피해자 전문' : '재산범죄·재산회복 전문'
+  const desc = isLee
+    ? '성폭력·스토킹·디지털성범죄 피해자를 대리하며, 베스트셀러 《피해자 감별사회》 공동저자(박영사). 피해자 지원 앱 《진심의 무게》를 직접 개발.'
+    : '중앙대·경북대 법전원 졸업. 대법원 국선변호인. 보이스피싱·전세사기 피해 구제 전문. 《피해자 감별사회》 공동저자(박영사).'
+  const center = CATEGORY_TO_CENTER[category]
 
   return (
-    <div className="mt-12 p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
-      <Image src="/images/lawyers/lawyer-noh.svg" alt="노채은 변호사" width={64} height={64} className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
-      <div className="text-center sm:text-left">
-        <p className="font-medium text-gray-900">노채은 변호사</p>
-        <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | 재산범죄·재산회복 전문</p>
-        <p className="text-xs text-gray-400 mt-1 leading-relaxed">
-          경북대학교 법학전문대학원 졸업. 대법원 국선변호인.
-          보이스피싱·전세사기 피해 구제 및 개인회생·파산에 정통한 전문 변호사.
-        </p>
+    <div className="mt-12 space-y-4">
+      <div className="p-5 sm:p-6 bg-gray-50 rounded-2xl flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+        <Link href={profileUrl} className="flex-shrink-0">
+          <Image src={images[name] || '/images/lawyers/lawyer-lee.svg'} alt={`${name} 변호사`} width={64} height={64} className="w-16 h-16 rounded-full object-cover" />
+        </Link>
+        <div className="text-center sm:text-left">
+          <Link href={profileUrl} className="font-medium text-gray-900 hover:text-[#1B3B2F] transition-colors">{name} 변호사</Link>
+          <p className="text-sm text-gray-500">법률사무소 로앤이 대표변호사 | {specialty}</p>
+          <p className="text-xs text-gray-400 mt-1 leading-relaxed">{desc}</p>
+          <Link href={profileUrl} className="inline-block mt-2 text-xs text-[#1B3B2F] font-medium hover:underline">프로필 보기 &rarr;</Link>
+        </div>
+      </div>
+
+      <div className="p-5 sm:p-6 bg-[#1B3B2F] rounded-2xl text-center">
+        <p className="text-white font-semibold text-sm mb-3">법률 상담이 필요하신가요?</p>
+        <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
+          <Link href="/consultation" className="inline-flex items-center justify-center px-6 py-2.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors">
+            상담 신청하기
+          </Link>
+          <a href="tel:032-207-8788" className="inline-flex items-center justify-center px-6 py-2.5 border border-white/30 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-colors">
+            032-207-8788
+          </a>
+          {center && (
+            <Link href={center.href} className="inline-flex items-center justify-center px-6 py-2.5 border border-white/30 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-colors">
+              {center.name} &rarr;
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   )

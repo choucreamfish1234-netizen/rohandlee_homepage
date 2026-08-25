@@ -102,7 +102,7 @@ export default function PrivacyPage() {
               <li>사업자명: 법률사무소 로앤이</li>
               <li>대표: 이유림</li>
               <li>주소: 경기도 부천시 부일로205번길 54, 205호</li>
-              <li>전화: 032-207-8788</li>
+              <li>전화: <a href="tel:032-207-8788">032-207-8788</a></li>
               <li>이메일: rohetlee@naver.com</li>
             </ul>
           </div>

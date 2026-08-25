@@ -15,6 +15,8 @@ function detectInAppBrowser(): string | null {
   return null
 }
 
+const AI_SEARCH_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude'] as const
+
 function detectChannel(referrer: string, utmSource: string): string {
   if (utmSource) return utmSource
 
@@ -23,27 +25,48 @@ function detectChannel(referrer: string, utmSource: string): string {
 
   const r = referrer.toLowerCase()
 
+  // AI 검색 (최우선 — google보다 먼저 판별)
+  if (r.includes('gemini.google') || r.includes('bard.google')) return 'gemini'
+  if (r.includes('chat.openai') || r.includes('chatgpt')) return 'chatgpt'
+  if (r.includes('perplexity')) return 'perplexity'
+  if (r.includes('copilot.microsoft') || r.includes('bing.com/chat')) return 'copilot'
+  if (r.includes('claude.ai')) return 'claude'
+
+  // 일반 검색
+  if (r.includes('google')) return 'google'
+  if (r.includes('naver.com') || r.includes('search.naver')) return 'naver'
+  if (r.includes('daum') || r.includes('search.daum')) return 'daum'
+  if (r.includes('bing')) return 'bing'
+
+  // SNS
   if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
   if (r.includes('instagram.com') || r.includes('l.instagram.com')) return 'instagram'
   if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co')) return 'twitter'
-  if (r.includes('naver.com') || r.includes('search.naver')) return 'naver'
-  if (r.includes('google.com') || r.includes('google.co.kr')) return 'google'
-  if (r.includes('lawtalk.co.kr')) return 'lawtalk'
-  if (r.includes('kakao.com') || r.includes('kakaotalk')) return 'kakao'
+  if (r.includes('youtube')) return 'youtube'
   if (r.includes('facebook.com') || r.includes('fb.com') || r.includes('l.facebook.com')) return 'facebook'
-  if (!r || r === '') return 'direct'
+  if (r.includes('kakao.com') || r.includes('kakaotalk')) return 'kakao'
+  if (r.includes('blog.naver')) return 'naver_blog'
+  if (r.includes('cafe.naver')) return 'naver_cafe'
+
+  // 법률 플랫폼
+  if (r.includes('lawtalk')) return 'lawtalk'
+
+  // 직접 / 내부
+  if (!r || r === '' || r.includes('lawfirmrohandlee')) return 'direct'
 
   return 'other'
+}
+
+function isAiSearch(channel: string): boolean {
+  return (AI_SEARCH_CHANNELS as readonly string[]).includes(channel)
 }
 
 export default function TrafficTracker() {
   const pathname = usePathname()
 
   useEffect(() => {
-    // 관리자 페이지는 추적 제외
     if (pathname.startsWith('/admin')) return
 
-    // 같은 세션에서 중복 기록 방지
     const sessionKey = `_visited_${pathname}`
     if (sessionStorage.getItem(sessionKey)) return
     sessionStorage.setItem(sessionKey, '1')
@@ -65,6 +88,7 @@ export default function TrafficTracker() {
         page: pathname,
         referrer: referrer || null,
         channel,
+        source: isAiSearch(channel) ? 'ai_search' : (channel === 'direct' ? 'direct' : (channel === 'other' ? 'other' : (['google', 'naver', 'daum', 'bing'].includes(channel) ? 'search' : 'referral'))),
         utm_source: utmSource || null,
         utm_medium: utmMedium || null,
         utm_campaign: utmCampaign || null,

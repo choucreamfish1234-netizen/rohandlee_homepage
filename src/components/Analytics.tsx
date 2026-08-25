@@ -43,13 +43,19 @@ function isBot(): boolean {
 function detectReferrerType(ref: string): string {
   if (!ref) return 'direct'
   const r = ref.toLowerCase()
-  // 스레드 (threads.net, threads.meta 등 — 인스타그램보다 먼저 체크)
+  // AI 검색 (최우선 — google보다 먼저 판별)
+  if (r.includes('gemini.google') || r.includes('bard.google')) return 'gemini'
+  if (r.includes('chat.openai') || r.includes('chatgpt')) return 'chatgpt'
+  if (r.includes('perplexity')) return 'perplexity'
+  if (r.includes('copilot.microsoft') || r.includes('bing.com/chat')) return 'copilot'
+  if (r.includes('claude.ai')) return 'claude'
+  // 스레드
   if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
-  // 트위터/X (twitter.com, x.com, t.co)
+  // 트위터/X
   if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co/')) return 'twitter'
-  // 인스타그램 (instagram.com, l.instagram.com)
+  // 인스타그램
   if (r.includes('instagram.com')) return 'instagram'
-  // 페이스북 (facebook.com, fb.com, l.facebook.com)
+  // 페이스북
   if (r.includes('facebook.com') || r.includes('fb.com')) return 'facebook'
   // 네이버
   if (r.includes('naver.com')) return 'naver'
@@ -57,6 +63,8 @@ function detectReferrerType(ref: string): string {
   if (r.includes('google.')) return 'google'
   // 다음
   if (r.includes('daum.net') || r.includes('search.daum')) return 'daum'
+  // 빙
+  if (r.includes('bing.')) return 'bing'
   // 카카오
   if (r.includes('kakao')) return 'kakao'
   // 로톡

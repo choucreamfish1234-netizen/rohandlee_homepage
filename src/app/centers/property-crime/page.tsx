@@ -4,10 +4,10 @@ import CenterPage from './CenterPage'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/centers/property-crime', {
-    title: '사기·횡령·배임 피해자 전담센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    title: '사기·횡령·배임 피해자 전담센터',
     description: '사기 피해 변호사, 횡령 고소, 배임 고소, 보이스피싱 피해 구제, 투자사기 피해 변호사. 형사 고소부터 가압류·강제집행까지 원스톱 해결. 법률사무소 로앤이. 상담 032-207-8788',
     keywords: '사기 피해 변호사, 횡령 고소, 배임 고소 방법, 보이스피싱 피해 변호사, 투자사기 피해, 중고거래 사기 고소, 코인 사기 피해, 사기죄 고소장, 횡령죄 성립요건, 배임죄 처벌, 법률사무소 로앤이',
-    ogTitle: '사기·횡령·배임 피해자 전담센터 | 최초의 종합 피해자 중심 로펌 로앤이',
+    ogTitle: '사기·횡령·배임 피해자 전담센터',
     ogDescription: '사기·횡령·배임·보이스피싱·투자사기. 형사 고소부터 가압류·강제집행까지 원스톱. 상담 032-207-8788',
   })
 }

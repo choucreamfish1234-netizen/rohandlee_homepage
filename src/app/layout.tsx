@@ -8,7 +8,6 @@ import ConsultationProvider from '@/components/ConsultationProvider'
 import AdminMode from '@/components/AdminMode'
 import Analytics from '@/components/Analytics'
 import TrafficTracker from '@/components/TrafficTracker'
-import { FIRM_STATS } from '@/lib/firm-stats'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -21,7 +20,7 @@ export const metadata: Metadata = {
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 8대 전문센터 운영. 민형사 동시 타격 입체 전략. 무료 상담 032-207-8788',
+    '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
   keywords: [
     '국내최초 종합 피해자 전문 로펌',
     '피해자 전문 변호사',
@@ -48,13 +47,13 @@ export const metadata: Metadata = {
     url: baseUrl,
     siteName: '법률사무소 로앤이',
     title: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
-    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 8대 전문센터, 민형사 동시 타격. 무료 상담 032-207-8788',
+    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 9대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: '법률사무소 로앤이 | 국내최초 종합 피해자 전문 로펌',
-    description: '모든 피해를 한 곳에서. 8대 전문센터 운영. 민형사 동시 타격 입체 전략.',
+    description: '모든 피해를 한 곳에서. 9대 전문센터 운영. 민형사 동시 타격 입체 전략.',
     images: [`${baseUrl}/og-image.png`],
   },
   robots: {
@@ -116,7 +115,6 @@ const jsonLd = {
       closes: '18:00',
     },
   ],
-  priceRange: '무료 상담',
   slogan: '국내최초 종합 피해자 전문 로펌',
   areaServed: [
     { '@type': 'Country', name: '대한민국' },
@@ -136,23 +134,26 @@ const jsonLd = {
   knowsAbout: ['성범죄 피해자 변호', '재산범죄 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: '8대 전문센터',
+    name: '9대 전문센터',
     itemListElement: [
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '성범죄 피해자 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '재산범죄 피해자 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '신체범죄 피해 전담센터' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '이혼·가사 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '부동산 피해 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '재산회복 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '손해배상 전담센터' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '개인정보보호센터' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '기업법무·개인정보보호센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '학교폭력 전문센터' } },
     ],
   },
   employee: [
     {
       '@type': 'Person',
+      '@id': `${baseUrl}/lawyers/lee-yurim`,
       name: '이유림',
       jobTitle: '대표변호사',
+      url: `${baseUrl}/lawyers/lee-yurim`,
       knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리', 'LegalTech'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: [
@@ -163,19 +164,15 @@ const jsonLd = {
     },
     {
       '@type': 'Person',
+      '@id': `${baseUrl}/lawyers/roh-chaeeun`,
       name: '노채은',
       jobTitle: '대표변호사',
+      url: `${baseUrl}/lawyers/roh-chaeeun`,
       knowsAbout: ['재산범죄 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     },
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: FIRM_STATS.ratingValue,
-    reviewCount: FIRM_STATS.reviewCountText,
-    bestRating: '5',
-  },
   sameAs: [
     'https://www.lawtalk.co.kr/directory/profile/8292-이유림/review',
     'https://pf.kakao.com/_YxgWxcn',

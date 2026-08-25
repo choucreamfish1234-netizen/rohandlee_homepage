@@ -2,142 +2,73 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import CenterCasesDB from '@/components/CenterCasesDB'
 import Script from 'next/script'
 
-const faqs = [
-  {
-    question: '소송에서 이겼는데 상대방이 돈을 안 줘요.',
-    answer:
-      '강제집행을 해야 합니다. 상대방의 부동산, 예금, 급여 등을 압류하여 강제로 회수할 수 있습니다. 확정 판결문, 조정조서, 공정증서가 있으면 바로 진행 가능합니다.',
-  },
-  {
-    question: '상대방이 재산을 숨기고 있는 것 같아요.',
-    answer:
-      '법원을 통한 재산조회·재산명시 제도를 활용하면 상대방의 부동산, 금융자산, 자동차 등을 파악할 수 있습니다. 재산 은닉이 확인되면 형사 고소도 가능합니다.',
-  },
-  {
-    question: '가압류는 언제 해야 하나요?',
-    answer:
-      '소송을 제기하기 전에, 가능한 빨리 해야 합니다. 상대방이 재산을 처분하거나 빼돌리기 전에 먼저 잡아두는 것이 핵심입니다. 소송 중이라도 언제든 가능합니다.',
-  },
-  {
-    question: '스토킹 가해자에게 접근금지를 받을 수 있나요?',
-    answer:
-      '네, 접근금지 가처분을 신청할 수 있습니다. 법원이 인용하면 가해자가 일정 거리 이내 접근, 연락, 통신을 금지당하며, 위반 시 제재를 받습니다. 긴급한 경우 빠르게 결정이 나옵니다.',
-  },
+const crimeTypes = [
+  { emoji: '🏠', title: '부동산 강제경매', keywords: '부동산 강제경매 신청, 경매 배당, 임의경매', desc: '판결 후 상대방이 돈을 안 주면 부동산을 경매에 넣어 회수합니다. 경매 신청부터 배당까지 전 과정을 대리합니다.' },
+  { emoji: '💳', title: '예금·급여 압류', keywords: '예금 압류 방법, 급여 압류 신청, 통장 압류', desc: '상대방의 은행 예금이나 급여를 압류하여 채권을 회수합니다. 재산조회로 계좌를 파악하고 즉시 압류를 진행합니다.' },
+  { emoji: '🚗', title: '동산·차량 압류', keywords: '자동차 압류, 동산 압류, 유체동산 강제집행', desc: '자동차, 기계, 재고 등 동산을 압류·매각하여 채권을 회수합니다.' },
+  { emoji: '🔒', title: '가압류 (소송 전 재산 보전)', keywords: '가압류 신청 방법, 가압류 비용, 부동산 가압류', desc: '소송 전에 상대방 재산을 동결시키는 보전처분입니다. 가압류를 안 하면 소송 중에 재산을 빼돌릴 수 있습니다. 부동산, 예금, 차량, 매출채권 등에 가압류가 가능합니다.' },
+  { emoji: '⚡', title: '가처분 (접근금지·처분금지)', keywords: '접근금지 가처분, 처분금지 가처분, 임시지위 가처분', desc: '접근금지, 부동산 처분금지, 직위 보전 등 긴급한 권리 보호가 필요할 때. 스토킹 접근금지 가처분은 신체범죄센터와 동시 대응합니다.' },
+  { emoji: '🔍', title: '재산조회·재산명시', keywords: '재산명시 신청, 재산조회 방법, 숨긴 재산 찾기', desc: '상대방이 재산을 숨기면 법원을 통한 재산조회·재산명시로 부동산, 금융자산, 자동차, 보험 등을 파악합니다. 재산명시에 불출석하면 감치(구금)가 가능합니다.' },
+  { emoji: '📋', title: '채권추심', keywords: '채권추심 방법, 미수금 회수, 공사대금 추심', desc: '판결금, 합의금, 대여금, 공사대금, 물품대금 등 받지 못한 돈을 법적으로 추심합니다. 내용증명부터 강제집행까지 전 과정.' },
 ]
 
-const serviceAreas = [
-  {
-    title: '가압류',
-    description:
-      '소송 전에 상대방 재산을 먼저 잡습니다. 부동산, 계좌, 매출채권 가압류로 재산 도피를 원천 차단합니다. 소송에서 이겨도 재산이 없으면 의미가 없기 때문에, 가장 먼저 해야 할 조치입니다.',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-      </svg>
-    ),
-  },
-  {
-    title: '가처분',
-    description:
-      '긴급한 권리 보전이 필요할 때. 스토킹 범죄의 접근금지 가처분, 명예훼손 게시물 삭제 가처분, 부동산 처분금지 가처분 등. 본안 소송 전에 피해를 먼저 멈추게 합니다.',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-      </svg>
-    ),
-  },
-  {
-    title: '강제집행',
-    description:
-      '확정 판결, 조정조서, 공정증서를 가지고 있다면 상대방의 재산을 강제로 회수할 수 있습니다. 부동산 경매, 채권 압류 및 추심, 동산 압류까지 모든 집행 수단을 동원합니다.',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.97z" />
-      </svg>
-    ),
-  },
-  {
-    title: '압류·추심',
-    description:
-      '상대방의 급여, 예금, 매출채권, 임대보증금 반환채권 등을 압류하고 직접 추심합니다. 제3채무자(은행, 회사 등)에 대한 추심 절차까지 끝까지 진행합니다.',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-      </svg>
-    ),
-  },
-  {
-    title: '재산조회·재산명시',
-    description:
-      '상대방이 재산을 숨기고 있다면 법원을 통해 재산을 조회합니다. 재산명시신청, 재산조회신청, 채무불이행자 명부 등재로 압박합니다.',
-    icon: (
-      <svg className="w-6 h-6 text-[#1B3B2F]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-      </svg>
-    ),
-  },
+const whyPoints = [
+  { title: '판결 받았는데 돈을 안 줍니다? 강제로 받아냅니다', desc: '소송에서 이겨도 돈은 자동으로 안 옵니다. 가압류 → 재산조회 → 강제집행 → 배당까지 한 팀이 끝까지 추적합니다.', centers: [] },
+  { title: '사기 고소와 재산 회수를 동시에', desc: '재산범죄센터에서 사기 형사 고소로 가해자를 압박하고, 재산회복센터에서 동시에 가압류와 강제집행을 진행합니다. 형사 압박이 들어가면 돈이 나옵니다.', centers: [{ name: '재산범죄센터', path: '/centers/property-crime' }] },
+  { title: '숨긴 재산, 추적합니다', desc: '가해자가 가족에게 명의를 옮기고, 계좌를 비우고, 부동산을 처분해도 법원 재산조회와 데이터 분석으로 추적합니다. 사해행위 취소소송으로 빼돌린 재산을 원상복구시킵니다.', centers: [] },
+]
+
+const faqs = [
+  { q: '판결 받았는데 상대방이 돈을 안 주면 어떻게 하나요?', a: '강제집행을 신청합니다. 상대방의 부동산, 예금, 급여, 차량 등을 압류하여 강제로 회수합니다. 재산이 어디 있는지 모르면 법원에 재산조회를 신청합니다.' },
+  { q: '가압류는 언제 해야 하나요?', a: '소송 전에 해야 합니다. 소송 중에 상대방이 재산을 빼돌리면 이겨도 받을 수 없습니다. 가압류로 먼저 재산을 동결시키고 소송을 진행하는 것이 정석입니다.' },
+  { q: '가압류 비용은 얼마인가요?', a: '법원에 납부하는 담보금(청구 금액의 10~30%)과 변호사 비용이 듭니다. 담보금은 본안 소송 승소 후 돌려받습니다.' },
+  { q: '상대방이 재산을 숨기면 어떻게 찾나요?', a: '법원을 통한 재산조회로 부동산, 금융자산, 자동차, 보험 등을 조회할 수 있습니다. 재산명시 신청으로 상대방을 법원에 출석시켜 재산을 신고하게 할 수도 있습니다. 불출석하면 감치(구금)됩니다.' },
+  { q: '급여를 압류할 수 있나요?', a: '가능합니다. 다만 급여 전액을 압류할 수는 없고, 월 급여 중 일정 금액을 초과하는 부분만 압류됩니다. 최저 생계비는 보호됩니다.' },
+  { q: '가해자가 재산을 가족에게 옮겼으면 어떻게 하나요?', a: '사해행위 취소소송을 제기하면 빼돌린 재산을 원상복구시킬 수 있습니다. 채무를 면탈하기 위해 재산을 이전한 경우 강제집행면탈죄(형법 제327조)로 형사 고소도 가능합니다.' },
+  { q: '전국에서 상담받을 수 있나요?', a: '네, 전화·화상·온라인 상담이 가능합니다. 강제집행은 재산 소재지 관할이지만, 로앤이는 전국 어디든 대응합니다.' },
 ]
 
 const legalServiceJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
   name: '법률사무소 로앤이 재산회복 전담센터',
-  description:
-    '가압류·가처분·강제집행·압류추심. 판결문을 실제 돈으로 바꾸는 마지막 단계.',
+  description: '가압류·가처분·강제집행·압류추심·재산조회·재산명시·부동산경매·채권추심. 판결 받고 못 받는 돈을 강제로 회수하는 피해자 전문 로펌.',
   url: 'https://lawfirmrohandlee.com/centers/asset-recovery',
   telephone: '032-207-8788',
-  areaServed: {
-    '@type': 'Country',
-    name: 'KR',
-  },
-  priceRange: '무료 상담',
-  serviceType: ['가압류', '가처분', '강제집행', '압류추심', '재산조회', '재산명시'],
+  areaServed: { '@type': 'Country', name: 'KR' },
+  serviceType: ['가압류', '가처분', '강제집행', '압류추심', '재산조회', '재산명시', '부동산 강제경매', '채권추심'],
+  provider: { '@type': 'LegalService', name: '법률사무소 로앤이', url: 'https://lawfirmrohandlee.com' },
 }
 
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
+  mainEntity: faqs.map(f => ({
     '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 }
 
-function FAQItem({ question, answer }: { question: string; answer: string }) {
+function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
   return (
     <div className="border-b border-gray-200">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left"
-      >
-        <span className="text-sm sm:text-base font-medium text-black pr-4">{question}</span>
-        <svg
-          className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-5 text-left">
+        <span className="text-sm font-medium text-black pr-4">{q}</span>
+        <span className={`flex-shrink-0 text-gray-400 transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M10 4V16M4 10H16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
+        </span>
       </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="pb-5 text-sm text-gray-500 leading-relaxed">{answer}</p>
-      </motion.div>
+      <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-60 pb-5' : 'max-h-0'}`}>
+        <p className="text-sm text-gray-500 leading-relaxed">{a}</p>
+      </div>
     </div>
   )
 }
@@ -147,18 +78,10 @@ export default function AssetRecoveryPage() {
 
   return (
     <>
-      <Script
-        id="asset-recovery-legal-service-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }}
-      />
-      <Script
-        id="asset-recovery-faq-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <Script id="asset-recovery-ls" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(legalServiceJsonLd) }} />
+      <Script id="asset-recovery-faq" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
-      {/* 히어로 섹션 */}
+      {/* 히어로 */}
       <section className="min-h-[60vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-[#FAFAFA]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -166,76 +89,77 @@ export default function AssetRecoveryPage() {
           transition={{ duration: 0.8 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-6">
-            재산회복 전담센터
-          </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1B3B2F]/5 border border-[#1B3B2F]/10 mb-6">
+            <span className="text-[10px] font-semibold tracking-wider text-[#1B3B2F] uppercase">최초의 종합 피해자 중심 로펌</span>
+          </div>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-            받아야 할 돈, 지켜야 할 재산.
-            <br />
-            <span className="text-[#1B3B2F]">끝까지 추적하고 반드시 집행합니다.</span>
+            재산회복 전담센터
           </h1>
           <p className="mt-6 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-            가압류·가처분·강제집행·압류추심.
+            판결에서 이겼는데 돈을 안 줍니다.
             <br />
-            판결문을 실제 돈으로 바꾸는 마지막 단계, 로앤이가 끝까지 해냅니다.
+            합의했는데 약속을 안 지킵니다.
+            <br />
+            로앤이는 숨긴 재산을 찾아내고, 강제로 회수합니다.
           </p>
-          <div className="mt-8">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-400">
+            <span>가압류·가처분·강제집행·압류추심</span>
+            <span className="text-gray-300">|</span>
+            <span>재산 추적 + 강제 회수</span>
+            <span className="text-gray-300">|</span>
+            <span>노채은·이유림 변호사</span>
+          </div>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => openConsultation('재산회복 상담')}
               className="inline-flex items-center justify-center px-8 py-3.5 bg-[#1B3B2F] text-white text-sm font-medium rounded-full hover:bg-[#153126] transition-colors min-h-[48px]"
             >
-              무료 상담 신청하기
+              상담 신청하기
             </button>
+            <a
+              href="tel:032-207-8788"
+              className="inline-flex items-center justify-center px-8 py-3.5 border border-[#1B3B2F]/20 text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-[#1B3B2F]/5 transition-colors min-h-[48px]"
+            >
+              032-207-8788
+            </a>
           </div>
         </motion.div>
       </section>
 
-      {/* 설립 배경 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
+      {/* 설립 배경 */}
+      <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              왜 로앤이가 재산회복 전담센터를 만들었는가
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div className="space-y-6 text-sm sm:text-base text-gray-600 leading-relaxed">
+            <div className="space-y-5 text-sm sm:text-base text-gray-600 leading-relaxed">
               <p>
-                승소했는데 돈을 못 받고 있습니다.
-              </p>
-              <p>
-                판결문을 받았지만 상대방은 재산을 숨기고 연락을 끊습니다. 소송에서 이기는 것은
-                절반일 뿐, 실제로 돈을 회수하는 것이 진짜 승리입니다. 그런데 대부분의 로펌은
-                판결까지만 해주고 집행은 알아서 하라고 합니다.
+                승소했는데 돈을 못 받고 있습니다. 판결문을 받았지만 상대방은 재산을 숨기고 연락을 끊습니다.
+                소송에서 이기는 것은 절반일 뿐, 실제로 돈을 회수하는 것이 진짜 승리입니다.
               </p>
               <p className="font-semibold text-black">
-                법률사무소 로앤이는 다릅니다. 판결을 받아내는 것에서 끝나지 않습니다. 상대방의
-                재산을 추적하고, 압류하고, 추심하여 실제로 돈을 받아내는 것까지가 저희의
-                일입니다.
+                법률사무소 로앤이 재산회복 전담센터는 판결을 받아내는 것에서 끝나지 않습니다.
+                상대방의 재산을 추적하고, 압류하고, 추심하여 실제로 돈을 받아내는 것까지가 저희의 일입니다.
               </p>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* 취급 분야 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-[#FAFAFA]">
+      {/* 유형별 카드 8개 */}
+      <section className="py-16 sm:py-24 bg-[#FAFAFA]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-16">
-              이런 업무를 다룹니다
-            </h2>
+            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">Coverage</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-3">이런 업무를 다룹니다</h2>
+            <p className="text-center text-sm text-gray-500 mb-12">가압류부터 강제경매까지, 판결을 돈으로 바꾸는 모든 절차.</p>
           </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {serviceAreas.map((area, i) => (
-              <ScrollReveal key={area.title} delay={i * 0.1}>
-                <div className="bg-white p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
-                  <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
-                    {area.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-black mb-3">{area.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{area.description}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {crimeTypes.map((item, i) => (
+              <ScrollReveal key={item.title} delay={i * 0.06}>
+                <div className="bg-white border border-gray-100 rounded-xl p-5 h-full hover:border-[#1B3B2F]/20 transition-colors">
+                  <span className="text-2xl mb-3 block">{item.emoji}</span>
+                  <h3 className="text-sm font-bold text-black mb-1">{item.title}</h3>
+                  <p className="text-[10px] text-[#1B3B2F]/60 mb-2">{item.keywords}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -243,141 +167,74 @@ export default function AssetRecoveryPage() {
         </div>
       </section>
 
-      {/* 차별점 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 차별점 */}
+      <section className="py-16 sm:py-24" style={{ backgroundColor: '#f7faf9' }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-16">
-              로앤이만의 전략
-            </h2>
+            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">Why ROH&LEE</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-3">재산 회수, 왜 로앤이인가요?</h2>
+            <p className="text-center text-sm text-gray-500 mb-12">판결만 받아주는 곳이 많습니다. 로앤이는 돈까지 받아냅니다.</p>
           </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            <ScrollReveal delay={0}>
-              <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
-                <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
-                  <svg
-                    className="w-6 h-6 text-[#1B3B2F]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                    />
-                  </svg>
+          <div className="space-y-5">
+            {whyPoints.map((p, i) => (
+              <ScrollReveal key={p.title} delay={i * 0.1}>
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 sm:p-8">
+                  <h3 className="text-base sm:text-lg font-bold text-black mb-3">{p.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">{p.desc}</p>
+                  {p.centers.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      <span className="text-[10px] font-medium px-2.5 py-1 bg-[#1B3B2F]/8 text-[#1B3B2F] rounded-full">재산회복센터</span>
+                      {p.centers.map(c => (
+                        <Link key={c.name} href={c.path} className="text-[10px] font-medium px-2.5 py-1 bg-[#1B3B2F]/8 text-[#1B3B2F] rounded-full hover:bg-[#1B3B2F]/15 transition-colors">{c.name} &rarr;</Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-lg font-bold text-black mb-3">
-                  이유림 변호사 — 데이터로 재산을 추적한다
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  등기부, 금융거래, 사업자 정보를 분석하여 숨겨진 재산을 찾아내고, 가장
-                  효과적인 집행 대상을 선정합니다. IT 기술을 활용하기 때문에 남들보다 빠릅니다.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.12}>
-              <div className="bg-[#FAFAFA] p-6 sm:p-8 h-full border-t-[3px] border-[#1B3B2F]">
-                <div className="w-12 h-12 rounded-full bg-[#1B3B2F]/10 flex items-center justify-center mb-5">
-                  <svg
-                    className="w-6 h-6 text-[#1B3B2F]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 01-2.031.352 5.988 5.988 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.97zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0l2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 01-2.031.352 5.989 5.989 0 01-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.97z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold text-black mb-3">
-                  노채은 변호사 — 강제집행을 끝까지 수행한다
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">
-                  재산범죄 전담 경험으로 상대방의 재산 은닉 패턴을 꿰뚫고 있으며, 필요시 재산
-                  은닉에 대한 형사 고소를 병행하여 숨통을 조입니다.
-                </p>
-              </div>
-            </ScrollReveal>
+              </ScrollReveal>
+            ))}
           </div>
+        </div>
+      </section>
 
+      {/* 성공사례 (DB) */}
+      <CenterCasesDB centerSlug="asset-recovery" title="재산회복 성공사례" />
+
+      {/* FAQ */}
+      <section className="py-16 sm:py-24 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
-            <p className="mt-12 sm:mt-16 text-center text-sm sm:text-base font-semibold text-black">
-              판결을 돈으로 바꾸는 것.
-              <br />
-              이것이 로앤이 재산회복센터의 존재 이유입니다.
-            </p>
+            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">FAQ</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-12">자주 묻는 질문</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div>{faqs.map(f => <FaqItem key={f.q} q={f.q} a={f.a} />)}</div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* 부가 서비스 섹션 */}
-      <section className="py-10 sm:py-16 bg-gray-50">
-        <div className="max-w-3xl mx-auto px-4">
-          <ScrollReveal>
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-600 text-center mb-4">
-              부가 서비스: 개인회생·파산
-            </h3>
-            <p className="text-sm text-gray-400 text-center leading-relaxed max-w-xl mx-auto">
-              채무가 과도하여 정상적인 생활이 어려운 경우, 개인회생 또는 파산을 통해 법적으로
-              새로운 시작을 할 수 있습니다. 채무 규모와 소득 상황을 분석하여 가장 유리한 방법을
-              안내해드립니다.
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* CTA 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-[#1B3B2F] text-white">
+      {/* CTA */}
+      <section className="py-16 sm:py-24 bg-[#1B3B2F] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold">
-              판결문만 가지고 계신가요?
-            </h2>
-            <div className="mt-8 space-y-4 text-sm sm:text-base text-white/80 leading-relaxed">
-              <p>
-                이긴 소송인데 돈을 못 받고 계신가요?
-              </p>
-              <p className="text-white font-medium">
-                로앤이 재산회복센터가 판결을 실제 돈으로 바꿔드리겠습니다.
-              </p>
-            </div>
-            <div className="mt-8 sm:mt-10">
+            <h2 className="text-2xl sm:text-3xl font-bold">판결문만 가지고 계신가요?</h2>
+            <p className="mt-6 text-sm sm:text-base text-white/80 leading-relaxed">
+              이긴 소송인데 돈을 못 받고 계신가요?
+              <br />
+              로앤이 재산회복센터가 판결을 실제 돈으로 바꿔드리겠습니다.
+            </p>
+            <div className="mt-8">
               <button
                 onClick={() => openConsultation('재산회복 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                무료 상담 신청하기
+                상담 신청하기
               </button>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* FAQ 섹션 */}
-      <section className="py-16 sm:py-28 md:py-40 bg-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-black text-center mb-12">
-              자주 묻는 질문
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal>
-            <div>
-              {faqs.map((faq, i) => (
-                <FAQItem key={i} question={faq.question} answer={faq.answer} />
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+      <p className="sr-only">법률사무소 로앤이 재산회복 전담센터는 가압류, 가처분, 강제집행, 예금 압류, 급여 압류, 부동산 경매, 채권추심, 재산조회, 재산명시를 수행하며, 최초의 종합 피해자 중심 로펌으로서 사기 형사 고소와 재산 강제 회수를 동시에 진행한다.</p>
     </>
   )
 }

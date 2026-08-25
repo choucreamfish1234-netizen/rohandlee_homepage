@@ -4,6 +4,7 @@ import { useState } from 'react'
 import CenterPageTemplate from '@/components/CenterPageTemplate'
 import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
+import CenterCasesDB from '@/components/CenterCasesDB'
 
 const dispositions = [
   { level: '1호', title: '서면사과', severity: 'low' },
@@ -383,7 +384,7 @@ export default function SchoolViolenceCenterPage() {
         description:
           '한 번의 용기가 반복되는 피해를 끊습니다.\n로앤이 학교폭력 전문센터가 끝까지 함께합니다.',
       }}
-      customSection={<SchoolViolenceCustomSection />}
+      customSection={<><SchoolViolenceCustomSection /><CenterCasesDB centerSlug="school-violence" title="학교폭력 성공사례" /></>}
       ctaTitle="학교폭력, 더 이상 혼자 견디지 마세요."
       ctaDescription="피해학생 전문 변호사가 끝까지 함께합니다."
     />
