@@ -16,7 +16,6 @@ const crimeTypes = [
   { emoji: '⚡', title: '가처분 (접근금지·처분금지)', keywords: '접근금지 가처분, 처분금지 가처분, 임시지위 가처분', desc: '접근금지, 부동산 처분금지, 직위 보전 등 긴급한 권리 보호가 필요할 때. 스토킹 접근금지 가처분은 신체범죄센터와 동시 대응합니다.' },
   { emoji: '🔍', title: '재산조회·재산명시', keywords: '재산명시 신청, 재산조회 방법, 숨긴 재산 찾기', desc: '상대방이 재산을 숨기면 법원을 통한 재산조회·재산명시로 부동산, 금융자산, 자동차, 보험 등을 파악합니다. 재산명시에 불출석하면 감치(구금)가 가능합니다.' },
   { emoji: '📋', title: '채권추심', keywords: '채권추심 방법, 미수금 회수, 공사대금 추심', desc: '판결금, 합의금, 대여금, 공사대금, 물품대금 등 받지 못한 돈을 법적으로 추심합니다. 내용증명부터 강제집행까지 전 과정.' },
-  { emoji: '🏦', title: '개인회생·파산 (채무자인 경우)', keywords: '개인회생 신청 방법, 파산 신청, 면책', desc: '피해로 인해 빚이 쌓인 경우, 개인회생이나 파산으로 재기할 수 있습니다. 채무 조정부터 면책까지 대리합니다.' },
 ]
 
 const whyPoints = [
@@ -43,7 +42,7 @@ const legalServiceJsonLd = {
   url: 'https://lawfirmrohandlee.com/centers/asset-recovery',
   telephone: '032-207-8788',
   areaServed: { '@type': 'Country', name: 'KR' },
-  serviceType: ['가압류', '가처분', '강제집행', '압류추심', '재산조회', '재산명시', '부동산 강제경매', '채권추심', '개인회생', '개인파산'],
+  serviceType: ['가압류', '가처분', '강제집행', '압류추심', '재산조회', '재산명시', '부동산 강제경매', '채권추심'],
   provider: { '@type': 'LegalService', name: '법률사무소 로앤이', url: 'https://lawfirmrohandlee.com' },
 }
 

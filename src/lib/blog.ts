@@ -33,6 +33,7 @@ export const CATEGORIES = [
   '부동산',
   '재산회복',
   '손해배상',
+  '채무구제',
   '학교폭력',
   '법률정보',
 ] as const
@@ -46,6 +47,7 @@ export const CATEGORY_THUMBNAILS: Record<string, string> = {
   '부동산': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop&q=80',
   '재산회복': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
   '손해배상': 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=450&fit=crop&q=80',
+  '채무구제': 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80',
   '학교폭력': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80',
   '법률정보': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80',
 }

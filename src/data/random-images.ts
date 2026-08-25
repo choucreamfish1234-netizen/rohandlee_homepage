@@ -181,6 +181,7 @@ const CATEGORY_TO_POOL: Record<string, PoolKey[]> = {
   '개인정보': ['digital', 'legal'],
   '기업법무': ['legal', 'finance'],
   '재산회복': ['finance', 'legal'],
+  '채무구제': ['finance', 'legal'],
   '법률정보': ['legal'],
 }
 

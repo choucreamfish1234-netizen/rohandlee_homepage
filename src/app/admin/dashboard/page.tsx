@@ -24,6 +24,7 @@ const CENTER_CATEGORIES = [
   { key: '부동산', label: '부동산 피해 전담', author: '노채은 변호사' },
   { key: '재산회복', label: '재산회복 전담', author: '노채은 변호사' },
   { key: '손해배상', label: '손해배상 전담', author: '이유림 변호사' },
+  { key: '채무구제', label: '개인회생·파산', author: '노채은 변호사' },
   { key: '학교폭력', label: '학교폭력 전문', author: '이유림 변호사' },
 ]
 
