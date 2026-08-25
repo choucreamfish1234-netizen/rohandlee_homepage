@@ -15,7 +15,8 @@ function detectInAppBrowser(): string | null {
   return null
 }
 
-const AI_SEARCH_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude'] as const
+const AI_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude', 'kakao_ai', 'clova_x'] as const
+const SEARCH_CHANNELS = ['google', 'naver', 'daum', 'bing', 'yahoo']
 
 function detectChannel(referrer: string, utmSource: string): string {
   if (utmSource) return utmSource
@@ -25,18 +26,27 @@ function detectChannel(referrer: string, utmSource: string): string {
 
   const r = referrer.toLowerCase()
 
-  // AI 검색 (최우선 — google보다 먼저 판별)
+  // AI 검색 (최우선)
   if (r.includes('gemini.google') || r.includes('bard.google')) return 'gemini'
   if (r.includes('chat.openai') || r.includes('chatgpt')) return 'chatgpt'
   if (r.includes('perplexity')) return 'perplexity'
   if (r.includes('copilot.microsoft') || r.includes('bing.com/chat')) return 'copilot'
   if (r.includes('claude.ai')) return 'claude'
+  if (r.includes('search.daum.net/ai') || r.includes('ai.kakao')) return 'kakao_ai'
+  if (r.includes('clova') || r.includes('clovax')) return 'clova_x'
 
-  // 일반 검색
+  // 네이버 세부 (일반 naver 검색보다 먼저)
+  if (r.includes('blog.naver')) return 'naver_blog'
+  if (r.includes('cafe.naver')) return 'naver_cafe'
+  if (r.includes('kin.naver')) return 'naver_kin'
+  if (r.includes('map.naver')) return 'naver_map'
+
+  // 검색엔진
   if (r.includes('google')) return 'google'
-  if (r.includes('naver.com') || r.includes('search.naver')) return 'naver'
-  if (r.includes('daum') || r.includes('search.daum')) return 'daum'
+  if (r.includes('naver')) return 'naver'
+  if (r.includes('daum') || r.includes('search.kakao')) return 'daum'
   if (r.includes('bing')) return 'bing'
+  if (r.includes('yahoo')) return 'yahoo'
 
   // SNS
   if (r.includes('threads.net') || r.includes('threads.meta')) return 'threads'
@@ -44,21 +54,30 @@ function detectChannel(referrer: string, utmSource: string): string {
   if (r.includes('twitter.com') || r.includes('x.com') || r.includes('t.co')) return 'twitter'
   if (r.includes('youtube')) return 'youtube'
   if (r.includes('facebook.com') || r.includes('fb.com') || r.includes('l.facebook.com')) return 'facebook'
+  if (r.includes('tiktok')) return 'tiktok'
   if (r.includes('kakao.com') || r.includes('kakaotalk')) return 'kakao'
-  if (r.includes('blog.naver')) return 'naver_blog'
-  if (r.includes('cafe.naver')) return 'naver_cafe'
 
   // 법률 플랫폼
   if (r.includes('lawtalk')) return 'lawtalk'
+  if (r.includes('lawpeople')) return 'lawpeople'
 
   // 직접 / 내부
   if (!r || r === '' || r.includes('lawfirmrohandlee')) return 'direct'
 
-  return 'other'
+  // 기타 — hostname 추출
+  try {
+    return 'other:' + new URL(referrer).hostname
+  } catch {
+    return 'other'
+  }
 }
 
-function isAiSearch(channel: string): boolean {
-  return (AI_SEARCH_CHANNELS as readonly string[]).includes(channel)
+function getSource(channel: string): string {
+  if ((AI_CHANNELS as readonly string[]).includes(channel)) return 'ai_search'
+  if (channel === 'direct') return 'direct'
+  if (SEARCH_CHANNELS.includes(channel)) return 'search'
+  if (channel.startsWith('other')) return 'other'
+  return 'referral'
 }
 
 export default function TrafficTracker() {
@@ -88,7 +107,7 @@ export default function TrafficTracker() {
         page: pathname,
         referrer: referrer || null,
         channel,
-        source: isAiSearch(channel) ? 'ai_search' : (channel === 'direct' ? 'direct' : (channel === 'other' ? 'other' : (['google', 'naver', 'daum', 'bing'].includes(channel) ? 'search' : 'referral'))),
+        source: getSource(channel),
         utm_source: utmSource || null,
         utm_medium: utmMedium || null,
         utm_campaign: utmCampaign || null,

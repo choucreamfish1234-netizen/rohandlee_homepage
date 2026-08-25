@@ -13,13 +13,21 @@ type Tab = 'overview' | 'channels' | 'pages' | 'devices' | 'conversions' | 'real
 const COLORS = ['#1B3B2F', '#2D6A4F', '#40916C', '#52B788', '#74C69D', '#95D5B2', '#B7E4C7', '#D8F3DC']
 const CHANNEL_LABELS: Record<string, string> = {
   gemini: 'Gemini', chatgpt: 'ChatGPT', perplexity: 'Perplexity', copilot: 'Copilot', claude: 'Claude',
-  naver: '네이버', naver_app: '네이버앱', google: '구글', daum: '다음', bing: 'Bing', kakao: '카카오',
-  lawtalk: '로톡', instagram: '인스타그램', threads: '스레드',
-  twitter: '트위터/X', facebook: '페이스북',
+  kakao_ai: 'Kakao AI', clova_x: 'Clova X',
+  naver: '네이버', naver_app: '네이버앱', google: '구글', daum: '다음', bing: 'Bing', yahoo: 'Yahoo', kakao: '카카오',
+  lawtalk: '로톡', lawpeople: '로피플',
+  instagram: '인스타그램', threads: '스레드', tiktok: 'TikTok',
+  twitter: 'X(Twitter)', facebook: '페이스북',
   youtube: '유튜브', naver_blog: '네이버 블로그', naver_cafe: '네이버 카페',
-  direct: '직접 방문', other: '기타',
+  naver_kin: '네이버 지식iN', naver_map: '네이버 지도',
+  direct: '직접 방문', internal: '내부 이동', other: '기타',
 }
-const AI_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude']
+function getChannelLabel(name: string): string {
+  if (CHANNEL_LABELS[name]) return CHANNEL_LABELS[name]
+  if (name.startsWith('other:')) return name.replace('other:', '')
+  return name
+}
+const AI_CHANNELS = ['gemini', 'chatgpt', 'perplexity', 'copilot', 'claude', 'kakao_ai', 'clova_x']
 const EVENT_LABELS: Record<string, string> = {
   consultation_open: '상담 팝업 열기', email_consultation_select: '이메일 상담 선택',
   rapid_consultation_click: '바로 상담(래피드) 클릭',
@@ -337,7 +345,7 @@ export default function AdminAnalyticsPage() {
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
                         <Pie
-                          data={channelData.channels.map((c) => ({ ...c, name: CHANNEL_LABELS[c.name] || c.name }))}
+                          data={channelData.channels.map((c) => ({ ...c, name: getChannelLabel(c.name) }))}
                           cx="50%" cy="50%" innerRadius={60} outerRadius={100}
                           dataKey="value" nameKey="name"
                           label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
@@ -362,7 +370,7 @@ export default function AdminAnalyticsPage() {
                       return (
                         <div key={ch.name} className="flex items-center gap-3">
                           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
-                          <span className="text-sm text-gray-700 w-24">{CHANNEL_LABELS[ch.name] || ch.name}</span>
+                          <span className="text-sm text-gray-700 w-24">{getChannelLabel(ch.name)}</span>
                           <div className="flex-1 bg-gray-100 h-5 rounded overflow-hidden">
                             <div className="h-full rounded" style={{ width: `${pct}%`, backgroundColor: COLORS[i % COLORS.length] }} />
                           </div>
@@ -680,7 +688,7 @@ export default function AdminAnalyticsPage() {
                       <tbody>
                         {convData.channelPerformance.map((c) => (
                           <tr key={c.channel} className="border-b border-gray-50">
-                            <td className="py-2">{CHANNEL_LABELS[c.channel] || c.channel}</td>
+                            <td className="py-2">{getChannelLabel(c.channel)}</td>
                             <td className="py-2 text-right">{c.sessions}</td>
                             <td className="py-2 text-right font-medium">{c.conversions}</td>
                             <td className="py-2 text-right">
@@ -765,7 +773,7 @@ export default function AdminAnalyticsPage() {
                       </span>
                       <span className="text-gray-700 flex-1 truncate">{PAGE_NAMES[v.page_path] || v.page_path}</span>
                       {v.referrer_type && (
-                        <span className="text-xs text-gray-400">{CHANNEL_LABELS[v.referrer_type] || v.referrer_type}</span>
+                        <span className="text-xs text-gray-400">{getChannelLabel(v.referrer_type)}</span>
                       )}
                     </div>
                   ))}
@@ -839,7 +847,7 @@ export default function AdminAnalyticsPage() {
                             const found = aiChannels.find((c: { name: string }) => c.name === ch)
                             return (
                               <div key={ch} className="text-center p-3 bg-purple-50 rounded-lg">
-                                <p className="text-xs text-gray-500">{CHANNEL_LABELS[ch] || ch}</p>
+                                <p className="text-xs text-gray-500">{getChannelLabel(ch)}</p>
                                 <p className="text-lg font-bold text-purple-700">{found ? found.count.toLocaleString() : '0'}</p>
                               </div>
                             )
@@ -861,7 +869,7 @@ export default function AdminAnalyticsPage() {
                             <PieChart>
                               <Pie
                                 data={trafficData.channels.map((c) => ({
-                                  name: CHANNEL_LABELS[c.name] || c.name,
+                                  name: getChannelLabel(c.name),
                                   value: c.count,
                                 }))}
                                 cx="50%" cy="50%" innerRadius={60} outerRadius={100}
@@ -889,7 +897,7 @@ export default function AdminAnalyticsPage() {
                           <ResponsiveContainer width="100%" height="100%">
                             <BarChart
                               data={trafficData.channels.map((c) => ({
-                                name: CHANNEL_LABELS[c.name] || c.name,
+                                name: getChannelLabel(c.name),
                                 count: c.count,
                               }))}
                               layout="vertical"
