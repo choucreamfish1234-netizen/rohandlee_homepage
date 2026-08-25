@@ -24,9 +24,9 @@ const AppSection = dynamic(() => import('@/components/sections/AppSection'), { s
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/', {
-    title: '국내최초 종합 피해자 전문 로펌',
-    description: '국내최초 종합 피해자 전문 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
-    ogTitle: '국내최초 종합 피해자 전문 로펌',
+    title: '최초의 종합 피해자 중심 로펌',
+    description: '최초의 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
+    ogTitle: '최초의 종합 피해자 중심 로펌',
     ogDescription: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 9대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
   })
 }
@@ -35,7 +35,7 @@ const homeFaqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: [
-    { '@type': 'Question', name: '피해자 전문 로펌이 뭔가요?', acceptedAnswer: { '@type': 'Answer', text: '피해자 전문 로펌은 범죄나 사고의 피해자만을 전문으로 대리하는 법률사무소입니다. 법률사무소 로앤이는 성범죄, 재산범죄, 신체범죄, 부동산 분쟁, 손해배상, 강제집행 등 모든 분야의 피해자를 종합적으로 대리하는 국내최초 종합 피해자 전문 로펌입니다.' } },
+    { '@type': 'Question', name: '피해자 전문 로펌이 뭔가요?', acceptedAnswer: { '@type': 'Answer', text: '피해자 전문 로펌은 범죄나 사고의 피해자만을 전문으로 대리하는 법률사무소입니다. 법률사무소 로앤이는 성범죄, 재산범죄, 신체범죄, 부동산 분쟁, 손해배상, 강제집행 등 모든 분야의 피해자를 종합적으로 대리하는 최초의 종합 피해자 중심 로펌입니다.' } },
     { '@type': 'Question', name: '성범죄 피해를 당했는데 어디에 상담해야 하나요?', acceptedAnswer: { '@type': 'Answer', text: '법률사무소 로앤이 성범죄 피해자 전담센터에서 무료 상담을 받으실 수 있습니다. 전화 032-207-8788 또는 온라인 상담을 이용하세요.' } },
     { '@type': 'Question', name: '사기를 당했는데 돈을 돌려받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네, 가능합니다. 법률사무소 로앤이 재산범죄센터와 재산회복센터가 협력하여, 사기죄 형사 고소와 동시에 가압류·강제집행으로 피해 금액을 회수합니다.' } },
     { '@type': 'Question', name: '변호사 비용이 부담되는데 무료 상담이 가능한가요?', acceptedAnswer: { '@type': 'Answer', text: '네, 법률사무소 로앤이는 첫 상담을 무료로 제공합니다.' } },
