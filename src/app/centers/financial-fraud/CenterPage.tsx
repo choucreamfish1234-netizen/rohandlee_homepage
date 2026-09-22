@@ -106,7 +106,7 @@ export default function FinancialFraudCenterPage() {
           <ScrollReveal>
             <div className="space-y-5 text-sm sm:text-base text-gray-600 leading-relaxed">
               <p>고소장만 써주고 끝나는 곳이 많습니다. 형사고소를 해도 가해자가 재산을 빼돌리면 승소해도 돈을 받을 수 없습니다.</p>
-              <p className="font-semibold text-black">법률사무소 로앤이 금융사기 피해자 전담센터는 형사고소로 가해자를 압박하면서, 동시에 가압류로 재산을 동결시키고, 민사소송으로 피해금을 회수합니다. 고소에서 끝나지 않고, 돈을 돌려받아야 끝입니다.</p>
+              <p className="font-semibold text-black">법률사무소 로앤이는 2026년 9월 기준 누적 241건의 피해자 사건을 대리한 경험을 바탕으로, 금융사기 피해자 전담센터에서 형사고소, 가압류, 민사소송을 동시에 진행합니다. 고소에서 끝나지 않고, 돈을 돌려받아야 끝입니다.</p>
             </div>
           </ScrollReveal>
         </div>

@@ -77,6 +77,10 @@ export default function StatsBar() {
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="relative">
+            <StatItem label="누적 피해자 대리" end={FIRM_STATS.totalCases} suffix="건+" />
+            <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
+          </div>
+          <div className="relative">
             <StatItem label="상담 후기" end={FIRM_STATS.reviewCount} suffix="+" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
