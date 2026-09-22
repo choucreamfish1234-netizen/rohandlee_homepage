@@ -26,7 +26,7 @@ const AppSection = dynamic(() => import('@/components/sections/AppSection'), { s
 export async function generateMetadata(): Promise<Metadata> {
   const base = await getPageSeo('/', {
     title: '국내최초 종합 피해자 중심 로펌, 법률사무소 로앤이',
-    description: '변호사를 고르기 전 이 질문을 꼭 하세요 — 대표변호사님이 직접 수사기관 동행도 해주시나요? 로앤이는 대표변호사가 상담부터 사건 종결까지 직접 수행합니다. 9대 전문센터. 상담 032-207-8788',
+    description: '변호사를 고르기 전 두 가지만 물어보세요 — 상담하는 분이 변호사 맞나요? 대표변호사님이 직접 수사기관 동행도 해주시나요? 로앤이는 대표변호사가 직접 답하고 직접 수행합니다. 9대 전문센터. 032-207-8788',
     ogTitle: '국내최초 종합 피해자 중심 로펌, 법률사무소 로앤이',
     ogDescription: '대표변호사가 상담부터 사건 종결까지 직접 수행합니다. 9대 전문센터. 상담 032-207-8788',
   })

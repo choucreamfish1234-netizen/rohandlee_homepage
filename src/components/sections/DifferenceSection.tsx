@@ -70,24 +70,38 @@ export default function DifferenceSection() {
         <ScrollReveal delay={0.5}>
           <div className="max-w-2xl mx-auto mt-16 sm:mt-24 text-center text-sm sm:text-base text-gray-500 leading-8 sm:leading-9 space-y-4">
             <p>
-              많은 로펌에서는 상담은 대표변호사가 하지만,<br />
-              실제 사건은 경험이 적은 다른 변호사가 수행합니다.
+              어떤 로펌이든 상담할 때,<br />
+              이 두 가지만 물어보세요.
             </p>
-            <p>
-              의뢰인은 대표변호사를 믿고 맡겼는데,<br />
-              정작 수사기관에 동행하고, 법원에 서고,<br />
-              의견서를 쓰는 사람은 다른 변호사입니다.
+            <p className="text-gray-700 font-semibold">
+              하나.<br />
+              &ldquo;지금 상담해주시는 분이 변호사님 맞나요?&rdquo;
             </p>
-            <p className="text-gray-700">
-              로앤이는 다릅니다.<br />
-              상담부터 고소장 작성, 수사기관 동행,<br />
-              법원 출석, 의견서 제출, 합의 협상까지<br />
-              대표변호사 이유림·노채은이 직접 수행합니다.
+            <p className="text-gray-400 text-xs sm:text-sm">
+              24시간 상담을 내세우는 곳일수록<br />
+              첫 상담을 받는 사람이 변호사가 아닌<br />
+              사무장이나 상담 직원인 경우가 많습니다.
             </p>
-            <p className="font-bold text-[#1B3B2F] text-base sm:text-lg pt-2">
-              상담한 바로 그 변호사가,<br />
-              당신의 사건을 끝까지 책임집니다.
+            <p className="text-gray-700 font-semibold">
+              둘.<br />
+              &ldquo;상담해주시는 대표변호사님이<br />
+              직접 수사기관 동행도 해주시는 건가요?&rdquo;
             </p>
+            <p className="text-gray-400 text-xs sm:text-sm">
+              이 질문에 명확하게 답하지 못하는 곳이라면,<br />
+              당신의 사건은 상담한 변호사가 아닌<br />
+              다른 변호사가 맡게 될 가능성이 높습니다.
+            </p>
+            <div className="pt-4">
+              <div className="bg-[#1B3B2F] rounded-xl p-5 text-white text-sm leading-relaxed">
+                <p>
+                  로앤이는 두 질문 모두 필요 없습니다.<br />
+                  첫 전화부터 대표변호사가 직접 받고,<br />
+                  상담부터 사건 종결까지 직접 수행합니다.<br />
+                  <span className="font-bold">24시 사무장이 아니라, 변호사가 답합니다.</span>
+                </p>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
       </div>
