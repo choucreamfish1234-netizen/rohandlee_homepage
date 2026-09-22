@@ -7,7 +7,7 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/lawyers', {
     title: '변호사 소개',
-    description: '법률사무소 로앤이 대표변호사 이유림·노채은을 소개합니다. 성범죄·재산범죄·신체범죄 피해자 전문.',
+    description: '법률사무소 로앤이 대표변호사 이유림·노채은을 소개합니다. 성범죄·금융사기·신체범죄 피해자 전문.',
     ogTitle: '변호사 소개',
     ogDescription: '법률사무소 로앤이 대표변호사 이유림·노채은',
   })

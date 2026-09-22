@@ -26,7 +26,7 @@ const DEFAULT_COMPETITORS = [
 
 const PAGE_NAMES: Record<string, string> = {
   '/': '메인 페이지', '/blog': '블로그', '/cases': '성공사례', '/consultation': '무료 상담 예약',
-  '/directions': '오시는 길', '/centers/sexual-crime': '성범죄 센터', '/centers/property-crime': '재산범죄 센터',
+  '/directions': '오시는 길', '/centers/sexual-crime': '성범죄 센터', '/centers/financial-fraud': '금융사기센터',
   '/centers/asset-recovery': '재산회복 센터', '/centers/damages': '손해배상 센터', '/centers/corporate': '기업법무 센터', '/centers/it-security': '개인정보보호센터',
 }
 

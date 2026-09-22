@@ -21,9 +21,9 @@ const centers: Center[] = [
     alt: '어두운 방에 창문으로 빛이 들어오는 모습 - 희망과 회복',
   },
   {
-    title: '재산범죄 피해자 전담 센터',
-    description: '사기·횡령·배임 피해 전담 구제 시스템',
-    href: '/centers/property-crime',
+    title: '금융사기 피해자 전담센터',
+    description: '금융사기·보이스피싱·투자사기 피해 전담 구제 시스템',
+    href: '/centers/financial-fraud',
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop&q=80',
     alt: '서류와 펜이 있는 깔끔한 데스크 - 법률과 계약',
   },

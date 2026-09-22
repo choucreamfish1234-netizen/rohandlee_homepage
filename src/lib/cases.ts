@@ -37,7 +37,7 @@ export interface SuccessCase {
 
 export const CENTER_CATEGORY_OPTIONS = [
   { value: 'sexual-crime', label: '성범죄센터' },
-  { value: 'property-crime', label: '재산범죄센터' },
+  { value: 'property-crime', label: '금융사기센터' },
   { value: 'physical-crime', label: '신체범죄센터' },
   { value: 'real-estate', label: '부동산센터' },
   { value: 'damages', label: '손해배상센터' },

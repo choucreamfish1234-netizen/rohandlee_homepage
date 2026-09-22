@@ -8,7 +8,7 @@ const points = [
     title: '고소만 하면 끝? 돈을 돌려받아야 끝입니다',
     desc: '대부분의 로펌은 고소장을 써서 수사기관에 제출하면 역할이 끝납니다. 그런데 가해자가 처벌받아도 돈은 자동으로 돌아오지 않습니다. 로앤이는 형사 고소와 동시에 가해자 재산을 가압류하고, 판결 후 강제집행·압류추심까지 수행합니다. 고소부터 돈 회수까지 원스톱.',
     centers: [
-      { name: '재산범죄센터', path: '/centers/property-crime' },
+      { name: '금융사기센터', path: '/centers/financial-fraud' },
       { name: '재산회복센터', path: '/centers/asset-recovery' },
     ],
   },
@@ -16,7 +16,7 @@ const points = [
     title: '사기 피해인데 협박도 받고 있다면?',
     desc: '돈을 돌려달라고 하면 "무고로 고소한다"고 협박합니다. "가만히 안 두겠다"고 위협합니다. 사기 피해에 협박·스토킹이 동반되는 경우, 로앤이는 사기 고소와 협박 고소, 접근금지 가처분을 한 팀이 동시에 처리합니다.',
     centers: [
-      { name: '재산범죄센터', path: '/centers/property-crime' },
+      { name: '금융사기센터', path: '/centers/financial-fraud' },
       { name: '신체범죄센터', path: '/centers/physical-crime' },
       { name: '재산회복센터', path: '/centers/asset-recovery' },
     ],

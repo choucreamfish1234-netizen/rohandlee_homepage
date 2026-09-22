@@ -7,7 +7,7 @@ import { trackConversion } from '@/lib/track-conversion'
 
 const caseTypeOptions = [
   '성범죄 피해 상담',
-  '재산범죄 피해 상담',
+  '금융사기 피해 상담',
   '회생·파산 상담',
   '기업법무 상담',
   '개인정보보호 상담',

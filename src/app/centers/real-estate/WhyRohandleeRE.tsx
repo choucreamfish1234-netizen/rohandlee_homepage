@@ -12,7 +12,7 @@ const points = [
   {
     title: '건축업자가 도주했다면, 시간이 없습니다',
     desc: '공사대금을 받고 도주한 시공사는 다른 현장에서 같은 짓을 반복합니다. 사업자등록, 계좌 내역, 하도급 관계를 추적하여 시공사의 재산을 가압류하고, 사기죄 형사 고소로 압박합니다.',
-    centers: [{ name: '부동산센터', path: '/centers/real-estate' }, { name: '재산범죄센터', path: '/centers/property-crime' }, { name: '재산회복센터', path: '/centers/asset-recovery' }],
+    centers: [{ name: '부동산센터', path: '/centers/real-estate' }, { name: '금융사기센터', path: '/centers/financial-fraud' }, { name: '재산회복센터', path: '/centers/asset-recovery' }],
   },
   {
     title: '보증금만 문제가 아니라 협박도 받고 있다면?',

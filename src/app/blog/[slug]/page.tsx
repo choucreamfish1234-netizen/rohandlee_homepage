@@ -224,7 +224,7 @@ export default async function Page({ params }: Props) {
   const aboutTopic = (() => {
     switch (post.category) {
       case '성범죄': return '성범죄 피해자 법률 상담'
-      case '재산범죄': return '재산범죄 피해 법률 상담'
+      case '재산범죄': return '금융사기 피해 법률 상담'
       case '신체범죄': return '신체범죄 피해 법률 상담'
       case '부동산': return '부동산 피해 법률 상담'
       case '학교폭력': return '학교폭력 피해 법률 상담'

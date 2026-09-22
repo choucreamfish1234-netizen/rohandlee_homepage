@@ -89,7 +89,7 @@ export default function Page() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
                   { name: '성범죄', href: '/centers/sexual-crime' },
-                  { name: '재산범죄', href: '/centers/property-crime' },
+                  { name: '금융사기', href: '/centers/financial-fraud' },
                   { name: '신체범죄', href: '/centers/physical-crime' },
                   { name: '이혼·가사', href: '/centers/divorce' },
                   { name: '부동산', href: '/centers/real-estate' },

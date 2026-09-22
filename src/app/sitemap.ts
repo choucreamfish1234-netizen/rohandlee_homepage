@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     })),
 
-    { url: `${baseUrl}/centers/property-crime`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/centers/financial-fraud`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/asset-recovery`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/damages`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/divorce`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },

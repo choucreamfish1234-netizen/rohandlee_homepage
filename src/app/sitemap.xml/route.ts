@@ -7,7 +7,7 @@ export async function GET() {
     { url: baseUrl, changefreq: 'weekly', priority: '1.0' },
     { url: `${baseUrl}/consultation`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/centers/sexual-crime`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/property-crime`, changefreq: 'monthly', priority: '0.9' },
+    { url: `${baseUrl}/centers/financial-fraud`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/centers/bankruptcy`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/centers/school-violence`, changefreq: 'monthly', priority: '0.9' },
     { url: `${baseUrl}/centers/it-security`, changefreq: 'monthly', priority: '0.8' },

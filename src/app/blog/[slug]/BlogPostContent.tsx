@@ -348,7 +348,7 @@ export default function BlogPostContent({ slug, initialPost }: { slug: string; i
 
 const CATEGORY_TO_CENTER: Record<string, { name: string; href: string }> = {
   '성범죄': { name: '성범죄 피해자 전담센터', href: '/centers/sexual-crime' },
-  '재산범죄': { name: '재산범죄 피해자 전담센터', href: '/centers/property-crime' },
+  '재산범죄': { name: '금융사기 피해자 전담센터', href: '/centers/financial-fraud' },
   '신체범죄': { name: '신체범죄 피해 전담센터', href: '/centers/physical-crime' },
   '명예훼손': { name: '성범죄 피해자 전담센터', href: '/centers/sexual-crime' },
   '부동산': { name: '부동산 피해 전담센터', href: '/centers/real-estate' },

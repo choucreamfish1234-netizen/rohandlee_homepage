@@ -26,6 +26,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/centers/property-crime',
+        destination: '/centers/financial-fraud',
+        permanent: true,
+      },
+      {
         source: '/centers/lease-deposit',
         destination: '/centers/real-estate',
         permanent: true,

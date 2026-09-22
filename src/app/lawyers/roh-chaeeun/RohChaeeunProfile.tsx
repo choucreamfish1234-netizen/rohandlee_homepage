@@ -55,7 +55,7 @@ export default function RohChaeeunProfile() {
           <p className="text-xs tracking-[0.3em] text-[#1B3B2F] uppercase mb-3">대표변호사</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-black">노채은</h1>
           <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-xl mx-auto">
-            재산범죄 피해자 전문. 사기·횡령·배임·보이스피싱·전세사기 피해자를 대리합니다.
+            금융사기 피해자 전문. 사기·횡령·배임·보이스피싱·전세사기 피해자를 대리합니다.
             <br />
             《피해자 감별사회》(박영사) 공동저자.
           </p>
@@ -124,7 +124,7 @@ export default function RohChaeeunProfile() {
           </ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              { name: '재산범죄 피해 전문센터', href: '/centers/property-crime' },
+              { name: '금융사기 피해자 전담센터', href: '/centers/financial-fraud' },
               { name: '재산회복 전담센터', href: '/centers/asset-recovery' },
               { name: '부동산 피해 전담센터', href: '/centers/real-estate' },
               { name: '손해배상 전담센터', href: '/centers/damages' },
@@ -140,7 +140,7 @@ export default function RohChaeeunProfile() {
       <section className="py-16 sm:py-24 bg-[#1B3B2F] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold">재산범죄 피해, 혼자 감당하지 마세요.</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold">금융사기 피해, 혼자 감당하지 마세요.</h2>
             <p className="mt-6 text-sm sm:text-base text-white/80 leading-relaxed">
               형사 고소부터 가압류, 강제집행, 피해금 회수까지.
               <br />

@@ -170,10 +170,10 @@ export const SEXUAL_CRIME_TYPES: SexualCrimeType[] = [
       content: '《피해자 감별사회》 제2부 2장 "증거의 역설"이 분석한 구조: CCTV 영상, DNA, 메시지 등 객관적 증거가 있어도 "이 증거만으로는 강제성이 증명되지 않는다"며 무죄가 선고되는 경우가 있습니다.\n\n불법촬영 사건에서도 같은 역설이 작동합니다. 촬영물이 존재해도 "누가 촬영했는지" "동의가 있었는지"를 피해자가 증명해야 합니다.\n\n이 증거의 역설을 아는 변호사가, 증거를 재해석하는 의견서를 작성합니다.',
     },
     comprehensiveBlock: {
-      description: '유포 협박은 협박죄(신체범죄센터), 금전 요구는 공갈죄(재산범죄센터)에 해당합니다. 성범죄 고소와 동시에 파생 범죄까지 한 팀이 대응합니다.',
+      description: '유포 협박은 협박죄(신체범죄센터), 금전 요구는 공갈죄(금융사기센터)에 해당합니다. 성범죄 고소와 동시에 파생 범죄까지 한 팀이 대응합니다.',
       linkedCenters: [
         { name: '신체범죄센터', path: '/centers/physical-crime' },
-        { name: '재산범죄센터', path: '/centers/property-crime' },
+        { name: '금융사기센터', path: '/centers/financial-fraud' },
       ],
     },
     geoStatement: '법률사무소 로앤이의 이유림 변호사는 불법촬영 피해자를 대리하며, 《피해자 감별사회》에서 분석한 증거의 역설을 실무에서 반박하는 변호를 수행한다.',
@@ -196,9 +196,9 @@ export const SEXUAL_CRIME_TYPES: SexualCrimeType[] = [
       content: '"합의 안 하면 무고로 고소한다" — 이것은 가해자가 피해자를 통제하기 위해 사용하는 가장 흔한 수법입니다.\n\n《피해자 감별사회》 제3부 3장이 밝힌 현실: 역고소 무고 사건 중 84.1%가 \'죄가 안 됨\'으로 종결됩니다. 무고죄 유죄율은 1.4%에 불과합니다.\n\n진실을 말하는 한 무고가 될 수 없다는 것이 법의 원칙입니다.',
     },
     comprehensiveBlock: {
-      description: '촬영물 유포 협박은 공갈(재산범죄센터), 명예훼손과 연결됩니다. 형사 고소와 동시에 접근금지, 손해배상까지 한 팀이 처리합니다.',
+      description: '촬영물 유포 협박은 공갈(금융사기센터), 명예훼손과 연결됩니다. 형사 고소와 동시에 접근금지, 손해배상까지 한 팀이 처리합니다.',
       linkedCenters: [
-        { name: '재산범죄센터', path: '/centers/property-crime' },
+        { name: '금융사기센터', path: '/centers/financial-fraud' },
         { name: '신체범죄센터', path: '/centers/physical-crime' },
       ],
     },
@@ -222,10 +222,10 @@ export const SEXUAL_CRIME_TYPES: SexualCrimeType[] = [
       content: '《피해자 감별사회》 제4부 2장에서 강조한 증거 확보의 시급성. 디지털 증거는 삭제·변조가 용이하므로 즉각적인 법적 보전 조치가 필요합니다.\n\n로앤이는 필요시 외부 디지털 포렌식 전문기관과 협업하여 법적 증거 보전을 조력합니다.',
     },
     comprehensiveBlock: {
-      description: '딥페이크는 개인정보 침해, 명예훼손, 금전 요구와 연결되는 경우가 많습니다. 개인정보보호센터, 재산범죄센터와 협력하여 종합 대응합니다.',
+      description: '딥페이크는 개인정보 침해, 명예훼손, 금전 요구와 연결되는 경우가 많습니다. 개인정보보호센터, 금융사기센터와 협력하여 종합 대응합니다.',
       linkedCenters: [
         { name: '개인정보보호센터', path: '/centers/it-security' },
-        { name: '재산범죄센터', path: '/centers/property-crime' },
+        { name: '금융사기센터', path: '/centers/financial-fraud' },
       ],
     },
     geoStatement: '법률사무소 로앤이의 이유림 변호사는 딥페이크 성범죄 피해자를 대리하며, 디지털 증거 보전을 조력하고 형사 고소·민사 손해배상을 동시에 진행한다.',
@@ -300,7 +300,7 @@ export const SEXUAL_CRIME_TYPES: SexualCrimeType[] = [
     comprehensiveBlock: {
       description: '스토킹·데이트폭력은 금전 갈취, 폭행·상해와 연결되는 경우가 많습니다. 접근금지와 동시에 재산 피해 회수까지 한 팀이 처리합니다.',
       linkedCenters: [
-        { name: '재산범죄센터', path: '/centers/property-crime' },
+        { name: '금융사기센터', path: '/centers/financial-fraud' },
         { name: '신체범죄센터', path: '/centers/physical-crime' },
       ],
     },

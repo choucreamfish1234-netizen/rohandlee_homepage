@@ -4,7 +4,7 @@ import RohChaeeunProfile from './RohChaeeunProfile'
 const baseUrl = 'https://lawfirmrohandlee.com'
 
 export const metadata: Metadata = {
-  title: '노채은 변호사 | 재산범죄 피해자 대리 · 《피해자 감별사회》 공동저자',
+  title: '노채은 변호사 | 금융사기 피해자 대리 · 《피해자 감별사회》 공동저자',
   description: 'ROH&LEE 노채은 대표변호사는 사기·횡령·배임·보이스피싱 피해자를 대리하며, 박영사 베스트셀러 《피해자 감별사회》 공동저자입니다.',
   alternates: { canonical: `${baseUrl}/lawyers/roh-chaeeun` },
   openGraph: {

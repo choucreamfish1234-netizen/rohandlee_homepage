@@ -13,7 +13,7 @@ interface Props {
 
 const SLUG_TO_CATEGORIES: Record<string, string[]> = {
   'sexual-crime': ['성범죄', '스토킹'],
-  'property-crime': ['보이스피싱', '재산범죄'],
+  'property-crime': ['보이스피싱', '금융사기', '재산범죄'],
   'physical-crime': ['신체범죄'],
   'real-estate': ['전세사기', '부동산'],
   'damages': ['손해배상'],

@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase'
 
 const caseTypes = [
   '성범죄 피해',
-  '재산범죄 피해',
+  '금융사기 피해',
   '회생·파산',
   '기업경영 법무',
   '개인정보보호',

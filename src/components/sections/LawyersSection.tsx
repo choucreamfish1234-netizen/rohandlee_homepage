@@ -450,7 +450,7 @@ const lawyerJsonLd = [
     name: '노채은',
     jobTitle: '대표변호사',
     worksFor: { '@type': 'LegalService', name: '법률사무소 로앤이' },
-    knowsAbout: ['재산범죄 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
+    knowsAbout: ['금융사기 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
     alumniOf: [
       { '@type': 'CollegeOrUniversity', name: '중앙대학교' },
       { '@type': 'CollegeOrUniversity', name: '경북대학교 법학전문대학원' },

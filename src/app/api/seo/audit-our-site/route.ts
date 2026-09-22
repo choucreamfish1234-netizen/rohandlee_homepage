@@ -38,8 +38,8 @@ const SITE_PAGES = [
     defaultDescription: '성범죄 피해자 전문 이유림 변호사. 성폭행, 성추행, 강제추행, 불법촬영, 몰카, 디지털성범죄, 리벤지포르노, 딥페이크 피해 전문 상담. 로톡 평점 4.9, 후기 200건 이상. 경찰 조사부터 재판까지 전 과정 동행. 첫 상담 무료.',
   },
   {
-    path: '/centers/property-crime',
-    name: '재산범죄 센터',
+    path: '/centers/financial-fraud',
+    name: '금융사기센터',
     hasH1: true,
     defaultTitle: '보이스피싱·전세사기·투자사기 피해자 전문 변호사 | 로앤이',
     defaultDescription: '재산범죄 피해자 전문 노채은 변호사. 보이스피싱 피해금 환급, 전세사기 특별법 활용, 투자사기 민형사 대응. 피해금 회수 전문. 로톡 평점 4.9. 첫 상담 무료.',

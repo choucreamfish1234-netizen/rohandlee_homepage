@@ -10,7 +10,7 @@ const PAGES = [
   { path: '/cases', name: '성공 사례' },
   { path: '/directions', name: '오시는 길' },
   { path: '/centers/sexual-crime', name: '성범죄 센터' },
-  { path: '/centers/property-crime', name: '재산범죄 센터' },
+  { path: '/centers/financial-fraud', name: '금융사기센터' },
   { path: '/centers/it-security', name: '개인정보보호센터' },
   { path: '/centers/school-violence', name: '학교폭력 전문센터' },
   { path: '/centers/asset-recovery', name: '재산회복 센터' },

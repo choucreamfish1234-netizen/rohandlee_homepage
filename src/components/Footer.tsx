@@ -23,7 +23,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { href: '/centers/sexual-crime', label: '성범죄 피해 전문센터' },
-                { href: '/centers/property-crime', label: '재산범죄 피해 전문센터' },
+                { href: '/centers/financial-fraud', label: '금융사기 피해자 전담센터' },
                 { href: '/centers/physical-crime', label: '신체범죄 피해 전담센터' },
                 { href: '/centers/divorce', label: '이혼·가사 전담센터' },
                 { href: '/centers/real-estate', label: '부동산 피해 전담센터' },
