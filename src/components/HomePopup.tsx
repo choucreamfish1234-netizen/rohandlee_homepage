@@ -100,6 +100,8 @@ export default function HomePopup() {
                 </p>
               </div>
 
+              <p className="mt-3 text-center text-xs text-gray-400">언론이 전문가 의견을 구할 때 찾는 로펌입니다.</p>
+
               <button
                 onClick={() => setShow(false)}
                 className="mt-5 w-full inline-flex items-center justify-center px-6 py-3.5 bg-[#1B3B2F] text-white text-sm font-medium rounded-full hover:bg-[#153126] transition-colors min-h-[48px]"

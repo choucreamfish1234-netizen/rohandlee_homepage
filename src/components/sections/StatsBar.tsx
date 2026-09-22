@@ -71,7 +71,7 @@ export default function StatsBar() {
   return (
     <section style={{ background: 'linear-gradient(135deg, #1B3B2F 0%, #2d5a47 100%)' }}>
       <div className="max-w-5xl mx-auto px-4 py-8 sm:py-10">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-6 sm:gap-4">
           <div className="relative">
             <StatItem label="로톡 평점" end={FIRM_STATS.ratingNumeric} suffix="" isDecimal />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
@@ -92,8 +92,12 @@ export default function StatsBar() {
             <StaticItem value="무료" label="첫 상담" />
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
-          <div className="col-span-2 sm:col-span-1">
+          <div className="relative">
             <StaticItem value="A-Z" label="대표변호사 직접 수행" />
+            <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
+          </div>
+          <div className="col-span-2 sm:col-span-1">
+            <StaticItem value="📺" label="언론이 찾는 로펌" />
           </div>
         </div>
       </div>

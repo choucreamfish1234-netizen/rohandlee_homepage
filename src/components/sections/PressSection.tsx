@@ -46,10 +46,10 @@ export default function PressSection() {
       >
         <span className="text-xs tracking-widest text-gray-400 uppercase">PRESS</span>
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
-          언론이 주목한 법률사무소 로앤이
+          언론이 찾는 로펌, 로앤이
         </h2>
         <p className="text-sm text-gray-500 mt-3">
-          피해자를 위해 싸우는 로앤이의 이야기가 언론에 소개되었습니다
+          주요 언론사가 법률 전문가 의견을 구할 때 로앤이를 찾습니다
         </p>
       </motion.div>
 
