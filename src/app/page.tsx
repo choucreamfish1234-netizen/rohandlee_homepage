@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { getPageSeo } from '@/lib/seo'
+import HomePopup from '@/components/HomePopup'
 import HeroSection from '@/components/sections/HeroSection'
 import StatsBar from '@/components/sections/StatsBar'
 import DeclarationSection from '@/components/sections/DeclarationSection'
@@ -24,12 +25,12 @@ const AppSection = dynamic(() => import('@/components/sections/AppSection'), { s
 
 export async function generateMetadata(): Promise<Metadata> {
   const base = await getPageSeo('/', {
-    title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    description: '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 9대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
-    ogTitle: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    ogDescription: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 9대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
+    title: '국내최초 종합 피해자 중심 로펌, 법률사무소 로앤이',
+    description: '변호사를 고르기 전 이 질문을 꼭 하세요 — 대표변호사님이 직접 수사기관 동행도 해주시나요? 로앤이는 대표변호사가 상담부터 사건 종결까지 직접 수행합니다. 9대 전문센터. 상담 032-207-8788',
+    ogTitle: '국내최초 종합 피해자 중심 로펌, 법률사무소 로앤이',
+    ogDescription: '대표변호사가 상담부터 사건 종결까지 직접 수행합니다. 9대 전문센터. 상담 032-207-8788',
   })
-  return { ...base, title: { absolute: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌' } }
+  return { ...base, title: { absolute: '국내최초 종합 피해자 중심 로펌, 법률사무소 로앤이' } }
 }
 
 const homeFaqJsonLd = {
@@ -49,6 +50,7 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
+      <HomePopup />
       <HeroSection />
       <StatsBar />
       <DeclarationSection />
