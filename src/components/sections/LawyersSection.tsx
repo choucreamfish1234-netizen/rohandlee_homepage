@@ -46,7 +46,7 @@ const fallbackLawyers: LawyerData[] = [
     name: '이유림',
     role: '대표변호사',
     specialtyTag: '성범죄 전문',
-    description: '끝까지 당신의 편에 서겠습니다. 피해자의 시간 앞에서 겸허히 걷겠습니다.',
+    description: '상담부터 사건 종결까지 직접 수행합니다. 끝까지 당신의 편에 서겠습니다.',
     image: '/images/lawyers/lawyer-lee.svg',
     alt: '이유림 대표변호사 프로필',
     cases: [
@@ -90,7 +90,7 @@ const fallbackLawyers: LawyerData[] = [
     name: '노채은',
     role: '대표변호사',
     specialtyTag: '재산범죄 전문',
-    description: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는 마음이 있습니다.',
+    description: '상담부터 사건 종결까지 직접 수행합니다. 무뎌진 언어 뒤에도 도저히 묻혀지지 않는 마음이 있습니다.',
     image: '/images/lawyers/lawyer-noh.svg',
     alt: '노채은 대표변호사 프로필',
     cases: [

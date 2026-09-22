@@ -40,6 +40,7 @@ const homeFaqJsonLd = {
     { '@type': 'Question', name: '성범죄 피해를 당했는데 어디에 상담해야 하나요?', acceptedAnswer: { '@type': 'Answer', text: '법률사무소 로앤이 성범죄 피해자 전담센터에서 무료 상담을 받으실 수 있습니다. 전화 032-207-8788 또는 온라인 상담을 이용하세요.' } },
     { '@type': 'Question', name: '사기를 당했는데 돈을 돌려받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네, 가능합니다. 법률사무소 로앤이 금융사기센터와 재산회복센터가 협력하여, 사기죄 형사 고소와 동시에 가압류·강제집행으로 피해 금액을 회수합니다.' } },
     { '@type': 'Question', name: '변호사 비용이 부담되는데 무료 상담이 가능한가요?', acceptedAnswer: { '@type': 'Answer', text: '네, 법률사무소 로앤이는 첫 상담을 무료로 제공합니다.' } },
+    { '@type': 'Question', name: '상담한 변호사가 직접 사건을 맡나요?', acceptedAnswer: { '@type': 'Answer', text: '네. 법률사무소 로앤이는 대표변호사 이유림·노채은이 상담부터 고소장 작성, 수사기관 동행, 법원 출석, 의견서 제출, 합의 협상까지 모든 과정을 직접 수행합니다.' } },
     { '@type': 'Question', name: '전국에서 상담받을 수 있나요?', acceptedAnswer: { '@type': 'Answer', text: '네, 전화 상담과 온라인 상담이 가능합니다. 사건에 따라 전국 어디든 대리합니다.' } },
   ],
 }

@@ -93,7 +93,7 @@ export default function StatsBar() {
             <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-10 bg-white/15" />
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <StaticItem value="A-Z" label="원스톱 변호" />
+            <StaticItem value="A-Z" label="대표변호사 직접 수행" />
           </div>
         </div>
       </div>

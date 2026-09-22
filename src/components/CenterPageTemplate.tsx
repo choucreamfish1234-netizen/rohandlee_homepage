@@ -365,6 +365,7 @@ export default function CenterPageTemplate({
               tag="p"
               className="mt-4 text-gray-400 text-sm"
             />
+            <p className="mt-3 text-xs text-white/50">대표변호사가 상담부터 사건 수행까지 직접 책임집니다.</p>
             <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
               <button
                 onClick={handleCtaClick}

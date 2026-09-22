@@ -1,7 +1,7 @@
 'use client'
 
 import ScrollReveal from '@/components/ScrollReveal'
-import { Users, Smartphone, Award, Eye, Layers, Zap } from 'lucide-react'
+import { Users, Smartphone, Award, Layers, Zap, UserCheck } from 'lucide-react'
 
 const differences = [
   {
@@ -30,9 +30,9 @@ const differences = [
     icon: Smartphone,
   },
   {
-    title: '투명한 비용 체계',
-    description: '숨겨진 비용 없이 처음부터 끝까지 투명하게 안내합니다.',
-    icon: Eye,
+    title: '대표변호사 직접 수행',
+    description: '상담부터 고소장 작성, 수사기관 동행, 법원 출석, 합의 협상까지 대표변호사가 직접 수행합니다.',
+    icon: UserCheck,
   },
 ]
 
@@ -66,6 +66,30 @@ export default function DifferenceSection() {
             )
           })}
         </div>
+
+        <ScrollReveal delay={0.5}>
+          <div className="max-w-2xl mx-auto mt-16 sm:mt-24 text-center text-sm sm:text-base text-gray-500 leading-8 sm:leading-9 space-y-4">
+            <p>
+              많은 로펌에서는 상담은 대표변호사가 하지만,<br />
+              실제 사건은 경험이 적은 다른 변호사가 수행합니다.
+            </p>
+            <p>
+              의뢰인은 대표변호사를 믿고 맡겼는데,<br />
+              정작 수사기관에 동행하고, 법원에 서고,<br />
+              의견서를 쓰는 사람은 다른 변호사입니다.
+            </p>
+            <p className="text-gray-700">
+              로앤이는 다릅니다.<br />
+              상담부터 고소장 작성, 수사기관 동행,<br />
+              법원 출석, 의견서 제출, 합의 협상까지<br />
+              대표변호사 이유림·노채은이 직접 수행합니다.
+            </p>
+            <p className="font-bold text-[#1B3B2F] text-base sm:text-lg pt-2">
+              상담한 바로 그 변호사가,<br />
+              당신의 사건을 끝까지 책임집니다.
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
