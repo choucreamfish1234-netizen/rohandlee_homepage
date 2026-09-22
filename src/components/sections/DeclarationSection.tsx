@@ -19,7 +19,7 @@ export default function DeclarationSection() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <div className="mt-10 text-base sm:text-lg text-[#1B3B2F]/70 leading-relaxed max-w-2xl mx-auto space-y-4 text-left sm:text-center">
+          <div className="mt-10 text-base sm:text-lg text-[#1B3B2F]/70 leading-relaxed max-w-2xl mx-auto space-y-4 text-center">
             <p>성범죄만 전문? 재산범죄만 전문?<br className="hidden sm:inline" /> 현실의 피해는 그렇게 깔끔하게 나뉘지 않습니다.</p>
             <p className="text-[#1B3B2F]/50 text-sm leading-relaxed">
               데이트폭력을 당하면서 돈도 뜯겼습니다.<br />
