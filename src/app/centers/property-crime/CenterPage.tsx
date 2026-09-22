@@ -15,11 +15,11 @@ export default function PropertyCrimeCenterPage() {
   return (
     <CenterPageTemplate
       pagePath="centers/property-crime"
-      centerName="재산범죄 피해 전문센터"
-      subtitle="재산범죄 피해 전문센터"
+      centerName="금융사기 피해자 전담센터"
+      subtitle="금융사기 피해자 전담센터"
       ctaLabel="피해금 회복 가능성 진단"
       ctaHref="/consultation"
-      defaultCaseType="재산범죄 피해 상담"
+      defaultCaseType="금융사기 피해 상담"
       customHero={
         <section className="min-h-[55vh] sm:min-h-[65vh] flex flex-col items-center justify-center px-5 sm:px-4 bg-white">
           <motion.div
@@ -32,7 +32,7 @@ export default function PropertyCrimeCenterPage() {
               국내최초 종합 피해자 중심 로펌
             </span>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
-              재산범죄 피해 전문센터
+              금융사기 피해자 전담센터
             </h1>
             <p className="mt-6 text-sm sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto">
               고소장만 써주고 끝나는 곳이 많습니다.<br className="hidden sm:inline" />
@@ -48,7 +48,7 @@ export default function PropertyCrimeCenterPage() {
             </div>
             <div className="mt-8">
               <button
-                onClick={() => openConsultation('재산범죄 피해 상담')}
+                onClick={() => openConsultation('금융사기 피해 상담')}
                 className="inline-flex items-center justify-center px-8 py-3.5 bg-black text-white text-sm rounded-full hover:bg-gray-800 transition-colors min-h-[48px]"
               >
                 피해금 회복 가능성 진단
@@ -102,13 +102,13 @@ export default function PropertyCrimeCenterPage() {
         {
           name: '노채은',
           role: '대표변호사',
-          specialty: '재산범죄 피해자 전문 변호사',
+          specialty: '금융사기 피해자 전문 변호사',
           quote: '무뎌진 언어 뒤에도 도저히 묻혀지지 않는\n마음이 있습니다.',
           image: '/images/lawyers/lawyer-noh.svg',
         },
       ]}
       preServiceSection={<CrimeTypesGrid />}
-      customSection={<><ProcessTimeline /><WhyRohandlee /><CenterCasesDB centerSlug="property-crime" title="재산범죄 피해자 대리 성공사례" /><Testimonials /><PropertyFaq /></>}
+      customSection={<><ProcessTimeline /><WhyRohandlee /><CenterCasesDB centerSlug="property-crime" title="금융사기 피해자 대리 성공사례" /><Testimonials /><PropertyFaq /></>}
       ctaTitle="재산범죄는 속도가 생명입니다."
       ctaDescription="범인이 재산을 숨기기 전에, 지금 바로 상담하세요."
     />
