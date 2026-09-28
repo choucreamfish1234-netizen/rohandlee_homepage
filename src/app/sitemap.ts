@@ -35,9 +35,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/centers/school-violence`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/centers/corporate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/centers/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${baseUrl}/en/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/zh/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/vi/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
+    ...['sexual-crime', 'stalking', 'fraud', 'violence', 'rental-fraud', 'wage-theft'].map(slug => ({
+      url: `${baseUrl}/centers/foreign-victim/${slug}`,
+      lastModified: '2026-09-28',
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
+    ...['report', 'visa', 'process'].map(slug => ({
+      url: `${baseUrl}/centers/foreign-victim/guide/${slug}`,
+      lastModified: '2026-09-28',
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    ...['en', 'zh', 'vi'].flatMap(locale => [
+      { url: `${baseUrl}/${locale}/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly' as const, priority: 0.8 },
+      ...['sexual-crime', 'stalking', 'fraud', 'violence', 'rental-fraud', 'wage-theft'].map(slug => ({
+        url: `${baseUrl}/${locale}/foreign-victim/${slug}`,
+        lastModified: '2026-09-28',
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+      })),
+      ...['report', 'visa', 'process'].map(slug => ({
+        url: `${baseUrl}/${locale}/foreign-victim/guide/${slug}`,
+        lastModified: '2026-09-28',
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      })),
+    ]),
 
     { url: `${baseUrl}/lawyers/lee-yurim`, lastModified: '2025-08-15', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/lawyers/roh-chaeeun`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
