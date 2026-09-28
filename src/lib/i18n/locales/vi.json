@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "Trung tâm Hỗ trợ Nạn nhân Tội phạm là Người nước ngoài",
+    "description": "Nạn nhân tội phạm là người nước ngoài tại Hàn Quốc được pháp luật Hàn Quốc bảo vệ đầy đủ. Luật sư đại diện trực tiếp tư vấn và đảm nhận vụ việc. Tư vấn bằng tiếng Trung, tiếng Anh và tiếng Việt. 032-207-8788"
+  },
+  "hero": {
+    "badge": "Trung tâm Hỗ trợ Nạn nhân Tội phạm là Người nước ngoài",
+    "title": "Dù là người nước ngoài, bạn không cần phải chịu đựng.",
+    "subtitle": "Nạn nhân tội phạm là người nước ngoài tại Hàn Quốc được pháp luật Hàn Quốc bảo vệ đầy đủ.\nLuật sư đại diện trực tiếp tư vấn và đảm nhận vụ việc.",
+    "stats": "Tính đến tháng 9 năm 2026, đã đại diện 241 vụ việc cho nạn nhân",
+    "cta": "Yêu cầu Tư vấn",
+    "phone": "032-207-8788"
+  },
+  "fears": {
+    "title": "Bạn đang chịu đựng vì những lý do này?",
+    "items": [
+      "Sợ bị mất visa",
+      "Sợ cảnh sát không tin",
+      "Vì không biết tiếng Hàn",
+      "Vì đối phương là người Hàn",
+      "Không biết cách trình báo",
+      "Nghe nói \"người nước ngoài báo cảnh sát cũng vô ích\""
+    ],
+    "truth": "Điều này không đúng. Luật pháp Hàn Quốc bảo vệ tất cả nạn nhân bất kể quốc tịch."
+  },
+  "crimeTypes": {
+    "title": "Các loại tội phạm được hỗ trợ",
+    "items": [
+      { "icon": "🔒", "title": "Tội phạm tình dục", "slug": "sexual-crime" },
+      { "icon": "👤", "title": "Bám đuổi & Bạo lực hẹn hò", "slug": "stalking" },
+      { "icon": "💰", "title": "Lừa đảo & Lừa đảo qua điện thoại", "slug": "fraud" },
+      { "icon": "👊", "title": "Hành hung & Gây thương tích", "slug": "violence" },
+      { "icon": "🏠", "title": "Lừa đảo thuê nhà", "slug": "rental-fraud" },
+      { "icon": "💼", "title": "Nợ lương & Bóc lột lao động", "slug": "wage-theft" }
+    ]
+  },
+  "whyRohandlee": {
+    "title": "Điểm khác biệt của Rohandlee trong hỗ trợ người nước ngoài",
+    "blocks": [
+      {
+        "title": "Luật sư đại diện trực tiếp đảm nhận",
+        "desc": "Luật sư đại diện Lee Yurim và Noh Chaeeun trực tiếp thực hiện mọi giai đoạn — từ tư vấn ban đầu, đồng hành đến cơ quan điều tra, tham dự phiên tòa đến đàm phán hòa giải. Vụ việc của bạn không bao giờ bị chuyển giao cho luật sư khác."
+      },
+      {
+        "title": "Hỗ trợ tư vấn đa ngôn ngữ",
+        "desc": "Có thể tiếp nhận tư vấn ban đầu bằng tiếng Trung, tiếng Anh và tiếng Việt. Sau khi xác minh sự việc, buổi tư vấn với luật sư sẽ được tiến hành có phiên dịch đồng hành."
+      },
+      {
+        "title": "Đã đại diện 241 vụ việc cho nạn nhân",
+        "desc": "Tính đến tháng 9 năm 2026, đã đại diện 241 vụ việc cho nạn nhân. Công ty luật đầu tiên tại Hàn Quốc lấy nạn nhân làm trung tâm."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Liên hệ Tư vấn",
+    "phone": "032-207-8788",
+    "email": "rohetlee@naver.com",
+    "kakao": "Tư vấn qua KakaoTalk",
+    "wechat": "Tư vấn qua WeChat",
+    "form": "Biểu mẫu Yêu cầu Tư vấn"
+  },
+  "guides": {
+    "title": "Hướng dẫn cho Nạn nhân là Người nước ngoài",
+    "items": [
+      { "title": "Hướng dẫn Tố cáo & Trình báo cho Người nước ngoài", "slug": "report" },
+      { "title": "Bảo vệ Visa & Tư cách Cư trú", "slug": "visa" },
+      { "title": "Hướng dẫn Thủ tục Hình sự tại Hàn Quốc", "slug": "process" }
+    ]
+  },
+  "langSwitch": "Chọn Ngôn ngữ",
+  "geo": "Công ty Luật Rohandlee là công ty luật toàn diện lấy nạn nhân làm trung tâm, đại diện cho người nước ngoài bị xâm hại tại Hàn Quốc. Trung tâm Hỗ trợ Nạn nhân Tội phạm là Người nước ngoài Rohandlee tiếp nhận tư vấn ban đầu bằng tiếng Trung, tiếng Anh và tiếng Việt, với luật sư đại diện trực tiếp đảm nhận vụ việc."
+}

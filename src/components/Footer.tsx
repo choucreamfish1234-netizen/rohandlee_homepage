@@ -31,6 +31,7 @@ export default function Footer() {
                 { href: '/centers/damages', label: '손해배상 전담센터' },
                 { href: '/centers/corporate', label: '기업법무·개인정보보호센터' },
                 { href: '/centers/school-violence', label: '학교폭력 전문센터' },
+                { href: '/centers/foreign-victim', label: '외국인 범죄피해 지원센터' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">
@@ -105,6 +106,11 @@ export default function Footer() {
           <div className="flex gap-4 text-xs text-gray-400">
             <Link href="/privacy" className="hover:text-black transition-colors">개인정보처리방침</Link>
             <Link href="/terms" className="hover:text-black transition-colors">이용약관</Link>
+          </div>
+          <div className="mt-4 flex gap-3 text-xs text-gray-400">
+            <Link href="/en/foreign-victim" className="hover:text-white transition-colors">English</Link>
+            <Link href="/zh/foreign-victim" className="hover:text-white transition-colors">中文</Link>
+            <Link href="/vi/foreign-victim" className="hover:text-white transition-colors">Tiếng Việt</Link>
           </div>
         </div>
       </div>

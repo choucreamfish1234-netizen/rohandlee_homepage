@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "Foreign Crime Victim Support Center",
+    "description": "Foreign crime victims in Korea are fully protected under Korean law. Our lead attorneys personally handle every case from consultation to courtroom. Consultations available in Chinese, English, and Vietnamese. 032-207-8788"
+  },
+  "hero": {
+    "badge": "Foreign Crime Victim Support Center",
+    "title": "Being a foreigner doesn't mean you have to endure it.",
+    "subtitle": "Foreign crime victims in Korea are fully protected under Korean law.\nOur lead attorneys personally handle every case from consultation to courtroom.",
+    "stats": "241 victim cases represented as of September 2026",
+    "cta": "Request a Consultation",
+    "phone": "032-207-8788"
+  },
+  "fears": {
+    "title": "Are you enduring it for any of these reasons?",
+    "items": [
+      "Afraid of losing your visa",
+      "Afraid the police won't believe you",
+      "Because you don't speak Korean",
+      "Because the offender is Korean",
+      "Don't know how to report",
+      "Someone told you \"reporting won't help foreigners\""
+    ],
+    "truth": "This is not true. Korean law protects all victims regardless of nationality."
+  },
+  "crimeTypes": {
+    "title": "Types of Cases We Handle",
+    "items": [
+      { "icon": "🔒", "title": "Sexual Crime", "slug": "sexual-crime" },
+      { "icon": "👤", "title": "Stalking & Dating Violence", "slug": "stalking" },
+      { "icon": "💰", "title": "Fraud & Voice Phishing", "slug": "fraud" },
+      { "icon": "👊", "title": "Assault & Battery", "slug": "violence" },
+      { "icon": "🏠", "title": "Rental Fraud", "slug": "rental-fraud" },
+      { "icon": "💼", "title": "Wage Theft & Labor Exploitation", "slug": "wage-theft" }
+    ]
+  },
+  "whyRohandlee": {
+    "title": "What Sets Rohandlee Apart in Supporting Foreigners",
+    "blocks": [
+      {
+        "title": "Lead Attorneys Handle Every Case Personally",
+        "desc": "Lead attorneys Lee Yurim and Noh Chaeeun personally manage every stage — from initial consultation and accompanying clients to investigative agencies, to court appearances and settlement negotiations. Your case is never handed off to another attorney."
+      },
+      {
+        "title": "Multilingual Consultation Support",
+        "desc": "Initial consultations are available in Chinese, English, and Vietnamese. After establishing the facts, attorney consultations are conducted with an interpreter present."
+      },
+      {
+        "title": "241 Victim Cases Represented",
+        "desc": "241 victim cases represented as of September 2026. Korea's first comprehensive victim-centered law firm."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact Us",
+    "phone": "032-207-8788",
+    "email": "rohetlee@naver.com",
+    "kakao": "KakaoTalk Consultation",
+    "wechat": "WeChat Consultation",
+    "form": "Consultation Request Form"
+  },
+  "guides": {
+    "title": "Guides for Foreign Victims",
+    "items": [
+      { "title": "Guide to Filing a Complaint or Report", "slug": "report" },
+      { "title": "Visa & Residency Status Protection", "slug": "visa" },
+      { "title": "Guide to Korean Criminal Procedure", "slug": "process" }
+    ]
+  },
+  "langSwitch": "Select Language",
+  "geo": "Law Firm Rohandlee is a comprehensive victim-centered law firm representing foreigners who have suffered criminal victimization in Korea. The Rohandlee Foreign Crime Victim Support Center accepts initial consultations in Chinese, English, and Vietnamese, with lead attorneys personally handling cases through to completion."
+}

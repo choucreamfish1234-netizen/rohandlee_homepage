@@ -9,6 +9,7 @@ const navLinks = [
   { href: '/#centers', label: '사무실 소개' },
   { href: '/#lawyers', label: '변호사 소개' },
   { href: '/centers/school-violence', label: '학교폭력센터' },
+  { href: '/centers/foreign-victim', label: '외국인 범죄피해' },
   { href: '/consultation', label: '상담 안내' },
   { href: '/cases', label: '성공사례' },
   { href: '/directions', label: '오시는 길' },

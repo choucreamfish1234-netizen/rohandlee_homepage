@@ -34,6 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/centers/real-estate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/school-violence`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/centers/corporate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/centers/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/en/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/zh/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/vi/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.8 },
 
     { url: `${baseUrl}/lawyers/lee-yurim`, lastModified: '2025-08-15', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/lawyers/roh-chaeeun`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
