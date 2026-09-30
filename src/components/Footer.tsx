@@ -106,6 +106,7 @@ export default function Footer() {
           <div className="flex gap-4 text-xs text-gray-400">
             <Link href="/privacy" className="hover:text-black transition-colors">개인정보처리방침</Link>
             <Link href="/terms" className="hover:text-black transition-colors">이용약관</Link>
+            <a href="https://akpul.co.kr" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">악플닷컴</a>
           </div>
           <div className="mt-4 flex gap-3 text-xs text-gray-400">
             <Link href="/en/foreign-victim" className="hover:text-white transition-colors">English</Link>
