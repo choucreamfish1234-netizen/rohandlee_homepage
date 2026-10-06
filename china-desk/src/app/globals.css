@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 웹폰트 없음 — 중국 본토에서 Google Fonts 가 차단되므로 시스템 폰트만 사용 */
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+body {
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  color: #24272d;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+html:lang(ko) body {
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  word-break: keep-all;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@layer components {
+  .container-site { @apply mx-auto w-full max-w-site px-4 sm:px-6; }
+  .section { @apply py-16 sm:py-20 lg:py-24; }
+  .h2 { @apply text-[24px] font-bold leading-snug tracking-tight text-navy sm:text-[30px]; }
+  .lead { @apply mt-3 text-[15px] leading-relaxed text-mute sm:text-[16px]; }
+  .card { @apply rounded-card border border-line bg-white; }
+  .chip { @apply inline-flex h-10 items-center rounded-full border border-line bg-white px-4 text-[14px] text-charcoal transition-colors hover:border-navy/40; }
+  .chip[aria-pressed="true"], .chip[data-active="true"] { @apply border-navy bg-navy text-white; }
+  .btn-primary { @apply inline-flex h-12 items-center justify-center gap-2 rounded-card bg-navy px-6 text-[15px] font-semibold text-white transition-colors hover:bg-navy-soft; }
+  .btn-outline { @apply inline-flex h-12 items-center justify-center gap-2 rounded-card border border-line bg-white px-6 text-[15px] font-semibold text-navy transition-colors hover:border-navy/30 hover:bg-mist; }
+  .btn-gold { @apply inline-flex h-12 items-center justify-center gap-2 rounded-card bg-gold px-6 text-[15px] font-semibold text-white transition-colors hover:brightness-105; }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
