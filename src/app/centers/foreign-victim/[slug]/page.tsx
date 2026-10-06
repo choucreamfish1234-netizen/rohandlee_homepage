@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params
-  if (!crimeTypeSlugs.includes(slug as string)) {
+  if (!(crimeTypeSlugs as readonly string[]).includes(slug)) {
     notFound()
   }
   return <ForeignVictimSubPage locale="ko" slug={slug} type="crime" />

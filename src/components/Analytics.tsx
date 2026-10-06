@@ -28,8 +28,25 @@ function getSessionId(): string {
   if (!sid) {
     sid = uuid()
     sessionStorage.setItem('_sid', sid)
+    sessionStorage.setItem('_sid_start', String(Date.now()))
   }
   return sid
+}
+
+function getSessionDurationSec(): number {
+  const start = Number(sessionStorage.getItem('_sid_start'))
+  if (!start) return 0
+  return Math.round((Date.now() - start) / 1000)
+}
+
+// Unload-time requests made with fetch are cancelled by the browser; sendBeacon is delivered after the page is gone.
+function sendFlush(payload: Record<string, unknown>) {
+  const body = JSON.stringify(payload)
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon('/api/analytics/flush', new Blob([body], { type: 'application/json' }))
+    return
+  }
+  fetch('/api/analytics/flush', { method: 'POST', body, headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(() => {})
 }
 
 function isBot(): boolean {
@@ -152,37 +169,21 @@ export default function Analytics() {
   const clicks = useRef(0)
   const sessionCreated = useRef(false)
   const currentPath = useRef(pathname)
+  const pageViewId = useRef<number | null>(null)
 
   // Flush page view data on page leave
-  const flush = useCallback(async () => {
-    const elapsed = Math.round((Date.now() - startTime.current) / 1000)
-    const vid = getVisitorId()
+  const flush = useCallback(() => {
     const sid = getSessionId()
-    if (!vid || !sid) return
-
-    // Update page_views with final scroll/time/click data
-    await supabase
-      .from('page_views')
-      .update({
-        scroll_depth: scrollMax.current,
-        time_on_page: elapsed,
-        click_count: clicks.current,
-        is_bounce: clicks.current <= 1 && elapsed < 10,
-      })
-      .eq('session_id', sid)
-      .eq('page_path', currentPath.current)
-      .order('created_at', { ascending: false })
-      .limit(1)
-
-    // Update session
-    await supabase
-      .from('visitor_sessions')
-      .update({
-        ended_at: new Date().toISOString(),
-        exit_page: currentPath.current,
-        is_bounce: clicks.current <= 1 && elapsed < 10,
-      })
-      .eq('session_id', sid)
+    if (!sid) return
+    sendFlush({
+      sessionId: sid,
+      pageViewId: pageViewId.current,
+      path: currentPath.current,
+      timeOnPage: Math.round((Date.now() - startTime.current) / 1000),
+      scrollDepth: scrollMax.current,
+      clickCount: clicks.current,
+      sessionDuration: getSessionDurationSec(),
+    })
   }, [])
 
   // Ensure session exists
@@ -236,6 +237,7 @@ export default function Analytics() {
     startTime.current = Date.now()
     scrollMax.current = 0
     clicks.current = 0
+    pageViewId.current = null
 
     const ref = document.referrer
     const refType = detectReferrerType(ref)
@@ -248,7 +250,7 @@ export default function Analytics() {
       await ensureSession()
 
       // Insert page view
-      const { error } = await supabase.from('page_views').insert({
+      const { data: inserted, error } = await supabase.from('page_views').insert({
         visitor_id: vid,
         session_id: sid,
         page_path: pathname,
@@ -263,10 +265,12 @@ export default function Analytics() {
         os: device.os,
         screen_resolution: getScreenRes(),
         language: navigator.language || null,
-      })
+      }).select('id').single()
 
       if (error) {
         console.error('[Analytics] page_views insert failed:', error.message)
+      } else if (currentPath.current === pathname) {
+        pageViewId.current = inserted.id
       }
 
       // Update session page_count
@@ -303,15 +307,20 @@ export default function Analytics() {
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('click', onClick, { passive: true })
 
-    // Flush on page leave
-    const onBeforeUnload = () => flush()
-    window.addEventListener('beforeunload', onBeforeUnload)
+    // Flush on page leave. pagehide/visibilitychange fire reliably on mobile, unlike beforeunload.
+    const onPageHide = () => flush()
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') flush()
+    }
+    window.addEventListener('pagehide', onPageHide)
+    document.addEventListener('visibilitychange', onVisibilityChange)
 
     return () => {
       flush()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('click', onClick)
-      window.removeEventListener('beforeunload', onBeforeUnload)
+      window.removeEventListener('pagehide', onPageHide)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
     }
   }, [pathname, ensureSession, flush])
 

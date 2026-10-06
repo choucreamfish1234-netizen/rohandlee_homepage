@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,16 +10,28 @@ export async function GET(req: NextRequest) {
     since.setDate(since.getDate() - days)
     const sinceISO = since.toISOString()
 
-    const [{ data: pageViews }, { data: sessions }] = await Promise.all([
-      supabaseAdmin
-        .from('page_views')
-        .select('page_path, page_title, time_on_page, scroll_depth, is_bounce')
-        .gte('created_at', sinceISO),
+    const [pageViews, sessions] = await Promise.all([
+      fetchAllRows<{
+        page_path: string
+        page_title: string | null
+        time_on_page: number | null
+        scroll_depth: number | null
+        is_bounce: boolean | null
+      }>(() =>
+        supabaseAdmin
+          .from('page_views')
+          .select('page_path, page_title, time_on_page, scroll_depth, is_bounce')
+          .gte('created_at', sinceISO)
+          .order('id')
+      ),
 
-      supabaseAdmin
-        .from('visitor_sessions')
-        .select('landing_page, exit_page')
-        .gte('started_at', sinceISO),
+      fetchAllRows<{ landing_page: string | null; exit_page: string | null }>(() =>
+        supabaseAdmin
+          .from('visitor_sessions')
+          .select('landing_page, exit_page')
+          .gte('started_at', sinceISO)
+          .order('id')
+      ),
     ])
 
     // Popular pages

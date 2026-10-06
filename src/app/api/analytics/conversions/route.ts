@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,19 +11,32 @@ export async function GET(req: NextRequest) {
     const sinceISO = since.toISOString()
 
     const [
-      { data: convEvents },
-      { data: legacyEvents },
+      convEvents,
+      legacyEvents,
       { count: totalSessions },
     ] = await Promise.all([
-      supabaseAdmin
-        .from('conversion_events')
-        .select('event_type, page, referrer, channel, created_at')
-        .gte('created_at', sinceISO),
+      fetchAllRows<{ event_type: string; page: string | null; referrer: string | null; channel: string | null; created_at: string }>(() =>
+        supabaseAdmin
+          .from('conversion_events')
+          .select('event_type, page, referrer, channel, created_at')
+          .gte('created_at', sinceISO)
+          .order('id')
+      ),
 
-      supabaseAdmin
-        .from('consultation_events')
-        .select('event_type, event_label, page_path, referrer_type, device_type, created_at')
-        .gte('created_at', sinceISO),
+      fetchAllRows<{
+        event_type: string
+        event_label: string | null
+        page_path: string | null
+        referrer_type: string | null
+        device_type: string | null
+        created_at: string
+      }>(() =>
+        supabaseAdmin
+          .from('consultation_events')
+          .select('event_type, event_label, page_path, referrer_type, device_type, created_at')
+          .gte('created_at', sinceISO)
+          .order('id')
+      ),
 
       supabaseAdmin
         .from('visitor_sessions')

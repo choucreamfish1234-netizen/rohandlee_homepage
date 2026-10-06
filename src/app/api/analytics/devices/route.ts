@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,10 +10,13 @@ export async function GET(req: NextRequest) {
     since.setDate(since.getDate() - days)
     const sinceISO = since.toISOString()
 
-    const { data: views } = await supabaseAdmin
-      .from('page_views')
-      .select('device_type, device_brand, browser, os, screen_resolution')
-      .gte('created_at', sinceISO)
+    const views = await fetchAllRows<Record<string, string | null>>(() =>
+      supabaseAdmin
+        .from('page_views')
+        .select('device_type, device_brand, browser, os, screen_resolution')
+        .gte('created_at', sinceISO)
+        .order('id')
+    )
 
     const countField = (field: string) => {
       const map: Record<string, number> = {}

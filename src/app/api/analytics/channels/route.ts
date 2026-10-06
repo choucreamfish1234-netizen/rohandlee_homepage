@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 
 export async function GET(req: NextRequest) {
   try {
@@ -9,28 +10,34 @@ export async function GET(req: NextRequest) {
     since.setDate(since.getDate() - days)
     const sinceISO = since.toISOString()
 
-    const [{ data: views }, { data: keywords }, { data: utmData }] = await Promise.all([
-      // Referrer type distribution
-      supabaseAdmin
-        .from('page_views')
-        .select('referrer_type')
-        .gte('created_at', sinceISO)
-        .not('referrer_type', 'is', null),
+    const [views, keywords, utmData] = await Promise.all([
+      fetchAllRows<{ referrer_type: string | null }>(() =>
+        supabaseAdmin
+          .from('page_views')
+          .select('referrer_type')
+          .gte('created_at', sinceISO)
+          .not('referrer_type', 'is', null)
+          .order('id')
+      ),
 
-      // Top search keywords
-      supabaseAdmin
-        .from('page_views')
-        .select('search_keyword')
-        .gte('created_at', sinceISO)
-        .not('search_keyword', 'is', null)
-        .not('search_keyword', 'eq', ''),
+      fetchAllRows<{ search_keyword: string }>(() =>
+        supabaseAdmin
+          .from('page_views')
+          .select('search_keyword')
+          .gte('created_at', sinceISO)
+          .not('search_keyword', 'is', null)
+          .not('search_keyword', 'eq', '')
+          .order('id')
+      ),
 
-      // UTM campaigns
-      supabaseAdmin
-        .from('visitor_sessions')
-        .select('utm_source, utm_medium, utm_campaign')
-        .gte('started_at', sinceISO)
-        .not('utm_source', 'is', null),
+      fetchAllRows<{ utm_source: string; utm_medium: string | null; utm_campaign: string | null }>(() =>
+        supabaseAdmin
+          .from('visitor_sessions')
+          .select('utm_source, utm_medium, utm_campaign')
+          .gte('started_at', sinceISO)
+          .not('utm_source', 'is', null)
+          .order('id')
+      ),
     ])
 
     // Channel distribution

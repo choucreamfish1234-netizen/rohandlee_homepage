@@ -1,28 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
     const days = searchParams.get('days')
 
-    let query = supabaseAdmin
-      .from('visits')
-      .select('channel, page, created_at')
-
-    if (days && days !== 'all') {
+    const sinceISO = (() => {
+      if (!days || days === 'all') return null
       const since = new Date()
       since.setDate(since.getDate() - parseInt(days))
-      query = query.gte('created_at', since.toISOString())
-    }
+      return since.toISOString()
+    })()
 
-    const { data, error } = await query.order('created_at', { ascending: false })
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    const visits = data || []
+    const visits = await fetchAllRows<{ channel: string | null; page: string | null; created_at: string }>(() => {
+      const query = supabaseAdmin.from('visits').select('channel, page, created_at')
+      return (sinceISO ? query.gte('created_at', sinceISO) : query).order('created_at', { ascending: false })
+    })
 
     // 채널별 방문수
     const channelMap: Record<string, number> = {}
