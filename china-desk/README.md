@@ -7,15 +7,43 @@
 - 웹폰트 없음(시스템 폰트) — 중국 본토에서 Google Fonts 차단 대응
 - 저장소: Supabase REST(PostgREST·Storage)를 `fetch` 로 직접 호출. 환경변수가 없으면 `.data/` 로컬 파일(개발용)
 
-## 실행
+## 로컬에서 보기
+
+필요한 것은 **Node.js 20 이상** 하나뿐입니다. ([nodejs.org](https://nodejs.org) 에서 LTS 버전 설치)
 
 ```bash
+git fetch origin
+git checkout claude/kind-pascal-87i5uo
 cd china-desk
-npm install
-cp .env.example .env.local   # 값 채우기 (아래 표)
-npm run dev                  # http://localhost:3000 → /cn
-npm run build && npm start   # 운영 빌드 확인
+npm install     # 처음 한 번만 (2~3분)
+npm run dev
+```
+
+브라우저에서 **http://localhost:3000** 을 열면 됩니다. 중국어판으로 자동 이동합니다.
+
+| 주소 | 화면 |
+|---|---|
+| http://localhost:3000 | 메인 (중국어) |
+| http://localhost:3000/ko | 한국어판 |
+| http://localhost:3000/cn/detention | 사건 상세 (예: 가족 구속) |
+| http://localhost:3000/cn#for-accused | 피의자용 광고 랜딩 (카드가 걸러진 상태) |
+| http://localhost:3000/cn/consult | 상담 신청 |
+| http://localhost:3000/admin | 관리자 (비밀번호 `admin1234`) |
+
+`npm run dev` 가 처음 실행될 때 `.env.local` 을 자동으로 만들어 줍니다. Supabase 없이도 바로 볼 수 있고, 로컬에서 넣은 상담 신청은 `china-desk/.data/consultations.json` 에 저장됩니다. 멈출 때는 터미널에서 `Ctrl+C`.
+
+> 자동 생성되는 비밀번호 `admin1234` 는 **로컬 전용**입니다. 실제 배포에는 Vercel 환경변수에 긴 비밀번호를 따로 넣으세요.
+
+### 휴대폰으로도 보려면
+
+같은 와이파이에 연결한 뒤 `npm run dev` 가 출력하는 `Network:` 주소(예: `http://192.168.0.5:3000`)를 휴대폰 브라우저에 입력하면 됩니다.
+
+## 그 밖의 명령
+
+```bash
+npm run build && npm start   # 운영 빌드로 확인 (http://localhost:3000)
 npm run lint
+npm run typecheck
 ```
 
 ## 환경변수
@@ -26,7 +54,7 @@ npm run lint
 | `NEXT_PUBLIC_GA_ID` | GA4 측정 ID. 비우면 GA 스크립트를 싣지 않음 (dataLayer 는 항상 쌓임 → GTM 사용 가능) |
 | `CONSULT_WEBHOOK_URL` | 상담 접수 알림 웹훅(Slack Incoming Webhook 등). `{ text, urgent, id, case_type }` 를 POST. 실패해도 접수는 저장됨 |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | 둘 다 있으면 Supabase 저장, 없으면 `.data/` 로컬 저장 |
-| `ADMIN_PASSWORD` | 관리자 비밀번호 (충분히 길게) |
+| `ADMIN_PASSWORD` | 관리자 비밀번호 (충분히 길게). 로컬은 `npm run dev` 가 자동 생성 |
 | `ADMIN_SESSION_SECRET` | 세션 서명 키, 32자 이상 (`openssl rand -hex 32`) |
 
 > ⚠️ Vercel 에서는 로컬 파일이 유지되지 않으므로 **운영에는 반드시 Supabase 를 연결**한다. 관리자 상단에 "로컬 저장 모드" 배지가 보이면 Supabase 가 연결되지 않은 상태다.
