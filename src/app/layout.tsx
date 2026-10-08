@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 10대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
+    '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 11대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
   keywords: [
     '국내최초 종합 피해자 중심 로펌',
     '피해자 전문 변호사',
@@ -56,13 +56,13 @@ export const metadata: Metadata = {
     url: baseUrl,
     siteName: '법률사무소 로앤이',
     title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 10대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
+    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 11대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    description: '모든 피해를 한 곳에서. 10대 전문센터 운영. 민형사 동시 타격 입체 전략.',
+    description: '모든 피해를 한 곳에서. 11대 전문센터 운영. 민형사 동시 타격 입체 전략.',
     images: [`${baseUrl}/og-image.png`],
   },
   robots: {
@@ -143,7 +143,7 @@ const jsonLd = {
   knowsAbout: ['성범죄 피해자 변호', '금융사기 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력', '법률 전문가 자문', '언론 인터뷰'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: '10대 전문센터',
+    name: '11대 전문센터',
     itemListElement: [
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '성범죄 피해자 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '금융사기 피해자 전담센터' } },
@@ -155,6 +155,7 @@ const jsonLd = {
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '기업법무·개인정보보호센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '학교폭력 전문센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '외국인 범죄피해 지원센터' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '성소수자 범죄피해 지원센터' } },
     ],
   },
   employee: [

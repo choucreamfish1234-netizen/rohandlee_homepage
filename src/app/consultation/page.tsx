@@ -6,9 +6,9 @@ import ConsultationForm from './ConsultationForm'
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/consultation', {
     title: '상담 안내',
-    description: '법률사무소 로앤이 상담 안내. 성범죄·재산범죄·신체범죄·부동산·손해배상·학교폭력 등 10대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788 또는 온라인 상담.',
+    description: '법률사무소 로앤이 상담 안내. 성범죄·재산범죄·신체범죄·부동산·손해배상·학교폭력 등 11대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788 또는 온라인 상담.',
     ogTitle: '상담 안내',
-    ogDescription: '10대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788.',
+    ogDescription: '11대 전문센터 변호사가 직접 상담합니다. 전화 032-207-8788.',
   })
 }
 
@@ -19,7 +19,7 @@ export default function Page() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <h1 className="text-2xl sm:text-3xl font-bold text-black mb-4">법률사무소 로앤이 상담 안내</h1>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            국내1호 종합 피해자 전문 로펌 법률사무소 로앤이는 성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 재산회복, 개인정보보호, 학교폭력 등 10대 전문센터를 운영하며 모든 분야의 피해자를 대리합니다.
+            국내1호 종합 피해자 전문 로펌 법률사무소 로앤이는 성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 재산회복, 개인정보보호, 학교폭력 등 11대 전문센터를 운영하며 모든 분야의 피해자를 대리합니다.
           </p>
         </div>
       </section>
@@ -85,7 +85,7 @@ export default function Page() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-black mb-3">10대 전문센터</h2>
+              <h2 className="text-lg font-bold text-black mb-3">11대 전문센터</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
                   { name: '성범죄', href: '/centers/sexual-crime' },
@@ -98,6 +98,7 @@ export default function Page() {
                   { name: '기업법무', href: '/centers/corporate' },
                   { name: '학교폭력', href: '/centers/school-violence' },
                   { name: '외국인 범죄피해', href: '/centers/foreign-victim' },
+                  { name: '성소수자 범죄피해', href: '/centers/lgbtq-crime' },
                 ].map(center => (
                   <Link key={center.href} href={center.href} className="block p-3 bg-white border border-gray-100 rounded-lg text-center hover:border-[#1B3B2F]/30 transition-colors">
                     <span className="text-xs font-medium text-black">{center.name}</span>

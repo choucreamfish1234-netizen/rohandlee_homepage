@@ -32,6 +32,7 @@ export default function Footer() {
                 { href: '/centers/corporate', label: '기업법무·개인정보보호센터' },
                 { href: '/centers/school-violence', label: '학교폭력 전문센터' },
                 { href: '/centers/foreign-victim', label: '외국인 범죄피해 지원센터' },
+                { href: '/centers/lgbtq-crime', label: '성소수자 범죄피해 지원센터' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">

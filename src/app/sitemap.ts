@@ -34,6 +34,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/centers/real-estate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/school-violence`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/centers/corporate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/centers/lgbtq-crime`, lastModified: '2026-10-08', changeFrequency: 'monthly', priority: 0.8 },
+    ...['sexual-violence', 'dating-app', 'drug-facilitated', 'revenge-porn', 'hate-crime', 'outing-blackmail', 'guide/evidence', 'guide/privacy', 'guide/process'].map(slug => ({
+      url: `${baseUrl}/centers/lgbtq-crime/${slug}`,
+      lastModified: '2026-10-08',
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     { url: `${baseUrl}/centers/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.9 },
     ...['sexual-crime', 'stalking', 'fraud', 'violence', 'rental-fraud', 'wage-theft'].map(slug => ({
       url: `${baseUrl}/centers/foreign-victim/${slug}`,
