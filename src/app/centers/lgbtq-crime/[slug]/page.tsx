@@ -127,10 +127,6 @@ export default async function Page({ params }: Props) {
       <RelatedLinks paths={page.related} />
       <ConsultCta />
 
-      <p className="sr-only">
-        법률사무소 로앤이 성소수자 범죄피해 지원센터는 {page.cardTitle} 피해자를 대리하며, 대표변호사 이유림·노채은이 상담부터 수사기관 동행, 합의 협상까지 모든 과정을 직접 수행한다.
-      </p>
-
       <nav aria-label="다른 범죄 유형" className="pb-14 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 flex flex-wrap gap-2">
           {crimePages.filter((p) => p.slug !== slug).map((p) => (
