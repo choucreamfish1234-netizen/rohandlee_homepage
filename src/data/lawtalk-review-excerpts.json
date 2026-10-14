@@ -1,0 +1,86 @@
+{
+  "verifiedAt": "2026-10-15",
+  "reviews": [
+    {
+      "place": "home",
+      "lawyer": "이유림",
+      "quote": "생각지못한 쟁점에 대해 짚어주셨어요.",
+      "month": "2026.04",
+      "topic": "쟁점을 살피는 상담",
+      "source": "https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC/review",
+      "page": 2,
+      "context": "준비하지 못한 쟁점과 답변 방향에 관한 상담. 피해자 지위 명시 없음."
+    },
+    {
+      "place": "home",
+      "lawyer": "노채은",
+      "quote": "의뢰인의 눈높이에서 쉽게 답변해주십니다",
+      "month": "2026.02",
+      "topic": "눈높이에 맞춘 설명",
+      "source": "https://www.lawtalk.co.kr/directory/profile/7587-%EB%85%B8%EC%B1%84%EC%9D%80/review",
+      "page": 1,
+      "context": "상담 전 정리와 쉬운 법률 설명에 관한 평가. 피해자 지위 명시 없음."
+    },
+    {
+      "place": "home",
+      "lawyer": "이유림",
+      "quote": "관련 자료까지 찾아서 명확하게 상담해주셨어요",
+      "month": "2026.03",
+      "topic": "자료를 바탕으로 한 검토",
+      "source": "https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC/review",
+      "page": 3,
+      "context": "회생·파산 분야, 자료를 살피고 유불리를 설명한 상담."
+    },
+    {
+      "place": "home",
+      "lawyer": "노채은",
+      "quote": "필요한 절차에 대해 잘 말씀해주셨습니다",
+      "month": "2026.04",
+      "topic": "다음 절차의 안내",
+      "source": "https://www.lawtalk.co.kr/directory/profile/7587-%EB%85%B8%EC%B1%84%EC%9D%80/review",
+      "page": 1,
+      "context": "임대차 분야, 내용 확인과 현실적 절차 안내. 피해자 지위 명시 없음."
+    },
+    {
+      "place": "victim",
+      "lawyer": "이유림",
+      "quote": "피해자 전문이라고 자신감있게 말씀하시는 모습에 반했어요",
+      "month": "2026.03",
+      "topic": "피해자 대리 상담",
+      "source": "https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC/review",
+      "page": 3,
+      "context": "후기 제목에서 피해자 전문 상담을 명시."
+    },
+    {
+      "place": "victim",
+      "lawyer": "노채은",
+      "quote": "피해자 입장을 많이 고려해주시고 상황판단에 많은 도움을 주셔서",
+      "month": "2026.05",
+      "topic": "피해자의 입장에서",
+      "source": "https://www.lawtalk.co.kr/directory/profile/7587-%EB%85%B8%EC%B1%84%EC%9D%80/review",
+      "page": 1,
+      "context": "후기 본문에서 피해자 입장에 대한 고려와 위안을 명시.",
+      "fragment": true
+    },
+    {
+      "place": "victim",
+      "lawyer": "이유림",
+      "quote": "꼼꼼한 분석과 명쾌한 답변이 큰 도움이 되었습니다.",
+      "month": "2026.04",
+      "topic": "고소를 고민하던 순간",
+      "source": "https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC/review",
+      "page": 2,
+      "context": "협박·공갈 등에 관한 상담 후 필요시 고소를 맡기겠다고 기재."
+    },
+    {
+      "place": "victim",
+      "lawyer": "노채은",
+      "quote": "변호사님과 상담하길 잘했습니다.",
+      "month": "2026.04",
+      "topic": "중고거래 사기 상담",
+      "source": "https://www.lawtalk.co.kr/directory/profile/7587-%EB%85%B8%EC%B1%84%EC%9D%80/review",
+      "page": 1,
+      "context": "본문에서 중고사기로 막막했던 상황과 대응 방법에 대한 도움을 명시."
+    }
+  ]
+}
