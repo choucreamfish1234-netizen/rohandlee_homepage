@@ -258,5 +258,9 @@
   {
     "source": "/voice-phishing/job-scam",
     "destination": "/renewal/pages/voice-phishing/job-scam/index.html"
+  },
+  {
+    "source": "/practice",
+    "destination": "/renewal/pages/practice/index.html"
   }
 ]
