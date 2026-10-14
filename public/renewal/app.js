@@ -15,3 +15,18 @@ const story=document.querySelector('.story'),title=document.querySelector('#step
   document.body.append(a);
  }
 })();
+
+// One shared portrait stage; only the selected biography occupies page height.
+(()=>{
+ const team=document.querySelector('.editorial-team');if(!team)return;
+ const buttons=[...team.querySelectorAll('.team-person')];
+ buttons.forEach(button=>button.addEventListener('click',()=>{
+  const expand=button.getAttribute('aria-expanded')!=='true';
+  buttons.forEach(item=>{
+   const active=item===button&&expand;
+   item.setAttribute('aria-expanded',String(active));
+   const panel=document.getElementById(item.getAttribute('aria-controls'));
+   if(panel)panel.hidden=!active;
+  });
+ }));
+})();
