@@ -1,3 +1,4 @@
+import renewalRoutes from '@/data/renewal-routes.json'
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 import { practiceAreas } from '@/data/practice'
@@ -140,5 +141,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Sitemap dynamic fetch error:', err)
   }
 
-  return [...staticPages, ...dynamicPages]
+  const renewalPages: MetadataRoute.Sitemap = renewalRoutes.map(({ source }) => ({ url: baseUrl + (source === '/' ? '' : source), lastModified: '2026-10-14', changeFrequency: 'monthly', priority: source === '/' ? 1 : 0.8 }))
+  return Array.from(new Map([...staticPages, ...dynamicPages, ...renewalPages].map(page => [page.url, page])).values())
 }

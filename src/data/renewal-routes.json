@@ -1,0 +1,262 @@
+[
+  {
+    "source": "/administrative",
+    "destination": "/renewal/pages/administrative/index.html"
+  },
+  {
+    "source": "/business",
+    "destination": "/renewal/pages/business/index.html"
+  },
+  {
+    "source": "/centers/asset-recovery",
+    "destination": "/renewal/pages/centers/asset-recovery/index.html"
+  },
+  {
+    "source": "/centers/corporate",
+    "destination": "/renewal/pages/centers/corporate/index.html"
+  },
+  {
+    "source": "/centers/damages",
+    "destination": "/renewal/pages/centers/damages/index.html"
+  },
+  {
+    "source": "/centers/divorce",
+    "destination": "/renewal/pages/centers/divorce/index.html"
+  },
+  {
+    "source": "/centers/financial-fraud",
+    "destination": "/renewal/pages/centers/financial-fraud/index.html"
+  },
+  {
+    "source": "/centers/foreign-victim",
+    "destination": "/renewal/pages/centers/foreign-victim/index.html"
+  },
+  {
+    "source": "/centers",
+    "destination": "/renewal/pages/centers/index.html"
+  },
+  {
+    "source": "/centers/lgbtq-crime",
+    "destination": "/renewal/pages/centers/lgbtq-crime/index.html"
+  },
+  {
+    "source": "/centers/physical-crime",
+    "destination": "/renewal/pages/centers/physical-crime/index.html"
+  },
+  {
+    "source": "/centers/real-estate",
+    "destination": "/renewal/pages/centers/real-estate/index.html"
+  },
+  {
+    "source": "/centers/school-violence",
+    "destination": "/renewal/pages/centers/school-violence/index.html"
+  },
+  {
+    "source": "/centers/sexual-crime",
+    "destination": "/renewal/pages/centers/sexual-crime/index.html"
+  },
+  {
+    "source": "/civil/construction",
+    "destination": "/renewal/pages/civil/construction/index.html"
+  },
+  {
+    "source": "/civil/contract",
+    "destination": "/renewal/pages/civil/contract/index.html"
+  },
+  {
+    "source": "/civil/damages",
+    "destination": "/renewal/pages/civil/damages/index.html"
+  },
+  {
+    "source": "/civil/divorce",
+    "destination": "/renewal/pages/civil/divorce/index.html"
+  },
+  {
+    "source": "/civil",
+    "destination": "/renewal/pages/civil/index.html"
+  },
+  {
+    "source": "/civil/inheritance",
+    "destination": "/renewal/pages/civil/inheritance/index.html"
+  },
+  {
+    "source": "/civil/labor",
+    "destination": "/renewal/pages/civil/labor/index.html"
+  },
+  {
+    "source": "/civil/loan-deposit",
+    "destination": "/renewal/pages/civil/loan-deposit/index.html"
+  },
+  {
+    "source": "/civil/parenting",
+    "destination": "/renewal/pages/civil/parenting/index.html"
+  },
+  {
+    "source": "/civil/real-estate",
+    "destination": "/renewal/pages/civil/real-estate/index.html"
+  },
+  {
+    "source": "/collection/alimony",
+    "destination": "/renewal/pages/collection/alimony/index.html"
+  },
+  {
+    "source": "/collection/b2b",
+    "destination": "/renewal/pages/collection/b2b/index.html"
+  },
+  {
+    "source": "/collection/construction",
+    "destination": "/renewal/pages/collection/construction/index.html"
+  },
+  {
+    "source": "/collection/crypto-recovery",
+    "destination": "/renewal/pages/collection/crypto-recovery/index.html"
+  },
+  {
+    "source": "/collection/fraud-recovery",
+    "destination": "/renewal/pages/collection/fraud-recovery/index.html"
+  },
+  {
+    "source": "/collection",
+    "destination": "/renewal/pages/collection/index.html"
+  },
+  {
+    "source": "/collection/personal-loan",
+    "destination": "/renewal/pages/collection/personal-loan/index.html"
+  },
+  {
+    "source": "/collection/process",
+    "destination": "/renewal/pages/collection/process/index.html"
+  },
+  {
+    "source": "/collection/wage",
+    "destination": "/renewal/pages/collection/wage/index.html"
+  },
+  {
+    "source": "/crypto/defi",
+    "destination": "/renewal/pages/crypto/defi/index.html"
+  },
+  {
+    "source": "/crypto/exchange-dispute",
+    "destination": "/renewal/pages/crypto/exchange-dispute/index.html"
+  },
+  {
+    "source": "/crypto/fraud-defense",
+    "destination": "/renewal/pages/crypto/fraud-defense/index.html"
+  },
+  {
+    "source": "/crypto/ico-compliance",
+    "destination": "/renewal/pages/crypto/ico-compliance/index.html"
+  },
+  {
+    "source": "/crypto",
+    "destination": "/renewal/pages/crypto/index.html"
+  },
+  {
+    "source": "/crypto/listing",
+    "destination": "/renewal/pages/crypto/listing/index.html"
+  },
+  {
+    "source": "/crypto/seizure",
+    "destination": "/renewal/pages/crypto/seizure/index.html"
+  },
+  {
+    "source": "/crypto/tax",
+    "destination": "/renewal/pages/crypto/tax/index.html"
+  },
+  {
+    "source": "/defense/assault",
+    "destination": "/renewal/pages/defense/assault/index.html"
+  },
+  {
+    "source": "/defense/corporate",
+    "destination": "/renewal/pages/defense/corporate/index.html"
+  },
+  {
+    "source": "/defense/defamation",
+    "destination": "/renewal/pages/defense/defamation/index.html"
+  },
+  {
+    "source": "/defense/drugs",
+    "destination": "/renewal/pages/defense/drugs/index.html"
+  },
+  {
+    "source": "/defense/dui",
+    "destination": "/renewal/pages/defense/dui/index.html"
+  },
+  {
+    "source": "/defense/fraud",
+    "destination": "/renewal/pages/defense/fraud/index.html"
+  },
+  {
+    "source": "/defense/gambling",
+    "destination": "/renewal/pages/defense/gambling/index.html"
+  },
+  {
+    "source": "/defense",
+    "destination": "/renewal/pages/defense/index.html"
+  },
+  {
+    "source": "/defense/medical",
+    "destination": "/renewal/pages/defense/medical/index.html"
+  },
+  {
+    "source": "/defense/sexual-offense",
+    "destination": "/renewal/pages/defense/sexual-offense/index.html"
+  },
+  {
+    "source": "/defense/traffic",
+    "destination": "/renewal/pages/defense/traffic/index.html"
+  },
+  {
+    "source": "/defense/voice-phishing",
+    "destination": "/renewal/pages/defense/voice-phishing/index.html"
+  },
+  {
+    "source": "/defense/warrant",
+    "destination": "/renewal/pages/defense/warrant/index.html"
+  },
+  {
+    "source": "/family",
+    "destination": "/renewal/pages/family/index.html"
+  },
+  {
+    "source": "/",
+    "destination": "/renewal/pages/home/index.html"
+  },
+  {
+    "source": "/inheritance",
+    "destination": "/renewal/pages/inheritance/index.html"
+  },
+  {
+    "source": "/labor",
+    "destination": "/renewal/pages/labor/index.html"
+  },
+  {
+    "source": "/real-estate",
+    "destination": "/renewal/pages/real-estate/index.html"
+  },
+  {
+    "source": "/voice-phishing/account-access",
+    "destination": "/renewal/pages/voice-phishing/account-access/index.html"
+  },
+  {
+    "source": "/voice-phishing/account-freeze",
+    "destination": "/renewal/pages/voice-phishing/account-freeze/index.html"
+  },
+  {
+    "source": "/voice-phishing/cash-delivery",
+    "destination": "/renewal/pages/voice-phishing/cash-delivery/index.html"
+  },
+  {
+    "source": "/voice-phishing",
+    "destination": "/renewal/pages/voice-phishing/index.html"
+  },
+  {
+    "source": "/voice-phishing/investigation",
+    "destination": "/renewal/pages/voice-phishing/investigation/index.html"
+  },
+  {
+    "source": "/voice-phishing/job-scam",
+    "destination": "/renewal/pages/voice-phishing/job-scam/index.html"
+  }
+]
