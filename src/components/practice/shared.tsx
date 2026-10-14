@@ -84,10 +84,10 @@ export function ConsultationCTA({ text }: { text?: string }) {
         <p className="mt-5 text-sm text-white/60">대표변호사가 직접 상담합니다.</p>
         <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            href="/consultation"
+            href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-10 py-4 bg-[#F6F2EA] text-[#1B3B2F] text-sm font-semibold tracking-wide hover:bg-white transition-colors min-h-[52px]"
           >
-            상담 신청하기
+            상담 문의하기
           </Link>
           <a
             href="tel:+82322078788"
@@ -95,7 +95,9 @@ export function ConsultationCTA({ text }: { text?: string }) {
           >
             032-207-8788
           </a>
+          <Link href="/consultation#inquiry" className="inline-flex items-center justify-center px-10 py-4 text-sm underline underline-offset-4 min-h-[52px]">문의하기</Link>
         </div>
+        <p className="mt-6 text-sm text-white/80"><a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer">기타 문의는 카카오톡으로 문의해주세요 ↗</a></p>
       </div>
     </section>
   )

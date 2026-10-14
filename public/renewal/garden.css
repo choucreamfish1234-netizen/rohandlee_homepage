@@ -47,3 +47,10 @@
   .case-section:not(.case-archive) .case-card>p{font-size:16px;line-height:1.8}
   .case-belt-controls{font-size:12px}
 }
+
+.contact .actions{flex-wrap:wrap}
+.contact-other{display:inline-block;margin-top:26px;font-size:14px;color:#c4d3bd;text-underline-offset:5px}
+.contact-other:hover{text-decoration:underline}
+.renewal-kakao{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:#fee500;color:#191919;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px #0b181426}
+.renewal-kakao-label{position:absolute;right:66px;white-space:nowrap;background:#f6f5f0;color:#243b2d;padding:7px 12px;border:1px solid #d4dccd;border-radius:20px;font-size:12px}
+@media(max-width:800px){.contact .actions{gap:14px}.contact .actions>.pill{font-size:13px}.contact-other{font-size:13px;padding:8px 0}.renewal-kakao{width:50px;height:50px;right:14px}.renewal-kakao-label{right:59px;font-size:11px}}

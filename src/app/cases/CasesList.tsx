@@ -379,14 +379,14 @@ export default function CasesList() {
               비슷한 사건으로 고민 중이신가요?
             </h2>
             <p className="text-white/60 text-sm mb-8 sm:mb-10">
-              로앤이의 전문 변호사가 무료로 상담해드립니다.
+              상담 예약은 레피드에서, 기타 문의는 카카오톡으로 안내합니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
-                href="/consultation"
+                href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 sm:px-10 py-4 bg-white text-accent text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                무료 상담 신청하기
+                상담 문의하기
               </Link>
               <a
                 href="tel:032-207-8788"

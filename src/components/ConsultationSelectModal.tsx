@@ -95,10 +95,10 @@ export default function ConsultationSelectModal({
                   style={{ backgroundColor: '#1B3B2F' }}
                 >
                   <span className="block text-white font-semibold text-base">
-                    첫 회 무료 이메일 상담받기
+                    문의하기
                   </span>
                   <span className="block text-sm text-white/50 mt-1">
-                    이메일로 사건을 검토해드립니다
+                    문의 내용을 남기면 이메일로 답변드립니다
                   </span>
                 </button>
 
@@ -115,12 +115,13 @@ export default function ConsultationSelectModal({
                     className="block font-semibold text-base"
                     style={{ color: '#1B3B2F' }}
                   >
-                    바로 상담받기
+                    상담 문의하기
                   </span>
                   <span className="block text-sm text-gray-400 mt-1">
-                    전문 변호사와 즉시 상담합니다
+                    레피드에서 상담 일정을 예약하세요
                   </span>
                 </a>
+                <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" onClick={() => { trackConversion('kakao_click'); onClose() }} className="text-sm text-center text-[#43543f] py-3">기타 문의는 카카오톡으로 문의해주세요 ↗</a>
               </div>
             </div>
           </motion.div>

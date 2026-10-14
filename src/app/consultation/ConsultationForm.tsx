@@ -80,7 +80,7 @@ export default function ConsultationForm() {
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-black mb-4">상담 신청이 완료되었습니다</h2>
+          <h2 className="text-2xl font-bold text-black mb-4">문의가 접수되었습니다</h2>
           <p className="text-gray-500 text-sm leading-relaxed">
             빠른 시간 내에 담당 변호사가 연락드리겠습니다.<br />
             긴급 상담은 <a href="tel:032-207-8788" className="text-accent font-medium">032-207-8788</a>로 전화주세요.
@@ -195,7 +195,7 @@ export default function ConsultationForm() {
               disabled={submitting}
               className="w-full py-4 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[52px]"
             >
-              {submitting ? '전송 중...' : '상담 신청하기'}
+              {submitting ? '전송 중...' : '문의하기'}
             </button>
 
             <p className="text-xs text-gray-400 text-center">

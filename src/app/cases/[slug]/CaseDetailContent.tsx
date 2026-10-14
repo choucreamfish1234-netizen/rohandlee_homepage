@@ -8,12 +8,10 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Breadcrumb from '@/components/Breadcrumb'
 import { type SuccessCase, DEFAULT_CASES, CENTER_CATEGORY_OPTIONS } from '@/lib/cases'
-import { useConsultation } from '@/components/ConsultationProvider'
 
 export default function CaseDetailContent({ slug, initialCase }: { slug: string; initialCase?: SuccessCase | null }) {
   const [caseData, setCaseData] = useState<SuccessCase | null>(initialCase ?? null)
   const [loading, setLoading] = useState(!initialCase)
-  const { openConsultation } = useConsultation()
 
   useEffect(() => {
     if (initialCase?.content) return
@@ -302,14 +300,14 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
         <div className="record-contact rounded-2xl bg-gradient-to-br from-[#1B3B2F] to-[#2d5a47] p-6 sm:p-10 text-center shadow-xl">
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3">비슷한 사건으로 고민 중이신가요?</h3>
           <p className="text-sm text-white/70 mb-6 sm:mb-8 max-w-md mx-auto">
-            전문 변호사가 끝까지 함께합니다. 지금 바로 무료 상담을 신청하세요.
+            상담은 레피드에서 예약하고, 기타 문의는 카카오톡으로 남겨주세요.
           </p>
-          <button
-            onClick={() => openConsultation()}
+          <a
+            href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
             className="bg-white text-[#1B3B2F] text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-white/90 transition-colors shadow-md min-h-[48px]"
           >
-            무료 상담 신청
-          </button>
+            상담 문의하기
+          </a>
         </div>
       </motion.article>
     </section>
