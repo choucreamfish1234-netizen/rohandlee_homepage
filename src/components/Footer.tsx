@@ -50,7 +50,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2 text-xs text-[#1C1C1A]/60">
               <li><Link href="/cases" className="hover:text-black transition-colors">대응 사례</Link></li>
               <li><Link href="/lawyers" className="hover:text-black transition-colors">변호사 소개</Link></li>
-              <li><Link href="/blog" className="hover:text-black transition-colors">블로그</Link></li>
+              <li><Link href="/blog" className="hover:text-black transition-colors">법률상식</Link></li>
             </ul>
           </div>
 
