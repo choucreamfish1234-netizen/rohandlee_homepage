@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>5개 센터 UI 검토 — 운영 미배포</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#f6f5f0;color:#233c2b;font:16px/1.7 system-ui}header{padding:24px}h1{font-size:26px}label{display:inline-block;margin:8px 20px 8px 0}select{font:inherit;padding:10px}section{margin:24px}iframe{display:block;border:0;height:900px;background:#f6f5f0}h2{font-size:18px}.frame-wrap{overflow:auto}p{max-width:850px}</style></head>
+<body><header><h1>5개 센터 · 변경 전후 비교</h1><p>운영 배포 전 검토용입니다. 같은 폭에서 원본과 수정본을 비교합니다. 변경 전 화면은 기준 커밋의 HTML이며 공통 기존 CSS·JS는 수정하지 않았습니다.</p>
+<label>센터 <select id="center"><option value="defense">형사사건</option><option value="civil">민사·가사</option><option value="collection">채권추심</option><option value="crypto">가상자산·코인</option><option value="voice-phishing">보이스피싱</option></select></label>
+<label>화면 폭 <select id="width"><option>375</option><option selected>390</option><option>768</option><option>1440</option></select></label></header>
+<section><h2>변경 전 · b3f99af</h2><div class="frame-wrap"><iframe id="before" title="변경 전 센터"></iframe></div></section>
+<section><h2>변경 후 · 검토용 브랜치</h2><div class="frame-wrap"><iframe id="after" title="변경 후 센터"></iframe></div></section>
+<script>
+const center=document.querySelector('#center'),width=document.querySelector('#width'),before=document.querySelector('#before'),after=document.querySelector('#after');
+function size(){for(const frame of [before,after])frame.style.width=width.value+'px'}
+async function page(){const selected=center.value;const response=await fetch('./'+selected+'.json');const source=await response.json();if(selected!==center.value)return;before.srcdoc=source.replace('</head>','<meta name="robots" content="noindex,nofollow"></head>');after.src='/'+selected;size()}
+center.addEventListener('change',page);width.addEventListener('change',size);page();
+</script></body></html>
