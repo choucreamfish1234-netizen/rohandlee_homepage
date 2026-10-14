@@ -2,44 +2,48 @@
 
 import Link from 'next/link'
 import { EditableText } from '@/components/Editable'
+import { defenseNav, victimNav, collectionNav, cryptoNav, businessNav } from '@/data/practice/nav'
+
+const linkColumns = [defenseNav, victimNav, collectionNav, cryptoNav, businessNav]
 
 export default function Footer() {
   return (
     <footer id="location" className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        {/* 분야별 링크 */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-10">
+          {linkColumns.map((col) => (
+            <div key={col.href}>
+              <h4 className="text-xs font-semibold text-black mb-4">
+                <Link href={col.href} className="hover:text-[#1B3B2F] transition-colors">
+                  {col.label}
+                </Link>
+              </h4>
+              <ul className="space-y-2">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 pt-10 border-t border-gray-100 grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* 사무소 정보 */}
-          <div className="md:col-span-1">
+          <div>
             <h3 className="text-sm font-semibold text-black mb-4">법률사무소 로앤이</h3>
             <p className="text-xs text-gray-500 leading-relaxed">
-              피해자 전문 로펌<br />
-              끝까지 함께하는 법률 파트너
+              형사 사건 대응 · 피해 구제 · 채권 회수 · 가상자산 · 기업 자문<br />
+              대표변호사가 직접 상담하고, 사건을 수행합니다.
             </p>
-          </div>
-
-          {/* 전문센터 */}
-          <div>
-            <h4 className="text-xs font-semibold text-black mb-4">전문센터</h4>
-            <ul className="space-y-2">
-              {[
-                { href: '/centers/sexual-crime', label: '성범죄 피해 전문센터' },
-                { href: '/centers/financial-fraud', label: '금융사기 피해자 전담센터' },
-                { href: '/centers/physical-crime', label: '신체범죄 피해 전담센터' },
-                { href: '/centers/divorce', label: '이혼·가사 전담센터' },
-                { href: '/centers/real-estate', label: '부동산 피해 전담센터' },
-                { href: '/centers/asset-recovery', label: '재산회복 전담센터' },
-                { href: '/centers/damages', label: '손해배상 전담센터' },
-                { href: '/centers/corporate', label: '기업법무·개인정보보호센터' },
-                { href: '/centers/school-violence', label: '학교폭력 전문센터' },
-                { href: '/centers/foreign-victim', label: '외국인 범죄피해 지원센터' },
-                { href: '/centers/lgbtq-crime', label: '성소수자 범죄피해 지원센터' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-xs text-gray-500 hover:text-black transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="mt-4 space-y-2 text-xs text-gray-500">
+              <li><Link href="/cases" className="hover:text-black transition-colors">대응 사례</Link></li>
+              <li><Link href="/lawyers" className="hover:text-black transition-colors">변호사 소개</Link></li>
+              <li><Link href="/blog" className="hover:text-black transition-colors">블로그</Link></li>
             </ul>
           </div>
 
@@ -97,6 +101,21 @@ export default function Footer() {
               tag="p"
               className="text-xs text-gray-500 leading-relaxed"
             />
+            <Link href="/directions" className="inline-block mt-3 text-xs text-gray-500 hover:text-black transition-colors">
+              오시는 길 안내 &rarr;
+            </Link>
+          </div>
+
+          {/* 상담 */}
+          <div>
+            <h4 className="text-xs font-semibold text-black mb-4">상담 신청</h4>
+            <p className="text-xs text-gray-500 leading-relaxed">대표변호사가 직접 상담합니다.</p>
+            <Link
+              href="/consultation"
+              className="inline-flex items-center justify-center mt-4 px-5 py-2.5 bg-[#1B3B2F] text-white text-xs font-medium rounded-full hover:bg-[#152f25] transition-colors"
+            >
+              상담 신청하기
+            </Link>
           </div>
         </div>
 
@@ -109,10 +128,10 @@ export default function Footer() {
             <Link href="/terms" className="hover:text-black transition-colors">이용약관</Link>
             <a href="https://akpul.co.kr" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">악플닷컴</a>
           </div>
-          <div className="mt-4 flex gap-3 text-xs text-gray-400">
-            <Link href="/en/foreign-victim" className="hover:text-white transition-colors">English</Link>
-            <Link href="/zh/foreign-victim" className="hover:text-white transition-colors">中文</Link>
-            <Link href="/vi/foreign-victim" className="hover:text-white transition-colors">Tiếng Việt</Link>
+          <div className="flex gap-3 text-xs text-gray-400">
+            <Link href="/en/foreign-victim" className="hover:text-black transition-colors">English</Link>
+            <Link href="/zh/foreign-victim" className="hover:text-black transition-colors">中文</Link>
+            <Link href="/vi/foreign-victim" className="hover:text-black transition-colors">Tiếng Việt</Link>
           </div>
         </div>
       </div>

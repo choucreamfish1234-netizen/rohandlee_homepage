@@ -2,6 +2,8 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
 import type { Metadata } from 'next'
 import CaseDetailContent from './CaseDetailContent'
+import { findPracticeCase, practiceCases } from '@/data/practice/cases'
+import PracticeCaseDetail from '@/components/practice/PracticeCaseDetail'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
@@ -59,6 +61,13 @@ export async function generateStaticParams() {
     }
   }
 
+  for (const c of practiceCases) {
+    if (!seen.has(c.slug)) {
+      slugs.push({ slug: c.slug })
+      seen.add(c.slug)
+    }
+  }
+
   for (const c of DEFAULT_CASES) {
     if (c.slug && !seen.has(c.slug)) {
       slugs.push({ slug: c.slug })
@@ -73,10 +82,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
+  const practice = findPracticeCase(decodedSlug)
+  if (practice) {
+    const url = `${baseUrl}/cases/${practice.slug}`
+    return {
+      title: practice.title,
+      description: `${practice.summary}. 결과: ${practice.result}. 법률사무소 로앤이 대응 사례.`,
+      keywords: [practice.category, `${practice.category} 변호사`],
+      alternates: { canonical: url },
+      openGraph: {
+        title: practice.title,
+        description: practice.summary,
+        type: 'article',
+        url,
+        siteName: '법률사무소 로앤이',
+        locale: 'ko_KR',
+        images: [`${baseUrl}/og-image.png`],
+      },
+    }
+  }
+
   const caseData = await findCase(decodedSlug)
 
   if (!caseData) {
-    return { title: '성공사례 | 법률사무소 로앤이' }
+    return { title: '대응 사례' }
   }
 
   const offenseStr = caseData.offense_types?.length ? caseData.offense_types.join('·') : ''
@@ -121,6 +150,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+
+  const practice = findPracticeCase(decodedSlug)
+  if (practice) return <PracticeCaseDetail c={practice} />
 
   const caseData = await findCase(decodedSlug)
 

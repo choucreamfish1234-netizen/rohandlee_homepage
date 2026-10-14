@@ -15,7 +15,7 @@ interface Center {
 const centers: Center[] = [
   {
     title: '성범죄 피해자 전담 센터',
-    description: '성범죄 피해자만을 위한 전담 변호 시스템',
+    description: '성범죄 피해자를 위한 전담 변호 시스템',
     href: '/centers/sexual-crime',
     image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop&q=80',
     alt: '어두운 방에 창문으로 빛이 들어오는 모습 - 희망과 회복',

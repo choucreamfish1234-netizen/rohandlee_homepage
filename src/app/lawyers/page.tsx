@@ -61,7 +61,7 @@ export default async function Page() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">Attorneys</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-black">변호사 소개</h1>
           <p className="mt-4 text-gray-500 text-sm">
-            법률사무소 로앤이는 피해자만을 대리합니다.
+            대표변호사가 상담부터 사건 종결까지 직접 수행합니다.
           </p>
         </div>
 

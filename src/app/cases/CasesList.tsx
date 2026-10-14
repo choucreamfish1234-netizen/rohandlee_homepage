@@ -137,7 +137,7 @@ export default function CasesList() {
   const canEdit = isEditMode && dbReady
 
   return (
-    <section className="pt-24 sm:pt-32 pb-16 sm:pb-40 bg-white">
+    <section className="pt-12 sm:pt-16 pb-16 sm:pb-24 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -148,9 +148,9 @@ export default function CasesList() {
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Case Results
           </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">
-            성공사례
-          </h1>
+          <h2 className="text-2xl sm:text-3xl font-bold text-black">
+            성공사례 아카이브
+          </h2>
           <p className="mt-5 text-gray-400 text-sm">
             로앤이가 만들어낸 결과로 증명합니다.
           </p>

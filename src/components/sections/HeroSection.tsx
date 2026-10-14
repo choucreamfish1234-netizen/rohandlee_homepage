@@ -125,8 +125,8 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <span className="inline-block text-sm sm:text-base font-bold px-6 py-2.5 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
-            국내최초 종합 피해자 중심 로펌
+          <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
+            형사 사건 대응 · 피해 구제 · 채권 회수 · 가상자산 · 기업 자문
           </span>
         </motion.div>
 
@@ -134,9 +134,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-          className="text-2xl md:text-4xl font-medium tracking-tight text-gray-900"
+          className="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 leading-snug"
         >
-          법률사무소 로앤이
+          사건의 시작부터 끝까지,<br />
+          법률사무소 로앤이가 함께합니다.
         </motion.h1>
 
         <motion.p
@@ -145,15 +146,14 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           className="text-sm sm:text-base text-gray-500 mt-5 leading-relaxed"
         >
-          성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 강제집행<br />
-          모든 피해를 한 곳에서. 11대 전문센터가 함께합니다.
+          대표변호사가 직접 상담하고, 사건을 수행합니다.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
-          className="mt-6"
+          transition={{ duration: 0.5, delay: 0.5, ease: 'easeOut' }}
+          className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
           <button
             onClick={() => openConsultation()}
@@ -161,6 +161,12 @@ export default function HeroSection() {
           >
             상담 신청하기
           </button>
+          <a
+            href="tel:+82322078788"
+            className="inline-flex items-center justify-center border border-[#1B3B2F]/30 text-[#1B3B2F] rounded-full px-8 py-3.5 text-sm font-medium hover:bg-[#1B3B2F]/5 transition min-h-[48px]"
+          >
+            032-207-8788
+          </a>
         </motion.div>
       </div>
 

@@ -6,8 +6,11 @@ import { supabase } from '@/lib/supabase'
 import { trackConversion } from '@/lib/track-conversion'
 
 const caseTypeOptions = [
+  '형사 사건 대응 상담',
   '성범죄 피해 상담',
   '금융사기 피해 상담',
+  '채권추심 상담',
+  '가상자산·코인 상담',
   '회생·파산 상담',
   '기업법무 상담',
   '개인정보보호 상담',

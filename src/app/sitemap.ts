@@ -1,11 +1,33 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { practiceAreas } from '@/data/practice'
+import { practiceCases } from '@/data/practice/cases'
+
+const PRACTICE_LASTMOD = '2026-10-14'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lawfirmrohandlee.com'
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: '2025-08-25', changeFrequency: 'weekly', priority: 1 },
+    { url: baseUrl, lastModified: PRACTICE_LASTMOD, changeFrequency: 'weekly', priority: 1 },
+
+    // 종합 법률사무소 신규 섹션
+    ...practiceAreas.flatMap((area) => [
+      { url: `${baseUrl}${area.base}`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'monthly' as const, priority: 0.9 },
+      ...area.pages.map((p) => ({
+        url: `${baseUrl}${area.base}/${p.slug}`,
+        lastModified: PRACTICE_LASTMOD,
+        changeFrequency: 'monthly' as const,
+        priority: ['process', 'tax', 'defi'].includes(p.slug) ? 0.7 : 0.8,
+      })),
+    ]),
+    ...practiceCases.map((c) => ({
+      url: `${baseUrl}/cases/${c.slug}`,
+      lastModified: PRACTICE_LASTMOD,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    { url: `${baseUrl}/centers`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/consultation`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/privacy`, lastModified: '2025-06-01', changeFrequency: 'yearly', priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: '2025-06-01', changeFrequency: 'yearly', priority: 0.3 },
@@ -74,7 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/lawyers/roh-chaeeun`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/lawyers`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.8 },
 
-    { url: `${baseUrl}/cases`, lastModified: '2025-08-20', changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/cases`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/blog`, lastModified: new Date().toISOString(), changeFrequency: 'daily', priority: 0.8 },
   ]
 
@@ -89,6 +111,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         .from('blog_posts')
         .select('slug, updated_at, created_at')
         .eq('status', 'published')
+        .lte('published_at', new Date().toISOString())
 
       if (posts) {
         dynamicPages.push(...posts.map((post) => ({

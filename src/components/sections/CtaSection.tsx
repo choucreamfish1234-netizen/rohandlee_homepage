@@ -23,13 +23,13 @@ export default function CtaSection() {
       <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
         <ScrollReveal>
           <h2 className="text-2xl sm:text-4xl font-bold leading-snug">
-            어떤 피해든, 로앤이가 답을 찾겠습니다.
+            어떤 사건이든, 첫 상담이 결과를 바꿉니다.
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
           <p className="mt-6 sm:mt-8 text-white/50 text-sm leading-relaxed">
-            국내최초 종합 피해자 중심 로펌. 11대 전문센터가 함께합니다.
+            대표변호사가 직접 상담합니다. 032-207-8788
           </p>
         </ScrollReveal>
 
@@ -39,7 +39,7 @@ export default function CtaSection() {
               onClick={() => openConsultation()}
               className="w-full max-w-[280px] sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-white text-[#1B3B2F] text-base font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 min-h-[48px]"
             >
-              무료 상담 신청하기
+              상담 신청하기
             </button>
             <Link
               href="/consultation"

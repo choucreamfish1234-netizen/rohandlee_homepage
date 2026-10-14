@@ -73,7 +73,7 @@ export default function FinancialFraudCenterPage() {
           className="text-center max-w-3xl mx-auto"
         >
           <span className="inline-block text-xs sm:text-sm font-semibold px-5 py-2 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
-            오직 피해자만 대리합니다.
+            피해자를 전문으로 대리합니다.
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black leading-tight">
             금융사기 피해자 전담센터
@@ -221,7 +221,7 @@ export default function FinancialFraudCenterPage() {
         </div>
       </section>
 
-      <p className="sr-only">법률사무소 로앤이 금융사기 피해자 전담센터는 투자사기, 유사수신, 보이스피싱, 전세사기, 횡령, 배임 등 금융사기를 포함한 주요 재산범죄 피해자만을 대리하며, 형사고소부터 가압류, 손해배상, 강제집행까지 통합 대응한다.</p>
+      <p className="sr-only">법률사무소 로앤이 금융사기 피해자 전담센터는 투자사기, 유사수신, 보이스피싱, 전세사기, 횡령, 배임 등 금융사기를 포함한 주요 재산범죄 피해자를 전문으로 대리하며, 형사고소부터 가압류, 손해배상, 강제집행까지 통합 대응한다.</p>
     </>
   )
 }
