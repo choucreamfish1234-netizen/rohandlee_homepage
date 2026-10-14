@@ -1,8 +1,11 @@
+import { assignedCaseImage } from './case-image'
 import type { PracticeCase } from '@/data/practice/cases'
 
 // Stable editorial images, shared by cards, articles and search metadata.
 // These illustrate the field; they are not photographs of the actual case.
 export function practiceCaseImage(c: PracticeCase) {
+  const assigned = assignedCaseImage(c.slug)
+  if (assigned) return { ...assigned, caption: '사건 이해를 돕기 위한 설명용 이미지입니다.' }
   const categories: Record<string, string> = {
     '음주운전': 'dui', '마약': 'drugs', '성범죄': 'sexual-offense',
     '교통사고': 'traffic', '폭행·상해': 'assault', '사기·횡령': 'fraud',

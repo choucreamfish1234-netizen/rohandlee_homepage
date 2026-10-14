@@ -1,3 +1,4 @@
+import { absoluteCaseImage } from '@/lib/case-image'
 import { practiceCaseImage } from '@/lib/practice-case-image'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -28,7 +29,7 @@ const itemListJsonLd = {
     '@type': 'ListItem',
     position: i + 1,
     name: c.title,
-    image: `https://lawfirmrohandlee.com${practiceCaseImage(c).src}`,
+    image: absoluteCaseImage(practiceCaseImage(c).src),
     url: `https://lawfirmrohandlee.com/cases/${c.slug}`,
   })),
 }

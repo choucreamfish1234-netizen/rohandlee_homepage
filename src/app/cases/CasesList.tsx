@@ -1,5 +1,6 @@
 'use client'
 
+import { withAssignedCaseImage } from '@/lib/case-image'
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,7 +13,7 @@ const categories = ['전체', '성범죄', '재산범죄', '스토킹', '보이�
 export default function CasesList() {
   const { isEditMode } = useAdmin()
   const reducedMotion = useReducedMotion()
-  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES)
+  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES.map(withAssignedCaseImage))
   const [dbReady, setDbReady] = useState(false)
   const [activeCategory, setActiveCategory] = useState('전체')
   const [imagePopupId, setImagePopupId] = useState<number | null>(null)
@@ -32,7 +33,7 @@ export default function CasesList() {
       setCases(data.cases)
       setDbReady(data.source === 'database')
     } catch {
-      setCases(DEFAULT_CASES)
+      setCases(DEFAULT_CASES.map(withAssignedCaseImage))
     }
   }
 

@@ -1,3 +1,4 @@
+import { absoluteCaseImage } from '@/lib/case-image'
 import Image from 'next/image'
 import { practiceCaseImage } from '@/lib/practice-case-image'
 import Link from 'next/link'
@@ -13,7 +14,7 @@ export function practiceCaseJsonLd(c: PracticeCase) {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: c.title,
-    image: `${BASE_URL}${practiceCaseImage(c).src}`,
+    image: absoluteCaseImage(practiceCaseImage(c).src),
     description: c.summary,
     author: { '@type': 'LegalService', '@id': `${BASE_URL}/#legalservice`, name: '법률사무소 로앤이', url: BASE_URL },
     publisher: { '@type': 'LegalService', '@id': `${BASE_URL}/#legalservice`, name: '법률사무소 로앤이', url: BASE_URL },

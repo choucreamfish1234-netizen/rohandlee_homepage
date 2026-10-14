@@ -1,3 +1,4 @@
+import { withAssignedCaseImage } from '@/lib/case-image'
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
@@ -12,12 +13,12 @@ export async function GET() {
       .order('sort_order', { ascending: true })
 
     if (error || !data || data.length === 0) {
-      return NextResponse.json({ cases: DEFAULT_CASES, source: 'hardcoded' })
+      return NextResponse.json({ cases: DEFAULT_CASES.map(withAssignedCaseImage), source: 'hardcoded' })
     }
 
-    return NextResponse.json({ cases: data, source: 'database' })
+    return NextResponse.json({ cases: data.map(withAssignedCaseImage), source: 'database' })
   } catch {
-    return NextResponse.json({ cases: DEFAULT_CASES, source: 'hardcoded' })
+    return NextResponse.json({ cases: DEFAULT_CASES.map(withAssignedCaseImage), source: 'hardcoded' })
   }
 }
 
