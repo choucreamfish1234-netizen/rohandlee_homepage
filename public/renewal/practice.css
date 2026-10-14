@@ -9,3 +9,23 @@
 @media(prefers-reduced-motion:reduce){.practice-gallery{height:auto}}
 .detail-hero{padding-bottom:75px}.detail-hero h1{font-size:clamp(38px,5.3vw,75px);overflow-wrap:anywhere}.detail-hero .pill{margin-top:20px;font-size:13px}.section-nav{position:sticky;top:0;z-index:10;display:flex;gap:35px;justify-content:center;padding:21px 5%;background:#f6f5f0f2;backdrop-filter:blur(14px);border-bottom:1px solid #233d2320;color:#597153;font-size:12px;overflow-x:auto;white-space:nowrap}.section-nav a:hover{color:#173f23}.rich-section{display:grid;grid-template-columns:1fr 1.2fr;gap:10%;padding:100px 9%;background:#f6f5f0;color:#223b29;scroll-margin-top:65px}.rich-heading .eyebrow{color:#798c71;font-size:9px;letter-spacing:2px}.rich-heading h2{font-size:clamp(30px,3.2vw,46px);font-weight:500;letter-spacing:-.05em;line-height:1.45;margin:0 0 22px}.rich-heading p{font-size:13px;color:#83907a;line-height:1.9;max-width:310px}.situation-list{list-style:none;padding:0;margin:0}.situation-list li{border-top:1px solid #2343262b;padding:26px 0;font-size:18px;line-height:1.7;display:flex;gap:24px;align-items:baseline}.situation-list li span{font:12px Georgia;color:#8d9b80}.issue-section{background:#e9ede3}.rich-copy article{margin-bottom:40px}.rich-copy article:last-child{margin-bottom:0}.rich-copy h3,.work-steps h3{font-size:21px;letter-spacing:-.03em;font-weight:500;margin:0 0 15px}.rich-copy p,.work-steps p{font-size:14px;line-height:2.1;color:#6a7c61;margin:0}.work-steps{list-style:none;padding:0;margin:0}.work-steps li{display:flex;gap:23px;padding:28px 0;border-top:1px solid #29412b25}.work-steps li:first-child{padding-top:0;border-top:0}.work-steps>li>span{font:14px Georgia;color:#9eac93;padding-top:5px}.material-section{background:#edf0e8}.material-highlight{border-left:2px solid #829d73;padding:0 0 0 24px;margin-bottom:45px}.material-highlight ul{list-style:none;padding:0;margin:0}.material-highlight li{font-size:14px;color:#5a7252;line-height:2.2}.rich-faq details{padding:24px 0}.rich-faq summary{font-size:17px;line-height:1.7;gap:20px}.rich-faq p{font-size:14px;line-height:2;color:#6d7b66;margin:18px 0 5px}.content-sources{padding:28px 9%;background:#f6f5f0;color:#7c8976;font-size:11px;display:flex;flex-wrap:wrap;gap:18px}.content-sources a{color:#486642;text-decoration:underline;text-underline-offset:4px}.content-note{margin:0;padding:20px 9% 40px;background:#f6f5f0;color:#8b9585;font-size:11px;line-height:1.9}
 @media(max-width:800px){.section-nav{justify-content:flex-start;padding:17px 7%;gap:25px;font-size:11px}.rich-section{grid-template-columns:1fr;padding:65px 7%;gap:25px;scroll-margin-top:58px}.rich-heading h2{font-size:30px}.rich-heading p{font-size:12px;max-width:none}.situation-list li{font-size:15px;padding:20px 0;gap:17px}.rich-copy h3,.work-steps h3{font-size:19px}.rich-copy p,.work-steps p{font-size:13px;line-height:2}.rich-faq summary{font-size:15px}.rich-faq p{font-size:13px}.work-steps li{gap:16px}.content-sources{padding:25px 7%;font-size:10px}.content-note{padding:15px 7% 35px;font-size:10px}.detail-hero{padding-bottom:55px}}
+
+/* Home practice: larger center names and substantive, readable introductions. */
+.practice-gallery .type-heading h2{font-size:clamp(76px,10vw,160px)}
+.practice-assurance{letter-spacing:0;font-size:12px;color:#47594c}
+.practice-gallery .gallery-detail p{color:#4f6054;font-size:16px;line-height:1.85}
+@media(max-width:800px){
+ .practice-gallery .type-heading{top:15%}
+ .practice-gallery .type-heading h2{font-size:clamp(44px,12.2vw,76px);line-height:1.18}
+ .practice-gallery .gallery-panel:nth-child(4) .type-heading h2{font-size:clamp(36px,10.7vw,68px)}
+ .practice-gallery .type-heading .eyebrow{margin-bottom:16px}
+ .practice-gallery .gallery-detail{top:33%;gap:18px}
+ .practice-gallery .gallery-detail h3{font-size:clamp(24px,6.4vw,32px);line-height:1.4}
+ .practice-gallery .gallery-detail p{font-size:15px;line-height:1.8;margin-bottom:18px}
+ .practice-gallery .practice-actions{gap:12px}
+ .practice-gallery .practice-assurance{font-size:10px}
+}
+/* Short screens remain naturally scrollable; no text is clipped inside a fixed scene. */
+@media(max-width:800px) and (max-height:740px){
+ .practice-gallery .practice-sticky{min-height:800px}
+}
