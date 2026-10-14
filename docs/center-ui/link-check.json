@@ -1,0 +1,207 @@
+[
+  {
+    "path": "/business",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/business"
+  },
+  {
+    "path": "/civil/construction",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/construction"
+  },
+  {
+    "path": "/civil/contract",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/contract"
+  },
+  {
+    "path": "/civil/damages",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/damages"
+  },
+  {
+    "path": "/civil/divorce",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/divorce"
+  },
+  {
+    "path": "/civil/inheritance",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/inheritance"
+  },
+  {
+    "path": "/civil/labor",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/labor"
+  },
+  {
+    "path": "/civil/loan-deposit",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/loan-deposit"
+  },
+  {
+    "path": "/civil/parenting",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/parenting"
+  },
+  {
+    "path": "/civil/real-estate",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/civil/real-estate"
+  },
+  {
+    "path": "/collection/alimony",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/alimony"
+  },
+  {
+    "path": "/collection/b2b",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/b2b"
+  },
+  {
+    "path": "/collection/construction",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/construction"
+  },
+  {
+    "path": "/collection/crypto-recovery",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/crypto-recovery"
+  },
+  {
+    "path": "/collection/fraud-recovery",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/fraud-recovery"
+  },
+  {
+    "path": "/collection/personal-loan",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/personal-loan"
+  },
+  {
+    "path": "/collection/process",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/process"
+  },
+  {
+    "path": "/collection/wage",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/collection/wage"
+  },
+  {
+    "path": "/crypto/defi",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/defi"
+  },
+  {
+    "path": "/crypto/exchange-dispute",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/exchange-dispute"
+  },
+  {
+    "path": "/crypto/fraud-defense",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/fraud-defense"
+  },
+  {
+    "path": "/crypto/ico-compliance",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/ico-compliance"
+  },
+  {
+    "path": "/crypto/listing",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/listing"
+  },
+  {
+    "path": "/crypto/seizure",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/seizure"
+  },
+  {
+    "path": "/crypto/tax",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/crypto/tax"
+  },
+  {
+    "path": "/defense/assault",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/assault"
+  },
+  {
+    "path": "/defense/corporate",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/corporate"
+  },
+  {
+    "path": "/defense/defamation",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/defamation"
+  },
+  {
+    "path": "/defense/drugs",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/drugs"
+  },
+  {
+    "path": "/defense/dui",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/dui"
+  },
+  {
+    "path": "/defense/fraud",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/fraud"
+  },
+  {
+    "path": "/defense/gambling",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/gambling"
+  },
+  {
+    "path": "/defense/medical",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/medical"
+  },
+  {
+    "path": "/defense/sexual-offense",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/sexual-offense"
+  },
+  {
+    "path": "/defense/traffic",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/traffic"
+  },
+  {
+    "path": "/defense/warrant",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/defense/warrant"
+  },
+  {
+    "path": "/voice-phishing/account-access",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/voice-phishing/account-access"
+  },
+  {
+    "path": "/voice-phishing/account-freeze",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/voice-phishing/account-freeze"
+  },
+  {
+    "path": "/voice-phishing/cash-delivery",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/voice-phishing/cash-delivery"
+  },
+  {
+    "path": "/voice-phishing/investigation",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/voice-phishing/investigation"
+  },
+  {
+    "path": "/voice-phishing/job-scam",
+    "status": 200,
+    "final": "https://lawfirmrohandlee.com/voice-phishing/job-scam"
+  }
+]

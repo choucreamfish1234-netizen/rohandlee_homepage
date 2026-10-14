@@ -1,0 +1,21 @@
+/* Five hub pages only: retain the shared renewal palette, cards and motion. */
+body.center-hub:has(.center-scene) header .brand img{filter:brightness(0) saturate(100%);opacity:.84}
+body.center-hub header{color:#233c2b}
+.center-hub header [aria-current="page"]{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px}
+.center-hub .nav-mega>summary{font-weight:600}
+.center-hub .nav-mega>summary::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;align-self:center}
+.center-hub header :focus-visible,.center-hub footer :focus-visible{outline:2px solid #597153;outline-offset:5px}
+.center-hub .menu{min-width:64px;min-height:44px}
+.center-hub .mega-column{min-width:0}
+.center-hub .mega-column a{overflow-wrap:anywhere}
+@media(max-width:800px){
+ .center-hub header nav.open{max-height:calc(100dvh - 82px);overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(28px,env(safe-area-inset-bottom))}
+ .center-hub .nav-mega .mega-content{max-height:none;overflow:visible}
+ .center-hub header nav a,.center-hub header nav summary{min-height:44px;display:flex;align-items:center}
+ .center-hub .nav-mega .mega-content{background:#f7f7ef;color:#233c2b}
+ .center-hub .nav-mega .mega-column a{color:#233c2b}
+}
+@media(prefers-reduced-motion:reduce){
+ .center-hub{scroll-behavior:auto}
+ .center-hub .motion-item,.center-hub .hero-letter,.center-hub .title-line>span,.center-hub .reveal{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}
+}
