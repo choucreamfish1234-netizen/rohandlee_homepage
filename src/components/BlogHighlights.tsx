@@ -28,10 +28,10 @@ export default function BlogHighlights() {
   }, [])
 
   return (
-    <section className="bg-[#FAFAFA] py-16 md:py-24">
+    <section className="bg-[#F6F2EA] py-20 md:py-28">
       <div className="text-center mb-10">
-        <span className="text-xs tracking-widest text-gray-400 uppercase">INSIGHTS</span>
-        <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mt-2">피해자를 위한 법률 정보</h2>
+        <p className="eyebrow text-center">Insights</p>
+        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#1C1C1A] mt-4">로앤이 법률 칼럼</h2>
       </div>
       {posts.length === 0 ? (
         <p className="text-center text-gray-400 text-sm">게시글을 불러오는 중...</p>

@@ -34,58 +34,64 @@ export function serviceJsonLd(name: string, description: string, path: string) {
 
 export function PracticeHero({ title, subtitle, eyebrow }: { title: string; subtitle: string; eyebrow?: string }) {
   return (
-    <section
-      className="relative overflow-hidden text-white py-16 sm:py-24"
-      style={{ background: 'linear-gradient(135deg, #1B3B2F 0%, #2d5a47 55%, #1B3B2F 100%)' }}
-    >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%)' }}
-      />
-      <div className="relative max-w-4xl mx-auto px-5 text-center">
-        {eyebrow && (
-          <span className="inline-block text-xs sm:text-sm font-semibold text-[#C9A24B] tracking-wide mb-5">{eyebrow}</span>
-        )}
-        <h1 className="text-2xl sm:text-4xl font-bold leading-snug whitespace-pre-line">{title}</h1>
-        <p className="mt-5 text-sm sm:text-base text-white/75 leading-relaxed max-w-2xl mx-auto">{subtitle}</p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/consultation"
-            className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-[#1B3B2F] text-sm font-semibold rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
-          >
-            상담 신청하기
-          </Link>
-          <a
-            href="tel:+82322078788"
-            className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-colors min-h-[48px]"
-          >
-            032-207-8788
-          </a>
+    <section className="bg-[#F6F2EA] pt-16 sm:pt-24 pb-14 sm:pb-20">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+        <div className="lg:col-span-8">
+          {eyebrow && <p className="eyebrow tracking-[0.12em] text-xs">{eyebrow}</p>}
+          <h1 className="mt-6 font-serif text-[2rem] leading-[1.3] sm:text-5xl sm:leading-[1.25] font-semibold text-[#1C1C1A] whitespace-pre-line tracking-tight">
+            {title}
+          </h1>
+        </div>
+        <div className="lg:col-span-4">
+          <p className="text-sm sm:text-base text-[#1C1C1A]/65 leading-relaxed">{subtitle}</p>
+          <div className="mt-7 flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/consultation"
+              className="inline-flex items-center justify-center px-7 py-3.5 bg-[#1B3B2F] text-white text-sm font-semibold tracking-wide hover:bg-[#152f25] transition-colors min-h-[50px]"
+            >
+              상담 신청하기
+            </Link>
+            <a
+              href="tel:+82322078788"
+              className="inline-flex items-center justify-center px-7 py-3.5 border border-[#1B3B2F]/30 text-[#1B3B2F] text-sm font-medium tracking-wide hover:bg-white transition-colors min-h-[50px]"
+            >
+              032-207-8788
+            </a>
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
+export function SectionTitle({ eyebrow, title, className = '' }: { eyebrow: string; title: string; className?: string }) {
+  return (
+    <div className={className}>
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 className="mt-4 font-serif text-2xl sm:text-4xl font-semibold text-[#1C1C1A] leading-tight">{title}</h2>
+    </div>
+  )
+}
+
 export function ConsultationCTA({ text }: { text?: string }) {
   return (
-    <section
-      className="py-16 sm:py-20 text-white"
-      style={{ background: 'linear-gradient(135deg, #1B3B2F 0%, #2d5a47 50%, #1B3B2F 100%)' }}
-    >
-      <div className="max-w-3xl mx-auto px-4 text-center">
-        <h2 className="text-xl sm:text-3xl font-bold leading-snug">{text || '어떤 사건이든, 첫 상담이 결과를 바꿉니다.'}</h2>
-        <p className="mt-4 text-sm text-[#C9A24B] font-medium">대표변호사가 직접 상담합니다.</p>
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+    <section className="bg-[#0f241c] text-white py-20 sm:py-28">
+      <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+        <p className="eyebrow justify-center">Consultation</p>
+        <h2 className="mt-6 font-serif text-2xl sm:text-4xl font-semibold leading-snug">
+          {text || '어떤 사건이든, 첫 상담이 결과를 바꿉니다.'}
+        </h2>
+        <p className="mt-5 text-sm text-white/60">대표변호사가 직접 상담합니다.</p>
+        <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/consultation"
-            className="inline-flex items-center justify-center px-8 py-3.5 bg-[#C9A24B] text-[#1B3B2F] text-sm font-bold rounded-full hover:bg-[#d6b25f] transition-colors min-h-[48px]"
+            className="inline-flex items-center justify-center px-10 py-4 bg-[#F6F2EA] text-[#1B3B2F] text-sm font-semibold tracking-wide hover:bg-white transition-colors min-h-[52px]"
           >
             상담 신청하기
           </Link>
           <a
             href="tel:+82322078788"
-            className="inline-flex items-center justify-center px-8 py-3.5 border border-white/40 text-white text-sm font-medium rounded-full hover:bg-white/10 transition-colors min-h-[48px]"
+            className="inline-flex items-center justify-center px-10 py-4 border border-white/40 text-white text-sm font-medium tracking-wide hover:bg-white/10 transition-colors min-h-[52px]"
           >
             032-207-8788
           </a>
@@ -99,39 +105,46 @@ export function CaseCard({ c }: { c: PracticeCase }) {
   return (
     <Link
       href={`/cases/${c.slug}`}
-      className="group flex flex-col h-full rounded-xl border border-gray-200 bg-white p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#C9A24B] hover:shadow-md"
+      className="group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
     >
-      <span className="text-xs font-bold text-[#C9A24B]">{c.category}</span>
-      <h3 className="mt-2 text-base font-bold text-black leading-snug">{c.title}</h3>
-      <p className="mt-2 text-sm text-gray-500 leading-relaxed flex-1">{c.summary}</p>
-      <p className="mt-4 text-sm font-bold text-[#1B3B2F]">
-        <span className="text-[#C9A24B]">결과</span> · {c.result}
-      </p>
+      <span className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/50">{c.category}</span>
+      <h3 className="mt-3 font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A] leading-snug group-hover:text-[#1B3B2F] transition-colors">
+        {c.title}
+      </h3>
+      <p className="mt-3 text-sm text-[#1C1C1A]/60 leading-relaxed flex-1">{c.summary}</p>
+      <div className="mt-5 flex items-center gap-3">
+        <span className="h-px w-6 bg-[#B8955A]" />
+        <p className="text-sm font-semibold text-[#8a6d3b]">{c.result}</p>
+      </div>
+      <span className="mt-4 text-xs text-[#1C1C1A]/40 group-hover:text-[#1B3B2F] transition-colors">사례 읽기 &rarr;</span>
     </Link>
   )
 }
 
 export function CaseDisclaimer({ className = '' }: { className?: string }) {
-  return <p className={`text-xs text-gray-400 leading-relaxed ${className}`}>{CASE_DISCLAIMER}</p>
+  return <p className={`text-xs text-[#1C1C1A]/40 leading-relaxed ${className}`}>{CASE_DISCLAIMER}</p>
 }
 
 export function RelatedCases({ cases, title = '관련 대응 사례' }: { cases: PracticeCase[]; title?: string }) {
   if (cases.length === 0) return null
   return (
-    <section className="py-14 sm:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between gap-4 mb-8">
-          <h2 className="text-2xl font-bold text-black">{title}</h2>
-          <Link href="/cases" className="text-sm text-gray-500 hover:text-[#1B3B2F] transition-colors flex-shrink-0">
-            전체 사례 보기 &rarr;
+    <section className="py-20 sm:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <div className="flex items-end justify-between gap-4 mb-10">
+          <SectionTitle eyebrow="Cases" title={title} />
+          <Link
+            href="/cases"
+            className="text-sm font-semibold text-[#1B3B2F] border-b border-[#1B3B2F] pb-1 hover:text-[#B8955A] hover:border-[#B8955A] transition-colors flex-shrink-0"
+          >
+            전체 사례 &rarr;
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
           {cases.map((c) => (
             <CaseCard key={c.slug} c={c} />
           ))}
         </div>
-        <CaseDisclaimer className="mt-6" />
+        <CaseDisclaimer className="mt-10" />
       </div>
     </section>
   )
@@ -139,18 +152,18 @@ export function RelatedCases({ cases, title = '관련 대응 사례' }: { cases:
 
 export function FaqList({ faqs }: { faqs: PracticeFaq[] }) {
   return (
-    <section className="py-14 sm:py-20 bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-3">FAQ</p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-10">자주 묻는 질문</h2>
-        <div className="divide-y divide-gray-200 border-y border-gray-200">
-          {faqs.map((f) => (
-            <details key={f.q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-sm sm:text-base font-medium text-black">
-                {f.q}
-                <span className="mt-0.5 flex-shrink-0 text-gray-400 transition-transform group-open:rotate-45">+</span>
+    <section className="py-20 sm:py-24 bg-[#F6F2EA]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <SectionTitle eyebrow="FAQ" title="자주 묻는 질문" className="lg:col-span-4" />
+        <div className="lg:col-span-8 border-t border-[#1C1C1A]/15">
+          {faqs.map((f, i) => (
+            <details key={f.q} className="group border-b border-[#1C1C1A]/15 py-6">
+              <summary className="flex cursor-pointer list-none items-start gap-5 text-base sm:text-lg font-medium text-[#1C1C1A]">
+                <span className="font-serif text-sm text-[#B8955A] pt-1 w-6 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                <span className="flex-1">{f.q}</span>
+                <span className="mt-0.5 flex-shrink-0 text-[#1C1C1A]/40 transition-transform group-open:rotate-45">+</span>
               </summary>
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed">{f.a}</p>
+              <p className="mt-4 pl-11 text-sm sm:text-base text-[#1C1C1A]/65 leading-relaxed">{f.a}</p>
             </details>
           ))}
         </div>
@@ -161,19 +174,15 @@ export function FaqList({ faqs }: { faqs: PracticeFaq[] }) {
 
 export function StepList({ steps, title, bg = 'bg-white' }: { steps: PracticeStep[]; title: string; bg?: string }) {
   return (
-    <section className={`py-14 sm:py-20 ${bg}`}>
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <h2 className="text-2xl font-bold text-black mb-8">{title}</h2>
-        <ol className="space-y-5">
+    <section className={`py-20 sm:py-24 ${bg}`}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <SectionTitle eyebrow="Strategy" title={title} className="mb-12" />
+        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
           {steps.map((s, i) => (
-            <li key={s.title} className="flex gap-4">
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-[#1B3B2F] text-white text-sm font-bold flex items-center justify-center">
-                {i + 1}
-              </span>
-              <div>
-                <h3 className="text-sm sm:text-base font-bold text-black">{s.title}</h3>
-                <p className="mt-1 text-sm text-gray-600 leading-relaxed">{s.desc}</p>
-              </div>
+            <li key={s.title} className="border-t border-[#1C1C1A]/20 pt-6">
+              <span className="font-serif text-4xl text-[#B8955A]/80">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="mt-4 text-base sm:text-lg font-semibold text-[#1C1C1A]">{s.title}</h3>
+              <p className="mt-2 text-sm text-[#1C1C1A]/60 leading-relaxed">{s.desc}</p>
             </li>
           ))}
         </ol>
@@ -184,19 +193,23 @@ export function StepList({ steps, title, bg = 'bg-white' }: { steps: PracticeSte
 
 export function RelatedAreas({ items }: { items: RelatedArea[] }) {
   return (
-    <section className="py-12 sm:py-16 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        <h2 className="text-lg font-bold text-black mb-5">관련 분야</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <section className="py-16 sm:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+        <SectionTitle eyebrow="Related" title="관련 분야" className="mb-8" />
+        <div className="border-t border-[#1C1C1A]/15">
           {items.map((r) => (
             <Link
               key={r.href}
               href={r.href}
-              className="group block rounded-xl border border-gray-200 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C9A24B]"
+              className="group flex items-center justify-between gap-6 py-6 border-b border-[#1C1C1A]/15"
             >
-              <span className="text-sm font-bold text-black">{r.title}</span>
-              <span className="block mt-1.5 text-xs text-gray-500 leading-relaxed">{r.desc}</span>
-              <span className="inline-block mt-3 text-xs text-gray-400 group-hover:text-[#C9A24B] transition-colors">더 보기 &rarr;</span>
+              <div>
+                <span className="font-serif text-lg sm:text-2xl font-semibold text-[#1C1C1A] group-hover:text-[#1B3B2F] transition-colors">
+                  {r.title}
+                </span>
+                <span className="block mt-1 text-sm text-[#1C1C1A]/55">{r.desc}</span>
+              </div>
+              <span className="text-xl text-[#1C1C1A]/30 group-hover:text-[#B8955A] group-hover:translate-x-1 transition-all">&rarr;</span>
             </Link>
           ))}
         </div>

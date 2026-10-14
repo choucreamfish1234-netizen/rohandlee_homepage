@@ -25,8 +25,8 @@ export default function OneStopSection() {
     <section className="py-12 sm:py-20 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">One-Stop</p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-4">
+          <p className="eyebrow text-center mb-4">One-Stop</p>
+          <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-center text-[#1C1C1A] mb-4">
             하나의 피해, 여러 개의 법적 문제.<br className="sm:hidden" /> 로앤이는 한 번에 해결합니다.
           </h2>
           <p className="text-center text-sm text-gray-500 mb-12 sm:mb-16 max-w-2xl mx-auto">

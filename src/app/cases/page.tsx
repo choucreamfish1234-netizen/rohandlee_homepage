@@ -41,19 +41,25 @@ export default async function Page({ searchParams }: Props) {
       <JsonLd data={itemListJsonLd} />
       <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '대응 사례' }]} />
 
-      <section className="pt-8 sm:pt-12 pb-14 sm:pb-20 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-10">
-            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">Case Results</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">대응 사례</h1>
-            <p className="mt-5 text-gray-500 text-sm">
-              형사 사건 대응 · 채권추심 · 가상자산 · 기업자문 · 피해자 구제
-            </p>
-            <CaseDisclaimer className="mt-4 max-w-2xl mx-auto" />
+      <section className="bg-[#F6F2EA] pt-10 sm:pt-16 pb-12 sm:pb-16">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+          <div className="lg:col-span-7">
+            <p className="eyebrow">Case Results</p>
+            <h1 className="mt-6 font-serif text-4xl sm:text-6xl font-semibold text-[#1C1C1A] tracking-tight">대응 사례</h1>
           </div>
+          <div className="lg:col-span-5">
+            <p className="text-sm sm:text-base text-[#1C1C1A]/65 leading-relaxed">
+              형사 사건 대응 · 채권추심 · 가상자산 · 기업자문 · 피해자 구제. 분야마다 다른 쟁점에 로앤이가 어떻게 대응했는지 기록했습니다.
+            </p>
+            <CaseDisclaimer className="mt-4" />
+          </div>
+        </div>
+      </section>
 
-          <nav aria-label="사례 분야 필터" className="mb-8 -mx-4 px-4 overflow-x-auto">
-            <ul className="flex sm:flex-wrap sm:justify-center gap-2 min-w-max sm:min-w-0">
+      <section className="pt-10 pb-20 sm:pb-28 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <nav aria-label="사례 분야 필터" className="mb-12 -mx-5 px-5 overflow-x-auto scrollbar-hide border-b border-[#1C1C1A]/10">
+            <ul className="flex gap-6 sm:gap-7 min-w-max">
               {[null, ...CASE_CATEGORIES].map((cat) => {
                 const isActive = cat === active
                 return (
@@ -61,10 +67,10 @@ export default async function Page({ searchParams }: Props) {
                     <Link
                       href={cat ? `/cases?category=${encodeURIComponent(cat)}` : '/cases'}
                       scroll={false}
-                      className={`inline-block text-xs sm:text-sm px-4 py-2 rounded-full border transition-colors ${
+                      className={`inline-block py-4 text-sm border-b-2 -mb-px transition-colors ${
                         isActive
-                          ? 'bg-[#1B3B2F] border-[#1B3B2F] text-white'
-                          : 'border-gray-200 text-gray-600 hover:border-[#1B3B2F]/40'
+                          ? 'border-[#1B3B2F] text-[#1B3B2F] font-semibold'
+                          : 'border-transparent text-[#1C1C1A]/55 hover:text-[#1C1C1A]'
                       }`}
                     >
                       {cat ?? '전체'}
@@ -75,7 +81,7 @@ export default async function Page({ searchParams }: Props) {
             </ul>
           </nav>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
             {filtered.map((c) => (
               <CaseCard key={c.slug} c={c} />
             ))}

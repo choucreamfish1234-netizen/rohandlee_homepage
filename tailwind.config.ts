@@ -10,11 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         accent: '#1B3B2F',
+        ivory: '#F6F2EA',
+        sand: '#ECE5D8',
+        gold: '#B8955A',
+        ink: '#1C1C1A',
         background: '#ffffff',
         foreground: '#111111',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Pretendard Variable"', 'Pretendard', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Noto Serif KR"', 'Georgia', 'serif'],
       },
     },
   },

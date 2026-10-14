@@ -25,6 +25,13 @@ export function practiceCaseJsonLd(c: PracticeCase) {
 
 export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
   const areaLink = caseAreaLink(c)
+  const middle = c.charge
+    ? { label: c.area === 'defense' ? '혐의' : '사건', value: c.charge }
+    : c.issue
+      ? { label: '쟁점', value: c.issue }
+      : c.situation
+        ? { label: '사건', value: c.situation }
+        : null
   const related = practiceCases.filter((x) => x.category === c.category && x.slug !== c.slug).slice(0, 3)
 
   const sections: { heading: string; text: string }[] =
@@ -41,59 +48,62 @@ export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
       <JsonLd data={practiceCaseJsonLd(c)} />
       <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '대응 사례', href: '/cases' }, { name: c.title }]} />
 
-      <article className="pt-6 sm:pt-10 pb-14 sm:pb-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <header>
-            <Link
-              href={`/cases?category=${encodeURIComponent(c.category)}`}
-              className="inline-block text-xs font-bold text-[#C9A24B] hover:underline"
-            >
+      <article className="bg-white">
+        <header className="bg-[#F6F2EA] pt-12 sm:pt-20 pb-12 sm:pb-16">
+          <div className="max-w-4xl mx-auto px-5 sm:px-8">
+            <Link href={`/cases?category=${encodeURIComponent(c.category)}`} className="eyebrow tracking-[0.12em] text-xs hover:opacity-80">
               {c.category}
             </Link>
-            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-black leading-snug">{c.title}</h1>
-            <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">{c.summary}</p>
-          </header>
+            <h1 className="mt-6 font-serif text-[1.75rem] leading-[1.35] sm:text-[2.6rem] sm:leading-[1.3] font-semibold text-[#1C1C1A] tracking-tight">
+              {c.title}
+            </h1>
+            <p className="mt-6 text-base sm:text-lg text-[#1C1C1A]/65 leading-relaxed">{c.summary}</p>
 
-          <dl className="mt-8 rounded-2xl border border-gray-200 bg-[#f7faf9] p-5 sm:p-6 space-y-3 text-sm">
-            <div className="flex gap-3">
-              <dt className="w-16 flex-shrink-0 text-gray-400">분야</dt>
-              <dd className="text-gray-800">{AREA_LABEL[c.area]}</dd>
-            </div>
-            {c.charge && (
-              <div className="flex gap-3">
-                <dt className="w-16 flex-shrink-0 text-gray-400">{c.area === 'defense' ? '혐의' : '사건'}</dt>
-                <dd className="text-gray-800">{c.charge}</dd>
+            <dl className={`mt-10 grid grid-cols-1 ${middle ? 'sm:grid-cols-3' : 'sm:grid-cols-2'} border-t border-[#1C1C1A]/20`}>
+              <div className="py-5 sm:pr-6 border-b sm:border-b-0 border-[#1C1C1A]/10">
+                <dt className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/45">분야</dt>
+                <dd className="mt-2 text-sm sm:text-base text-[#1C1C1A]">{AREA_LABEL[c.area]}</dd>
               </div>
-            )}
-            {c.issue && (
-              <div className="flex gap-3">
-                <dt className="w-16 flex-shrink-0 text-gray-400">쟁점</dt>
-                <dd className="text-gray-800">{c.issue}</dd>
+              {middle && (
+                <div className="py-5 sm:px-6 sm:border-l border-b sm:border-b-0 border-[#1C1C1A]/10">
+                  <dt className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/45">{middle.label}</dt>
+                  <dd className="mt-2 text-sm sm:text-base text-[#1C1C1A]">{middle.value}</dd>
+                </div>
+              )}
+              <div className="py-5 sm:pl-6 sm:border-l border-[#1C1C1A]/10">
+                <dt className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/45">결과</dt>
+                <dd className="mt-2 font-serif text-base sm:text-lg font-semibold text-[#8a6d3b]">{c.result}</dd>
               </div>
-            )}
-            <div className="flex gap-3">
-              <dt className="w-16 flex-shrink-0 text-gray-400">결과</dt>
-              <dd className="font-bold text-[#C9A24B]">{c.result}</dd>
-            </div>
-          </dl>
+            </dl>
+          </div>
+        </header>
 
-          <div className="mt-10 space-y-8">
-            {sections.map((s) => (
+        <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+          <div className="space-y-12">
+            {sections.map((s, i) => (
               <section key={s.heading}>
-                <h2 className="text-lg sm:text-xl font-bold text-black mb-3">{s.heading}</h2>
-                <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{s.text}</p>
+                <div className="flex items-baseline gap-4">
+                  <span className="font-serif text-sm text-[#B8955A]">{String(i + 1).padStart(2, '0')}</span>
+                  <h2 className="font-serif text-xl sm:text-2xl font-semibold text-[#1C1C1A]">{s.heading}</h2>
+                </div>
+                <p className="mt-4 text-base sm:text-[17px] text-[#1C1C1A]/80 leading-[1.9]">{s.text}</p>
               </section>
             ))}
           </div>
 
-          <CaseDisclaimer className="mt-10 pt-6 border-t border-gray-100" />
+          <CaseDisclaimer className="mt-14 pt-6 border-t border-[#1C1C1A]/10" />
 
           <Link
             href={areaLink.href}
-            className="mt-8 flex items-center justify-between rounded-xl border border-gray-200 p-5 hover:border-[#C9A24B] transition-colors"
+            className="group mt-10 flex items-center justify-between border-y border-[#1C1C1A]/15 py-6"
           >
-            <span className="text-sm font-bold text-black">{areaLink.label} 안내 보기</span>
-            <span className="text-gray-400">&rarr;</span>
+            <div>
+              <span className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/45">Related Practice</span>
+              <span className="block mt-1 font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A] group-hover:text-[#1B3B2F]">
+                {areaLink.label} 안내 보기
+              </span>
+            </div>
+            <span className="text-xl text-[#1C1C1A]/30 group-hover:text-[#B8955A] transition-colors">&rarr;</span>
           </Link>
         </div>
       </article>

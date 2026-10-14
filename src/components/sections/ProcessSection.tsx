@@ -41,7 +41,7 @@ export default function ProcessSection() {
     <section className="py-12 sm:py-20 bg-[#f5f8f6]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+          <p className="eyebrow text-center mb-4">
             How We Work
           </p>
           <EditableText
@@ -50,7 +50,7 @@ export default function ProcessSection() {
             fieldKey="heading"
             defaultValue="수임 절차"
             tag="h2"
-            className="text-xl sm:text-3xl font-bold text-center text-black mb-5"
+            className="font-serif text-2xl sm:text-4xl font-semibold text-center text-[#1C1C1A] mb-5"
           />
           <EditableText
             page="home"

@@ -72,8 +72,9 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-sm font-medium tracking-tight text-white flex-shrink-0">
-            법률사무소 로앤이
+          <Link href="/" className="flex items-baseline gap-2 text-white flex-shrink-0">
+            <span className="font-serif text-lg font-semibold tracking-wide">ROH&amp;LEE</span>
+            <span className="text-[11px] text-white/60 tracking-tight lg:hidden xl:inline">법률사무소 로앤이</span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-5 xl:gap-7 h-full" aria-label="주 메뉴">
@@ -82,7 +83,7 @@ export default function Header() {
                 <div key={item.href} className="relative group h-full flex items-center">
                   <Link
                     href={item.href}
-                    className="flex items-center gap-1 text-xs text-white/70 hover:text-white group-hover:text-white transition-colors"
+                    className="flex items-center gap-1 text-[13px] text-white/75 hover:text-white group-hover:text-white transition-colors"
                     aria-haspopup="true"
                   >
                     {item.label}
@@ -91,13 +92,13 @@ export default function Header() {
                     </svg>
                   </Link>
                   <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity duration-200 absolute top-full left-1/2 -translate-x-1/2 pt-0">
-                    <div className="bg-white rounded-xl shadow-xl border border-gray-100 p-3 w-[420px]">
+                    <div className="bg-[#F6F2EA] shadow-2xl border-t-2 border-[#B8955A] p-4 w-[440px]">
                       <ul className="grid grid-cols-2 gap-x-2">
                         {item.children.map((child) => (
                           <li key={child.href}>
                             <Link
                               href={child.href}
-                              className="block text-xs text-gray-600 hover:text-[#1B3B2F] hover:bg-[#1B3B2F]/5 rounded-lg px-3 py-2 transition-colors"
+                              className="block text-[13px] text-[#1C1C1A]/75 hover:text-[#1B3B2F] hover:bg-white px-3 py-2 transition-colors"
                             >
                               {child.label}
                             </Link>
@@ -106,7 +107,7 @@ export default function Header() {
                       </ul>
                       <Link
                         href={item.href}
-                        className="mt-2 block text-center text-xs font-medium text-[#1B3B2F] border-t border-gray-100 pt-3 pb-1 hover:text-[#C9A24B] transition-colors"
+                        className="mt-3 block text-center text-xs font-semibold tracking-wide text-[#1B3B2F] border-t border-[#1B3B2F]/10 pt-3 pb-1 hover:text-[#B8955A] transition-colors"
                       >
                         {item.label} 전체 보기 &rarr;
                       </Link>
@@ -117,7 +118,7 @@ export default function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="text-xs text-white/70 hover:text-white transition-colors"
+                  className="text-[13px] text-white/75 hover:text-white transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -128,7 +129,7 @@ export default function Header() {
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => openConsultation()}
-              className="bg-white text-[#1B3B2F] text-sm px-4 py-2.5 rounded-full hover:bg-white/90 transition-colors font-medium min-h-[44px]"
+              className="bg-[#F6F2EA] text-[#1B3B2F] text-[13px] px-4 sm:px-5 py-2.5 hover:bg-white transition-colors font-semibold tracking-wide min-h-[44px]"
             >
               상담 예약
             </button>
@@ -195,7 +196,7 @@ export default function Header() {
                           <li>
                             <Link
                               href={item.href}
-                              className="block text-sm font-medium text-[#C9A24B] py-2.5 px-2"
+                              className="block text-sm font-medium text-[#B8955A] py-2.5 px-2"
                               onClick={() => setMobileOpen(false)}
                             >
                               {item.label} 전체 보기

@@ -10,13 +10,18 @@ const facts = [
 
 export default function FirmFactsSection() {
   return (
-    <section className="py-12 sm:py-20 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6">
-        <ScrollReveal>
-          <h2 className="text-xl sm:text-2xl font-bold text-black mb-6">법률사무소 로앤이는</h2>
-          <div className="space-y-3">
+    <section className="py-20 sm:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <ScrollReveal className="lg:col-span-4">
+          <p className="eyebrow">Our Firm</p>
+          <h2 className="mt-5 font-serif text-3xl sm:text-4xl font-semibold text-[#1C1C1A] leading-tight">
+            법률사무소 로앤이는
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal delay={0.1} className="lg:col-span-8">
+          <div className="space-y-5">
             {facts.map((f) => (
-              <p key={f} className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              <p key={f} className="text-base sm:text-lg text-[#1C1C1A]/75 leading-relaxed">
                 {f}
               </p>
             ))}

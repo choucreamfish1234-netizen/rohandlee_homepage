@@ -12,6 +12,7 @@ import {
   FaqList,
   RelatedAreas,
   ConsultationCTA,
+  SectionTitle,
 } from './shared'
 
 export default function PracticeDetail({ area, page }: { area: PracticeArea; page: PracticePage }) {
@@ -31,53 +32,57 @@ export default function PracticeDetail({ area, page }: { area: PracticeArea; pag
         ]}
       />
 
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl font-bold text-black mb-8 text-center">이런 상황이시라면</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {page.situations.map((s) => (
-              <div key={s} className="flex items-start gap-3 rounded-xl border border-gray-200 p-5">
-                <span className="mt-0.5 flex-shrink-0 text-[#C9A24B] font-bold">✓</span>
-                <p className="text-sm sm:text-base text-gray-700">{s}</p>
-              </div>
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <SectionTitle eyebrow="Situation" title="이런 상황이시라면" className="lg:col-span-4" />
+          <ul className="lg:col-span-8 border-t border-[#1C1C1A]/15">
+            {page.situations.map((s, i) => (
+              <li key={s} className="flex items-start gap-5 py-5 border-b border-[#1C1C1A]/15">
+                <span className="font-serif text-sm text-[#B8955A] pt-1 w-6 flex-shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                <p className="text-base sm:text-lg text-[#1C1C1A]/85">{s}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      <section className="py-14 sm:py-20 bg-[#f7faf9]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl font-bold text-black mb-6">{page.legalTitle}</h2>
-          <div className="space-y-4">
+      <section className="py-20 sm:py-24 bg-[#F6F2EA]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <SectionTitle eyebrow="Legal Guide" title={page.legalTitle} />
+              {page.legalNote && <p className="mt-6 text-xs text-[#1C1C1A]/45 leading-relaxed">{page.legalNote}</p>}
+            </div>
+          </div>
+          <div className="lg:col-span-8 space-y-6">
             {page.legal.map((p) => (
-              <p key={p} className="text-sm sm:text-base text-gray-700 leading-relaxed">
+              <p key={p} className="text-base sm:text-[17px] text-[#1C1C1A]/80 leading-[1.85]">
                 {p}
               </p>
             ))}
           </div>
-          {page.legalNote && <p className="mt-6 text-xs text-gray-400">{page.legalNote}</p>}
         </div>
       </section>
 
       {page.sections?.map((sec) => (
-        <section key={sec.title} className="py-14 sm:py-20 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6">
-            <h2 className="text-2xl font-bold text-black mb-8">{sec.title}</h2>
+        <section key={sec.title} className="py-20 sm:py-24 bg-white">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8">
+            <SectionTitle eyebrow="Key Points" title={sec.title} className="mb-10" />
             {sec.paragraphs && (
-              <div className="space-y-4 max-w-3xl">
+              <div className="space-y-5 max-w-3xl mb-10">
                 {sec.paragraphs.map((p) => (
-                  <p key={p} className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                  <p key={p} className="text-base sm:text-lg text-[#1C1C1A]/75 leading-relaxed">
                     {p}
                   </p>
                 ))}
               </div>
             )}
             {sec.items && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
                 {sec.items.map((it) => (
-                  <div key={it.title} className="rounded-xl border border-gray-100 bg-white p-5 border-l-4 border-l-[#1B3B2F]">
-                    <h3 className="text-sm sm:text-base font-bold text-black">{it.title}</h3>
-                    <p className="mt-1.5 text-sm text-gray-600 leading-relaxed">{it.desc}</p>
+                  <div key={it.title} className="border-t border-[#1C1C1A]/15 py-6">
+                    <h3 className="font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A]">{it.title}</h3>
+                    <p className="mt-2 text-sm sm:text-base text-[#1C1C1A]/65 leading-relaxed">{it.desc}</p>
                   </div>
                 ))}
               </div>
@@ -86,14 +91,14 @@ export default function PracticeDetail({ area, page }: { area: PracticeArea; pag
         </section>
       ))}
 
-      <StepList steps={page.strategy} title="로앤이의 대응 방식" bg={page.sections?.length ? 'bg-[#f7faf9]' : 'bg-white'} />
+      <StepList steps={page.strategy} title="로앤이의 대응 방식" bg={page.sections?.length ? 'bg-[#F6F2EA]' : 'bg-white'} />
       <RelatedCases cases={cases} />
       <FaqList faqs={page.faqs} />
       <RelatedAreas items={page.related} />
 
-      <nav aria-label={`${area.name} 다른 분야`} className="pb-14 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <p className="text-xs text-gray-400 mb-3">{area.name} 다른 분야</p>
+      <nav aria-label={`${area.name} 다른 분야`} className="pb-20 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <p className="text-xs tracking-[0.2em] uppercase text-[#1C1C1A]/45 mb-4">{area.name} 다른 분야</p>
           <div className="flex flex-wrap gap-2">
             {area.pages
               .filter((p) => p.slug !== page.slug)
@@ -101,7 +106,7 @@ export default function PracticeDetail({ area, page }: { area: PracticeArea; pag
                 <Link
                   key={p.slug}
                   href={`${area.base}/${p.slug}`}
-                  className="text-xs px-3 py-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-[#1B3B2F]/10 transition-colors"
+                  className="text-sm px-4 py-2 border border-[#1C1C1A]/15 text-[#1C1C1A]/70 hover:bg-[#1B3B2F] hover:text-white hover:border-[#1B3B2F] transition-colors"
                 >
                   {p.name}
                 </Link>

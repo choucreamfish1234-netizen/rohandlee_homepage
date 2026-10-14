@@ -140,11 +140,11 @@ export default function CentersSection() {
     <section id="centers" className="py-12 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+          <p className="eyebrow text-center mb-4">
             11 Specialized Centers
           </p>
           <p className="text-xs font-semibold text-[#1B3B2F] text-center mb-3">국내 유일, 피해자를 위한</p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
+          <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-center text-[#1C1C1A] mb-10 sm:mb-20">
             11대 전문센터
           </h2>
         </ScrollReveal>

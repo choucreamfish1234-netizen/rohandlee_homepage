@@ -190,7 +190,7 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-8"
+        className="aspect-[3/4] overflow-hidden bg-[#ECE5D8] mb-8"
       >
         <Image
           src={lawyer.image}
@@ -208,10 +208,10 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
       >
-        <h3 className="text-2xl font-medium text-gray-900">{lawyer.name}</h3>
-        <p className="mt-1 text-sm text-gray-400">{lawyer.role}</p>
+        <h3 className="font-serif text-3xl font-semibold text-[#1C1C1A]">{lawyer.name}</h3>
+        <p className="mt-2 text-xs tracking-[0.2em] text-[#B8955A]">{lawyer.role}</p>
         <div className="mt-3">
-          <span className="inline-flex border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600">
+          <span className="inline-flex border-b border-[#1C1C1A]/30 pb-0.5 text-xs text-[#1C1C1A]/70">
             {lawyer.specialtyTag}
           </span>
         </div>
@@ -222,7 +222,7 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
-        className="mt-5 text-sm italic text-gray-500 leading-relaxed"
+        className="mt-5 font-serif text-base text-[#1C1C1A]/70 leading-relaxed"
       >
         {lawyer.description}
       </motion.p>
@@ -235,7 +235,7 @@ function LawyerCard({ lawyer }: { lawyer: LawyerData }) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.3, delay: 0.5 + idx * 0.05, ease: 'easeOut' }}
-            className="border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-600"
+            className="border border-[#1C1C1A]/15 px-3 py-1 text-xs text-[#1C1C1A]/65"
           >
             {tag}
           </motion.span>
@@ -373,7 +373,7 @@ function AssociateCard({ lawyer }: { lawyer: LawyerDB }) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="flex flex-col items-center text-center"
     >
-      <div className="w-[300px] aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 mb-6 flex-shrink-0">
+      <div className="w-[300px] aspect-[3/4] overflow-hidden bg-[#ECE5D8] mb-6 flex-shrink-0">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -519,7 +519,7 @@ export default function LawyersSection() {
   }, [])
 
   return (
-    <section id="lawyers" className="py-12 sm:py-20 bg-[#f5f8f6]">
+    <section id="lawyers" className="py-20 sm:py-28 bg-white">
       {lawyerJsonLd.map((ld, i) => (
         <script
           key={i}
@@ -529,10 +529,10 @@ export default function LawyersSection() {
       ))}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
+          <p className="eyebrow text-center mb-4">
             Our Lawyers
           </p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
+          <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-center text-[#1C1C1A] mb-10 sm:mb-20">
             변호사 소개
           </h2>
         </ScrollReveal>

@@ -62,7 +62,7 @@ export default function CenterCasesDB({ centerSlug, title = '성공사례', maxI
     <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">Cases</p>
+          <p className="eyebrow text-center mb-4">Cases</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-center text-black mb-12">{title}</h2>
         </ScrollReveal>
 

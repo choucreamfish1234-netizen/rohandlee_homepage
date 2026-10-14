@@ -6,9 +6,7 @@ import HeroSection from '@/components/sections/HeroSection'
 import PracticeAreasSection from '@/components/sections/home/PracticeAreasSection'
 import FeaturedCasesSection, { type FeaturedCase } from '@/components/sections/home/FeaturedCasesSection'
 import AboutSection from '@/components/sections/home/AboutSection'
-import AreaShortcutsSection from '@/components/sections/home/AreaShortcutsSection'
 import FirmFactsSection from '@/components/sections/home/FirmFactsSection'
-import CentersSection from '@/components/sections/CentersSection'
 import LawyersSection from '@/components/sections/LawyersSection'
 import HomeFaqSection from '@/components/sections/HomeFaqSection'
 import CtaSection from '@/components/sections/CtaSection'
@@ -63,8 +61,6 @@ export default function Home() {
       <FeaturedCasesSection cases={featuredCases} disclaimer={CASE_DISCLAIMER} />
       <AboutSection />
       <LawyersSection />
-      <CentersSection />
-      <AreaShortcutsSection />
       <PressSection />
       <BlogHighlights />
       <FirmFactsSection />

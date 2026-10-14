@@ -1,5 +1,9 @@
 import type { AreaKey } from './types'
 import { getAreaPage } from './index'
+import { defenseABodies } from './case-bodies/defense-a'
+import { defenseBBodies } from './case-bodies/defense-b'
+import { collectionBodies } from './case-bodies/collection'
+import { advisoryBodies } from './case-bodies/advisory'
 
 export type CaseArea = AreaKey | 'victim'
 
@@ -50,7 +54,7 @@ export const AREA_LABEL: Record<CaseArea, string> = {
   victim: '피해자 구제',
 }
 
-export const practiceCases: PracticeCase[] = [
+const rawCases: PracticeCase[] = [
   // ── 형사 · 음주운전
   {
     slug: 'dui-008-fine-reduction',
@@ -64,24 +68,6 @@ export const practiceCases: PracticeCase[] = [
     issue: '음주측정 절차 적법성, 운전 장소의 도로 해당 여부',
     response: '음주측정기 정기검사 기록 확인, 운전 장소와 경위에 대한 법리 검토, 양형 자료 제출',
     result: '벌금 300만원 (검찰 구형 징역 6월)',
-    body: [
-      {
-        heading: '사건 경위',
-        text: '의뢰인은 회사 회식 후 대리기사를 호출한 상태에서, 주차장 안에서 차량을 약 20미터 이동하던 중 경찰 음주 단속에 적발되었다. 호흡 측정 결과 혈중알코올농도는 0.082%로, 0.08% 기준을 소폭 넘는 수치였다.',
-      },
-      {
-        heading: '법률적 쟁점',
-        text: '첫째, 음주측정기의 정기검사 기록을 확인한 결과 검사 유효기간이 7일 지난 상태였으며, 이는 측정 결과의 신뢰성에 영향을 미칠 수 있는 절차적 하자였다. 둘째, 차량을 이동한 장소가 사적 주차장이어서 도로교통법상 \'도로\'에 해당하는지가 문제되었다. 음주운전 형사처벌 규정은 도로 외의 장소에도 적용되므로, 이 쟁점은 운전 경위와 위험성을 평가하는 사정으로 함께 다뤄졌다.',
-      },
-      {
-        heading: '대응 전략',
-        text: '변호인은 음주측정기의 정기검사 유효기간이 지났다는 사실을 근거로 측정 결과의 신뢰성에 의문을 제기했다. 또한 운전 장소가 외부 차량 통행이 없는 사적 주차장이었고, 대리기사를 호출한 상태에서 단거리 이동만 한 점, 초범인 점 등 양형에 유리한 사정을 종합적으로 제시했다.',
-      },
-      {
-        heading: '결과',
-        text: '법원은 검찰의 징역 6월 구형에도 불구하고 제반 사정을 고려하여 벌금 300만원을 선고했다. 의뢰인은 징역형을 면할 수 있었다.',
-      },
-    ],
   },
   {
     slug: 'dui-repeat-probation',
@@ -753,6 +739,11 @@ export const practiceCases: PracticeCase[] = [
     result: '촬영물 전량 삭제, 합의금 수령',
   },
 ]
+
+const caseBodies = { ...defenseABodies, ...defenseBBodies, ...collectionBodies, ...advisoryBodies }
+
+/** 사례 상세 본문은 case-bodies/* 에서 관리한다 */
+export const practiceCases: PracticeCase[] = rawCases.map((c) => ({ ...c, body: caseBodies[c.slug] ?? c.body }))
 
 export const FEATURED_CASE_SLUGS = [
   'dui-008-fine-reduction',
