@@ -1,33 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { trackConversion } from '@/lib/track-conversion'
 
 const KAKAO_CHAT_URL = 'https://pf.kakao.com/_YxgWxcn/chat'
 
 export default function FloatingButtons() {
-  const [visible, setVisible] = useState(false)
   const [showTooltip, setShowTooltip] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 100)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   return (
     <AnimatePresence>
-      {visible && (
+      {(
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-3"
         >
-          {/* 카카오톡 상담 */}
+          {/* 기타 문의 · 카카오톡 */}
           <div
             className="relative"
             onMouseEnter={() => setShowTooltip(true)}
@@ -41,7 +33,7 @@ export default function FloatingButtons() {
                   exit={{ opacity: 0, x: 8 }}
                   className="absolute right-16 top-1/2 -translate-y-1/2 whitespace-nowrap bg-black text-white text-xs px-3 py-1.5 rounded-lg shadow-md"
                 >
-                  카카오톡 상담
+                  기타 문의 · 카카오톡
                 </motion.span>
               )}
             </AnimatePresence>
@@ -51,7 +43,7 @@ export default function FloatingButtons() {
               rel="noopener noreferrer"
               onClick={() => trackConversion('kakao_click')}
               className="w-14 h-14 bg-[#FEE500] rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
-              aria-label="카카오톡 상담"
+              aria-label="기타 문의 · 카카오톡"
             >
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
                 <path

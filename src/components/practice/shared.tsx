@@ -75,7 +75,7 @@ export function SectionTitle({ eyebrow, title, className = '' }: { eyebrow: stri
 
 export function ConsultationCTA({ text }: { text?: string }) {
   return (
-    <section className="bg-[#0f241c] text-white py-20 sm:py-28">
+    <section className="records-cta bg-[#0f241c] text-white py-20 sm:py-28">
       <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
         <p className="eyebrow justify-center">Consultation</p>
         <h2 className="mt-6 font-serif text-2xl sm:text-4xl font-semibold leading-snug">
@@ -84,10 +84,10 @@ export function ConsultationCTA({ text }: { text?: string }) {
         <p className="mt-5 text-sm text-white/60">대표변호사가 직접 상담합니다.</p>
         <div className="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            href="/consultation"
+            href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-10 py-4 bg-[#F6F2EA] text-[#1B3B2F] text-sm font-semibold tracking-wide hover:bg-white transition-colors min-h-[52px]"
           >
-            상담 신청하기
+            상담예약하기
           </Link>
           <a
             href="tel:+82322078788"
@@ -95,7 +95,9 @@ export function ConsultationCTA({ text }: { text?: string }) {
           >
             032-207-8788
           </a>
+          <Link href="/consultation#inquiry" className="inline-flex items-center justify-center px-10 py-4 text-sm underline underline-offset-4 min-h-[52px]">문의하기</Link>
         </div>
+        <p className="mt-6 text-sm text-white/80"><a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer">기타 문의는 카카오톡으로 문의해주세요 ↗</a></p>
       </div>
     </section>
   )
@@ -105,14 +107,14 @@ export function CaseCard({ c }: { c: PracticeCase }) {
   return (
     <Link
       href={`/cases/${c.slug}`}
-      className="group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
+      className="record-card group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
     >
       <span className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/50">{c.category}</span>
       <h3 className="mt-3 font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A] leading-snug group-hover:text-[#1B3B2F] transition-colors">
         {c.title}
       </h3>
       <p className="mt-3 text-sm text-[#1C1C1A]/60 leading-relaxed flex-1">{c.summary}</p>
-      <div className="mt-5 flex items-center gap-3">
+      <div className="record-result mt-5 flex items-center gap-3">
         <span className="h-px w-6 bg-[#B8955A]" />
         <p className="text-sm font-semibold text-[#8a6d3b]">{c.result}</p>
       </div>
@@ -128,7 +130,7 @@ export function CaseDisclaimer({ className = '' }: { className?: string }) {
 export function RelatedCases({ cases, title = '관련 대응 사례' }: { cases: PracticeCase[]; title?: string }) {
   if (cases.length === 0) return null
   return (
-    <section className="py-20 sm:py-24 bg-white">
+    <section className="records-related py-20 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="flex items-end justify-between gap-4 mb-10">
           <SectionTitle eyebrow="Cases" title={title} />

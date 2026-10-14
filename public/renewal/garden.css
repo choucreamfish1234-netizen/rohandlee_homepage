@@ -7,3 +7,71 @@
 .center-scene,.center-motion .center-scene .image-hero{background:#f7f7ef;color:#253a2d}.center-motion .image-hero:before{background:linear-gradient(90deg,#f7f7ef 0%,#f7f7eff5 23%,#f7f7efc7 40%,#f7f7ef33 60%,transparent 80%),linear-gradient(0deg,#f7f7ef88,transparent 24%)}.center-motion .image-hero>.breadcrumb,.center-motion .image-hero>.eyebrow{color:#6b7c63}.center-motion .image-hero>p{color:#56694d}.center-motion .image-hero>.pill{background:#294730;color:#fff}.center-motion .image-hero>.text-link{color:#294730}.scene-foot{color:#4a6041}body:has(.center-scene) header,body.light:has(.center-scene) header{color:#233c2b;border-color:#263e2420}body:has(.center-scene) header .brand img,body.light:has(.center-scene) header .brand img{filter:brightness(0) saturate(100%);opacity:.84}body:has(.center-scene) .nav-cta,body.light:has(.center-scene) .nav-cta{border-color:#314d354d}body:has(.center-scene) header nav.open{background:#f7f7ef;color:#233c2b}
 @media(max-width:800px){.center-motion .image-hero:before{background:linear-gradient(180deg,#f7f7ef 0%,#f7f7ef 22%,#f7f7efed 35%,#f7f7ef88 51%,transparent 68%,#f7f7ef99 100%)}.garden-story{padding:75px 0 65px}.garden-heading{padding:0 7% 35px;display:block}.garden-heading h2{font-size:37px;margin:18px 0}.garden-heading p{font-size:12px}.garden-panorama{margin:0;height:55svh;min-height:350px}.garden-panorama>img{object-position:38% center}.garden-panorama>figcaption{left:7%;right:7%;font-size:7px;letter-spacing:0;flex-direction:column;gap:6px}.garden-diptych{gap:32px;grid-template-columns:1fr;margin:40px 7% 0}.garden-diptych figure:nth-child(2){margin-top:0}.garden-diptych img{aspect-ratio:1.5}.garden-diptych h3{font-size:25px}}@media(prefers-reduced-motion:reduce){.garden-panorama>img{transform:none!important;will-change:auto}}
 .production-footer-links{line-height:2.2;max-width:350px}.production-footer-links a:hover{text-decoration:underline}
+
+/* Case records form one horizontal belt; the archive and detail pages stay intact. */
+.case-section:not(.case-archive){padding-top:65px;padding-bottom:55px;overflow:hidden}
+.case-section:not(.case-archive) .case-heading{margin-bottom:25px}
+.case-section:not(.case-archive) .case-grid{
+  display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;
+  margin:0 -2px;padding:6px 2px 20px;
+  scroll-snap-type:x proximity;scroll-padding-inline:2px;
+  overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#7c947d #e1e6de;
+  -webkit-overflow-scrolling:touch;
+}
+.case-section:not(.case-archive) .case-card{
+  flex:0 0 clamp(280px,29vw,350px);height:auto;
+  scroll-snap-align:start;padding:22px 0 12px;
+}
+.case-section:not(.case-archive) .case-card>strong{font-size:26px;margin-bottom:16px;padding-bottom:16px}
+.case-section:not(.case-archive) .case-card>h3{font-size:19px;margin-bottom:12px;line-height:1.55}
+.case-section:not(.case-archive) .case-card>p{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;
+  font-size:15px;line-height:1.8;margin-bottom:14px;
+}
+.case-section:not(.case-archive) .case-card>.case-read{font-size:13px;padding-top:0}
+.case-section:not(.case-archive) .case-note{margin-top:22px}
+.case-belt-controls{display:flex;align-items:center;gap:12px;margin-top:12px;color:#465e49;font-size:12px}
+.case-belt-controls>span{margin-right:auto}
+.case-belt-controls button{border:1px solid #b8c5b6;background:transparent;color:#21432f;width:44px;height:44px;font-size:20px;border-radius:50%}
+.case-belt-controls button:disabled{opacity:.35;cursor:default}
+.case-grid:focus-visible{outline:2px solid #365b40;outline-offset:6px}
+@media(max-width:800px){
+  .case-section:not(.case-archive){padding:48px 7% 40px}
+  .case-section:not(.case-archive) .case-heading{display:flex;align-items:end;gap:18px;margin-bottom:20px}
+  .case-section:not(.case-archive) .case-heading h2{font-size:28px;line-height:1.4}
+  .case-section:not(.case-archive) .case-heading>a{font-size:12px;margin:0;flex-shrink:0}
+  .case-section:not(.case-archive) .case-grid{gap:20px;margin-right:-8.14%;padding-right:7%;scroll-padding-inline:2px}
+  .case-section:not(.case-archive) .case-card{flex-basis:min(78vw,330px)}
+  .case-section:not(.case-archive) .case-card>strong{font-size:25px;line-height:1.45}
+  .case-section:not(.case-archive) .case-card>h3{font-size:18px;line-height:1.6}
+  .case-section:not(.case-archive) .case-card>p{font-size:16px;line-height:1.8}
+  .case-belt-controls{font-size:12px}
+}
+
+.contact .actions{flex-wrap:wrap}
+.contact-other{display:inline-block;margin-top:26px;font-size:14px;color:#c4d3bd;text-underline-offset:5px}
+.contact-other:hover{text-decoration:underline}
+.renewal-kakao{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:#fee500;color:#191919;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px #0b181426}
+.renewal-kakao-label{position:absolute;right:66px;white-space:nowrap;background:#f6f5f0;color:#243b2d;padding:7px 12px;border:1px solid #d4dccd;border-radius:20px;font-size:12px}
+@media(max-width:800px){.contact .actions{gap:14px}.contact .actions>.pill{font-size:13px}.contact-other{font-size:13px;padding:8px 0}.renewal-kakao{width:50px;height:50px;right:14px}.renewal-kakao-label{right:59px;font-size:11px}}
+
+/* On-page consultation: scoped to avoid the existing situation dialog. */
+dialog.rl-consult{position:fixed;inset:0;margin:auto;width:min(560px,calc(100% - 32px));max-height:calc(100dvh - 32px);box-sizing:border-box;padding:44px 36px 32px;border:1px solid #d9ded3;border-radius:20px;background:#f7f6f0;color:#253c2e;overflow:auto;overscroll-behavior:contain;text-align:left;box-shadow:0 24px 100px #071a2440}
+.rl-consult::backdrop{background:rgb(10 24 17 / .65);backdrop-filter:blur(5px)}
+.rl-consult [hidden]{display:none!important}.rl-consult button,.rl-consult input,.rl-consult select,.rl-consult textarea{font:inherit;box-sizing:border-box}
+.rl-consult .rl-close{position:absolute;right:16px;top:10px;width:44px;height:44px;background:transparent;border:0;font-size:30px;color:#253c2e;cursor:pointer}
+.rl-consult .rl-eyebrow{font-size:10px;letter-spacing:.2em;margin:0 0 16px;color:#65745e}
+.rl-consult h2{font-size:clamp(24px,5vw,32px);letter-spacing:-.045em;line-height:1.4;margin:0 0 18px;font-weight:600;outline:none}
+.rl-consult .rl-intro{font-size:15px;line-height:1.7;color:#52634f;margin:0 0 24px}
+.rl-consult .rl-choice{display:flex;align-items:center;justify-content:space-between;width:100%;gap:16px;text-align:left;text-decoration:none;padding:22px 20px;margin:12px 0;border:1px solid #cbd4c5;border-radius:12px;background:#fffefa;color:#253c2e;cursor:pointer}
+.rl-consult .rl-choice strong{display:block;font-size:20px;font-weight:600}.rl-consult .rl-choice small{display:block;font-size:14px;line-height:1.6;margin-top:8px}
+.rl-consult .rl-book{background:#293f30;color:#fffef8;border-color:#293f30}
+.rl-consult .rl-other{display:block;margin-top:24px;font-size:14px;line-height:1.8;color:#425b40;text-underline-offset:4px}
+.rl-consult .rl-back{background:none;border:0;padding:0;margin:0 0 20px;color:#52634f;cursor:pointer;font-size:14px}
+.rl-form>label,.rl-fields>label{display:block;font-size:14px;line-height:1.6;margin-bottom:16px}
+.rl-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rl-consult input:not([type=checkbox]),.rl-consult select,.rl-consult textarea{display:block;width:100%;min-height:48px;margin-top:6px;padding:12px;border:1px solid #bbc8b5;border-radius:8px;background:#fffefb;color:#233c2c;font-size:16px}
+.rl-consult textarea{resize:vertical}.rl-consult .rl-consent{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#52634f}.rl-consent input{margin-top:5px;accent-color:#293f30}.rl-consent a{color:inherit;text-decoration:underline}
+.rl-consult .rl-submit{width:100%;min-height:52px;border:0;border-radius:28px;background:#293f30;color:#fffef8;cursor:pointer;font-size:16px}.rl-submit:disabled{opacity:.65;cursor:default}
+.rl-consult .rl-status{font-size:14px;line-height:1.7;margin:12px 0}.rl-consult :focus-visible{outline:2px solid #7a9268;outline-offset:4px}
+@media(max-width:600px){dialog.rl-consult{padding:42px 22px 24px;max-height:calc(100dvh - 24px);width:calc(100% - 24px)}.rl-consult .rl-choice{padding:20px 16px}.rl-consult .rl-other{font-size:13px}}

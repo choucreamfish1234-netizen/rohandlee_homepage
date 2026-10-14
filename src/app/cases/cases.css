@@ -1,0 +1,80 @@
+/* Deliberately scoped: the other Next pages retain their existing design. */
+.case-experience{--case-paper:#f6f5f0;--case-ink:#243b2d;background:var(--case-paper);color:var(--case-ink);font-family:'Noto Sans KR','Pretendard Variable',sans-serif;overflow-wrap:anywhere}
+.case-experience .font-serif{font-family:inherit}
+.case-experience h1,.case-experience h2,.case-experience h3{letter-spacing:-.05em;font-weight:500}
+.case-experience .eyebrow{color:#647963;font-size:10px;letter-spacing:.24em}
+.case-experience .records-hero{background:var(--case-paper);padding:80px 0 64px}
+.case-experience .records-hero h1{font-size:clamp(48px,7vw,96px);line-height:1.15;color:var(--case-ink);font-weight:600}
+.case-experience .records-hero p{line-height:1.9}
+.case-experience .records-list,.case-experience .records-related{background:var(--case-paper)}
+.case-experience .records-list nav{border-color:#c9d1c5}
+.case-experience .records-list nav a{min-height:48px;color:#53634f}
+.case-experience .records-list nav a[aria-current=page]{color:#243b2d;border-color:#243b2d}
+.case-experience .record-card{background:transparent;border-top:1px solid #7a8c77;padding:24px 0 16px}
+.case-experience .record-card>span:first-child{color:#60725c;font-size:11px}
+.case-experience .record-card h3{font-size:23px;line-height:1.5;color:#243b2d}
+.case-experience .record-card>p{font-size:15px;line-height:1.9;color:#52614f}
+.case-experience .record-result{padding:20px 0 0;margin-top:24px;border-top:1px solid #d7ddcf}
+.case-experience .record-result>span{display:none}
+.case-experience .record-result p{font-size:25px;line-height:1.5;font-weight:500;color:#34543b;letter-spacing:-.04em}
+.case-experience .record-card>span:last-child{font-size:12px;color:#576d51;margin-top:22px}
+.case-experience .records-archive{background:#eeefe8;border-top:1px solid #d8ded1;padding-top:64px}
+.case-experience .archive-heading{text-align:left;margin-bottom:32px}
+.case-experience .archive-heading h2{font-size:32px;color:#243b2d}
+.case-experience .archive-heading p{color:#5a6d55}
+.case-experience .archive-filters{justify-content:flex-start;gap:8px}
+.case-experience .archive-filters button{border:1px solid #bfccb8;border-radius:30px;background:transparent;color:#49603f}
+.case-experience .archive-filters button[aria-pressed=true]{background:#243b2d;color:#f6f5f0;border-color:#243b2d}
+.case-experience .archive-card{border:0;border-top:1px solid #b8c6b1;border-radius:0;box-shadow:none;background:transparent;transform:none}
+.case-experience .archive-image{border-radius:0;aspect-ratio:2/1;margin-top:18px}
+.case-experience .archive-copy{padding:24px 0}
+.case-experience .archive-copy h2{font-size:23px;line-height:1.5;color:#243b2d}
+.case-experience .archive-copy>p{font-size:15px;line-height:1.9;color:#52614f}
+.case-experience .archive-copy>div:first-child{align-items:flex-start;gap:12px;flex-wrap:wrap}
+.case-experience .archive-copy>div:first-child>span{background:transparent;color:#36543b;border:0;padding:0;font-size:12px}
+.case-experience .archive-copy>div:first-child>span:last-child{font-size:18px;font-weight:500}
+.case-experience .records-cta,.case-experience .record-contact{background:radial-gradient(ellipse at 50% 130%,#45624b,#0b1814 70%);border-radius:0;box-shadow:none;color:#f6f5f0}
+.case-experience .records-cta .eyebrow{color:#b9cab5}
+.case-experience .records-cta h2{font-size:clamp(28px,4vw,48px);line-height:1.45}
+.case-experience .records-cta a{border-radius:40px}
+.case-experience .records-archive>div:last-child>div>div{background:#243b2d}
+.case-experience .record-article,.case-experience .record-header,.case-experience .record-legacy{background:var(--case-paper)}
+.case-experience .record-header{padding-top:64px;padding-bottom:48px}
+.case-experience .record-header h1,.case-experience .record-legacy h1{color:#243b2d;font-size:clamp(32px,4.5vw,58px);line-height:1.35;font-weight:500}
+.case-experience .record-header dl{border-color:#bdc9b6}
+.case-experience .record-header dt{font-size:12px;color:#5c7055}
+.case-experience .record-header dd{line-height:1.8}
+.case-experience .record-outcome dd{font-size:24px;color:#34543b;font-weight:500}
+.case-experience .record-body{max-width:900px}
+.case-experience .record-body section{border-top:1px solid #cdd7c6;padding-top:28px}
+.case-experience .record-body section h2{font-size:26px;color:#243b2d}
+.case-experience .record-body section span{color:#768d6a}
+.case-experience .record-body section p,.case-experience .case-content p{font-size:17px;line-height:2;color:#43543f}
+.case-experience .record-thumbnail{border-radius:0;box-shadow:none}
+.case-experience .record-badge>span{background:transparent;border:0;border-left:2px solid #78916a;padding:4px 0 4px 20px;font-size:24px;color:#34543b;box-shadow:none;line-height:1.5}
+.case-experience .record-legacy article>div[class*="bg-"]{background:#eaeee3;border-radius:0;box-shadow:none}
+.case-experience .record-legacy article>.record-contact{background:#243b2d}
+.case-experience .case-content h2{font-size:27px;font-weight:500}
+.case-experience .case-content strong{background:transparent;padding:0}
+.case-experience .case-content table{display:block;max-width:100%;overflow-x:auto}
+.case-experience a:focus-visible,.case-experience button:focus-visible{outline:2px solid #4c7145;outline-offset:5px}
+@media(max-width:800px){
+ .case-experience .records-hero{padding:48px 0 40px}
+ .case-experience .records-hero h1{font-size:52px}
+ .case-experience .records-hero p:not(.eyebrow){font-size:15px;color:#52614f}
+ .case-experience .records-list{padding-top:12px;padding-bottom:48px}
+ .case-experience .record-card h3,.case-experience .archive-copy h2{font-size:22px}
+ .case-experience .record-card>p,.case-experience .archive-copy>p{font-size:16px}
+ .case-experience .record-result p{font-size:24px}
+ .case-experience .records-archive{padding-top:40px}
+ .case-experience .archive-filters{flex-wrap:nowrap;overflow-x:auto;padding:5px 2px 14px;margin-bottom:24px}
+ .case-experience .archive-filters button{flex-shrink:0}
+ .case-experience .record-header{padding-top:36px;padding-bottom:24px}
+ .case-experience .record-header h1,.case-experience .record-legacy h1{font-size:32px;line-height:1.4}
+ .case-experience .record-body{padding-top:40px;padding-bottom:44px}
+ .case-experience .record-body section p,.case-experience .case-content p{font-size:16px;line-height:1.95}
+ .case-experience .record-legacy{padding:36px 0 48px}
+ .case-experience .record-legacy article{padding-left:7%;padding-right:7%}
+ .case-experience .record-contact h3{color:#f6f5f0}
+}
+@media(prefers-reduced-motion:reduce){.case-experience *{animation:none!important;transition:none!important;scroll-behavior:auto!important}.case-experience .archive-card img{transform:none!important}}

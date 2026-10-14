@@ -30,3 +30,7 @@ if (gaId) {
   gtag('js', new Date())
   gtag('config', gaId)
 }
+
+import { initConsultation } from './consultation'
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initConsultation, { once: true })
+else initConsultation()

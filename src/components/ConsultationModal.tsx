@@ -201,7 +201,7 @@ export default function ConsultationModal({
                     </svg>
                   </div>
                   <h3 className="text-xl font-bold text-black mb-3">
-                    상담 신청이 완료되었습니다
+                    문의가 접수되었습니다
                   </h3>
                   <p className="text-sm text-gray-500 leading-relaxed">
                     영업일 기준 24시간 내 연락드리겠습니다.
@@ -218,7 +218,7 @@ export default function ConsultationModal({
                       Consultation
                     </p>
                     <h2 className="text-2xl font-bold text-black">
-                      무료 상담 신청
+                      문의하기
                     </h2>
                   </div>
 
@@ -387,7 +387,7 @@ export default function ConsultationModal({
                           전송 중...
                         </span>
                       ) : (
-                        '상담 신청하기'
+                        '문의하기'
                       )}
                     </button>
                   </form>
