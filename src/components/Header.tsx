@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import RenewalHeader from './RenewalHeader'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -61,6 +62,8 @@ export default function Header() {
     setMobileOpen(false)
     setOpenSection(null)
   }, [pathname])
+
+  if (pathname === '/cases' || pathname.startsWith('/cases/')) return <RenewalHeader />
 
   return (
     <header
