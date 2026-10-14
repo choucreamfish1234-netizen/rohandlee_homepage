@@ -59,12 +59,18 @@ export default function BlogListClient({
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">Blog</p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-black">법률 블로그</h1>
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">LEGAL INSIGHTS</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-black">법률상식</h1>
           <p className="mt-4 text-gray-500 text-sm max-w-lg mx-auto">
             법률 정보와 판례 분석, 로앤이의 이야기를 전합니다.
           </p>
         </motion.div>
+
+        <Link href="/blog/detention-family-guides" className="block mb-10 border border-[#c5d0c1] bg-[#f3f5ee] p-6 sm:p-8 text-[#294332]">
+          <span className="text-xs tracking-widest">가족을 위한 법률상식 · 30편</span>
+          <span className="block text-xl sm:text-2xl font-semibold mt-3">인천·수원·서울동부구치소 안내 ↗</span>
+          <span className="block mt-3 text-sm leading-6">첫 면회, 일반접견과 변호인접견, 녹음 여부와 구속 직후 준비할 일을 찾아보세요.</span>
+        </Link>
 
         {showFeatured && (
           <motion.div

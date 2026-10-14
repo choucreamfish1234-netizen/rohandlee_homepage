@@ -1,5 +1,6 @@
 'use client'
 
+import RenewalHeader from './RenewalHeader'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -39,7 +40,7 @@ const navItems: NavItem[] = [
 ]
 
 const mobileExtras: NavChild[] = [
-  { href: '/blog', label: '블로그' },
+  { href: '/blog', label: '법률상식' },
   { href: '/directions', label: '오시는 길' },
 ]
 
@@ -61,6 +62,8 @@ export default function Header() {
     setMobileOpen(false)
     setOpenSection(null)
   }, [pathname])
+
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) return <RenewalHeader />
 
   return (
     <header
