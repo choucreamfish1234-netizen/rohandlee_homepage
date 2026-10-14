@@ -87,7 +87,7 @@ export function ConsultationCTA({ text }: { text?: string }) {
             href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-10 py-4 bg-[#F6F2EA] text-[#1B3B2F] text-sm font-semibold tracking-wide hover:bg-white transition-colors min-h-[52px]"
           >
-            상담 문의하기
+            상담예약하기
           </Link>
           <a
             href="tel:+82322078788"

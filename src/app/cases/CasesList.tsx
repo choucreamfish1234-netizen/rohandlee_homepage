@@ -386,7 +386,7 @@ export default function CasesList() {
                 href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 sm:px-10 py-4 bg-white text-accent text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                상담 문의하기
+                상담예약하기
               </Link>
               <a
                 href="tel:032-207-8788"

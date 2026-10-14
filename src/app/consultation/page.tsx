@@ -27,8 +27,8 @@ export default function Page() {
       <section className="pb-8 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-            <a href="#inquiry" className="p-5 bg-[#f6f5f0] rounded-xl"><strong className="block text-[#243b2d] mb-2">문의하기</strong><span className="text-sm text-gray-600">문의 내용을 남기면 이메일로 답변드립니다.</span></a>
-            <a href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer" className="p-5 bg-[#243b2d] text-white rounded-xl"><strong className="block mb-2">상담 문의하기 ↗</strong><span className="text-sm">레피드에서 상담 일정을 예약하세요.</span></a>
+            <a href="#inquiry" className="p-5 bg-[#f6f5f0] rounded-xl"><strong className="block text-[#243b2d] mb-2">문의하기</strong><span className="text-sm text-gray-600">사건내용을 남겨주세요</span></a>
+            <a href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer" className="p-5 bg-[#243b2d] text-white rounded-xl"><strong className="block mb-2">상담예약하기 ↗</strong><span className="text-sm">전화상담, 방문상담을 원하시는 일정에 예약하세요</span></a>
             <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" className="p-5 bg-[#FEE500] text-[#191919] rounded-xl"><strong className="block mb-2">기타 문의 · 카카오톡 ↗</strong><span className="text-sm">기타 문의는 카카오톡으로 문의해주세요.</span></a>
           </div>
           <p className="mt-6 text-xs text-gray-400 text-center">
@@ -44,7 +44,7 @@ export default function Page() {
               <h2 className="text-lg font-bold text-black mb-3">상담 방법</h2>
               <div className="space-y-3 text-sm text-gray-600 leading-relaxed">
                 <p>
-                  이메일 문의는 아래 문의 폼으로 접수해주세요. 변호사 상담 예약은 ‘상담 문의하기’를 눌러 레피드에서 진행할 수 있습니다. 기타 문의는 카카오톡 채널로 연락해주세요.
+                  이메일 문의는 아래 문의 폼으로 접수해주세요. 변호사 상담 예약은 ‘상담예약하기’를 눌러 레피드에서 진행할 수 있습니다. 기타 문의는 카카오톡 채널로 연락해주세요.
                 </p>
                 <p>
                   전국 어디서든 전화·화상 상담이 가능합니다. 수사기관 동행, 법원 출석이 필요한 경우에도 전국 어디든 직접 갑니다.

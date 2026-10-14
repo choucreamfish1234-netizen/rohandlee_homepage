@@ -12,13 +12,13 @@ export function initConsultation() {
     <h2 id="rl-consult-title" tabindex="-1">어떤 도움이 필요하신가요?</h2>
     <div class="rl-options">
       <p class="rl-intro">편하신 방법으로 로앤이에 문의해주세요.</p>
-      <button type="button" class="rl-choice" data-email><span><strong>문의하기</strong><small>문의 내용을 남기면 이메일로 답변드립니다.</small></span><span aria-hidden="true">↗</span></button>
-      <a class="rl-choice rl-book" href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"><span><strong>상담 문의하기</strong><small>레피드에서 상담 일정을 예약하세요.</small></span><span aria-hidden="true">↗</span></a>
+      <button type="button" class="rl-choice" data-email><span><strong>문의하기</strong><small>사건내용을 남겨주세요</small></span><span aria-hidden="true">↗</span></button>
+      <a class="rl-choice rl-book" href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"><span><strong>상담예약하기</strong><small>전화상담, 방문상담을 원하시는 일정에 예약하세요</small></span><span aria-hidden="true">↗</span></a>
       <a class="rl-other" href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer">기타 문의는 카카오톡으로 문의해주세요 ↗</a>
     </div>
     <form class="rl-form" hidden>
       <button class="rl-back" type="button">← 문의 방법 선택</button>
-      <p class="rl-intro">사건의 경위와 현재 상황을 남겨주세요.</p>
+      <p class="rl-intro">사건내용을 남겨주세요</p>
       <div class="rl-fields">
         <label>이름<input name="name" autocomplete="name" required maxlength="100"></label>
         <label>연락처<input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label>

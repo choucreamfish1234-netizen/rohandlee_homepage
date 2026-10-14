@@ -98,7 +98,7 @@ export default function ConsultationSelectModal({
                     문의하기
                   </span>
                   <span className="block text-sm text-white/50 mt-1">
-                    문의 내용을 남기면 이메일로 답변드립니다
+                    사건내용을 남겨주세요
                   </span>
                 </button>
 
@@ -115,10 +115,10 @@ export default function ConsultationSelectModal({
                     className="block font-semibold text-base"
                     style={{ color: '#1B3B2F' }}
                   >
-                    상담 문의하기
+                    상담예약하기
                   </span>
                   <span className="block text-sm text-gray-400 mt-1">
-                    레피드에서 상담 일정을 예약하세요
+                    전화상담, 방문상담을 원하시는 일정에 예약하세요
                   </span>
                 </a>
                 <a href="https://pf.kakao.com/_YxgWxcn/chat" target="_blank" rel="noopener noreferrer" onClick={() => { trackConversion('kakao_click'); onClose() }} className="text-sm text-center text-[#43543f] py-3">기타 문의는 카카오톡으로 문의해주세요 ↗</a>

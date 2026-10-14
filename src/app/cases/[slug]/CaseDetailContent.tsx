@@ -306,7 +306,7 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
             href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
             className="bg-white text-[#1B3B2F] text-sm font-semibold px-8 py-3.5 rounded-full hover:bg-white/90 transition-colors shadow-md min-h-[48px]"
           >
-            상담 문의하기
+            상담예약하기
           </a>
         </div>
       </motion.article>
