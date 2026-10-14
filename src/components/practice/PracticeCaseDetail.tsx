@@ -1,3 +1,6 @@
+import { absoluteCaseImage } from '@/lib/case-image'
+import Image from 'next/image'
+import { practiceCaseImage } from '@/lib/practice-case-image'
 import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
 import { AREA_LABEL, caseAreaLink, practiceCases, type PracticeCase } from '@/data/practice/cases'
@@ -11,6 +14,7 @@ export function practiceCaseJsonLd(c: PracticeCase) {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: c.title,
+    image: absoluteCaseImage(practiceCaseImage(c).src),
     description: c.summary,
     author: { '@type': 'LegalService', '@id': `${BASE_URL}/#legalservice`, name: '법률사무소 로앤이', url: BASE_URL },
     publisher: { '@type': 'LegalService', '@id': `${BASE_URL}/#legalservice`, name: '법률사무소 로앤이', url: BASE_URL },
@@ -79,6 +83,10 @@ export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
         </header>
 
         <div className="record-body max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+          <figure className="mb-10">
+            <Image src={practiceCaseImage(c).src} alt={practiceCaseImage(c).alt} width={1200} height={800} sizes="(max-width: 768px) 100vw, 768px" className="w-full aspect-[3/2] object-cover" />
+            <figcaption className="mt-3 text-xs text-[#52634c]">{practiceCaseImage(c).caption}</figcaption>
+          </figure>
           <div className="space-y-12">
             {sections.map((s, i) => (
               <section key={s.heading}>

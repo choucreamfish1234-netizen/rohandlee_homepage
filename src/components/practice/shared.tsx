@@ -1,3 +1,5 @@
+import Image from 'next/image'
+import { practiceCaseImage } from '@/lib/practice-case-image'
 import Link from 'next/link'
 import type { PracticeFaq, PracticeStep, RelatedArea } from '@/data/practice'
 import { CASE_DISCLAIMER, type PracticeCase } from '@/data/practice/cases'
@@ -109,6 +111,7 @@ export function CaseCard({ c }: { c: PracticeCase }) {
       href={`/cases/${c.slug}`}
       className="record-card group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
     >
+      <Image src={practiceCaseImage(c).src} alt={practiceCaseImage(c).alt} width={1200} height={800} sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw" className="mb-5 w-full aspect-[3/2] object-cover" />
       <span className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/50">{c.category}</span>
       <h3 className="mt-3 font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A] leading-snug group-hover:text-[#1B3B2F] transition-colors">
         {c.title}

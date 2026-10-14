@@ -1,3 +1,6 @@
+import { withAssignedCaseImage } from '@/lib/case-image'
+import { absoluteCaseImage } from '@/lib/case-image'
+import { practiceCaseImage } from '@/lib/practice-case-image'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
 import type { Metadata } from 'next'
@@ -14,7 +17,7 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-async function findCase(slugOrId: string) {
+async function findCaseRecord(slugOrId: string) {
   // 1. slug로 검색
   const { data: bySlug } = await supabaseAdmin
     .from('success_cases')
@@ -38,6 +41,11 @@ async function findCase(slugOrId: string) {
 
   // 3. DEFAULT_CASES 폴백
   return DEFAULT_CASES.find(c => c.slug === slugOrId || String(c.id) === slugOrId) || null
+}
+
+async function findCase(slugOrId: string) {
+  const record = await findCaseRecord(slugOrId)
+  return record ? withAssignedCaseImage(record) : null
 }
 
 export async function generateStaticParams() {
@@ -89,6 +97,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: practice.title,
       description: `${practice.summary}. 결과: ${practice.result}. 법률사무소 로앤이 대응 사례.`,
       keywords: [practice.category, `${practice.category} 변호사`],
+      twitter: { card: 'summary_large_image', title: practice.title, description: practice.summary, images: [absoluteCaseImage(practiceCaseImage(practice).src)] },
       alternates: { canonical: url },
       openGraph: {
         title: practice.title,
@@ -97,7 +106,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url,
         siteName: '법률사무소 로앤이',
         locale: 'ko_KR',
-        images: [`${baseUrl}/og-image.png`],
+        images: [{ url: absoluteCaseImage(practiceCaseImage(practice).src), alt: practiceCaseImage(practice).alt }],
       },
     }
   }
