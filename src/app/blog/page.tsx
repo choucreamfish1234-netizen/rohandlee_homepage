@@ -1,3 +1,4 @@
+import { detentionGuides, guideAsPost } from '@/lib/detention-guides'
 import type { Metadata } from 'next'
 import { getPageSeo } from '@/lib/seo'
 import { supabaseAdmin } from '@/lib/supabase-admin'
@@ -7,7 +8,7 @@ import BlogListClient from './BlogListClient'
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/blog', {
     title: '법률상식',
-    description: '법률사무소 로앤이 법률상식. 성범죄·금융사기·재산범죄·학교폭력·부동산·손해배상 등 피해자를 위한 법률 정보와 판례 분석을 전달합니다.',
+    description: '법률사무소 로앤이 법률상식. 인천·수원·서울동부구치소 접견과 구속 가족 안내, 형사·민사 및 피해 회복에 관한 법률 정보를 전합니다.',
     ogTitle: '법률상식',
     ogDescription: '성범죄·재산범죄·학교폭력·부동산·손해배상 등 피해자를 위한 법률 정보.',
   })
@@ -32,11 +33,16 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     query = query.eq('category', category)
   }
 
+  const guides = category === '전체' || category === '법률정보' ? detentionGuides.map(guideAsPost) : []
   const from = (page - 1) * POSTS_PER_PAGE
-  const to = from + POSTS_PER_PAGE - 1
-  query = query.range(from, to)
-
-  const { data: posts, count } = await query
+  const localPosts = guides.slice(from, from + POSTS_PER_PAGE)
+  const remaining = POSTS_PER_PAGE - localPosts.length
+  const dbFrom = Math.max(0, from - guides.length)
+  // Fetch count even when the current page consists entirely of editorial guides.
+  query = query.range(dbFrom, dbFrom + Math.max(1, remaining) - 1)
+  const { data: databasePosts, count } = await query
+  const posts = [...localPosts, ...((databasePosts as BlogPost[] | null) || []).slice(0, remaining)]
+  const totalCount = (count || 0) + guides.length
 
   const { data: featured } = await supabaseAdmin
     .from('blog_posts')
@@ -46,7 +52,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     .order('view_count', { ascending: false })
     .limit(3)
 
-  const totalPages = Math.ceil((count || 0) / POSTS_PER_PAGE)
+  const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE)
 
   return (
     <BlogListClient
@@ -54,7 +60,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
       featured={(featured as BlogPost[]) || []}
       currentPage={page}
       totalPages={totalPages}
-      totalCount={count || 0}
+      totalCount={totalCount}
       currentCategory={category}
     />
   )

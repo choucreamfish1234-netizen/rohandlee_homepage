@@ -1,3 +1,5 @@
+import DetentionGuideArticle from '@/components/DetentionGuideArticle'
+import { detentionGuides, findDetentionGuide, GUIDE_BASE, GUIDE_DATE } from '@/lib/detention-guides'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -70,7 +72,7 @@ export async function generateStaticParams() {
     .select('slug')
     .eq('status', 'published')
 
-  return (posts || []).map((post) => ({
+  return [...detentionGuides, ...(posts || [])].map((post) => ({
     slug: post.slug,
   }))
 }
@@ -78,6 +80,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+  const guide = findDetentionGuide(decodedSlug)
+  if (guide) return {
+    title: guide.title, description: guide.excerpt,
+    alternates: { canonical: `${GUIDE_BASE}/blog/${guide.slug}` },
+    openGraph: { type: 'article', title: guide.title, description: guide.excerpt,
+      url: `${GUIDE_BASE}/blog/${guide.slug}`, publishedTime: GUIDE_DATE,
+      images: [{ url: `${GUIDE_BASE}/og-image.png`, width: 1200, height: 630, alt: guide.title }] },
+    twitter: { card: 'summary_large_image', title: guide.title, description: guide.excerpt, images: [`${GUIDE_BASE}/og-image.png`] },
+    robots: { index: true, follow: true },
+  }
+
   let { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
@@ -147,6 +160,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+  const guide = findDetentionGuide(decodedSlug)
+  if (guide) return <DetentionGuideArticle guide={guide} />
+
 
   let { data: post } = await supabaseAdmin
     .from('blog_posts')

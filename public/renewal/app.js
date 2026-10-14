@@ -31,12 +31,5 @@ const story=document.querySelector('.story'),title=document.querySelector('#step
  }));
 })();
 
-// Keep the existing /blog articles accessible under their new menu name.
-(()=>{
- document.querySelectorAll('a[href="/blog"]').forEach(a=>{a.textContent='법률상식'});
- const nav=document.querySelector('header nav');
- if(nav&&!nav.querySelector('a[href="/blog"]')){
-  const a=document.createElement('a');a.href='/blog';a.textContent='법률상식';
-  nav.insertBefore(a,nav.querySelector('.nav-cta'));
- }
-})();
+// Keep the original legal articles discoverable from renewal pages.
+(()=>{document.querySelectorAll('a[href="/blog"]').forEach(a=>a.textContent='법률상식');const nav=document.querySelector('header nav');if(nav&&!nav.querySelector('a[href="/blog"]')){const a=document.createElement('a');a.href='/blog';a.textContent='법률상식';nav.insertBefore(a,nav.querySelector('.nav-cta'));}})();

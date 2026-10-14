@@ -66,6 +66,12 @@ export default function BlogListClient({
           </p>
         </motion.div>
 
+        <Link href="/blog/detention-family-guides" className="block mb-10 border border-[#c5d0c1] bg-[#f3f5ee] p-6 sm:p-8 text-[#294332]">
+          <span className="text-xs tracking-widest">가족을 위한 법률상식 · 30편</span>
+          <span className="block text-xl sm:text-2xl font-semibold mt-3">인천·수원·서울동부구치소 안내 ↗</span>
+          <span className="block mt-3 text-sm leading-6">첫 면회, 일반접견과 변호인접견, 녹음 여부와 구속 직후 준비할 일을 찾아보세요.</span>
+        </Link>
+
         {showFeatured && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}

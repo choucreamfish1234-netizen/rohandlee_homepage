@@ -1,3 +1,4 @@
+import { detentionGuides, GUIDE_DATE } from '@/lib/detention-guides'
 import renewalRoutes from '@/data/renewal-routes.json'
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
@@ -101,7 +102,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/blog`, lastModified: new Date().toISOString(), changeFrequency: 'daily', priority: 0.8 },
   ]
 
-  const dynamicPages: MetadataRoute.Sitemap = []
+  const dynamicPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/blog/detention-family-guides`, lastModified: GUIDE_DATE, changeFrequency: 'monthly', priority: 0.8 },
+    ...detentionGuides.map(g => ({ url: `${baseUrl}/blog/${g.slug}`, lastModified: GUIDE_DATE, changeFrequency: 'monthly' as const, priority: 0.7 })),
+  ]
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
