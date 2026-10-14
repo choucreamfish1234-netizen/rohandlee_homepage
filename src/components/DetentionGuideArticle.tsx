@@ -1,3 +1,4 @@
+import GuideConsultationButton from './GuideConsultationButton'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -34,7 +35,7 @@ export default function DetentionGuideArticle({ guide }: { guide: DetentionGuide
       <section className="my-12 bg-[#253f31] p-7 sm:p-10 text-[#f7f7f2]">
         <h2 className="text-2xl font-medium">가족의 상황을 함께 정리하겠습니다.</h2>
         <p className="mt-4 leading-7">현재 수용기관과 사건 단계, 예정된 조사·재판 일정을 알려주세요.</p>
-        <a href={`?consult=1`} className="inline-block mt-6 border-b border-white/60 py-2">문의·상담예약 안내 ↗</a>
+        <GuideConsultationButton />
       </section>
       <section aria-label="함께 읽을 글"><h2 className="text-2xl mb-5">{guide.city} 관련 안내</h2><ul className="divide-y divide-[#d7ded3]">{related.slice(0, 4).map(g => <li key={g.slug}><Link href={`/blog/${g.slug}`} className="block py-4 leading-7">{g.title} ↗</Link></li>)}</ul><Link href="/blog/detention-family-guides" className="inline-block mt-6 underline underline-offset-4">세 구치소 안내 30편 모두 보기</Link></section>
     </div>
