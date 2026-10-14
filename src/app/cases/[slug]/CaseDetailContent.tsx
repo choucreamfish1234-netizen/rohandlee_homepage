@@ -76,9 +76,9 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
   const hasContent = caseData.content && caseData.content.trim().length > 0
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="record-legacy py-16 sm:py-20">
       <motion.article
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-3xl mx-auto px-4 sm:px-6 md:px-0"
       >
@@ -110,14 +110,14 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
         </h1>
 
         {/* Badge */}
-        <div className="mb-8">
+        <div className="record-badge mb-8">
           <span className={`inline-flex items-center text-sm font-semibold px-5 py-2 border shadow-sm ${caseData.badge_color}`}>
             {caseData.badge}
           </span>
         </div>
 
         {/* Thumbnail */}
-        <div className="aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-12">
+        <div className="record-thumbnail aspect-[16/9] overflow-hidden rounded-xl shadow-lg mb-12">
           <Image
             src={caseData.image_url}
             alt={caseData.title}
@@ -299,7 +299,7 @@ export default function CaseDetailContent({ slug, initialCase }: { slug: string;
         </div>
 
         {/* CTA */}
-        <div className="rounded-2xl bg-gradient-to-br from-[#1B3B2F] to-[#2d5a47] p-6 sm:p-10 text-center shadow-xl">
+        <div className="record-contact rounded-2xl bg-gradient-to-br from-[#1B3B2F] to-[#2d5a47] p-6 sm:p-10 text-center shadow-xl">
           <h3 className="text-lg sm:text-xl font-bold text-white mb-3">비슷한 사건으로 고민 중이신가요?</h3>
           <p className="text-sm text-white/70 mb-6 sm:mb-8 max-w-md mx-auto">
             전문 변호사가 끝까지 함께합니다. 지금 바로 무료 상담을 신청하세요.

@@ -75,7 +75,7 @@ export function SectionTitle({ eyebrow, title, className = '' }: { eyebrow: stri
 
 export function ConsultationCTA({ text }: { text?: string }) {
   return (
-    <section className="bg-[#0f241c] text-white py-20 sm:py-28">
+    <section className="records-cta bg-[#0f241c] text-white py-20 sm:py-28">
       <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
         <p className="eyebrow justify-center">Consultation</p>
         <h2 className="mt-6 font-serif text-2xl sm:text-4xl font-semibold leading-snug">
@@ -105,14 +105,14 @@ export function CaseCard({ c }: { c: PracticeCase }) {
   return (
     <Link
       href={`/cases/${c.slug}`}
-      className="group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
+      className="record-card group flex flex-col h-full bg-white border-t-2 border-[#1C1C1A] pt-6 pb-2 transition-colors hover:border-[#B8955A]"
     >
       <span className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/50">{c.category}</span>
       <h3 className="mt-3 font-serif text-lg sm:text-xl font-semibold text-[#1C1C1A] leading-snug group-hover:text-[#1B3B2F] transition-colors">
         {c.title}
       </h3>
       <p className="mt-3 text-sm text-[#1C1C1A]/60 leading-relaxed flex-1">{c.summary}</p>
-      <div className="mt-5 flex items-center gap-3">
+      <div className="record-result mt-5 flex items-center gap-3">
         <span className="h-px w-6 bg-[#B8955A]" />
         <p className="text-sm font-semibold text-[#8a6d3b]">{c.result}</p>
       </div>
@@ -128,7 +128,7 @@ export function CaseDisclaimer({ className = '' }: { className?: string }) {
 export function RelatedCases({ cases, title = '관련 대응 사례' }: { cases: PracticeCase[]; title?: string }) {
   if (cases.length === 0) return null
   return (
-    <section className="py-20 sm:py-24 bg-white">
+    <section className="records-related py-20 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="flex items-end justify-between gap-4 mb-10">
           <SectionTitle eyebrow="Cases" title={title} />

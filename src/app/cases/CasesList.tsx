@@ -3,8 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import ScrollReveal from '@/components/ScrollReveal'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useAdmin } from '@/components/AdminMode'
 import { type SuccessCase, DEFAULT_CASES, getRandomCaseImage } from '@/lib/cases'
 
@@ -12,6 +11,7 @@ const categories = ['전체', '성범죄', '재산범죄', '스토킹', '보이�
 
 export default function CasesList() {
   const { isEditMode } = useAdmin()
+  const reducedMotion = useReducedMotion()
   const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES)
   const [dbReady, setDbReady] = useState(false)
   const [activeCategory, setActiveCategory] = useState('전체')
@@ -137,13 +137,13 @@ export default function CasesList() {
   const canEdit = isEditMode && dbReady
 
   return (
-    <section className="pt-12 sm:pt-16 pb-16 sm:pb-24 bg-gray-50">
+    <section className="records-archive pt-12 sm:pt-16 pb-16 sm:pb-24 bg-gray-50">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-10 sm:mb-16"
+          className="archive-heading text-center mb-10 sm:mb-16"
         >
           <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
             Case Results
@@ -173,11 +173,12 @@ export default function CasesList() {
         )}
 
         {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-16">
+        <div className="archive-filters flex flex-wrap justify-center gap-2 mb-10 sm:mb-16">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
               className={`px-5 py-2.5 text-sm font-medium transition-all duration-300 min-h-[44px] ${
                 activeCategory === cat
                   ? 'bg-accent text-white'
@@ -193,17 +194,17 @@ export default function CasesList() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 1 }}
+            transition={{ duration: reducedMotion ? 0 : 0.2 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {filteredCases.map((c, i) => {
+            {filteredCases.map((c) => {
               const cardContent = (
-                <div className="group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full">
+                <div className="archive-card group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full">
                   {/* Image area */}
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-t-xl">
+                  <div className="archive-image relative aspect-[16/9] overflow-hidden rounded-t-xl">
                     <Image
                       src={c.image_url}
                       alt={c.title}
@@ -264,7 +265,7 @@ export default function CasesList() {
                   </div>
 
                   {/* Content area */}
-                  <div className="p-8">
+                  <div className="archive-copy p-8">
                     <div className="flex items-center justify-between mb-5">
                       {canEdit ? (
                         <InlineEdit
@@ -342,7 +343,7 @@ export default function CasesList() {
               )
 
               return (
-                <ScrollReveal key={c.id} delay={i * 0.1}>
+                <div key={c.id}>
                   {canEdit ? (
                     cardContent
                   ) : (
@@ -350,7 +351,7 @@ export default function CasesList() {
                       {cardContent}
                     </Link>
                   )}
-                </ScrollReveal>
+                </div>
               )
             })}
           </motion.div>
@@ -372,7 +373,7 @@ export default function CasesList() {
 
       {/* CTA */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-40">
-        <ScrollReveal>
+        <div>
           <div className="bg-accent py-12 sm:py-20 px-5 sm:px-8 text-center">
             <h2 className="text-xl sm:text-3xl font-bold text-white mb-4">
               비슷한 사건으로 고민 중이신가요?
@@ -395,7 +396,7 @@ export default function CasesList() {
               </a>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   )

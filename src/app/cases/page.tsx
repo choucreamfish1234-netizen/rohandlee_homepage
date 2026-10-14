@@ -41,11 +41,11 @@ export default async function Page({ searchParams }: Props) {
       <JsonLd data={itemListJsonLd} />
       <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '대응 사례' }]} />
 
-      <section className="bg-[#F6F2EA] pt-10 sm:pt-16 pb-12 sm:pb-16">
+      <section className="records-hero bg-[#F6F2EA] pt-10 sm:pt-16 pb-12 sm:pb-16">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7">
-            <p className="eyebrow">Case Results</p>
-            <h1 className="mt-6 font-serif text-4xl sm:text-6xl font-semibold text-[#1C1C1A] tracking-tight">대응 사례</h1>
+            <p className="eyebrow">CASE RECORDS</p>
+            <h1 className="mt-6 font-serif text-4xl sm:text-6xl font-semibold text-[#1C1C1A] tracking-tight">결과에 이르는<br />과정.</h1>
           </div>
           <div className="lg:col-span-5">
             <p className="text-sm sm:text-base text-[#1C1C1A]/65 leading-relaxed">
@@ -56,7 +56,7 @@ export default async function Page({ searchParams }: Props) {
         </div>
       </section>
 
-      <section className="pt-10 pb-20 sm:pb-28 bg-white">
+      <section className="records-list pt-10 pb-20 sm:pb-28 bg-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <nav aria-label="사례 분야 필터" className="mb-12 -mx-5 px-5 overflow-x-auto scrollbar-hide border-b border-[#1C1C1A]/10">
             <ul className="flex gap-6 sm:gap-7 min-w-max">
@@ -67,6 +67,7 @@ export default async function Page({ searchParams }: Props) {
                     <Link
                       href={cat ? `/cases?category=${encodeURIComponent(cat)}` : '/cases'}
                       scroll={false}
+                      aria-current={isActive ? 'page' : undefined}
                       className={`inline-block py-4 text-sm border-b-2 -mb-px transition-colors ${
                         isActive
                           ? 'border-[#1B3B2F] text-[#1B3B2F] font-semibold'

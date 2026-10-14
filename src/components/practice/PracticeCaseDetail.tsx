@@ -48,8 +48,8 @@ export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
       <JsonLd data={practiceCaseJsonLd(c)} />
       <Breadcrumb items={[{ name: '홈', href: '/' }, { name: '대응 사례', href: '/cases' }, { name: c.title }]} />
 
-      <article className="bg-white">
-        <header className="bg-[#F6F2EA] pt-12 sm:pt-20 pb-12 sm:pb-16">
+      <article className="record-article bg-white">
+        <header className="record-header bg-[#F6F2EA] pt-12 sm:pt-20 pb-12 sm:pb-16">
           <div className="max-w-4xl mx-auto px-5 sm:px-8">
             <Link href={`/cases?category=${encodeURIComponent(c.category)}`} className="eyebrow tracking-[0.12em] text-xs hover:opacity-80">
               {c.category}
@@ -70,7 +70,7 @@ export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
                   <dd className="mt-2 text-sm sm:text-base text-[#1C1C1A]">{middle.value}</dd>
                 </div>
               )}
-              <div className="py-5 sm:pl-6 sm:border-l border-[#1C1C1A]/10">
+              <div className="record-outcome py-5 sm:pl-6 sm:border-l border-[#1C1C1A]/10">
                 <dt className="text-[11px] tracking-[0.2em] uppercase text-[#1C1C1A]/45">결과</dt>
                 <dd className="mt-2 font-serif text-base sm:text-lg font-semibold text-[#8a6d3b]">{c.result}</dd>
               </div>
@@ -78,7 +78,7 @@ export default function PracticeCaseDetail({ c }: { c: PracticeCase }) {
           </div>
         </header>
 
-        <div className="max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
+        <div className="record-body max-w-3xl mx-auto px-5 sm:px-8 py-14 sm:py-20">
           <div className="space-y-12">
             {sections.map((s, i) => (
               <section key={s.heading}>
