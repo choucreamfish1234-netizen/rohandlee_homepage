@@ -40,6 +40,7 @@ export default function RenewalHeader() {
         <a href="/#lawyers">변호사 소개</a>
         <a href="/centers">피해자 전문센터 ↗</a>
         <a href="/cases" aria-current={pathname === '/cases' ? 'page' : undefined}>성공사례</a>
+        <a href="/blog" aria-current={pathname === '/blog' ? 'page' : undefined}>법률상식</a>
         <button className="renewal-nav-cta" type="button" aria-haspopup="dialog" onClick={() => { close(); openConsultation() }}>상담 안내 ↗</button>
       </nav>
     </header>

@@ -55,7 +55,7 @@ function buildDescription(post: { seo_description?: string | null; meta_descript
     if (plain.length > 0) return plain.substring(0, 160)
   }
 
-  return '법률사무소 로앤이 법률 블로그에서 자세한 내용을 확인하세요.'
+  return '법률사무소 로앤이 법률상식에서 자세한 내용을 확인하세요.'
 }
 
 export const revalidate = 3600

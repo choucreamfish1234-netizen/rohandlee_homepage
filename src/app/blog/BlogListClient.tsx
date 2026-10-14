@@ -59,8 +59,8 @@ export default function BlogListClient({
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">Blog</p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-black">법률 블로그</h1>
+          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-3">LEGAL INSIGHTS</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-black">법률상식</h1>
           <p className="mt-4 text-gray-500 text-sm max-w-lg mx-auto">
             법률 정보와 판례 분석, 로앤이의 이야기를 전합니다.
           </p>

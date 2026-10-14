@@ -40,7 +40,7 @@ const navItems: NavItem[] = [
 ]
 
 const mobileExtras: NavChild[] = [
-  { href: '/blog', label: '블로그' },
+  { href: '/blog', label: '법률상식' },
   { href: '/directions', label: '오시는 길' },
 ]
 
@@ -63,7 +63,7 @@ export default function Header() {
     setOpenSection(null)
   }, [pathname])
 
-  if (pathname === '/cases' || pathname.startsWith('/cases/')) return <RenewalHeader />
+  if (pathname === '/cases' || pathname.startsWith('/cases/') || pathname === '/blog' || pathname.startsWith('/blog/')) return <RenewalHeader />
 
   return (
     <header
