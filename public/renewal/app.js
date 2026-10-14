@@ -6,18 +6,9 @@ const story=document.querySelector('.story'),title=document.querySelector('#step
 
 // Restore the established email / booking / Kakao contact routes on static renewal pages.
 (()=>{
- const booking='https://www.latpeed.com/products/vy4Pu',kakao='https://pf.kakao.com/_YxgWxcn/chat';
+ const kakao='https://pf.kakao.com/_YxgWxcn/chat';
  const external=(a,url)=>{a.href=url;a.target='_blank';a.rel='noopener noreferrer'};
- document.querySelectorAll('.hero-action,.nav-cta,.detail-hero>.pill').forEach(a=>{
-  if(!/상담/.test(a.textContent))return;
-  external(a,booking);a.textContent='상담 문의하기 ↗';
- });
- document.querySelectorAll('.contact .actions').forEach(actions=>{
-  const email=actions.querySelector('a[href="/consultation"]');
-  if(email){email.href='/consultation#inquiry';email.textContent='문의하기 ↗'}
-  const reserve=document.createElement('a');reserve.className='pill';external(reserve,booking);reserve.textContent='상담 문의하기 ↗';actions.prepend(reserve);
-  const other=document.createElement('a');other.className='contact-other';external(other,kakao);other.textContent='기타 문의는 카카오톡으로 문의해주세요 ↗';actions.insertAdjacentElement('afterend',other);
- });
+ // Consultation controls are wired to the on-page dialog by analytics.js.
  if(!document.querySelector('.renewal-kakao')){
   const a=document.createElement('a');a.className='renewal-kakao';external(a,kakao);a.setAttribute('aria-label','기타 문의 · 카카오톡 (새 창)');
   a.innerHTML='<span class="renewal-kakao-label">기타 문의</span><svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28"><path fill="currentColor" d="M14 4C8.477 4 4 7.477 4 11.667c0 2.7 1.737 5.067 4.36 6.433-.14.507-.9 3.267-.933 3.5 0 0-.02.167.087.233.107.067.233.033.233.033.307-.043 3.56-2.327 4.12-2.733.7.1 1.413.2 2.133.2 5.523 0 10-3.477 10-7.667S19.523 4 14 4z"/></svg>';

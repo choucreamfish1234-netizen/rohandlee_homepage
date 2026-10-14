@@ -54,3 +54,24 @@
 .renewal-kakao{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right));bottom:calc(20px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:#fee500;color:#191919;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px #0b181426}
 .renewal-kakao-label{position:absolute;right:66px;white-space:nowrap;background:#f6f5f0;color:#243b2d;padding:7px 12px;border:1px solid #d4dccd;border-radius:20px;font-size:12px}
 @media(max-width:800px){.contact .actions{gap:14px}.contact .actions>.pill{font-size:13px}.contact-other{font-size:13px;padding:8px 0}.renewal-kakao{width:50px;height:50px;right:14px}.renewal-kakao-label{right:59px;font-size:11px}}
+
+/* On-page consultation: scoped to avoid the existing situation dialog. */
+dialog.rl-consult{position:fixed;inset:0;margin:auto;width:min(560px,calc(100% - 32px));max-height:calc(100dvh - 32px);box-sizing:border-box;padding:44px 36px 32px;border:1px solid #d9ded3;border-radius:20px;background:#f7f6f0;color:#253c2e;overflow:auto;overscroll-behavior:contain;text-align:left;box-shadow:0 24px 100px #071a2440}
+.rl-consult::backdrop{background:rgb(10 24 17 / .65);backdrop-filter:blur(5px)}
+.rl-consult [hidden]{display:none!important}.rl-consult button,.rl-consult input,.rl-consult select,.rl-consult textarea{font:inherit;box-sizing:border-box}
+.rl-consult .rl-close{position:absolute;right:16px;top:10px;width:44px;height:44px;background:transparent;border:0;font-size:30px;color:#253c2e;cursor:pointer}
+.rl-consult .rl-eyebrow{font-size:10px;letter-spacing:.2em;margin:0 0 16px;color:#65745e}
+.rl-consult h2{font-size:clamp(24px,5vw,32px);letter-spacing:-.045em;line-height:1.4;margin:0 0 18px;font-weight:600;outline:none}
+.rl-consult .rl-intro{font-size:15px;line-height:1.7;color:#52634f;margin:0 0 24px}
+.rl-consult .rl-choice{display:flex;align-items:center;justify-content:space-between;width:100%;gap:16px;text-align:left;text-decoration:none;padding:22px 20px;margin:12px 0;border:1px solid #cbd4c5;border-radius:12px;background:#fffefa;color:#253c2e;cursor:pointer}
+.rl-consult .rl-choice strong{display:block;font-size:20px;font-weight:600}.rl-consult .rl-choice small{display:block;font-size:14px;line-height:1.6;margin-top:8px}
+.rl-consult .rl-book{background:#293f30;color:#fffef8;border-color:#293f30}
+.rl-consult .rl-other{display:block;margin-top:24px;font-size:14px;line-height:1.8;color:#425b40;text-underline-offset:4px}
+.rl-consult .rl-back{background:none;border:0;padding:0;margin:0 0 20px;color:#52634f;cursor:pointer;font-size:14px}
+.rl-form>label,.rl-fields>label{display:block;font-size:14px;line-height:1.6;margin-bottom:16px}
+.rl-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rl-consult input:not([type=checkbox]),.rl-consult select,.rl-consult textarea{display:block;width:100%;min-height:48px;margin-top:6px;padding:12px;border:1px solid #bbc8b5;border-radius:8px;background:#fffefb;color:#233c2c;font-size:16px}
+.rl-consult textarea{resize:vertical}.rl-consult .rl-consent{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:#52634f}.rl-consent input{margin-top:5px;accent-color:#293f30}.rl-consent a{color:inherit;text-decoration:underline}
+.rl-consult .rl-submit{width:100%;min-height:52px;border:0;border-radius:28px;background:#293f30;color:#fffef8;cursor:pointer;font-size:16px}.rl-submit:disabled{opacity:.65;cursor:default}
+.rl-consult .rl-status{font-size:14px;line-height:1.7;margin:12px 0}.rl-consult :focus-visible{outline:2px solid #7a9268;outline-offset:4px}
+@media(max-width:600px){dialog.rl-consult{padding:42px 22px 24px;max-height:calc(100dvh - 24px);width:calc(100% - 24px)}.rl-consult .rl-choice{padding:20px 16px}.rl-consult .rl-other{font-size:13px}}
