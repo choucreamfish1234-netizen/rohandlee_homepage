@@ -138,24 +138,7 @@ export default function CasesList() {
 
   return (
     <section className="records-archive pt-12 sm:pt-16 pb-16 sm:pb-24 bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="archive-heading text-center mb-10 sm:mb-16"
-        >
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
-            Case Results
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-black">
-            성공사례 아카이브
-          </h2>
-          <p className="mt-5 text-gray-400 text-sm">
-            로앤이가 만들어낸 결과로 증명합니다.
-          </p>
-        </motion.div>
-
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         {/* Admin: DB seed banner */}
         {isEditMode && !dbReady && (
           <div className="mb-8 p-4 bg-amber-50 border border-amber-200 text-center rounded-lg">
@@ -372,7 +355,7 @@ export default function CasesList() {
       </div>
 
       {/* CTA */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-40">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 mt-16 sm:mt-40">
         <div>
           <div className="bg-accent py-12 sm:py-20 px-5 sm:px-8 text-center">
             <h2 className="text-xl sm:text-3xl font-bold text-white mb-4">

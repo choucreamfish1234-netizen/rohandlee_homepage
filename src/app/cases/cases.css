@@ -78,3 +78,6 @@
  .case-experience .record-contact h3{color:#f6f5f0}
 }
 @media(prefers-reduced-motion:reduce){.case-experience *{animation:none!important;transition:none!important;scroll-behavior:auto!important}.case-experience .archive-card img{transform:none!important}}
+
+/* Continue the case collection without a second archive title or color break. */
+.case-experience .records-archive{background:#f6f5f0;border-top:0;padding-top:0}

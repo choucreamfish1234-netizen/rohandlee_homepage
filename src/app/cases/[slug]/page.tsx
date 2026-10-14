@@ -1,3 +1,4 @@
+import { practiceCaseImage } from '@/lib/practice-case-image'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
 import type { Metadata } from 'next'
@@ -89,6 +90,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: practice.title,
       description: `${practice.summary}. 결과: ${practice.result}. 법률사무소 로앤이 대응 사례.`,
       keywords: [practice.category, `${practice.category} 변호사`],
+      twitter: { card: 'summary_large_image', title: practice.title, description: practice.summary, images: [`${baseUrl}${practiceCaseImage(practice).src}`] },
       alternates: { canonical: url },
       openGraph: {
         title: practice.title,
@@ -97,7 +99,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         url,
         siteName: '법률사무소 로앤이',
         locale: 'ko_KR',
-        images: [`${baseUrl}/og-image.png`],
+        images: [{ url: `${baseUrl}${practiceCaseImage(practice).src}`, alt: practiceCaseImage(practice).alt }],
       },
     }
   }
