@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/build-renewal-analytics.mjs && next build",
+    "build": "node scripts/sync-page-metadata.mjs --check && node scripts/build-renewal-analytics.mjs && next build",
+    "seo:sync": "node scripts/sync-page-metadata.mjs",
+    "seo:check": "node scripts/sync-page-metadata.mjs --check",
     "start": "next start",
     "lint": "next lint"
   },

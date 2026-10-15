@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ogTitle: '법률사무소 로앤이',
     ogDescription: '형사 사건 대응 · 피해자 구제 · 채권추심 · 가상자산 · 기업 자문',
   })
-  return { ...base, title: { absolute: HOME_TITLE } }
+  return base
 }
 
 const homeFaqJsonLd = {

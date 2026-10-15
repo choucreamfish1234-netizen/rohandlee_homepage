@@ -1,3 +1,4 @@
+import { brandedTitle } from '@/lib/page-metadata'
 import { withAssignedCaseImage } from '@/lib/case-image'
 import { absoluteCaseImage } from '@/lib/case-image'
 import { practiceCaseImage } from '@/lib/practice-case-image'
@@ -94,13 +95,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (practice) {
     const url = `${baseUrl}/cases/${practice.slug}`
     return {
-      title: practice.title,
+      title: { absolute: brandedTitle(practice.title) },
       description: `${practice.summary}. 결과: ${practice.result}. 법률사무소 로앤이 대응 사례.`,
       keywords: [practice.category, `${practice.category} 변호사`],
-      twitter: { card: 'summary_large_image', title: practice.title, description: practice.summary, images: [absoluteCaseImage(practiceCaseImage(practice).src)] },
+      twitter: { card: 'summary_large_image', title: brandedTitle(practice.title), description: practice.summary, images: [absoluteCaseImage(practiceCaseImage(practice).src)] },
       alternates: { canonical: url },
       openGraph: {
-        title: practice.title,
+        title: brandedTitle(practice.title),
         description: practice.summary,
         type: 'article',
         url,
@@ -114,7 +115,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const caseData = await findCase(decodedSlug)
 
   if (!caseData) {
-    return { title: '대응 사례' }
+    return { title: '사례를 찾을 수 없습니다', robots: { index: false, follow: false } }
   }
 
   const offenseStr = caseData.offense_types?.length ? caseData.offense_types.join('·') : ''
@@ -122,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const autoTitle = offenseStr && outcomeStr
     ? `${offenseStr} ${outcomeStr} 사례`
     : caseData.title
-  const metaTitle = caseData.seo_title || autoTitle
+  const metaTitle = brandedTitle(caseData.seo_title || autoTitle)
   const autoDesc = caseData.seo_description || (
     offenseStr
       ? `법률사무소 로앤이가 ${offenseStr} 사건에서 ${caseData.services_provided?.slice(0, 2).join(', ') || '법률 조력'}을 수행하여 ${outcomeStr || caseData.badge}을 이끌어낸 사례입니다.`
@@ -132,7 +133,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${baseUrl}/cases/${caseData.slug || decodedSlug}`
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: metaDesc,
     keywords: caseData.offense_types || [],
     alternates: {

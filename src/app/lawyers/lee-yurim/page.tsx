@@ -1,26 +1,13 @@
+import { getCuratedMetadata } from '@/lib/page-metadata'
 import type { Metadata } from 'next'
 import LeeYurimProfile from './LeeYurimProfile'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
+const profileMetadata = getCuratedMetadata('/lawyers/lee-yurim')!
 export const metadata: Metadata = {
-  title: '이유림 변호사 | 성범죄 피해자 대리 · 《피해자 감별사회》 저자',
-  description: 'ROH&LEE 이유림 대표변호사는 성폭력·스토킹·디지털성범죄 피해자를 대리하며, 박영사 베스트셀러 《피해자 감별사회》 공동저자이자 피해자 지원 앱 《진심의 무게》 개발자입니다.',
-  alternates: { canonical: `${baseUrl}/lawyers/lee-yurim` },
-  openGraph: {
-    type: 'profile',
-    title: '이유림 변호사 | ROH&LEE 대표변호사',
-    description: '성폭력·스토킹·디지털성범죄 피해자 대리. 《피해자 감별사회》 공동저자. 《진심의 무게》 개발자.',
-    url: `${baseUrl}/lawyers/lee-yurim`,
-    siteName: '법률사무소 로앤이',
-    locale: 'ko_KR',
-    images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: '이유림 변호사 | ROH&LEE 대표변호사',
-    description: '성폭력·스토킹·디지털성범죄 피해자 대리. 《피해자 감별사회》 공동저자.',
-  },
+  ...profileMetadata,
+  openGraph: { ...profileMetadata.openGraph, type: 'profile' },
 }
 
 const personJsonLd = {
