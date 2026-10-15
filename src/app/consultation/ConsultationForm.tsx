@@ -5,6 +5,12 @@ import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
 
 const caseTypes = [
+  '형사사건',
+  '민사·가사',
+  '채권추심',
+  '가상자산·코인',
+  '보이스피싱',
+  '기업법무',
   '성범죄 피해',
   '금융사기 피해',
   '회생·파산',
