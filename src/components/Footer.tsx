@@ -45,7 +45,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-black mb-4">법률사무소 로앤이</h3>
             <p className="text-xs text-[#1C1C1A]/60 leading-relaxed">
               형사 사건 대응 · 피해 구제 · 채권 회수 · 가상자산 · 기업 자문<br />
-              대표변호사가 직접 상담하고, 사건을 수행합니다.
+              대표변호사가 직접 상담하고, 사건을 수행합니다.<br />
+              사업자등록번호 <span className="whitespace-nowrap">164-53-00955</span>
             </p>
             <ul className="mt-4 space-y-2 text-xs text-[#1C1C1A]/60">
               <li><Link href="/cases" className="hover:text-black transition-colors">대응 사례</Link></li>
