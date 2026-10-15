@@ -192,5 +192,27 @@
       "href": "/voice-phishing/investigation",
       "label": "수사·구속·재판 대응"
     }
+  ],
+  [
+    {
+      "href": "/business",
+      "label": "기업법무 ↗"
+    },
+    {
+      "href": "/business#services",
+      "label": "월정액 법률자문"
+    },
+    {
+      "href": "/business#intervene",
+      "label": "분쟁 상대방 직접 대응"
+    },
+    {
+      "href": "/business#plans",
+      "label": "요금·업무 범위"
+    },
+    {
+      "href": "/business#start",
+      "label": "도입 절차"
+    }
   ]
 ]
