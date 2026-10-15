@@ -3,6 +3,13 @@ import { trackConversion } from '@/lib/track-conversion'
 
 export function initConsultation() {
   if (document.getElementById('rl-consult')) return
+  if (!document.querySelector('link[data-consultation-style]')) {
+    const style = document.createElement('link')
+    style.rel = 'stylesheet'
+    style.href = '/renewal/consultation.css'
+    style.dataset.consultationStyle = ''
+    document.head.append(style)
+  }
   const dialog = document.createElement('dialog')
   dialog.className = 'rl-consult'
   dialog.id = 'rl-consult'
