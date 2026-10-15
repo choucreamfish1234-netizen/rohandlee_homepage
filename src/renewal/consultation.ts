@@ -2,6 +2,14 @@ import { supabase } from '@/lib/supabase'
 import { trackConversion } from '@/lib/track-conversion'
 
 export function initConsultation() {
+  if (document.getElementById('rl-consult')) return
+  if (!document.querySelector('link[data-consultation-style]')) {
+    const style = document.createElement('link')
+    style.rel = 'stylesheet'
+    style.href = '/renewal/consultation.css'
+    style.dataset.consultationStyle = ''
+    document.head.append(style)
+  }
   const dialog = document.createElement('dialog')
   dialog.className = 'rl-consult'
   dialog.id = 'rl-consult'
@@ -24,7 +32,7 @@ export function initConsultation() {
         <label>연락처<input name="phone" type="tel" autocomplete="tel" required maxlength="30"></label>
       </div>
       <label>이메일<input name="email" type="email" autocomplete="email" required maxlength="254"></label>
-      <label>문의 분야<select name="category"><option value="">선택해주세요</option><option>형사사건</option><option>민사·가사</option><option>채권추심</option><option>가상자산·코인</option><option>보이스피싱</option><option>피해자 대리</option><option>기타</option></select></label>
+      <label>문의 분야<select name="category"><option value="">선택해주세요</option><option>형사사건</option><option>민사·가사</option><option>채권추심</option><option>가상자산·코인</option><option>보이스피싱</option><option>기업법무</option><option>피해자 대리</option><option>기타</option></select></label>
       <label>문의 내용<textarea name="content" rows="4" required maxlength="10000"></textarea></label>
       <label class="rl-consent"><input name="privacy_consent" type="checkbox" required><span>문의 접수 및 답변을 위한 개인정보 수집·이용에 동의합니다. <a href="/privacy" target="_blank" rel="noopener noreferrer">개인정보처리방침 ↗</a></span></label>
       <p class="rl-status" role="status" aria-live="polite"></p>
@@ -51,6 +59,9 @@ export function initConsultation() {
     opener = trigger
     if (submitted) { form.reset(); status.textContent = ''; submit.disabled = false; submitted = false }
     select(false)
+    if (document.body.classList.contains('business-page')) {
+      form.querySelector<HTMLSelectElement>('[name=category]')!.value = '기업법무'
+    }
     overflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     dialog.showModal()
@@ -68,7 +79,7 @@ export function initConsultation() {
   dialog.querySelector('.rl-back')!.addEventListener('click', () => select(false))
   dialog.querySelector('.rl-book')!.addEventListener('click', () => trackConversion('rapid_consultation_click'))
   dialog.querySelector('.rl-other')!.addEventListener('click', () => trackConversion('kakao_click'))
-  document.querySelectorAll<HTMLAnchorElement>('a[href="/consultation"],a[href="/consultation#inquiry"],.hero-action,.nav-cta,.detail-hero>.pill').forEach(link => {
+  document.querySelectorAll<HTMLAnchorElement>('[data-consultation],a[href="/consultation"],a[href="/consultation#inquiry"],.hero-action,.nav-cta,.detail-hero>.pill').forEach(link => {
     if (!/상담|문의/.test(link.textContent || '')) return
     // Preserve the existing CTA layout and replace only its behavior.
     link.href = '#rl-consult'
