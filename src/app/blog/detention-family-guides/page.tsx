@@ -1,12 +1,9 @@
+import { getCuratedMetadata } from '@/lib/page-metadata'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { detentionGuides } from '@/lib/detention-guides'
 
-export const metadata: Metadata = {
-  title: '인천·수원·서울동부구치소 접견과 구속 가족 안내 30편',
-  description: '가족이 구속되었을 때 먼저 할 일부터 일반접견 예약, 변호인접견, 녹음 여부, 보관금과 생활 지원까지. 세 구치소를 중심으로 질문별 안내를 확인하세요.',
-  alternates: { canonical: 'https://lawfirmrohandlee.com/blog/detention-family-guides' },
-}
+export const metadata: Metadata = getCuratedMetadata('/blog/detention-family-guides')!
 export default function Page() {
   return <section className="bg-[#f7f7f2] text-[#294332] py-14 sm:py-24 px-5"><div className="max-w-5xl mx-auto">
     <Link href="/blog" className="text-sm underline underline-offset-4">법률상식으로 돌아가기</Link>

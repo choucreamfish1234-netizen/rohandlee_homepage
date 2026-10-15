@@ -1,21 +1,13 @@
+import { getCuratedMetadata } from '@/lib/page-metadata'
 import type { Metadata } from 'next'
 import RohChaeeunProfile from './RohChaeeunProfile'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
+const profileMetadata = getCuratedMetadata('/lawyers/roh-chaeeun')!
 export const metadata: Metadata = {
-  title: '노채은 변호사 | 금융사기 피해자 대리 · 《피해자 감별사회》 공동저자',
-  description: 'ROH&LEE 노채은 대표변호사는 사기·횡령·배임·보이스피싱 피해자를 대리하며, 박영사 베스트셀러 《피해자 감별사회》 공동저자입니다.',
-  alternates: { canonical: `${baseUrl}/lawyers/roh-chaeeun` },
-  openGraph: {
-    type: 'profile',
-    title: '노채은 변호사 | ROH&LEE 대표변호사',
-    description: '사기·횡령·배임·보이스피싱 피해자 대리. 《피해자 감별사회》 공동저자.',
-    url: `${baseUrl}/lawyers/roh-chaeeun`,
-    siteName: '법률사무소 로앤이',
-    locale: 'ko_KR',
-    images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
-  },
+  ...profileMetadata,
+  openGraph: { ...profileMetadata.openGraph, type: 'profile' },
 }
 
 const personJsonLd = {
