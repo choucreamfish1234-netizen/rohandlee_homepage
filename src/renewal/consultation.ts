@@ -62,6 +62,10 @@ export function initConsultation() {
     if (document.body.classList.contains('business-page')) {
       form.querySelector<HTMLSelectElement>('[name=category]')!.value = '기업법무'
     }
+    if (document.body.classList.contains('collection-fees-page')) {
+      form.querySelector<HTMLSelectElement>('[name=category]')!.value = '채권추심'
+      form.querySelector<HTMLTextAreaElement>('[name=content]')!.placeholder = '채권 유형·금액, 지급기일 또는 미지급 기간, 집행권원 유무, 기존 소송·압류, 알고 있는 회수 단서를 적어주세요.'
+    }
     overflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     dialog.showModal()
