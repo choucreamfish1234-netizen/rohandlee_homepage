@@ -1,0 +1,2 @@
+// A single restrained transition; content is visible without JavaScript or motion.
+(()=>{const section=document.querySelector('.biz-intervene');if(!section||matchMedia('(prefers-reduced-motion: reduce)').matches)return;const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){section.classList.add('is-in-view');observer.disconnect()}},{threshold:.15});observer.observe(section)})();

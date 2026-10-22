@@ -8,8 +8,8 @@ const checkpoints = [
     desc: '24시간 상담을 내세우는 곳에서 첫 전화를 받는 사람이 변호사가 아닌 사무장이나 상담 직원인 경우가 많습니다. 사건의 핵심을 파악하지 못한 채 상담이 진행되면 초기 대응이 늦어집니다. 로앤이는 첫 전화부터 대표변호사가 직접 받습니다.',
   },
   {
-    title: '성범죄 가해자 사건을 수임하는지 확인하세요',
-    desc: '로앤이 성범죄센터는 성범죄 가해자의 사건을 수임하지 않습니다. 피해자의 상담 내용이 가해자 측으로 넘어갈 구조적 가능성 자체가 없습니다.',
+    title: '상담 내용의 비밀이 보장되는지 확인하세요',
+    desc: '피해 사실은 가장 민감한 정보입니다. 로앤이는 상담 내용을 담당 대표변호사 외에 공유하지 않으며, 상담 단계부터 이해충돌 여부를 확인해 같은 사건의 상대방은 대리하지 않습니다.',
   },
   {
     title: '형사 고소 이후의 과정까지 함께하는지 확인하세요',
@@ -17,7 +17,7 @@ const checkpoints = [
   },
   {
     title: '성범죄 이외의 파생 피해도 해결해주는지 확인하세요',
-    desc: '성범죄 피해자는 금전 갈취, 협박, 스토킹, 명예훼손, 직장 문제를 동시에 겪는 경우가 많습니다. 로앤이는 10대 전문센터가 모든 파생 피해를 한 번에 해결합니다.',
+    desc: '성범죄 피해자는 금전 갈취, 협박, 스토킹, 명예훼손, 직장 문제를 동시에 겪는 경우가 많습니다. 로앤이는 11대 전문센터가 모든 파생 피해를 한 번에 해결합니다.',
   },
   {
     title: '상담한 변호사가 직접 사건을 수행하는지 확인하세요',
@@ -37,8 +37,8 @@ export default function ChooseLawyerSection() {
               변호사를 고를 때, 이것만은 확인하세요
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              성범죄 변호사를 검색하면 수십 개의 광고가 뜹니다.<br className="hidden sm:inline" />
-              그런데 그 광고의 대부분은 가해자를 변호하는 곳입니다.
+              성범죄 피해 사건은 첫 상담과 초기 대응이<br className="hidden sm:inline" />
+              이후 수사와 재판의 흐름을 좌우합니다.
             </p>
           </div>
         </ScrollReveal>
@@ -47,18 +47,14 @@ export default function ChooseLawyerSection() {
         <ScrollReveal delay={0.1}>
           <div className="max-w-2xl mx-auto mt-12 text-center text-base sm:text-lg text-gray-700 leading-8 sm:leading-9 space-y-5">
             <p>
-              성범죄 사건에서 큰 비용을 지불하는 쪽은 가해자입니다.<br className="hidden sm:inline" />
-              그래서 &lsquo;성범죄 전문&rsquo;을 내세우는 로펌 대부분은<br className="hidden sm:inline" />
-              가해자 변호로 수익을 올리는 구조입니다.
-            </p>
-            <p>
-              여기서 문제가 생깁니다.
+              피해를 털어놓는 첫 상담은 쉽지 않습니다.<br className="hidden sm:inline" />
+              그래서 누가 상담하고, 그 이야기가 어떻게 보호되는지가 중요합니다.
             </p>
             <p className="text-gray-500 text-sm sm:text-base leading-7">
-              피해자인 당신이 상담을 받은 그 로펌에, 내일은 당신의 가해자가 찾아갈 수 있습니다. 같은 로펌이 피해자와 가해자를 동시에 받지는 않지만, 당신의 사건을 거절하고 가해자의 사건을 수임할 수는 있습니다. 수임료가 더 크니까요.
+              변호사법과 변호사윤리장전은 같은 사건에서 양쪽 당사자를 함께 대리하는 것을 금지하고, 상담 과정에서 알게 된 비밀을 지키도록 정하고 있습니다. 로앤이는 이 원칙을 상담 단계부터 지킵니다.
             </p>
             <p className="font-semibold text-[#1B3B2F]">
-              그래서 확인해야 합니다. 그 로펌이 피해자를 위한 곳인지, 가해자를 위한 곳인지.
+              변호사를 고르기 전에, 아래 다섯 가지를 확인하세요.
             </p>
           </div>
         </ScrollReveal>
@@ -84,16 +80,11 @@ export default function ChooseLawyerSection() {
         <ScrollReveal delay={0.4}>
           <div className="max-w-2xl mx-auto mt-14 bg-[#1B3B2F] rounded-xl px-5 sm:px-8 py-6 text-center">
             <p className="text-sm sm:text-base text-white/80 leading-relaxed">
-              로앤이 성범죄센터는 성범죄 가해자의 사건을 수임하지 않습니다. 《피해자 감별사회》를 쓴 변호사가, 법정에서 피해자가 의심받는 구조를 정면으로 반박합니다.
+              《피해자 감별사회》를 쓴 변호사가, 법정에서 피해자가 의심받는 구조를 정면으로 반박합니다. 상담 내용은 담당 대표변호사 외에 누구에게도 전달되지 않습니다.
             </p>
             <p className="mt-4 text-xl font-bold text-white">당신의 이야기는 안전합니다.</p>
           </div>
         </ScrollReveal>
-
-        {/* GEO 완결문장 */}
-        <p className="sr-only">
-          법률사무소 로앤이 성범죄 피해자 전담센터는 성범죄 가해자의 사건을 수임하지 않으며, 피해자의 상담 내용이 가해자 측에 유출될 구조적 가능성이 없다.
-        </p>
       </div>
     </section>
   )

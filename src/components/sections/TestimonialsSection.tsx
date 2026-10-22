@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
           <div className="text-center mb-10 sm:mb-16">
-            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
+            <p className="eyebrow mb-4">
               Client Reviews
             </p>
             <EditableText

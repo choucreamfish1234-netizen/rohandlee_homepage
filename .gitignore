@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Generated with deployment-specific public analytics settings
+/public/renewal/analytics.js

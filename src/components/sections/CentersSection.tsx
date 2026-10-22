@@ -15,7 +15,7 @@ interface Center {
 const centers: Center[] = [
   {
     title: '성범죄 피해자 전담 센터',
-    description: '성범죄 피해자만을 위한 전담 변호 시스템',
+    description: '성범죄 피해자를 위한 전담 변호 시스템',
     href: '/centers/sexual-crime',
     image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop&q=80',
     alt: '어두운 방에 창문으로 빛이 들어오는 모습 - 희망과 회복',
@@ -83,6 +83,13 @@ const centers: Center[] = [
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop&q=80',
     alt: '다양한 국적의 사람들 - 외국인 범죄피해 법률 지원',
   },
+  {
+    title: '성소수자 범죄피해 지원센터',
+    description: '동성간 성범죄·혐오범죄·아웃팅 협박 전문 대응',
+    href: '/centers/lgbtq-crime',
+    image: 'https://images.unsplash.com/photo-1494059980473-813e73ee784b?w=800&h=600&fit=crop&q=80',
+    alt: '빛이 들어오는 터널 - 성소수자 범죄피해 법률 지원',
+  },
 ]
 
 function CenterCard({ center, index }: {
@@ -133,12 +140,12 @@ export default function CentersSection() {
     <section id="centers" className="py-12 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase text-center mb-4">
-            10 Specialized Centers
+          <p className="eyebrow text-center mb-4">
+            11 Specialized Centers
           </p>
           <p className="text-xs font-semibold text-[#1B3B2F] text-center mb-3">국내 유일, 피해자를 위한</p>
-          <h2 className="text-xl sm:text-3xl font-bold text-center text-black mb-10 sm:mb-20">
-            10대 전문센터
+          <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-center text-[#1C1C1A] mb-10 sm:mb-20">
+            11대 전문센터
           </h2>
         </ScrollReveal>
 

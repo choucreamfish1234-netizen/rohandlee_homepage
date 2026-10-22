@@ -1,3 +1,6 @@
+import { brandedTitle } from '@/lib/page-metadata'
+import DetentionGuideArticle from '@/components/DetentionGuideArticle'
+import { detentionGuides, findDetentionGuide, GUIDE_BASE, GUIDE_DATE } from '@/lib/detention-guides'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -55,7 +58,7 @@ function buildDescription(post: { seo_description?: string | null; meta_descript
     if (plain.length > 0) return plain.substring(0, 160)
   }
 
-  return '법률사무소 로앤이 법률 블로그에서 자세한 내용을 확인하세요.'
+  return '법률사무소 로앤이 법률상식에서 자세한 내용을 확인하세요.'
 }
 
 export const revalidate = 3600
@@ -70,7 +73,7 @@ export async function generateStaticParams() {
     .select('slug')
     .eq('status', 'published')
 
-  return (posts || []).map((post) => ({
+  return [...detentionGuides, ...(posts || [])].map((post) => ({
     slug: post.slug,
   }))
 }
@@ -78,6 +81,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+  const guide = findDetentionGuide(decodedSlug)
+  if (guide) return {
+    title: { absolute: brandedTitle(guide.title) }, description: guide.excerpt,
+    alternates: { canonical: `${GUIDE_BASE}/blog/${guide.slug}` },
+    openGraph: { type: 'article', title: brandedTitle(guide.title), description: guide.excerpt,
+      url: `${GUIDE_BASE}/blog/${guide.slug}`, publishedTime: GUIDE_DATE,
+      images: [{ url: `${GUIDE_BASE}/og-image.png`, width: 1200, height: 630, alt: guide.title }] },
+    twitter: { card: 'summary_large_image', title: brandedTitle(guide.title), description: guide.excerpt, images: [`${GUIDE_BASE}/og-image.png`] },
+    robots: { index: true, follow: true },
+  }
+
   let { data: post } = await supabaseAdmin
     .from('blog_posts')
     .select('*')
@@ -102,12 +116,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const description = buildDescription(post)
-  const suffix = ' | 법률사무소 로앤이'
-  const maxTitleLen = 60 - suffix.length
-  let title = post.title
-  if (title.length > maxTitleLen) {
-    title = title.substring(0, maxTitleLen - 1).replace(/[,\s·\-—]+$/, '') + '…'
-  }
+  const title = brandedTitle(post.seo_title || post.title)
 
   const pageUrl = `${baseUrl}/blog/${decodedSlug}`
   const ogImage = post.thumbnail_url
@@ -115,25 +124,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     : { url: `${baseUrl}/og-image.png`, width: 1200, height: 630, alt: '법률사무소 로앤이' }
 
   return {
-    title,
+    title: { absolute: title },
     description,
+    keywords: [],
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
       type: 'article',
-      title: post.title,
+      title,
       description,
       url: pageUrl,
       siteName: '법률사무소 로앤이',
       locale: 'ko_KR',
-      publishedTime: post.created_at,
+      publishedTime: post.published_at || post.created_at,
+      modifiedTime: post.updated_at || post.published_at || post.created_at,
       authors: [post.author || '이유림 변호사'],
       images: [ogImage],
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
+      title,
       description,
       images: [ogImage.url],
     },
@@ -147,6 +158,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+  const guide = findDetentionGuide(decodedSlug)
+  if (guide) return <DetentionGuideArticle guide={guide} />
+
 
   let { data: post } = await supabaseAdmin
     .from('blog_posts')

@@ -54,9 +54,9 @@ export default function HeroSection() {
   }, [images.length])
 
   return (
-    <section className="bg-white pt-0 pb-16 md:pb-24 -mt-16">
+    <section className="relative bg-[#1B3B2F] -mt-16">
       {/* Image Slider */}
-      <div className="w-full h-[35vh] sm:h-[40vh] md:h-[55vh] relative overflow-hidden">
+      <div className="w-full h-[88svh] min-h-[560px] max-h-[860px] relative overflow-hidden">
         {loading ? (
           <div className="absolute inset-0 bg-[#1B3B2F] animate-pulse" />
         ) : images.length === 0 ? (
@@ -90,14 +90,14 @@ export default function HeroSection() {
 
         {/* Indicators (only 2+ images) */}
         {images.length >= 2 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          <div className="absolute bottom-8 right-5 sm:right-8 flex gap-2 z-20">
             {images.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentIndex(i)}
                 aria-label={`슬라이드 ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${
-                  currentIndex === i ? 'bg-white w-6' : 'bg-white/40 w-1.5'
+                className={`h-[2px] transition-all ${
+                  currentIndex === i ? 'bg-white w-10' : 'bg-white/40 w-5'
                 }`}
               />
             ))}
@@ -116,52 +116,63 @@ export default function HeroSection() {
             히어로 이미지 관리
           </button>
         )}
-      </div>
 
-      {/* Text below slider */}
-      <div className="text-center px-5 sm:px-4 mt-8 sm:mt-12 md:mt-16">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <span className="inline-block text-sm sm:text-base font-bold px-6 py-2.5 bg-[#1B3B2F] text-white rounded-full mb-6 tracking-wide">
-            국내최초 종합 피해자 중심 로펌
-          </span>
-        </motion.div>
+        {/* 이미지 위 그라데이션 — 텍스트 가독성 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0f241c] via-[#0f241c]/55 to-[#0f241c]/20 pointer-events-none" />
 
-        <motion.h1
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-          className="text-2xl md:text-4xl font-medium tracking-tight text-gray-900"
-        >
-          법률사무소 로앤이
-        </motion.h1>
+        {/* Text over slider */}
+        <div className="absolute inset-x-0 bottom-0 z-10">
+          <div className="max-w-7xl mx-auto px-5 sm:px-8 pb-20 sm:pb-24">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="eyebrow"
+            >
+              Law Firm ROH&amp;LEE
+            </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
-          className="text-sm sm:text-base text-gray-500 mt-5 leading-relaxed"
-        >
-          성범죄, 재산범죄, 신체범죄, 부동산, 손해배상, 강제집행<br />
-          모든 피해를 한 곳에서. 10대 전문센터가 함께합니다.
-        </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
+              className="mt-6 font-serif text-[2rem] leading-[1.3] sm:text-5xl sm:leading-[1.25] lg:text-6xl font-semibold text-white tracking-tight"
+            >
+              사건의 시작부터 끝까지,<br />
+              법률사무소 로앤이가<br className="sm:hidden" /> 함께합니다.
+            </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.65, ease: 'easeOut' }}
-          className="mt-6"
-        >
-          <button
-            onClick={() => openConsultation()}
-            className="bg-[#1B3B2F] text-white rounded-full px-8 py-3.5 text-sm font-medium hover:bg-[#152f25] transition min-h-[48px]"
-          >
-            상담 신청하기
-          </button>
-        </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+              className="mt-6 text-sm sm:text-base text-white/75 leading-relaxed"
+            >
+              형사 사건 대응 · 피해 구제 · 채권 회수 · 가상자산 · 기업 자문<br />
+              대표변호사가 직접 상담하고, 사건을 수행합니다.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.45, ease: 'easeOut' }}
+              className="mt-9 flex flex-col sm:flex-row gap-3"
+            >
+              <button
+                onClick={() => openConsultation()}
+                className="inline-flex items-center justify-center bg-white text-[#1B3B2F] px-8 py-4 text-sm font-semibold tracking-wide hover:bg-[#F6F2EA] transition min-h-[52px]"
+              >
+                상담 신청하기
+              </button>
+              <a
+                href="tel:+82322078788"
+                className="inline-flex items-center justify-center border border-white/50 text-white px-8 py-4 text-sm font-medium tracking-wide hover:bg-white/10 transition min-h-[52px]"
+              >
+                032-207-8788
+              </a>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
       {/* Admin Modal */}

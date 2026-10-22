@@ -382,6 +382,13 @@ export default function SexualCrimeCenterPage() {
                   </Link>
                 ))}
               </div>
+              <Link
+                href="/centers/lgbtq-crime"
+                className="mt-8 block rounded-xl bg-[#1B3B2F] p-5 text-center text-white hover:bg-[#153126] transition-colors"
+              >
+                <span className="block text-sm font-bold">남성 피해자이신가요?</span>
+                <span className="block mt-1 text-xs text-white/70">동성간 성폭력·약물 성범죄·아웃팅 협박은 성소수자 범죄피해 지원센터에서 안내합니다 &rarr;</span>
+              </Link>
             </div>
           </section>
 

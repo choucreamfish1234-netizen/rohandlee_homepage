@@ -1,70 +1,23 @@
-import { createClient } from '@supabase/supabase-js'
+import sitemap from '../sitemap'
 
-const baseUrl = 'https://lawfirmrohandlee.com'
-
+// /sitemap.xml 응답은 sitemap.ts 한 곳에서 관리하는 목록을 그대로 렌더링한다.
 export async function GET() {
-  const staticPages = [
-    { url: baseUrl, changefreq: 'weekly', priority: '1.0' },
-    { url: `${baseUrl}/consultation`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/sexual-crime`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/financial-fraud`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/bankruptcy`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/school-violence`, changefreq: 'monthly', priority: '0.9' },
-    { url: `${baseUrl}/centers/it-security`, changefreq: 'monthly', priority: '0.8' },
-    { url: `${baseUrl}/cases`, changefreq: 'weekly', priority: '0.8' },
-    { url: `${baseUrl}/blog`, changefreq: 'daily', priority: '0.8' },
-    { url: `${baseUrl}/directions`, changefreq: 'yearly', priority: '0.5' },
-  ]
-
-  // Fetch published blog posts
-  let blogPages: { url: string; lastmod: string; changefreq: string; priority: string }[] = []
-  try {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createClient(supabaseUrl, supabaseKey)
-      const { data: posts } = await supabase
-        .from('blog_posts')
-        .select('slug, updated_at, created_at')
-        .eq('status', 'published')
-        .lte('published_at', new Date().toISOString())
-
-      if (posts) {
-        blogPages = posts.map((post) => ({
-          url: `${baseUrl}/blog/${post.slug}`,
-          lastmod: new Date(post.updated_at || post.created_at).toISOString().split('T')[0],
-          changefreq: 'weekly',
-          priority: '0.7',
-        }))
-      }
-    }
-  } catch (err) {
-    console.error('Sitemap blog fetch error:', err)
-  }
-
-  const today = new Date().toISOString().split('T')[0]
+  const entries = await sitemap()
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${staticPages
-  .map(
-    (page) => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
+${entries
+  .map((e) => {
+    const lastmod = e.lastModified
+      ? new Date(e.lastModified).toISOString().split('T')[0]
+      : new Date().toISOString().split('T')[0]
+    return `  <url>
+    <loc>${e.url}</loc>
+    <lastmod>${lastmod}</lastmod>${e.changeFrequency ? `\n    <changefreq>${e.changeFrequency}</changefreq>` : ''}${
+      e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(1)}</priority>` : ''
+    }
   </url>`
-  )
-  .join('\n')}
-${blogPages
-  .map(
-    (page) => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${page.lastmod}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>`
-  )
+  })
   .join('\n')}
 </urlset>`
 

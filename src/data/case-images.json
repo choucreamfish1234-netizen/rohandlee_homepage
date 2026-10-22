@@ -1,0 +1,332 @@
+{
+  "dui-008-fine-reduction": {
+    "src": "/renewal/assets/green-centers/dui.webp",
+    "alt": "음주운전 사례 — 혈중알코올 0.08% 초과, 징역형 구형에서 벌금형으로 (설명용 이미지)"
+  },
+  "dui-repeat-probation": {
+    "src": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&h=450&fit=crop&q=80",
+    "alt": "음주운전 사례 — 음주운전 재범, 실형 위기에서 집행유예 (설명용 이미지)"
+  },
+  "dui-hit-and-run-partial": {
+    "src": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=450&fit=crop&q=80",
+    "alt": "음주운전 사례 — 음주 뺑소니 혐의 중 뺑소니 부분 무죄 (설명용 이미지)"
+  },
+  "drugs-cannabis-first-offense": {
+    "src": "/renewal/assets/green-centers/drugs.webp",
+    "alt": "마약 사례 — 대마 초범, 집행유예와 수강명령으로 실형 면해 (설명용 이미지)"
+  },
+  "drugs-hair-test-dispute": {
+    "src": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=450&fit=crop&q=80",
+    "alt": "마약 사례 — 필로폰 투약 혐의, 모발감정 신뢰성 다투어 무죄 (설명용 이미지)"
+  },
+  "drugs-medical-professional": {
+    "src": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800&h=450&fit=crop&q=80",
+    "alt": "마약 사례 — 의료인 프로포폴 투약, 면허 자격정지 최소화 (설명용 이미지)"
+  },
+  "sexual-offense-false-accusation": {
+    "src": "/renewal/assets/green-centers/sexual-offense.webp",
+    "alt": "성범죄 사례 — 합의하에 이루어진 관계 후 일방적 고소, 불기소 처분 (설명용 이미지)"
+  },
+  "sexual-offense-workplace-harassment": {
+    "src": "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&h=450&fit=crop&q=80",
+    "alt": "성범죄 사례 — 직장 내 강제추행 혐의, 추행 해당 여부 다투어 불기소 (설명용 이미지)"
+  },
+  "sexual-offense-digital-allegation": {
+    "src": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=450&fit=crop&q=80",
+    "alt": "성범죄 사례 — 촬영물 유포 혐의, 유포 행위 부인하여 일부 무죄 (설명용 이미지)"
+  },
+  "traffic-intersection-suspended-indictment": {
+    "src": "/renewal/assets/green-centers/traffic.webp",
+    "alt": "교통사고 사례 — 교차로 사고 치상, 합의와 기소유예 (설명용 이미지)"
+  },
+  "traffic-unlicensed-sentence-reduction": {
+    "src": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&h=450&fit=crop&q=80",
+    "alt": "교통사고 사례 — 무면허 운전 중 사고, 양형 감경 (설명용 이미지)"
+  },
+  "traffic-hit-and-run-no-charge": {
+    "src": "https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=800&h=450&fit=crop&q=80",
+    "alt": "교통사고 사례 — 뺑소니 혐의, 사고 미인지 입증하여 무혐의 (설명용 이미지)"
+  },
+  "assault-self-defense-acquittal": {
+    "src": "/renewal/assets/green-centers/assault.webp",
+    "alt": "폭행·상해 사례 — 쌍방폭행에서 정당방위 인정, 무죄 (설명용 이미지)"
+  },
+  "assault-dating-cctv-no-charge": {
+    "src": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=450&fit=crop&q=80",
+    "alt": "폭행·상해 사례 — 데이트 중 폭행 혐의, CCTV 확보하여 불기소 (설명용 이미지)"
+  },
+  "assault-child-discipline-fine": {
+    "src": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop&q=80",
+    "alt": "폭행·상해 사례 — 훈육 과정의 아동학대 혐의, 약식 벌금으로 감경 (설명용 이미지)"
+  },
+  "fraud-investment-civil-dispute": {
+    "src": "/renewal/assets/green-centers/fraud.webp",
+    "alt": "사기·횡령 사례 — 투자금 반환 불이행, 민사 분쟁임을 밝혀 불기소 (설명용 이미지)"
+  },
+  "fraud-corporate-card-embezzlement": {
+    "src": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop&q=80",
+    "alt": "사기·횡령 사례 — 법인카드 사적 사용, 업무상 횡령 일부 인정 — 벌금형 (설명용 이미지)"
+  },
+  "fraud-secondhand-delivery-delay": {
+    "src": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&h=450&fit=crop&q=80",
+    "alt": "사기·횡령 사례 — 중고거래 배송 지연, 다수 사기 고소 — 이행 의사 입증으로 불기소 (설명용 이미지)"
+  },
+  "fraud-account-transfer-aiding": {
+    "src": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=450&fit=crop&q=80",
+    "alt": "사기·횡령 사례 — 보이스피싱 대포통장 양도, 사기방조 — 벌금 200만원 (설명용 이미지)"
+  },
+  "defamation-public-interest-acquittal": {
+    "src": "/renewal/assets/green-centers/defamation.webp",
+    "alt": "명예훼손 사례 — 온라인 커뮤니티 게시글, 공익성 항변으로 무죄 (설명용 이미지)"
+  },
+  "defamation-workplace-insult-no-publicity": {
+    "src": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop&q=80",
+    "alt": "명예훼손 사례 — 직장 내 험담 모욕죄, 공연성 부정하여 불기소 (설명용 이미지)"
+  },
+  "defamation-consumer-review-opinion": {
+    "src": "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&h=450&fit=crop&q=80",
+    "alt": "명예훼손 사례 — 소비자 리뷰 작성, 업체의 명예훼손 고소 — 의견 표현으로 무죄 (설명용 이미지)"
+  },
+  "gambling-sports-first-offense": {
+    "src": "/renewal/assets/green-centers/gambling.webp",
+    "alt": "도박 사례 — 온라인 스포츠 도박 초범, 기소유예 (설명용 이미지)"
+  },
+  "gambling-telegram-participation": {
+    "src": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=450&fit=crop&q=80",
+    "alt": "도박 사례 — 텔레그램 도박방, 개설 혐의 부인 — 참여만 인정 (설명용 이미지)"
+  },
+  "voicephishing-account-rental-fine": {
+    "src": "/renewal/assets/green-centers/voice.webp",
+    "alt": "보이스피싱 사례 — 아르바이트로 통장 양도, 전자금융거래법 위반 — 벌금형 (설명용 이미지)"
+  },
+  "voicephishing-courier-no-intent": {
+    "src": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop&q=80",
+    "alt": "보이스피싱 사례 — 모르고 현금 수거책 역할, 사기방조 혐의 — 고의 부정 불기소 (설명용 이미지)"
+  },
+  "voicephishing-company-account-cleared": {
+    "src": "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&h=450&fit=crop&q=80",
+    "alt": "보이스피싱 사례 — 회사 계좌가 보이스피싱에 이용, 대표 혐의 — 무혐의 (설명용 이미지)"
+  },
+  "medical-surgery-negligence-fine": {
+    "src": "/renewal/assets/green-centers/medical.webp",
+    "alt": "의료 사례 — 수술 과실 업무상과실치상, 과실 범위 다툼 — 벌금형 (설명용 이미지)"
+  },
+  "medical-unlicensed-procedure-cleared": {
+    "src": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=450&fit=crop&q=80",
+    "alt": "의료 사례 — 무면허 시술 공동정범 의료법 위반, 의사 무혐의 (설명용 이미지)"
+  },
+  "medical-license-suspension-reduced": {
+    "src": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=450&fit=crop&q=80",
+    "alt": "의료 사례 — 의료인 면허 정지 위기, 행정심판으로 1월 감경 (설명용 이미지)"
+  },
+  "corporate-breach-business-judgment": {
+    "src": "/renewal/assets/green-centers/corporate.webp",
+    "alt": "기업형사 사례 — 대표이사 배임 혐의, 경영판단 원칙 적용 — 불기소 (설명용 이미지)"
+  },
+  "corporate-trade-secret-partial": {
+    "src": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=450&fit=crop&q=80",
+    "alt": "기업형사 사례 — 퇴사자 영업비밀 유출, 비밀관리성 다툼 — 일부 인정 (설명용 이미지)"
+  },
+  "corporate-subcontract-suspended-indictment": {
+    "src": "https://images.unsplash.com/photo-1562564055-71e051d33c19?w=800&h=450&fit=crop&q=80",
+    "alt": "기업형사 사례 — 하도급법 위반 고발, 자진시정으로 기소유예 (설명용 이미지)"
+  },
+  "warrant-fraud-dismissed": {
+    "src": "/renewal/assets/green-centers/warrant.webp",
+    "alt": "구속영장 사례 — 사기 혐의 구속영장, 영장실질심사에서 기각 (설명용 이미지)"
+  },
+  "warrant-drugs-bail": {
+    "src": "https://images.unsplash.com/photo-1479142506502-19b3a3b7ff33?w=800&h=450&fit=crop&q=80",
+    "alt": "구속영장 사례 — 마약 혐의 구속 후, 보석 허가 (설명용 이미지)"
+  },
+  "warrant-emergency-arrest-release": {
+    "src": "https://images.unsplash.com/photo-1423592707957-3b212afa6733?w=800&h=450&fit=crop&q=80",
+    "alt": "구속영장 사례 — 긴급체포 후 48시간 내 석방 (설명용 이미지)"
+  },
+  "b2b-receivable-120m": {
+    "src": "/renewal/assets/green-centers/collection.webp",
+    "alt": "채권추심 사례 — 거래처 미수금 1억 2천만원 — 부동산 가압류로 90% 회수 (설명용 이미지)"
+  },
+  "b2b-overseas-arbitration": {
+    "src": "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 해외 거래처 계약 불이행, 국제중재 판정으로 해결 (설명용 이미지)"
+  },
+  "b2b-subcontract-direct-payment": {
+    "src": "https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 하도급 대금 체불, 직불청구권 행사로 원청에서 회수 (설명용 이미지)"
+  },
+  "loan-no-iou-30m": {
+    "src": "https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 차용증 없는 3천만원, 카톡 대화로 지급명령 인용 (설명용 이미지)"
+  },
+  "loan-hidden-assets-50m": {
+    "src": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 지인에게 빌려준 5천만원, 은닉 재산 추적·회수 (설명용 이미지)"
+  },
+  "recovery-investment-fraud-80m": {
+    "src": "https://images.unsplash.com/photo-1633158829585-23ba8f7c8caf?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 투자 사기 8천만원, 부동산 가압류 후 합의금 6천만원 회수 (설명용 이미지)"
+  },
+  "recovery-used-car-full": {
+    "src": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 중고차 사기, 형사합의와 민사소송 병행으로 전액 환수 (설명용 이미지)"
+  },
+  "crypto-fraud-50m-seizure": {
+    "src": "/renewal/assets/green-centers/crypto.webp",
+    "alt": "가상자산 사례 — 코인 투자 사기 5천만원 — 거래소 계정 가압류 성공 (설명용 이미지)"
+  },
+  "crypto-p2p-wallet-trace": {
+    "src": "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — P2P 거래 사기, 지갑 추적으로 거래소 계정 특정 후 회수 (설명용 이미지)"
+  },
+  "wage-8-months-full": {
+    "src": "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 퇴사 후 8개월분 밀린 임금, 노동청 진정으로 전액 회수 (설명용 이미지)"
+  },
+  "wage-freelancer-worker-status": {
+    "src": "https://images.unsplash.com/photo-1604594849809-dfedbc827105?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 프리랜서 용역비 미지급, 근로자성 입증 후 임금 인정 (설명용 이미지)"
+  },
+  "alimony-detention-order": {
+    "src": "https://images.unsplash.com/photo-1559526324-593bc073d938?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 양육비 2년 체불, 감치명령 신청 후 즉시 지급 합의 (설명용 이미지)"
+  },
+  "alimony-salary-garnishment": {
+    "src": "https://images.unsplash.com/photo-1518183214770-9cffbec72538?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 양육비 이행확보 제도를 활용한 급여·예금 압류 (설명용 이미지)"
+  },
+  "construction-interior-40m": {
+    "src": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 인테리어 공사대금 4천만원, 유치권 행사와 소송으로 회수 (설명용 이미지)"
+  },
+  "construction-subcontract-direct-payment": {
+    "src": "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&h=450&fit=crop&q=80",
+    "alt": "채권추심 사례 — 하도급 공사대금, 직불청구권 행사로 회수 (설명용 이미지)"
+  },
+  "crypto-listing-a-token": {
+    "src": "https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — A토큰 국내 거래소 2곳 상장 — 법률 의견서와 AML 체계 구축 자문 (설명용 이미지)"
+  },
+  "crypto-listing-b-security-issue": {
+    "src": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — B프로젝트 토큰 증권성 이슈 해소 — 구조 변경 자문으로 상장 (설명용 이미지)"
+  },
+  "crypto-listing-overseas-entry": {
+    "src": "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — 해외 프로젝트 한국 시장 진출 — 특금법 준수 체계와 법률 의견서 (설명용 이미지)"
+  },
+  "crypto-token-fund-raising-no-charge": {
+    "src": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — 토큰 발행 유사수신 혐의, 사업 구조 변경으로 불기소 (설명용 이미지)"
+  },
+  "crypto-nft-rugpull-no-intent": {
+    "src": "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — NFT 프로젝트 러그풀 혐의, 개발 로그로 사기 고의 부정 (설명용 이미지)"
+  },
+  "crypto-otc-normal-trade": {
+    "src": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — P2P OTC 거래 사기 혐의, 정상 거래 입증 — 불기소 (설명용 이미지)"
+  },
+  "crypto-withdrawal-freeze-injunction": {
+    "src": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — 거래소 출금 정지 3개월, 가처분으로 해제 (설명용 이미지)"
+  },
+  "crypto-account-suspension-restored": {
+    "src": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop&q=80",
+    "alt": "가상자산 사례 — 이용약관 위반 계정 정지, 원상회복 인용 (설명용 이미지)"
+  },
+  "startup-series-a-antidilution": {
+    "src": "/renewal/assets/green-centers/civil.webp",
+    "alt": "기업자문 사례 — 시리즈A 투자계약 — 불리한 희석방지 조항 수정, 투자 유치 (설명용 이미지)"
+  },
+  "startup-cofounder-exit": {
+    "src": "https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=800&h=450&fit=crop&q=80",
+    "alt": "기업자문 사례 — 공동창업자 지분 분쟁 — 주주간계약 기반 원만한 이탈 합의 (설명용 이미지)"
+  },
+  "startup-saas-terms": {
+    "src": "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&h=450&fit=crop&q=80",
+    "alt": "기업자문 사례 — SaaS 서비스 이용약관 — 분쟁 예방 조항 설계 (설명용 이미지)"
+  },
+  "compliance-privacy-breach-penalty": {
+    "src": "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&h=450&fit=crop&q=80",
+    "alt": "기업자문 사례 — 개인정보 유출 사고 대응 — 과징금 70% 감경 (설명용 이미지)"
+  },
+  "compliance-subcontract-ftc": {
+    "src": "https://images.unsplash.com/photo-1436450412740-6b988f486c6b?w=800&h=450&fit=crop&q=80",
+    "alt": "기업자문 사례 — 하도급법 위반 공정위 조사 대응 — 자진시정으로 과징금 면제 (설명용 이미지)"
+  },
+  "digital-sex-crime-deletion": {
+    "src": "/renewal/assets/green-centers/support.webp",
+    "alt": "피해자 구제 사례 — 디지털 성범죄 피해 — 촬영물 전량 삭제 및 합의 (설명용 이미지)"
+  },
+  "voicephishing-not-guilty": {
+    "src": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=450&fit=crop&q=80",
+    "alt": "보이스피싱 사례 — 보이스피싱 '수거책'으로 몰린 의뢰인, 7건 전부 불송치 변호사 — '합의'가 아니라 '혐의없음'을 택한 이유 (설명용 이미지)",
+    "original": "https://ocoarsgieayahkzclfcu.supabase.co/storage/v1/object/public/site-images/1782370215798-eklf06.png"
+  },
+  "sexual-crime-8years": {
+    "src": "https://images.unsplash.com/photo-1589578527966-fdac0f44566c?w=800&h=450&fit=crop&q=80",
+    "alt": "성범죄 사례 — 특수강간·감금 등 9개 혐의, 징역 8년 선고 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80"
+  },
+  "jeonse-full-recovery": {
+    "src": "/renewal/assets/green-centers/property.webp",
+    "alt": "전세사기 사례 — 전세보증금 2억 원 반환 소송, 전액 회수 성공 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80"
+  },
+  "stalking-imprisonment": {
+    "src": "/renewal/assets/green-centers/family.webp",
+    "alt": "스토킹 사례 — 직장 내 지속적 스토킹, 접근금지 명령 및 실형 선고 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?w=800&q=80"
+  },
+  "쌍방폭행-사건-정당방위-인정-불송치-성공사례": {
+    "src": "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&h=450&fit=crop&q=80",
+    "alt": "일반 사례 — 쌍방폭행 사건 정당방위 인정 불송치 성공사례 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&q=80"
+  },
+  "가해자에게-합의서를-써준-상황-합의서-철회하고-처벌된-사": {
+    "src": "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=450&fit=crop&q=80",
+    "alt": "성범죄 사례 — 성범죄 가해자에게 합의서를 써준 상황, 합의서/처벌불원서 철회하고 처벌된 사례 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&q=80"
+  },
+  "동종영업금지-같은-건물에-들어온-동종-학원-결국-스스로-퇴거했습니다": {
+    "src": "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&h=450&fit=crop&q=80",
+    "alt": "일반 사례 — 동종영업금지-같은 건물에 들어온 '동종 학원', 결국 스스로 퇴거했습니다 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+  },
+  "school-violence-cross-report-response": {
+    "src": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop&q=80",
+    "alt": "학교폭력 사례 — 학폭 맞고소 사건, 반복 피해와 대응행위를 구분해 가해자 4호조치를 이끌어낸 변호사 (설명용 이미지)",
+    "original": "https://ocoarsgieayahkzclfcu.supabase.co/storage/v1/object/public/site-images/1786615770357-x3xlxf.jpg"
+  },
+  "게임-아이템-사기-2750만-원-가해자-구속시킨-성공사례": {
+    "src": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=450&fit=crop&q=80",
+    "alt": "재산범죄 사례 — 게임 아이템 사기 2,750만 원, 가해자 구속시킨 성공사례. (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80"
+  },
+  "특수강제추행특수상해-피해자-사건-형사조정-합의금-1000만원과-검찰-송치를-함께-받아낸-변호사": {
+    "src": "https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&h=450&fit=crop&q=80",
+    "alt": "일반 사례 — 특수강제추행·특수상해 피해자 사건, 형사조정 합의금 1,000만원과 검찰 송치를 함께 받아낸 변호사 (설명용 이미지)",
+    "original": "https://ocoarsgieayahkzclfcu.supabase.co/storage/v1/object/public/site-images/1787136062216-ob8enl.png"
+  },
+  "산재-사고-cctv-영상을-안전교육-자료로-돌려본-상사-개인정보보호법-위반-구약식-처분-변호사": {
+    "src": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&h=450&fit=crop&q=80",
+    "alt": "일반 사례 — 산재 사고 CCTV 영상을 '안전교육 자료'로 돌려본 상사, 개인정보보호법 위반 구약식 처분 변호사 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+  },
+  "건설회사-퇴직금-미지급-소송-근로자-5명-퇴직금-70085684원-전액-인용-판결": {
+    "src": "https://images.unsplash.com/photo-1631815589968-fdb09a223b1e?w=800&h=450&fit=crop&q=80",
+    "alt": "일반 사례 — 건설회사 퇴직금 미지급 소송, 근로자 5명 퇴직금 70,085,684원 전액 인용 판결 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80"
+  },
+  "보이스피싱-아르바이트에-속아-피의자가-된-의뢰인-혐의없음-불기소-결정-변호사-추천": {
+    "src": "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&h=450&fit=crop&q=80",
+    "alt": "보이스피싱 사례 — 보이스피싱 '아르바이트'에 속아 피의자가 된 의뢰인, 혐의없음 불기소 결정, 변호사 추천 (설명용 이미지)",
+    "original": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80"
+  },
+  "접근금지-가처분-신청서를-넣자-스토킹이-멈췄습니다": {
+    "src": "https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&h=450&fit=crop&q=80",
+    "alt": "스토킹 사례 — 접근금지 가처분 신청서를 넣자 스토킹이 멈췄습니다 (설명용 이미지)",
+    "original": "https://ocoarsgieayahkzclfcu.supabase.co/storage/v1/object/public/site-images/1787139464056-uttzbi.png"
+  }
+}

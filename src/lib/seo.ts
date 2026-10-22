@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { supabaseAdmin } from './supabase-admin'
+import { getCuratedMetadata } from './page-metadata'
 
 interface PageSeo {
   title: string | null
@@ -21,6 +22,9 @@ export async function getPageSeo(
   pagePath: string,
   defaults: SeoDefaults
 ): Promise<Metadata> {
+  const curated = getCuratedMetadata(pagePath)
+  if (curated) return curated
+
   let seo: PageSeo | null = null
 
   try {

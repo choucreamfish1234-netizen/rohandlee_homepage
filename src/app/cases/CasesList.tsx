@@ -1,10 +1,10 @@
 'use client'
 
+import { withAssignedCaseImage } from '@/lib/case-image'
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import ScrollReveal from '@/components/ScrollReveal'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { useAdmin } from '@/components/AdminMode'
 import { type SuccessCase, DEFAULT_CASES, getRandomCaseImage } from '@/lib/cases'
 
@@ -12,7 +12,8 @@ const categories = ['전체', '성범죄', '재산범죄', '스토킹', '보이�
 
 export default function CasesList() {
   const { isEditMode } = useAdmin()
-  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES)
+  const reducedMotion = useReducedMotion()
+  const [cases, setCases] = useState<SuccessCase[]>(DEFAULT_CASES.map(withAssignedCaseImage))
   const [dbReady, setDbReady] = useState(false)
   const [activeCategory, setActiveCategory] = useState('전체')
   const [imagePopupId, setImagePopupId] = useState<number | null>(null)
@@ -32,7 +33,7 @@ export default function CasesList() {
       setCases(data.cases)
       setDbReady(data.source === 'database')
     } catch {
-      setCases(DEFAULT_CASES)
+      setCases(DEFAULT_CASES.map(withAssignedCaseImage))
     }
   }
 
@@ -137,25 +138,8 @@ export default function CasesList() {
   const canEdit = isEditMode && dbReady
 
   return (
-    <section className="pt-24 sm:pt-32 pb-16 sm:pb-40 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-10 sm:mb-16"
-        >
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
-            Case Results
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black">
-            성공사례
-          </h1>
-          <p className="mt-5 text-gray-400 text-sm">
-            로앤이가 만들어낸 결과로 증명합니다.
-          </p>
-        </motion.div>
-
+    <section className="records-archive pt-12 sm:pt-16 pb-16 sm:pb-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8">
         {/* Admin: DB seed banner */}
         {isEditMode && !dbReady && (
           <div className="mb-8 p-4 bg-amber-50 border border-amber-200 text-center rounded-lg">
@@ -173,11 +157,12 @@ export default function CasesList() {
         )}
 
         {/* Category filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-16">
+        <div className="archive-filters flex flex-wrap justify-center gap-2 mb-10 sm:mb-16">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
+              aria-pressed={activeCategory === cat}
               className={`px-5 py-2.5 text-sm font-medium transition-all duration-300 min-h-[44px] ${
                 activeCategory === cat
                   ? 'bg-accent text-white'
@@ -193,17 +178,17 @@ export default function CasesList() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 1 }}
+            transition={{ duration: reducedMotion ? 0 : 0.2 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
-            {filteredCases.map((c, i) => {
+            {filteredCases.map((c) => {
               const cardContent = (
-                <div className="group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full">
+                <div className="archive-card group border border-gray-200 rounded-xl overflow-hidden hover:border-gray-400 hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full">
                   {/* Image area */}
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-t-xl">
+                  <div className="archive-image relative aspect-[16/9] overflow-hidden rounded-t-xl">
                     <Image
                       src={c.image_url}
                       alt={c.title}
@@ -264,7 +249,7 @@ export default function CasesList() {
                   </div>
 
                   {/* Content area */}
-                  <div className="p-8">
+                  <div className="archive-copy p-8">
                     <div className="flex items-center justify-between mb-5">
                       {canEdit ? (
                         <InlineEdit
@@ -342,7 +327,7 @@ export default function CasesList() {
               )
 
               return (
-                <ScrollReveal key={c.id} delay={i * 0.1}>
+                <div key={c.id}>
                   {canEdit ? (
                     cardContent
                   ) : (
@@ -350,7 +335,7 @@ export default function CasesList() {
                       {cardContent}
                     </Link>
                   )}
-                </ScrollReveal>
+                </div>
               )
             })}
           </motion.div>
@@ -371,21 +356,21 @@ export default function CasesList() {
       </div>
 
       {/* CTA */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-40">
-        <ScrollReveal>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 mt-16 sm:mt-40">
+        <div>
           <div className="bg-accent py-12 sm:py-20 px-5 sm:px-8 text-center">
             <h2 className="text-xl sm:text-3xl font-bold text-white mb-4">
               비슷한 사건으로 고민 중이신가요?
             </h2>
             <p className="text-white/60 text-sm mb-8 sm:mb-10">
-              로앤이의 전문 변호사가 무료로 상담해드립니다.
+              상담 예약은 레피드에서, 기타 문의는 카카오톡으로 안내합니다.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Link
-                href="/consultation"
+                href="https://www.latpeed.com/products/vy4Pu" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-8 sm:px-10 py-4 bg-white text-accent text-sm font-medium rounded-full hover:bg-gray-100 transition-colors min-h-[48px]"
               >
-                무료 상담 신청하기
+                상담예약하기
               </Link>
               <a
                 href="tel:032-207-8788"
@@ -395,7 +380,7 @@ export default function CasesList() {
               </a>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   )

@@ -1,11 +1,35 @@
+import { detentionGuides, GUIDE_DATE } from '@/lib/detention-guides'
+import renewalRoutes from '@/data/renewal-routes.json'
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
+import { practiceAreas } from '@/data/practice'
+import { practiceCases } from '@/data/practice/cases'
+
+const PRACTICE_LASTMOD = '2026-10-14'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lawfirmrohandlee.com'
 
   const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: '2025-08-25', changeFrequency: 'weekly', priority: 1 },
+    { url: baseUrl, lastModified: PRACTICE_LASTMOD, changeFrequency: 'weekly', priority: 1 },
+
+    // 종합 법률사무소 신규 섹션
+    ...practiceAreas.flatMap((area) => [
+      { url: `${baseUrl}${area.base}`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'monthly' as const, priority: 0.9 },
+      ...area.pages.map((p) => ({
+        url: `${baseUrl}${area.base}/${p.slug}`,
+        lastModified: PRACTICE_LASTMOD,
+        changeFrequency: 'monthly' as const,
+        priority: ['process', 'tax', 'defi'].includes(p.slug) ? 0.7 : 0.8,
+      })),
+    ]),
+    ...practiceCases.map((c) => ({
+      url: `${baseUrl}/cases/${c.slug}`,
+      lastModified: PRACTICE_LASTMOD,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    { url: `${baseUrl}/centers`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/consultation`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/privacy`, lastModified: '2025-06-01', changeFrequency: 'yearly', priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: '2025-06-01', changeFrequency: 'yearly', priority: 0.3 },
@@ -34,6 +58,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/centers/real-estate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/centers/school-violence`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/centers/corporate`, lastModified: '2025-08-20', changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/centers/lgbtq-crime`, lastModified: '2026-10-08', changeFrequency: 'monthly', priority: 0.8 },
+    ...['sexual-violence', 'dating-app', 'drug-facilitated', 'revenge-porn', 'hate-crime', 'outing-blackmail', 'guide/evidence', 'guide/privacy', 'guide/process'].map(slug => ({
+      url: `${baseUrl}/centers/lgbtq-crime/${slug}`,
+      lastModified: '2026-10-08',
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
     { url: `${baseUrl}/centers/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly', priority: 0.9 },
     ...['sexual-crime', 'stalking', 'fraud', 'violence', 'rental-fraud', 'wage-theft'].map(slug => ({
       url: `${baseUrl}/centers/foreign-victim/${slug}`,
@@ -67,11 +98,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/lawyers/roh-chaeeun`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/lawyers`, lastModified: '2025-08-25', changeFrequency: 'monthly', priority: 0.8 },
 
-    { url: `${baseUrl}/cases`, lastModified: '2025-08-20', changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/cases`, lastModified: PRACTICE_LASTMOD, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/blog`, lastModified: new Date().toISOString(), changeFrequency: 'daily', priority: 0.8 },
   ]
 
-  const dynamicPages: MetadataRoute.Sitemap = []
+  const dynamicPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/blog/detention-family-guides`, lastModified: GUIDE_DATE, changeFrequency: 'monthly', priority: 0.8 },
+    ...detentionGuides.map(g => ({ url: `${baseUrl}/blog/${g.slug}`, lastModified: GUIDE_DATE, changeFrequency: 'monthly' as const, priority: 0.7 })),
+  ]
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -82,6 +116,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         .from('blog_posts')
         .select('slug, updated_at, created_at')
         .eq('status', 'published')
+        .lte('published_at', new Date().toISOString())
 
       if (posts) {
         dynamicPages.push(...posts.map((post) => ({
@@ -110,5 +145,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Sitemap dynamic fetch error:', err)
   }
 
-  return [...staticPages, ...dynamicPages]
+  const renewalPages: MetadataRoute.Sitemap = renewalRoutes.map(({ source }) => ({ url: baseUrl + (source === '/' ? '' : source), lastModified: '2026-10-14', changeFrequency: 'monthly', priority: source === '/' ? 1 : 0.8 }))
+  return Array.from(new Map([...staticPages, ...dynamicPages, ...renewalPages].map(page => [page.url, page])).values())
 }

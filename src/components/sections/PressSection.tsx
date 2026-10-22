@@ -44,8 +44,8 @@ export default function PressSection() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="text-center mb-12"
       >
-        <span className="text-xs tracking-widest text-gray-400 uppercase">PRESS</span>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2">
+        <p className="eyebrow text-center">Press</p>
+        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#1C1C1A] mt-4">
           언론이 찾는 로펌, 로앤이
         </h2>
         <p className="text-sm text-gray-500 mt-3">

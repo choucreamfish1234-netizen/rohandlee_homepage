@@ -1,7 +1,13 @@
+import { brandedTitle } from '@/lib/page-metadata'
+import { withAssignedCaseImage } from '@/lib/case-image'
+import { absoluteCaseImage } from '@/lib/case-image'
+import { practiceCaseImage } from '@/lib/practice-case-image'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
 import type { Metadata } from 'next'
 import CaseDetailContent from './CaseDetailContent'
+import { findPracticeCase, practiceCases } from '@/data/practice/cases'
+import PracticeCaseDetail from '@/components/practice/PracticeCaseDetail'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
@@ -12,7 +18,7 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-async function findCase(slugOrId: string) {
+async function findCaseRecord(slugOrId: string) {
   // 1. slug로 검색
   const { data: bySlug } = await supabaseAdmin
     .from('success_cases')
@@ -38,6 +44,11 @@ async function findCase(slugOrId: string) {
   return DEFAULT_CASES.find(c => c.slug === slugOrId || String(c.id) === slugOrId) || null
 }
 
+async function findCase(slugOrId: string) {
+  const record = await findCaseRecord(slugOrId)
+  return record ? withAssignedCaseImage(record) : null
+}
+
 export async function generateStaticParams() {
   const { data: cases } = await supabaseAdmin
     .from('success_cases')
@@ -59,6 +70,13 @@ export async function generateStaticParams() {
     }
   }
 
+  for (const c of practiceCases) {
+    if (!seen.has(c.slug)) {
+      slugs.push({ slug: c.slug })
+      seen.add(c.slug)
+    }
+  }
+
   for (const c of DEFAULT_CASES) {
     if (c.slug && !seen.has(c.slug)) {
       slugs.push({ slug: c.slug })
@@ -73,10 +91,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
 
+  const practice = findPracticeCase(decodedSlug)
+  if (practice) {
+    const url = `${baseUrl}/cases/${practice.slug}`
+    return {
+      title: { absolute: brandedTitle(practice.title) },
+      description: `${practice.summary}. 결과: ${practice.result}. 법률사무소 로앤이 대응 사례.`,
+      keywords: [practice.category, `${practice.category} 변호사`],
+      twitter: { card: 'summary_large_image', title: brandedTitle(practice.title), description: practice.summary, images: [absoluteCaseImage(practiceCaseImage(practice).src)] },
+      alternates: { canonical: url },
+      openGraph: {
+        title: brandedTitle(practice.title),
+        description: practice.summary,
+        type: 'article',
+        url,
+        siteName: '법률사무소 로앤이',
+        locale: 'ko_KR',
+        images: [{ url: absoluteCaseImage(practiceCaseImage(practice).src), alt: practiceCaseImage(practice).alt }],
+      },
+    }
+  }
+
   const caseData = await findCase(decodedSlug)
 
   if (!caseData) {
-    return { title: '성공사례 | 법률사무소 로앤이' }
+    return { title: '사례를 찾을 수 없습니다', robots: { index: false, follow: false } }
   }
 
   const offenseStr = caseData.offense_types?.length ? caseData.offense_types.join('·') : ''
@@ -84,7 +123,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const autoTitle = offenseStr && outcomeStr
     ? `${offenseStr} ${outcomeStr} 사례`
     : caseData.title
-  const metaTitle = caseData.seo_title || autoTitle
+  const metaTitle = brandedTitle(caseData.seo_title || autoTitle)
   const autoDesc = caseData.seo_description || (
     offenseStr
       ? `법률사무소 로앤이가 ${offenseStr} 사건에서 ${caseData.services_provided?.slice(0, 2).join(', ') || '법률 조력'}을 수행하여 ${outcomeStr || caseData.badge}을 이끌어낸 사례입니다.`
@@ -94,7 +133,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pageUrl = `${baseUrl}/cases/${caseData.slug || decodedSlug}`
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: metaDesc,
     keywords: caseData.offense_types || [],
     alternates: {
@@ -121,6 +160,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+
+  const practice = findPracticeCase(decodedSlug)
+  if (practice) return <PracticeCaseDetail c={practice} />
 
   const caseData = await findCase(decodedSlug)
 

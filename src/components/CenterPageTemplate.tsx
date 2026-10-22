@@ -284,7 +284,7 @@ export default function CenterPageTemplate({
       <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <ScrollReveal>
-            <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
+            <p className="eyebrow mb-4">
               Assigned Lawyers
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold text-black mb-16">

@@ -16,12 +16,20 @@ const baseUrl = 'https://lawfirmrohandlee.com'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
+    default: '법률사무소 로앤이 | 형사 사건 대응 · 피해자 구제 · 채권추심 · 가상자산',
     template: '%s | 법률사무소 로앤이',
   },
   description:
-    '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 피해를 한 곳에서. 대표변호사 이유림·노채은. 10대 전문센터 운영. 민형사 동시 타격 입체 전략. 상담 032-207-8788',
+    '법률사무소 로앤이는 형사 사건 대응, 범죄 피해자 구제, 채권추심, 가상자산 법률자문, 기업 법률자문을 수행하는 종합 법률사무소입니다. 대표변호사가 직접 상담하고 사건을 수행합니다. 032-207-8788',
   keywords: [
+    '변호사',
+    '법률사무소',
+    '형사변호사',
+    '부천변호사',
+    '채권추심',
+    '가상자산변호사',
+    '코인변호사',
+    '피해자변호사',
     '국내최초 종합 피해자 중심 로펌',
     '피해자 전문 변호사',
     '성범죄 피해자 변호사',
@@ -55,14 +63,14 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     url: baseUrl,
     siteName: '법률사무소 로앤이',
-    title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    description: '성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행. 모든 피해를 한 곳에서. 10대 전문센터, 민형사 동시 타격. 상담 032-207-8788',
+    title: '법률사무소 로앤이',
+    description: '형사 사건 대응 · 피해자 구제 · 채권추심 · 가상자산 · 기업 자문',
     images: [{ url: `${baseUrl}/og-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '법률사무소 로앤이 | 국내최초 종합 피해자 중심 로펌',
-    description: '모든 피해를 한 곳에서. 10대 전문센터 운영. 민형사 동시 타격 입체 전략.',
+    title: '법률사무소 로앤이',
+    description: '형사 사건 대응 · 피해자 구제 · 채권추심 · 가상자산 · 기업 자문. 대표변호사가 직접 상담하고 사건을 수행합니다.',
     images: [`${baseUrl}/og-image.png`],
   },
   robots: {
@@ -97,9 +105,10 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
+  '@id': `${baseUrl}/#legalservice`,
   name: '법률사무소 로앤이',
-  alternateName: 'ROH&LEE',
-  description: '국내최초 종합 피해자 중심 로펌. 성범죄·재산범죄·신체범죄·부동산·손해배상·강제집행까지 모든 분야의 피해자를 전문으로 대리합니다.',
+  alternateName: ['ROH&LEE', 'Law Firm Roh & Lee'],
+  description: '형사 사건 대응, 범죄 피해자 구제, 채권추심, 가상자산 법률자문, 기업 법률자문을 수행하는 종합 법률사무소',
   url: baseUrl,
   telephone: '+82-32-207-8788',
   email: 'rohetlee@naver.com',
@@ -140,11 +149,15 @@ const jsonLd = {
     { '@type': 'Person', name: '이유림', jobTitle: '대표변호사' },
     { '@type': 'Person', name: '노채은', jobTitle: '대표변호사' },
   ],
-  knowsAbout: ['성범죄 피해자 변호', '금융사기 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력', '법률 전문가 자문', '언론 인터뷰'],
+  knowsAbout: ['형사 변호', '범죄 피해자 대리', '채권추심', '가상자산 법률자문', '코인 상장 자문', '기업 법률자문', '스타트업 법률자문', '성범죄 피해자 변호', '금융사기 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력', '법률 전문가 자문', '언론 인터뷰'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: '10대 전문센터',
+    name: '법률사무소 로앤이 업무 분야',
     itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '형사 사건 대응', url: `${baseUrl}/defense` } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '채권추심센터', url: `${baseUrl}/collection` } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '가상자산·코인 법률자문', url: `${baseUrl}/crypto` } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '기업 법률자문', url: `${baseUrl}/business` } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '성범죄 피해자 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '금융사기 피해자 전담센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '신체범죄 피해 전담센터' } },
@@ -155,6 +168,7 @@ const jsonLd = {
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '기업법무·개인정보보호센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '학교폭력 전문센터' } },
       { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '외국인 범죄피해 지원센터' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: '성소수자 범죄피해 지원센터' } },
     ],
   },
   employee: [
@@ -201,8 +215,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans:wght@400;500;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap"
           rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
         <script
           type="application/ld+json"

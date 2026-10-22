@@ -1,6 +1,12 @@
+import { readFileSync } from 'node:fs'
+const renewalRoutes = JSON.parse(readFileSync(new URL('./src/data/renewal-routes.json', import.meta.url), 'utf8'))
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: false,
+  async rewrites() {
+    return { beforeFiles: process.env.ROHANDLEE_RENEWAL_DISABLED === '1' ? [] : renewalRoutes, afterFiles: [], fallback: [] }
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -25,6 +31,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      ...renewalRoutes.map(({ source, destination }) => ({ source: destination, destination: source, permanent: true })),
       {
         source: '/centers/property-crime',
         destination: '/centers/financial-fraud',

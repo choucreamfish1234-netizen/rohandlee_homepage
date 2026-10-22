@@ -36,7 +36,7 @@ export default function TagsSection() {
     <section className="py-12 sm:py-20 bg-[#f5f8f6]">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.3em] text-gray-400 uppercase mb-4">
+          <p className="eyebrow mb-4">
             Practice Areas
           </p>
           <EditableText
