@@ -7,7 +7,7 @@ import { BrandMark } from "./BrandMark";
 import { LangSwitch } from "./LangSwitch";
 import { MobileMenu } from "./MobileMenu";
 
-export function UtilityBar({ dict }: { dict: Dictionary }) {
+export function UtilityBar({ dict, qaPaths }: { dict: Dictionary; qaPaths: Record<string, string[]> }) {
   return (
     <div className="bg-navy-deep text-[12px] text-white/80">
       <div className="mx-auto flex h-8 max-w-site items-center justify-between gap-3 px-4 sm:px-6">
@@ -20,7 +20,7 @@ export function UtilityBar({ dict }: { dict: Dictionary }) {
             <Icon name="phone" className="h-3.5 w-3.5" />
             {site.phone.display}
           </PhoneLink>
-          <LangSwitch current={dict.locale} className="text-white" />
+          <LangSwitch current={dict.locale} qaPaths={qaPaths} className="text-white" />
         </div>
       </div>
     </div>

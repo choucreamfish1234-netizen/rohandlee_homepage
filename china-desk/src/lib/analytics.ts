@@ -25,6 +25,7 @@ export type CtaLocation =
   | "case_hero"
   | "case_sidebar"
   | "case_bottom"
+  | "qa_bottom"
   | "wechat_modal"
   | "received"
   | "footer";

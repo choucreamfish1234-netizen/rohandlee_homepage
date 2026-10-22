@@ -5,6 +5,8 @@ import { ConsultLink, PhoneLink, WechatButton } from "../contact";
 import { FaqList } from "../FaqList";
 import { Icon } from "../Icon";
 import { ChipScroller } from "./ChipScroller";
+import { listedQa } from "@/lib/qa";
+import { QaLinkList } from "../qa/QaDetailView";
 
 function related(dict: Dictionary, c: CaseDetail): CaseDetail[] {
   const others = dict.caseList.filter((x) => x.slug !== c.slug);
@@ -15,6 +17,7 @@ function related(dict: Dictionary, c: CaseDetail): CaseDetail[] {
 export function CaseDetailView({ dict, c }: { dict: Dictionary; c: CaseDetail }) {
   const base = `/${dict.locale}`;
   const t = dict.caseDetail;
+  const relatedQa = listedQa(dict).filter((q) => q.related.includes(c.slug)).slice(0, 3);
 
   return (
     <>
@@ -167,6 +170,12 @@ export function CaseDetailView({ dict, c }: { dict: Dictionary; c: CaseDetail })
 
           <Block title={t.faq}>
             <FaqList items={c.faq} />
+            {relatedQa.length > 0 && dict.qa && (
+              <div className="mt-8">
+                <h3 className="text-[16px] font-bold text-navy">{dict.qa.relatedTitle}</h3>
+                <QaLinkList dict={dict} items={relatedQa} />
+              </div>
+            )}
           </Block>
 
           <section className="rounded-card bg-navy p-6 text-white sm:p-9">

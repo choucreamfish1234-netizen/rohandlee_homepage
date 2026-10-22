@@ -8,6 +8,7 @@ import { ContactProvider } from "@/components/contact";
 import { Footer } from "@/components/layout/Footer";
 import { Header, UtilityBar } from "@/components/layout/Header";
 import { MobileCta } from "@/components/layout/MobileCta";
+import { qaPathsByLocale } from "@/lib/qa";
 
 export const dynamicParams = false;
 
@@ -43,7 +44,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     <html lang={dict.htmlLang}>
       <body>
         <ContactProvider labels={{ locale, wechatModal: dict.wechatModal, phone: dict.common.phone }}>
-          <UtilityBar dict={dict} />
+          <UtilityBar dict={dict} qaPaths={qaPathsByLocale()} />
           <Header dict={dict} />
           <main>{children}</main>
           <Footer dict={dict} />

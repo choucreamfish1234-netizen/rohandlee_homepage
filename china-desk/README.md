@@ -115,6 +115,15 @@ src/
 - **언어 추가**(예: 영어): `src/content/en/` 폴더(`index.ts` 에서 `Dictionary` export) → `locales.ts` 에 `en` 한 줄
 - **광고 랜딩**: 피의자 대상 `/cn#for-accused`, 피해자 대상 `/cn#for-victim` (카드가 필터된 상태로 열림), 사건 키워드는 상세 URL로
 
+### 질문형 페이지 (/ko/qa) — 변호사 검수 후 공개
+
+검색어를 질문 그대로 제목에 담은 페이지입니다. 문구는 `src/content/ko/qa.ts`.
+
+- `reviewed: false`(초안): 주소로만 열리고 **검색 제외(noindex)**, 목록·사이트맵·내부 링크에서 빠집니다. 화면 위에 "검수 전 초안" 표시가 붙습니다.
+- 검수가 끝나면 해당 항목을 `reviewed: true`, `reviewer: "변호사 ○○○"`, `updated: "YYYY-MM-DD"` 로 바꿉니다. 그러면 자동으로 색인 허용 + 사이트맵 + `/ko/qa` 목록 + 홈 FAQ 아래 링크 + 관련 사건 페이지 링크에 들어갑니다.
+- 로컬 `npm run dev` 에서는 초안도 `/ko/qa` 목록에 "검수 전" 배지와 함께 보이므로 한 번에 훑어볼 수 있습니다.
+- 다른 언어에 추가하려면 `src/content/<언어>/qa.ts` 를 만들고 그 언어의 `index.ts`·`site.ts`(`qa` 문구)에 연결합니다. 없는 언어는 `/qa` 경로가 생기지 않고, 언어 전환 시 그 언어 홈으로 이동합니다.
+
 ### 전환 이벤트
 
 `wechat_click` · `phone_click` · `kakao_click` · `consultation_click` · `consultation_submit`(서버 접수 OK 후) · `wechat_id_copy` · `path_select`.

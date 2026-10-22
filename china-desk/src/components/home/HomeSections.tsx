@@ -6,6 +6,8 @@ import { KakaoLink, PhoneLink, WechatButton } from "../contact";
 import { FaqList } from "../FaqList";
 import { Icon, type UiIcon } from "../Icon";
 import { LawyerPhoto } from "../LawyerPhoto";
+import { listedQa } from "@/lib/qa";
+import Link from "next/link";
 
 export function WhySection({ dict }: { dict: Dictionary }) {
   const w = dict.why;
@@ -154,7 +156,15 @@ export function FaqSection({ dict }: { dict: Dictionary }) {
     <section id="faq" className="section scroll-mt-20">
       <div className="container-site grid gap-8 lg:grid-cols-[0.6fr_1.4fr] lg:gap-16">
         <h2 className="h2">{dict.faq.title}</h2>
-        <FaqList items={dict.faq.items} />
+        <div>
+          <FaqList items={dict.faq.items} />
+          {dict.qa && listedQa(dict).length > 0 && (
+            <Link href={`/${dict.locale}/qa`} className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-semibold text-navy hover:underline">
+              {dict.qa.moreLink}
+              <Icon name="arrow" className="h-4 w-4 text-gold" />
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );

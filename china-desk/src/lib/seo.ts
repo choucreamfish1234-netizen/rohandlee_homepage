@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
 import { defaultLocale, dictionaries, locales, type Locale } from "@/content/locales";
-import type { CaseDetail, Dictionary, FaqItem } from "@/content/types";
+import type { CaseDetail, Dictionary, FaqItem, QaItem } from "@/content/types";
 
 /** "/cn" + path */
 export function href(locale: string, path = ""): string {
@@ -13,10 +13,10 @@ export function absUrl(locale: string, path = ""): string {
 }
 
 /** canonical + hreflang (zh-CN / ko / x-default) */
-export function alternatesFor(locale: Locale, path = ""): Metadata["alternates"] {
+export function alternatesFor(locale: Locale, path = "", available: readonly Locale[] = locales): Metadata["alternates"] {
   const languages: Record<string, string> = {};
-  for (const l of locales) languages[dictionaries[l].htmlLang] = absUrl(l, path);
-  languages["x-default"] = absUrl(defaultLocale, path);
+  for (const l of available) languages[dictionaries[l].htmlLang] = absUrl(l, path);
+  if (available.includes(defaultLocale)) languages["x-default"] = absUrl(defaultLocale, path);
   return { canonical: absUrl(locale, path), languages };
 }
 
@@ -27,6 +27,8 @@ export function pageMetadata(opts: {
   description: string;
   keywords?: string[];
   noindex?: boolean;
+  /** 이 페이지가 존재하는 언어 (기본: 전체) */
+  available?: readonly Locale[];
 }): Metadata {
   const dict = dictionaries[opts.locale];
   const path = opts.path ?? "";
@@ -34,7 +36,7 @@ export function pageMetadata(opts: {
     title: opts.title,
     description: opts.description,
     keywords: opts.keywords,
-    alternates: alternatesFor(opts.locale, path),
+    alternates: alternatesFor(opts.locale, path, opts.available),
     openGraph: {
       type: "website",
       siteName: dict.brand.name,
@@ -88,6 +90,18 @@ export function faqLd(items: FaqItem[]) {
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
+  };
+}
+
+export function qaBreadcrumbLd(dict: Dictionary, locale: Locale, q: QaItem) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: dict.common.home, item: absUrl(locale) },
+      { "@type": "ListItem", position: 2, name: dict.qa?.title ?? "Q&A", item: absUrl(locale, "/qa") },
+      { "@type": "ListItem", position: 3, name: q.question, item: absUrl(locale, `/qa/${q.slug}`) },
+    ],
   };
 }
 

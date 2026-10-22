@@ -3,6 +3,7 @@ import { site } from "@/config/site";
 import type { Dictionary } from "@/content/types";
 import { BrandMark } from "./BrandMark";
 import { KakaoLink, PhoneLink } from "../contact";
+import { listedQa } from "@/lib/qa";
 
 export function Footer({ dict }: { dict: Dictionary }) {
   const base = `/${dict.locale}`;
@@ -40,6 +41,9 @@ export function Footer({ dict }: { dict: Dictionary }) {
             <li><Link href={`${base}#process`} className="hover:text-white">{dict.nav.process}</Link></li>
             <li><Link href={`${base}#about`} className="hover:text-white">{dict.nav.about}</Link></li>
             <li><Link href={`${base}#faq`} className="hover:text-white">{dict.nav.faq}</Link></li>
+            {dict.qa && listedQa(dict).length > 0 && (
+              <li><Link href={`${base}/qa`} className="hover:text-white">{dict.qa.title}</Link></li>
+            )}
             <li><Link href={`${base}/consult`} className="hover:text-white">{dict.nav.consult}</Link></li>
           </ul>
         </div>

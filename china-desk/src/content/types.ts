@@ -70,6 +70,30 @@ export interface Lawyer {
 
 export interface SelectOption { value: string; label: string }
 
+/** 질문형 페이지(/<locale>/qa/<slug>) — 검색어를 질문 그대로 제목에 담는다 */
+export interface QaSection { h: string; p?: string[]; list?: string[] }
+
+export interface QaItem {
+  slug: string;
+  /**
+   * 변호사 검수 완료 여부. false 면 검색 제외(noindex)·목록·사이트맵에서 빠지고
+   * 주소로만 열린다 (로컬 `npm run dev` 에서는 목록에 "검수 전" 으로 보인다).
+   */
+  reviewed: boolean;
+  /** 검수 변호사 — reviewed: true 일 때 페이지에 표시 (예: "변호사 이유림") */
+  reviewer?: string;
+  /** 마지막 수정일 YYYY-MM-DD */
+  updated: string;
+  /** H1 = 질문 */
+  question: string;
+  seo: { title: string; description: string; keywords: string[] };
+  /** 핵심 답변 2~3문장 — 페이지 맨 위 요약 상자, 검색 요약에 쓰인다 */
+  answer: string;
+  sections: QaSection[];
+  /** 함께 보여 줄 사건 안내 */
+  related: CaseSlug[];
+}
+
 export interface Dictionary {
   locale: string;
   htmlLang: string;
@@ -179,4 +203,7 @@ export interface Dictionary {
     onThisPage: string;
   };
   caseList: CaseDetail[];
+  /** 질문형 페이지 — 없는 언어는 /qa 경로가 생기지 않는다 */
+  qa?: { title: string; subtitle: string; answerLabel: string; updatedLabel: string; reviewedBy: string; moreLink: string; relatedTitle: string; ctaTitle: string; ctaBody: string };
+  qaList?: QaItem[];
 }
