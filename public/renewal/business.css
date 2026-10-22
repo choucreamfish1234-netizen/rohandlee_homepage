@@ -6,3 +6,6 @@
 @media(prefers-reduced-motion:reduce){.business-page html{scroll-behavior:auto}.business-main *, .business-main *:before,.business-main *:after{animation:none!important;transition:none!important}.biz-person:hover img{transform:none}}
 /* Allow the photo/caption grid item to shrink below its intrinsic text width. */
 .biz-hero>*{min-width:0}.biz-hero-image{width:100%;max-width:100%}.biz-hero-image figcaption>*{min-width:0}
+/* Keep the in-page menu horizontal instead of inheriting the mobile header menu stack. */
+.biz-subnav{flex-direction:row;align-items:center;justify-content:flex-start}
+.biz-subnav>a{flex:0 0 auto}
