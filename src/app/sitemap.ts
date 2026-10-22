@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    ...['en', 'zh', 'vi'].flatMap(locale => [
+    ...['en', 'vi'].flatMap(locale => [
       { url: `${baseUrl}/${locale}/foreign-victim`, lastModified: '2026-09-28', changeFrequency: 'monthly' as const, priority: 0.8 },
       ...['sexual-crime', 'stalking', 'fraud', 'violence', 'rental-fraud', 'wage-theft'].map(slug => ({
         url: `${baseUrl}/${locale}/foreign-victim/${slug}`,

@@ -1,3 +1,5 @@
+import { chinaDeskZhUrl } from '@/data/china-desk'
+
 export type Locale = 'ko' | 'en' | 'zh' | 'vi'
 
 export const locales: Locale[] = ['ko', 'en', 'zh', 'vi']
@@ -17,5 +19,7 @@ export function getLocaleFromPath(path: string): Locale {
 
 export function buildLocalePath(locale: Locale, subpath: string): string {
   if (locale === 'ko') return `/centers/foreign-victim${subpath}`
+  // 중국어는 Roh&Lee China Desk 로 통합 (옛 /zh 경로는 301)
+  if (locale === 'zh') return chinaDeskZhUrl(subpath)
   return `/${locale}/foreign-victim${subpath}`
 }

@@ -47,7 +47,6 @@ export default function Page() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <link rel="alternate" hrefLang="ko" href="https://lawfirmrohandlee.com/centers/foreign-victim" />
       <link rel="alternate" hrefLang="en" href="https://lawfirmrohandlee.com/en/foreign-victim" />
-      <link rel="alternate" hrefLang="zh" href="https://lawfirmrohandlee.com/zh/foreign-victim" />
       <link rel="alternate" hrefLang="vi" href="https://lawfirmrohandlee.com/vi/foreign-victim" />
       <link rel="alternate" hrefLang="x-default" href="https://lawfirmrohandlee.com/centers/foreign-victim" />
       <ForeignVictimHub locale="ko" />

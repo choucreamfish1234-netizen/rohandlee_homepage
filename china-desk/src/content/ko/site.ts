@@ -248,7 +248,7 @@ export const koSite: Omit<Dictionary, "caseList"> = {
 
   footer: {
     operator: "운영",
-    service: "한국 변호사가 법률상담과 사건 대리 서비스를 제공합니다.",
+    service: "Roh&Lee China Desk는 법률사무소 로앤이가 운영하는 법률서비스입니다.",
     address: "주소",
     phone: "전화",
     email: "이메일",

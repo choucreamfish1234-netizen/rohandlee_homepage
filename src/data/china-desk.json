@@ -1,0 +1,16 @@
+{
+  "_comment": "Roh&Lee China Desk(중국어·외국인 상담 사이트) 주소와, 본 홈페이지의 옛 중국어 페이지(/zh/foreign-victim)를 옮길 곳. next.config.mjs 의 301 리다이렉트와 사이트 내부 링크가 함께 쓴다.",
+  "url": "https://china.lawfirmrohandlee.com",
+  "zhRedirects": {
+    "": "/cn",
+    "/sexual-crime": "/cn/sex-crime-victim",
+    "/stalking": "/cn",
+    "/fraud": "/cn/fraud",
+    "/violence": "/cn/assault",
+    "/rental-fraud": "/cn/rental-deposit",
+    "/wage-theft": "/cn",
+    "/guide/report": "/cn/criminal-procedure",
+    "/guide/visa": "/cn",
+    "/guide/process": "/cn/criminal-procedure"
+  }
+}

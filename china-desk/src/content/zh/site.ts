@@ -249,7 +249,7 @@ export const zhSite: Omit<Dictionary, "caseList"> = {
 
   footer: {
     operator: "运营主体",
-    service: "韩国律师提供法律咨询及案件代理服务。",
+    service: "Roh&Lee China Desk 是 Law Firm Roh&Lee（법률사무소 로앤이）运营的法律服务。",
     address: "地址",
     phone: "电话",
     email: "邮箱",

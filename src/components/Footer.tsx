@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { CHINA_DESK_URL } from '@/data/china-desk'
 import { EditableText } from '@/components/Editable'
 import { defenseNav, victimNav, collectionNav, cryptoNav, businessNav } from '@/data/practice/nav'
 
@@ -135,10 +136,11 @@ export default function Footer() {
             <Link href="/privacy" className="hover:text-black transition-colors">개인정보처리방침</Link>
             <Link href="/terms" className="hover:text-black transition-colors">이용약관</Link>
             <a href="https://akpul.co.kr" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">악플닷컴</a>
+            <a href={`${CHINA_DESK_URL}/ko`} className="hover:text-black transition-colors">외국인 법률상담 · Roh&amp;Lee China Desk</a>
           </div>
           <div className="flex gap-3 text-xs text-[#1C1C1A]/45">
             <Link href="/en/foreign-victim" className="hover:text-black transition-colors">English</Link>
-            <Link href="/zh/foreign-victim" className="hover:text-black transition-colors">中文</Link>
+            <a href={`${CHINA_DESK_URL}/cn`} lang="zh-CN" className="hover:text-black transition-colors">中文</a>
             <Link href="/vi/foreign-victim" className="hover:text-black transition-colors">Tiếng Việt</Link>
           </div>
         </div>

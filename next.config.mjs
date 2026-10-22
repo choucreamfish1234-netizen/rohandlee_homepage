@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
 const renewalRoutes = JSON.parse(readFileSync(new URL('./src/data/renewal-routes.json', import.meta.url), 'utf8'))
+const chinaDesk = JSON.parse(readFileSync(new URL('./src/data/china-desk.json', import.meta.url), 'utf8'))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -31,6 +32,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 옛 중국어 페이지는 중국어 전용 사이트(Roh&Lee China Desk)로 통합
+      ...Object.entries(chinaDesk.zhRedirects).map(([from, to]) => ({
+        source: `/zh/foreign-victim${from}`,
+        destination: `${chinaDesk.url}${to}`,
+        permanent: true,
+      })),
+      { source: '/zh/:path*', destination: `${chinaDesk.url}/cn`, permanent: true },
       ...renewalRoutes.map(({ source, destination }) => ({ source: destination, destination: source, permanent: true })),
       {
         source: '/centers/property-crime',

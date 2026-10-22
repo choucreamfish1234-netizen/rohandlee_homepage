@@ -17,6 +17,9 @@ export function Footer({ dict }: { dict: Dictionary }) {
         <div>
           <BrandMark dict={dict} href={base} inverse />
           <p className="mt-4 max-w-xs leading-relaxed">{f.service}</p>
+          <a href={site.mainSite} target="_blank" rel="noopener" className="mt-3 inline-flex items-center gap-1 font-semibold text-white/85 hover:text-white">
+            {f.mainSite} ↗
+          </a>
         </div>
 
         <div>
