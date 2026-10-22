@@ -35,3 +35,13 @@
 @media(min-width:801px) and (max-width:1100px){.nav-mega .mega-content{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:800px){.practice-gallery .gallery-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px 17px;bottom:3%}.practice-gallery .gallery-tabs button{font-size:11px;padding:7px 0}.practice-gallery .gallery-tabs button i{margin-top:6px}.practice-gallery .practice-sticky{min-height:790px}}
 @media(max-width:800px){.practice-gallery .gallery-tabs{bottom:11%}}
+/* Victim support joins the main gallery; keep seven controls within two mobile rows. */
+.practice-gallery--seven .gallery-panel--victim .type-heading h2{font-size:clamp(64px,7.6vw,122px)}
+.practice-gallery--seven .gallery-tab--victim{flex:1.6}
+@media(max-width:800px){
+ .practice-gallery--seven .gallery-panel--victim .type-heading{top:12%}
+ .practice-gallery--seven .gallery-panel--victim .type-heading h2{font-size:clamp(38px,10vw,56px);line-height:1.12}
+ .practice-gallery--seven .gallery-panel--victim .type-heading h2>span{display:block}
+ .practice-gallery--seven .gallery-tabs{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:12px}
+ .practice-gallery--seven .gallery-tab--victim{grid-column:span 2}
+}
