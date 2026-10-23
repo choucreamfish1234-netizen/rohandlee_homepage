@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,6 +14,8 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { key, value } = await req.json()
     if (!key) return NextResponse.json({ error: 'key 필요' }, { status: 400 })

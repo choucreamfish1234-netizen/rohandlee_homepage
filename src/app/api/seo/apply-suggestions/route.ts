@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 interface Suggestion {
   page_path: string
@@ -12,6 +13,8 @@ interface Suggestion {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { suggestions } = await req.json() as { suggestions: Suggestion[] }
 

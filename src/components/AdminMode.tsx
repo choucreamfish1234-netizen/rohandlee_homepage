@@ -74,10 +74,14 @@ export default function AdminMode({ children }: { children: React.ReactNode }) {
     }
   }, [showPasswordModal])
 
-  function handlePasswordSubmit(e: React.FormEvent) {
+  async function handlePasswordSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const adminPw = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'roandlee2026'
-    if (password === adminPw) {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    }).catch(() => null)
+    if (res?.ok) {
       setIsEditMode(true)
       sessionStorage.setItem('admin_edit_mode', 'true')
       setShowPasswordModal(false)

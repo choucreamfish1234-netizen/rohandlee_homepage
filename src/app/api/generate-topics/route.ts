@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const maxDuration = 30
 
@@ -15,6 +16,8 @@ const CATEGORY_AUTHORS: Record<string, string> = {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {

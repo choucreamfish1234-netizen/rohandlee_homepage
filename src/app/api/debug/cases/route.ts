@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   const results: Record<string, unknown> = {}
 
   // 1. 환경변수 확인

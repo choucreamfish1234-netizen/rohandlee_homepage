@@ -234,7 +234,7 @@ export default function AdminAnalyticsPage() {
           )}
           <button
             onClick={() => {
-              sessionStorage.removeItem('admin_authenticated')
+              sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' })
               router.push('/admin')
             }}
             className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"

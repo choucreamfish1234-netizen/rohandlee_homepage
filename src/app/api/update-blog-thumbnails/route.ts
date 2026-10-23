@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getRandomThumbnail } from '@/lib/blog'
+import { requireAdmin } from '@/lib/admin-auth'
 
-export async function POST() {
+export async function POST(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     // Fetch all published posts
     const { data: posts, error: fetchError } = await supabaseAdmin

@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getRandomThumbnail } from '@/lib/blog'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getAuthorByCategory } from '@/lib/geo-prompt'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const maxDuration = 60
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { topic, category, index, title: preTitle, slug: preSlug } = await req.json()
 

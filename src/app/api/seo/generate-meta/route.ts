@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
 import { callClaude } from '@/lib/claude-api'
+import { requireAdmin } from '@/lib/admin-auth'
 
 const PAGES = [
   { path: '/', name: '메인 페이지' },
@@ -34,7 +35,9 @@ const SYSTEM_PROMPT = `법률사무소 로앤이의 SEO 메타태그 최적화 �
 반드시 유효한 JSON만 응답하세요. 마크다운 코드블록을 사용하지 마세요.
 {"suggested_title":"...","suggested_description":"...","target_keywords":["k1","k2"],"og_title":"...","og_description":"...","reason":"변경 이유"}`
 
-export async function POST() {
+export async function POST(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {

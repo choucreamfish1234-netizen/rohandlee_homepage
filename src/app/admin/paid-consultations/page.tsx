@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 
 interface PaidConsultation {
   id: number
@@ -72,13 +71,16 @@ export default function AdminPaidConsultationsPage() {
 
   const fetchItems = useCallback(async () => {
     setLoading(true)
-    const { data } = await supabase
-      .from('paid_consultations')
-      .select('*')
-      .order('created_at', { ascending: false })
-    setItems((data as PaidConsultation[]) || [])
+    const res = await fetch('/api/paid-consultations')
+    if (res.status === 401) {
+      sessionStorage.removeItem('admin_authenticated')
+      router.push('/admin')
+      return
+    }
+    const data = await res.json().catch(() => null)
+    setItems((data?.items as PaidConsultation[]) || [])
     setLoading(false)
-  }, [])
+  }, [router])
 
   const filtered = items.filter((c) => filter === 'all' || c.callback_status === filter)
 
@@ -233,7 +235,7 @@ export default function AdminPaidConsultationsPage() {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => { sessionStorage.removeItem('admin_authenticated'); router.push('/admin') }}
+            onClick={() => { sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' }); router.push('/admin') }}
             className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
           >
             로그아웃

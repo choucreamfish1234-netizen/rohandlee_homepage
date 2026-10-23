@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
+import { requireAdmin } from '@/lib/admin-auth'
 
-export async function POST() {
+export async function POST(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const now = new Date().toISOString()
     const rows = DEFAULT_CASES.map(c => ({

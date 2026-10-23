@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
 import { callClaude } from '@/lib/claude-api'
+import { requireAdmin } from '@/lib/admin-auth'
 
 const CORE_KEYWORDS = [
   { keyword: '성범죄 변호사', category: '성범죄' },
@@ -50,7 +51,9 @@ function chunkArray<T>(arr: T[], size: number): T[][] {
   return chunks
 }
 
-export async function POST() {
+export async function POST(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export async function GET() {
   const { data, error } = await supabaseAdmin
@@ -15,6 +16,8 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     const { page_path, title, description, keywords, og_title, og_description } = body

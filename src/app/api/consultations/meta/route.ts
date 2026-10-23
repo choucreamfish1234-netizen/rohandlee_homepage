@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 // 관리자 화면에서 상담 신청 접속 기록(IP 등)을 조회한다.
-// ADMIN_PASSWORD(서버 전용 환경변수)를 설정하면 그 값으로만 조회할 수 있다.
-function isAdmin(req: NextRequest) {
-  const expected = process.env.ADMIN_PASSWORD || process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'roandlee2026'
-  return req.headers.get('x-admin-key') === expected
-}
-
 export async function GET(req: NextRequest) {
-  if (!isAdmin(req)) return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  const denied = requireAdmin(req)
+  if (denied) return denied
 
   const id = req.nextUrl.searchParams.get('id')
   if (!id) return NextResponse.json({ error: 'id is required' }, { status: 400 })

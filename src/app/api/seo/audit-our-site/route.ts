@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 const SITE_PAGES = [
   {
@@ -180,7 +181,9 @@ function auditPage(
   }
 }
 
-export async function POST() {
+export async function POST(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     // Step 1: Fetch page_seo data for all pages at once
     const { data: seoRows } = await supabaseAdmin

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
+import { requireAdmin } from '@/lib/admin-auth'
 
 function getAuthorByCategory(category: string): string {
   switch (category) {
@@ -45,6 +46,8 @@ function buildNaverPrompt(author: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     let postId: number | undefined
     try {

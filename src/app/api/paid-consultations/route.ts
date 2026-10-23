@@ -1,7 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
+
+export async function GET(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
+  try {
+    const rows = await fetchAllRows(() =>
+      supabaseAdmin.from('paid_consultations').select('*').order('created_at', { ascending: false }).order('id')
+    )
+    return NextResponse.json({ items: rows })
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : 'error' }, { status: 500 })
+  }
+}
 
 export async function PATCH(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { id, ...updateData } = await req.json()
 
@@ -27,6 +44,8 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { id } = await req.json()
 

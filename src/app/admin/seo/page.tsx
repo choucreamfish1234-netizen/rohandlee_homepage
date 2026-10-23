@@ -359,7 +359,7 @@ export default function AdminSeoPage() {
           <h1 className="text-2xl font-bold text-black">SEO 관리</h1>
           <p className="text-sm text-gray-500 mt-1">경쟁 분석과 키워드 트래킹으로 검색 노출을 최적화하세요.</p>
         </div>
-        <button onClick={() => { sessionStorage.removeItem('admin_authenticated'); router.push('/admin') }} className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors">로그아웃</button>
+        <button onClick={() => { sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' }); router.push('/admin') }} className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors">로그아웃</button>
       </div>
 
       {/* Score Cards */}

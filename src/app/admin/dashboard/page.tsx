@@ -166,11 +166,9 @@ export default function AdminDashboardPage() {
     }
 
     try {
-      const { count } = await supabase
-        .from('consultations')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'new')
-      setNewConsultationCount(count || 0)
+      const res = await fetch('/api/consultations?count=new')
+      const data = await res.json()
+      setNewConsultationCount(data.count || 0)
     } catch {
       // ignore
     }
@@ -890,7 +888,7 @@ export default function AdminDashboardPage() {
           </Link>
           <button
             onClick={() => {
-              sessionStorage.removeItem('admin_authenticated')
+              sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' })
               router.push('/admin')
             }}
             className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"

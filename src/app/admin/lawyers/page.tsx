@@ -233,7 +233,7 @@ export default function AdminLawyersPage() {
             + 추가
           </button>
           <button
-            onClick={() => { sessionStorage.removeItem('admin_authenticated'); router.push('/admin') }}
+            onClick={() => { sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' }); router.push('/admin') }}
             className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors rounded-lg"
           >
             로그아웃

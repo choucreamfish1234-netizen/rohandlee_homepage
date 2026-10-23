@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { callClaude } from '@/lib/claude-api'
 import { parseAIResponse } from '@/lib/parse-ai-response'
+import { requireAdmin } from '@/lib/admin-auth'
 
 const SYSTEM_PROMPT = `당신은 법률사무소 웹사이트 SEO 전문가입니다.
 법률사무소 로앤이(roandlee.com) 정보:
@@ -27,6 +28,8 @@ interface OptimizeRequest {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY
     if (!anthropicApiKey) {

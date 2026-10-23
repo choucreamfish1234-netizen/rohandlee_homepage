@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString()
     const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString()

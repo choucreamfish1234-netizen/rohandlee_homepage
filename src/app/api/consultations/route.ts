@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
+import { fetchAllRows } from '@/lib/fetch-all-rows'
 import { validateConsultation, type ConsultationInput } from '@/lib/consultation-validation'
 
 const RATE_WINDOW_MS = 10 * 60 * 1000
@@ -93,8 +95,41 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ success: true })
 }
 
+// GET: 관리자 상담 목록 (?id=단건, ?count=new 미처리 건수)
+export async function GET(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
+
+  const id = req.nextUrl.searchParams.get('id')
+  if (id) {
+    const { data, error } = await supabaseAdmin.from('consultations').select('*').eq('id', id).maybeSingle()
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ consultation: data })
+  }
+
+  if (req.nextUrl.searchParams.get('count') === 'new') {
+    const { count, error } = await supabaseAdmin
+      .from('consultations')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'new')
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ count: count ?? 0 })
+  }
+
+  try {
+    const rows = await fetchAllRows(() =>
+      supabaseAdmin.from('consultations').select('*').order('created_at', { ascending: false }).order('id')
+    )
+    return NextResponse.json({ consultations: rows })
+  } catch (err) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : 'error' }, { status: 500 })
+  }
+}
+
 // PATCH: Update consultation (status change, notes, etc.)
 export async function PATCH(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { id, ...updateData } = await req.json()
 
@@ -133,6 +168,8 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE: Delete consultation
 export async function DELETE(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { id } = await req.json()
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { fetchAllRows } from '@/lib/fetch-all-rows'
+import { requireAdmin } from '@/lib/admin-auth'
 
 const KST_OFFSET_MS = 9 * 60 * 60 * 1000
 
@@ -13,6 +14,8 @@ function kstDateKey(date: Date) {
 }
 
 export async function GET(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { searchParams } = new URL(req.url)
     const days = parseInt(searchParams.get('days') || '30')

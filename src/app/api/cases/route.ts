@@ -2,6 +2,7 @@ import { withAssignedCaseImage } from '@/lib/case-image'
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { DEFAULT_CASES } from '@/lib/cases'
+import { requireAdmin } from '@/lib/admin-auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,6 +24,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     const { title, slug, tag, category, summary, content, badge, badge_color, tag_color, image_url, published } = body
@@ -74,6 +77,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -102,6 +107,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const body = await req.json()
     const { id } = body

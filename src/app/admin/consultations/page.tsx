@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 
 interface Consultation {
   id: number
@@ -106,9 +105,7 @@ export default function AdminConsultationsPage() {
     if (!selected) { setIpInfo(null); return }
     let cancelled = false
     setIpInfo({ status: 'loading' })
-    fetch(`/api/consultations/meta?id=${encodeURIComponent(String(selected.id))}`, {
-      headers: { 'x-admin-key': sessionStorage.getItem('admin_key') || '' },
-    })
+    fetch(`/api/consultations/meta?id=${encodeURIComponent(String(selected.id))}`)
       .then(async (res) => {
         if (!res.ok) throw new Error(String(res.status))
         const data = await res.json()
@@ -141,13 +138,16 @@ export default function AdminConsultationsPage() {
 
   const fetchConsultations = useCallback(async () => {
     setLoading(true)
-    const { data } = await supabase
-      .from('consultations')
-      .select('*')
-      .order('created_at', { ascending: false })
-    setConsultations((data as Consultation[]) || [])
+    const res = await fetch('/api/consultations')
+    if (res.status === 401) {
+      sessionStorage.removeItem('admin_authenticated')
+      router.push('/admin')
+      return
+    }
+    const data = await res.json().catch(() => null)
+    setConsultations((data?.consultations as Consultation[]) || [])
     setLoading(false)
-  }, [])
+  }, [router])
 
   // "미발송" = email_sent_at이 null이고 전화완료가 아닌 건
   const isUnsent = (c: Consultation) => !c.email_sent_at && c.status !== 'called'
@@ -185,8 +185,8 @@ export default function AdminConsultationsPage() {
         return
       }
       await fetchConsultations()
-      const refreshed = await supabase.from('consultations').select('*').eq('id', id).single()
-      if (refreshed.data) openDetail(refreshed.data as Consultation)
+      const refreshed = await fetch(`/api/consultations?id=${id}`).then((r) => r.json()).catch(() => null)
+      if (refreshed?.consultation) openDetail(refreshed.consultation as Consultation)
     } catch (e) {
       alert(`AI 분석 실패: ${e instanceof Error ? e.message : String(e)}`)
     } finally {
@@ -402,7 +402,7 @@ export default function AdminConsultationsPage() {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => { sessionStorage.removeItem('admin_authenticated'); router.push('/admin') }}
+            onClick={() => { sessionStorage.removeItem('admin_authenticated'); fetch('/api/admin/logout', { method: 'POST' }); router.push('/admin') }}
             className="px-4 py-2.5 border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
           >
             로그아웃
@@ -627,7 +627,7 @@ export default function AdminConsultationsPage() {
                       <span className="text-black">
                         {ipInfo?.status === 'loading' && <span className="text-gray-400">확인 중…</span>}
                         {ipInfo?.status === 'none' && <span className="text-gray-400">기록 없음 (IP 기록 도입 전 접수)</span>}
-                        {ipInfo?.status === 'error' && <span className="text-gray-400">조회 실패 — 다시 로그인해 주세요</span>}
+                        {ipInfo?.status === 'error' && <span className="text-gray-400">조회 실패 — 기록 테이블 생성 여부를 확인하거나 다시 로그인해 주세요</span>}
                         {ipInfo?.status === 'ok' && ipInfo.log && (
                           <>
                             <span className="font-mono">{ipInfo.log.ip}</span>

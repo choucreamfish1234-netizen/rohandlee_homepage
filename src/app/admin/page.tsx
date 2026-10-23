@@ -9,18 +9,25 @@ export default function AdminLoginPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
-    const adminPw = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'roandlee2026'
-    if (password === adminPw) {
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || '비밀번호가 올바르지 않습니다.')
+      }
       sessionStorage.setItem('admin_authenticated', 'true')
-      sessionStorage.setItem('admin_key', password)
       router.push('/admin/dashboard')
-    } else {
-      setError('비밀번호가 올바르지 않습니다.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '비밀번호가 올바르지 않습니다.')
       setLoading(false)
     }
   }

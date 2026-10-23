@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
+import { requireAdmin } from '@/lib/admin-auth'
 
-export async function DELETE() {
+export async function DELETE(req: Request) {
+  const denied = requireAdmin(req)
+  if (denied) return denied
   try {
     const { error, count } = await supabaseAdmin
       .from('blog_posts')
