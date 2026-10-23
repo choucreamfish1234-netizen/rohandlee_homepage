@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { supabase } from '@/lib/supabase'
 import { trackConversion } from '@/lib/track-conversion'
+import { submitConsultation } from '@/lib/submit-consultation'
 
 const caseTypeOptions = [
   '형사 사건 대응 상담',
@@ -39,6 +39,7 @@ export default function ConsultationModal({
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [honeypot, setHoneypot] = useState('')
 
   // defaultCaseType이 바뀌면 반영
   useEffect(() => {
@@ -104,30 +105,25 @@ export default function ConsultationModal({
     setError('')
 
     try {
-      const { error: supabaseError } = await supabase
-        .from('consultations')
-        .insert([
-          {
-            name: form.name,
-            phone: form.phone,
-            email: form.email || null,
-            category: form.category || null,
-            content: form.content || null,
-            privacy_consent: form.privacy_consent,
-            status: 'new',
-            created_at: new Date().toISOString(),
-          },
-        ])
-
-      if (supabaseError) throw supabaseError
+      await submitConsultation({
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        category: form.category || null,
+        content: form.content || null,
+        privacy_consent: form.privacy_consent,
+        website: honeypot,
+      })
       trackConversion('form_submit')
       setSubmitted(true)
       setTimeout(() => {
         onClose()
       }, 3000)
-    } catch {
+    } catch (err) {
       setError(
-        '일시적인 오류가 발생했습니다. 전화(032-207-8788)로 문의해주세요.'
+        err instanceof Error && err.message
+          ? err.message
+          : '일시적인 오류가 발생했습니다. 전화(032-207-8788)로 문의해주세요.'
       )
     } finally {
       setSubmitting(false)
@@ -357,6 +353,17 @@ export default function ConsultationModal({
                     )}
 
                     {/* 제출 버튼 */}
+                    {/* 봇 차단용 숨김 필드 — 사람에게는 보이지 않는다 */}
+                    <input
+                      type="text"
+                      name="website"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                    />
                     <button
                       type="submit"
                       disabled={submitting || !form.privacy_consent}

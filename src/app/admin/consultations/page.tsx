@@ -96,6 +96,28 @@ export default function AdminConsultationsPage() {
   const [customStatusInput, setCustomStatusInput] = useState('')
   const [showCustomInput, setShowCustomInput] = useState(false)
   const statusDropdownRef = useRef<HTMLDivElement>(null)
+  const [ipInfo, setIpInfo] = useState<{
+    status: 'loading' | 'none' | 'error' | 'ok'
+    log?: { ip: string | null; user_agent: string | null; referer: string | null; country: string | null; city: string | null }
+    sameIpCount?: number
+  } | null>(null)
+
+  useEffect(() => {
+    if (!selected) { setIpInfo(null); return }
+    let cancelled = false
+    setIpInfo({ status: 'loading' })
+    fetch(`/api/consultations/meta?id=${encodeURIComponent(String(selected.id))}`, {
+      headers: { 'x-admin-key': sessionStorage.getItem('admin_key') || '' },
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error(String(res.status))
+        const data = await res.json()
+        if (cancelled) return
+        setIpInfo(data.log?.ip ? { status: 'ok', log: data.log, sameIpCount: data.sameIpCount } : { status: 'none' })
+      })
+      .catch(() => { if (!cancelled) setIpInfo({ status: 'error' }) })
+    return () => { cancelled = true }
+  }, [selected])
 
   useEffect(() => {
     if (typeof window !== 'undefined' && sessionStorage.getItem('admin_authenticated') !== 'true') {
@@ -600,6 +622,28 @@ export default function AdminConsultationsPage() {
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">이메일</span><span className="text-black">{selected.email || '미등록'}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">유형</span><span className="text-black">{selected.category || '-'}</span></div>
                     <div className="flex gap-2"><span className="text-gray-400 w-16 shrink-0">접수일</span><span className="text-black">{formatDate(selected.created_at)}</span></div>
+                    <div className="flex gap-2">
+                      <span className="text-gray-400 w-16 shrink-0">접속 IP</span>
+                      <span className="text-black">
+                        {ipInfo?.status === 'loading' && <span className="text-gray-400">확인 중…</span>}
+                        {ipInfo?.status === 'none' && <span className="text-gray-400">기록 없음 (IP 기록 도입 전 접수)</span>}
+                        {ipInfo?.status === 'error' && <span className="text-gray-400">조회 실패 — 다시 로그인해 주세요</span>}
+                        {ipInfo?.status === 'ok' && ipInfo.log && (
+                          <>
+                            <span className="font-mono">{ipInfo.log.ip}</span>
+                            {(ipInfo.log.city || ipInfo.log.country) && (
+                              <span className="text-gray-400"> · {[ipInfo.log.city, ipInfo.log.country].filter(Boolean).join(', ')}</span>
+                            )}
+                            {!!ipInfo.sameIpCount && (
+                              <span className="block text-xs text-amber-600">같은 IP 기록 {ipInfo.sameIpCount}건 더 있음</span>
+                            )}
+                            {ipInfo.log.user_agent && (
+                              <span className="block text-xs text-gray-400 break-all">{ipInfo.log.user_agent}</span>
+                            )}
+                          </>
+                        )}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { supabase } from '@/lib/supabase'
+import { submitConsultation } from '@/lib/submit-consultation'
 
 const caseTypes = [
   '형사사건',
@@ -39,6 +39,7 @@ export default function ConsultationForm() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [honeypot, setHoneypot] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,24 +51,17 @@ export default function ConsultationForm() {
     setError('')
 
     try {
-      const { error: supabaseError } = await supabase
-        .from('consultations')
-        .insert([
-          {
-            name: form.name,
-            phone: form.phone,
-            email: form.email || null,
-            category: form.category,
-            content: form.content,
-            status: 'new',
-            created_at: new Date().toISOString(),
-          },
-        ])
-
-      if (supabaseError) throw supabaseError
+      await submitConsultation({
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        category: form.category || null,
+        content: form.content || null,
+        website: honeypot,
+      })
       setSubmitted(true)
-    } catch {
-      setError('전송에 실패했습니다. 전화(032-207-8788)로 문의해주세요.')
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : '전송에 실패했습니다. 전화(032-207-8788)로 문의해주세요.')
     } finally {
       setSubmitting(false)
     }
@@ -196,6 +190,17 @@ export default function ConsultationForm() {
               <p className="text-red-500 text-sm">{error}</p>
             )}
 
+            {/* 봇 차단용 숨김 필드 — 사람에게는 보이지 않는다 */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
             <button
               type="submit"
               disabled={submitting}

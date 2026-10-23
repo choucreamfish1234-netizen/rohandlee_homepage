@@ -1,5 +1,5 @@
-import { supabase } from '@/lib/supabase'
 import { trackConversion } from '@/lib/track-conversion'
+import { submitConsultation } from '@/lib/submit-consultation'
 
 export function initConsultation() {
   if (document.getElementById('rl-consult')) return
@@ -35,6 +35,7 @@ export function initConsultation() {
       <label>문의 분야<select name="category"><option value="">선택해주세요</option><option>형사사건</option><option>민사·가사</option><option>채권추심</option><option>가상자산·코인</option><option>보이스피싱</option><option>기업법무</option><option>피해자 대리</option><option>기타</option></select></label>
       <label>문의 내용<textarea name="content" rows="4" required maxlength="10000"></textarea></label>
       <label class="rl-consent"><input name="privacy_consent" type="checkbox" required><span>문의 접수 및 답변을 위한 개인정보 수집·이용에 동의합니다. <a href="/privacy" target="_blank" rel="noopener noreferrer">개인정보처리방침 ↗</a></span></label>
+      <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <p class="rl-status" role="status" aria-live="polite"></p>
       <button class="rl-submit" type="submit">문의하기 ↗</button>
     </form>`
@@ -98,20 +99,18 @@ export function initConsultation() {
     pending = true; submit.disabled = true; submit.textContent = '접수 중…'; status.textContent = ''
     const data = new FormData(form)
     try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) throw new Error('unavailable')
-      const { error } = await supabase.from('consultations').insert([{
-        name: String(data.get('name')).trim(), phone: String(data.get('phone')).trim(),
-        email: String(data.get('email')).trim(), category: data.get('category') || null,
-        content: String(data.get('content')).trim(), privacy_consent: data.get('privacy_consent') === 'on',
-        status: 'new', created_at: new Date().toISOString()
-      }])
-      if (error) throw error
+      await submitConsultation({
+        name: String(data.get('name') || ''), phone: String(data.get('phone') || ''),
+        email: String(data.get('email') || ''), category: String(data.get('category') || '') || null,
+        content: String(data.get('content') || ''), privacy_consent: data.get('privacy_consent') === 'on',
+        website: String(data.get('website') || '')
+      })
       submitted = true
       status.textContent = '문의가 접수되었습니다. 남겨주신 연락처로 답변드리겠습니다.'
       submit.textContent = '접수 완료'
       trackConversion('form_submit')
-    } catch {
-      status.textContent = '문의 접수에 실패했습니다. 잠시 후 다시 시도하거나 전화 032-207-8788로 문의해주세요.'
+    } catch (err) {
+      status.textContent = err instanceof Error && err.message ? err.message : '문의 접수에 실패했습니다. 잠시 후 다시 시도하거나 전화 032-207-8788로 문의해주세요.'
       submit.disabled = false; submit.textContent = '다시 문의하기 ↗'
     } finally { pending = false }
   })

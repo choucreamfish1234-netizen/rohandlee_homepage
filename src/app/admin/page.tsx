@@ -17,6 +17,7 @@ export default function AdminLoginPage() {
     const adminPw = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'roandlee2026'
     if (password === adminPw) {
       sessionStorage.setItem('admin_authenticated', 'true')
+      sessionStorage.setItem('admin_key', password)
       router.push('/admin/dashboard')
     } else {
       setError('비밀번호가 올바르지 않습니다.')
