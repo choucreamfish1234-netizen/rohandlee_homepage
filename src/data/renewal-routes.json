@@ -274,5 +274,9 @@
   {
     "source": "/fr/foreign-victim",
     "destination": "/renewal/pages/fr/foreign-victim/index.html"
+  },
+  {
+    "source": "/ja/foreign-victim",
+    "destination": "/renewal/pages/ja/foreign-victim/index.html"
   }
 ]
