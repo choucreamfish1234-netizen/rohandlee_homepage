@@ -258,5 +258,9 @@
   "/fr/foreign-victim": {
     "title": "Accompagnement des victimes étrangères en Corée | Ro&Lee",
     "description": "Un accompagnement juridique adapté à votre situation : dépôt de plainte, mesures de protection et démarches pour faire valoir vos droits."
+  },
+  "/ja/foreign-victim": {
+    "title": "韓国で犯罪被害に遭った外国人の方へ | Ro&Lee",
+    "description": "被害の状況に応じて、告訴の代理、保護措置、権利回復に向けた法的対応をご相談いただけます。"
   }
 }

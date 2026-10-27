@@ -151,6 +151,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     en: `${baseUrl}/en/foreign-victim`,
     vi: `${baseUrl}/vi/foreign-victim`,
     fr: `${baseUrl}/fr/foreign-victim`,
+    ja: `${baseUrl}/ja/foreign-victim`,
     'x-default': `${baseUrl}/centers/foreign-victim`,
   }
   const renewalPages: MetadataRoute.Sitemap = renewalRoutes.map(({ source }) => {
