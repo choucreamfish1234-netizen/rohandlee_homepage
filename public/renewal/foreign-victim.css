@@ -1,3 +1,55 @@
 .foreign-languages{display:flex;flex-wrap:wrap;gap:8px;padding:24px 7%;background:#f6f5f0;color:#244333;position:relative;z-index:2;margin-top:90px}.foreign-languages a{padding:10px 15px;min-height:44px;border:1px solid #bccabb;border-radius:24px;font-size:15px}.foreign-languages a[aria-current=page]{background:#244333;color:#fff}.foreign-languages a:focus-visible,.foreign-page a:focus-visible,.foreign-page button:focus-visible,.foreign-page summary:focus-visible{outline:3px solid #8caa74;outline-offset:4px}.foreign-page{background:#f6f5f0;color:#243b2d}.foreign-hero{display:grid;grid-template-columns:1.2fr 1fr;min-height:580px;background:#e8ede1}.foreign-hero-copy{padding:70px 8% 65px 12%}.foreign-hero h1{font-size:clamp(36px,4.2vw,66px);line-height:1.16;letter-spacing:-.035em;overflow-wrap:anywhere;margin:20px 0 28px}.foreign-hero p{font-size:18px;line-height:1.8}.foreign-hero>img{width:100%;height:100%;object-fit:cover;min-height:0}.foreign-page .pill{white-space:normal;line-height:1.5;text-align:center}.foreign-page .rich-copy p,.foreign-page .rich-faq p{font-size:17px;line-height:1.9;color:#506355}.foreign-page .rich-heading h2{font-size:clamp(29px,3.6vw,48px);line-height:1.25;letter-spacing:-.025em;overflow-wrap:anywhere}.foreign-page .rich-copy article{margin-bottom:36px}.foreign-page .rich-copy h3{line-height:1.4}.foreign-topics{display:flex;flex-wrap:wrap;gap:10px 22px;line-height:2}.foreign-topics a{text-decoration:underline;text-underline-offset:4px}.foreign-page .contact h2{font-size:clamp(32px,4vw,58px);line-height:1.25}.foreign-page .contact p{max-width:800px;margin-inline:auto}.foreign-page .actions{flex-wrap:wrap;gap:20px}.foreign-page footer p{line-height:1.9}.foreign-page .section-nav{flex-wrap:wrap}.foreign-page header nav{gap:22px}.foreign-page .rich-faq summary{padding-right:24px;line-height:1.6}.foreign-page main{overflow:clip}@media(max-width:800px){.foreign-languages{margin-top:75px;padding:20px 6%;gap:6px}.foreign-languages a{font-size:14px;padding:10px 12px}.foreign-hero{grid-template-columns:1fr}.foreign-hero-copy{padding:45px 7%}.foreign-hero>img{height:240px;min-height:0}.foreign-page .rich-section{padding:60px 7%;grid-template-columns:1fr;gap:28px}.foreign-page .contact{padding:65px 7%}.foreign-page .actions{display:flex;flex-direction:column;align-items:stretch}.foreign-page header nav.open{overflow-y:auto;max-height:calc(100svh - 75px)}.foreign-page footer{padding:50px 7%}.foreign-page footer p{overflow-wrap:anywhere}}@media(prefers-reduced-motion:reduce){.foreign-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 .foreign-page header{background:#183d32;color:#f6f5f0}.foreign-page .section-nav{position:relative;inset:auto;display:flex;flex-direction:row;align-items:center}.foreign-languages{position:relative;inset:auto;flex-direction:row;align-items:center}.foreign-page footer{background:#10251c;color:#f3f2ed}.foreign-page .foreign-hero .pill{background:#244333;color:#fff}.foreign-page .foreign-hero .eyebrow{color:#506355}
 .foreign-page .contact{color:#f3f2ed}.foreign-page .contact h2,.foreign-page .contact .text-link{color:#f3f2ed}.foreign-page .contact p{color:#bdcbbf}.foreign-page footer p{color:#bdcbbf}.foreign-page .foreign-hero h1{word-break:normal;hyphens:auto}@media(max-width:800px){.foreign-page .foreign-hero h1{font-size:32px}}
+
+/* The language hub is shared by Korean and translated landing pages. */
+body:has(.foreign-languages) header{height:82px;background:#183d32;color:#f6f5f0}
+body:has(.foreign-languages) .foreign-languages{margin-top:82px}
+@media(max-width:800px){
+ body:has(.foreign-languages){word-break:normal;overflow-wrap:break-word}
+ body:has(.foreign-languages) header{height:72px;padding:0 20px}
+ body:has(.foreign-languages) header .brand img{width:180px;max-width:53vw;height:auto}
+ body:has(.foreign-languages) header .menu{min-width:68px;min-height:44px;font-size:15px}
+ body:has(.foreign-languages) header nav{top:72px;max-height:calc(100dvh - 72px);overflow-y:auto;padding:20px;gap:12px}
+ body:has(.foreign-languages) header nav>a{min-height:44px;display:flex;align-items:center;font-size:16px;line-height:1.5}
+ body:has(.foreign-languages) .foreign-languages{margin-top:72px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:12px 20px;gap:8px;min-width:0}
+ .foreign-languages a{display:flex;align-items:center;justify-content:center;text-align:center;min-width:0;min-height:44px;padding:8px 4px;font-size:14px;line-height:1.3}
+ .foreign-page .foreign-hero{min-height:0;display:flex;flex-direction:column}
+ .foreign-page .foreign-hero-copy{padding:28px 20px 32px;min-width:0}
+ .foreign-page .foreign-hero .eyebrow{margin:0 0 18px;font-size:11px}
+ .foreign-page .foreign-hero h1{font-size:clamp(28px,7.5vw,34px);line-height:1.22;letter-spacing:-.025em;overflow-wrap:normal;text-wrap:balance;margin:0 0 20px}
+ .foreign-page:lang(ja) .foreign-hero h1,.foreign-page:lang(zh-CN) .foreign-hero h1{word-break:normal;line-break:strict;font-size:30px;line-height:1.4}
+ .foreign-page .foreign-hero p{font-size:16px;line-height:1.7;margin:0 0 24px;letter-spacing:normal}
+ .foreign-page .foreign-hero .pill{display:flex;justify-content:center;width:100%;min-height:48px;padding:13px 16px;font-size:15px;gap:12px}
+ .foreign-page .foreign-hero>img{height:180px;width:100%;object-fit:cover}
+ body:has(.foreign-languages) .section-nav{position:relative;inset:auto;display:flex;flex-direction:row;flex-wrap:wrap;padding:8px 20px;gap:4px 20px;white-space:normal;align-items:center}
+ body:has(.foreign-languages) .section-nav a{display:flex;align-items:center;min-height:44px;font-size:14px;line-height:1.4}
+ body:has(.foreign-languages) .rich-section{padding:40px 20px;gap:20px;grid-template-columns:minmax(0,1fr)}
+ body:has(.foreign-languages) .rich-heading h2{font-size:28px;line-height:1.35;margin:0;letter-spacing:-.02em;overflow-wrap:break-word}
+ body:has(.foreign-languages) .rich-copy,body:has(.foreign-languages) .rich-heading,body:has(.foreign-languages) .rich-faq{min-width:0}
+ .foreign-page .rich-copy article{margin:0 0 28px}
+ body:has(.foreign-languages) .rich-copy h3{font-size:20px;line-height:1.5;margin:0 0 12px;letter-spacing:normal}
+ body:has(.foreign-languages) .rich-copy p,body:has(.foreign-languages) .rich-faq p{font-size:16px;line-height:1.8;letter-spacing:normal;margin:0}
+ body:has(.foreign-languages):not(.foreign-page) .issue-section .rich-copy p{color:#c5d3bc}
+ .foreign-topics{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+ .foreign-topics a,.foreign-topics span{display:block;padding:12px 0;min-height:44px;border-bottom:1px solid #24433322;font-size:16px;line-height:1.5}
+ body:has(.foreign-languages) .rich-faq summary{font-size:16px;line-height:1.6;padding:0 28px 0 0;min-height:44px}
+ body:has(.foreign-languages) .rich-faq details{padding:18px 0}
+ body:has(.foreign-languages) .rich-faq details[open] p{margin-top:14px}
+ body:has(.foreign-languages) .contact{padding:44px 20px}
+ body:has(.foreign-languages) .contact h2{font-size:30px;line-height:1.35;letter-spacing:-.02em;margin:0 0 20px}
+ body:has(.foreign-languages) .contact>p{font-size:16px;line-height:1.8;margin:0}
+ body:has(.foreign-languages) .contact .actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:24px}
+ body:has(.foreign-languages) .contact .pill,body:has(.foreign-languages) .contact .text-link{display:flex;align-items:center;justify-content:center;min-height:48px;font-size:15px;line-height:1.5;padding:13px 16px;white-space:normal}
+ body:has(.foreign-languages) footer{padding:36px 20px;gap:22px}
+ body:has(.foreign-languages) footer p{font-size:13px;line-height:1.8;letter-spacing:normal;overflow-wrap:anywhere}
+ /* Avoid a second screen of empty scroll space before the Korean content. */
+ .foreign-languages+.center-scene{height:auto;min-height:0}
+ .foreign-languages+.center-scene .image-hero{position:relative;height:auto;min-height:500px;padding:36px 20px 100px}
+ .foreign-languages+.center-scene .breadcrumb{margin-bottom:24px;max-width:100%;font-size:12px}
+ .foreign-languages+.center-scene h1{font-size:32px;line-height:1.4;max-width:100%;letter-spacing:-.04em}
+ .foreign-languages+.center-scene .image-hero>p{font-size:16px;line-height:1.8;max-width:100%}
+ .foreign-languages+.center-scene .scene-foot{display:none}
+}
+@media(max-width:800px){body.center-motion:has(.foreign-languages) .issue-section .rich-copy p{font-size:16px;line-height:1.8;color:#c5d3bc}body.center-motion:has(.foreign-languages) .issue-section h3{font-size:20px;line-height:1.5}body.center-motion:has(.foreign-languages) .rich-faq summary{font-size:16px}}
+@media(max-width:800px){body:has(.foreign-languages) .center-scene .image-hero .pill{background:#244333;color:#fff;font-size:15px;min-height:48px;padding:13px 18px}}
