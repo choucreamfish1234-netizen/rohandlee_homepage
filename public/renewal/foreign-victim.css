@@ -53,3 +53,10 @@ body:has(.foreign-languages) .foreign-languages{margin-top:82px}
 }
 @media(max-width:800px){body.center-motion:has(.foreign-languages) .issue-section .rich-copy p{font-size:16px;line-height:1.8;color:#c5d3bc}body.center-motion:has(.foreign-languages) .issue-section h3{font-size:20px;line-height:1.5}body.center-motion:has(.foreign-languages) .rich-faq summary{font-size:16px}}
 @media(max-width:800px){body:has(.foreign-languages) .center-scene .image-hero .pill{background:#244333;color:#fff;font-size:15px;min-height:48px;padding:13px 18px}}
+
+/* Korean word units must not inherit per-letter mobile wrapping. */
+html:lang(ko) body:has(.foreign-languages) main{word-break:keep-all;overflow-wrap:break-word}
+html:lang(ko) body:has(.foreign-languages) .subhero h1{display:flex;flex-wrap:wrap;column-gap:.24em;row-gap:0;text-indent:0;text-align:left}
+html:lang(ko) body:has(.foreign-languages) .subhero h1 .hero-space{display:none}
+html:lang(ko) body:has(.foreign-languages) .subhero h1 .hero-word{white-space:nowrap;word-break:keep-all}
+html:lang(ko) body:has(.foreign-languages) .subhero>p{word-break:keep-all;overflow-wrap:normal}
