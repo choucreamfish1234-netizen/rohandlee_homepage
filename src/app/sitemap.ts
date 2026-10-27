@@ -145,6 +145,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Sitemap dynamic fetch error:', err)
   }
 
-  const renewalPages: MetadataRoute.Sitemap = renewalRoutes.map(({ source }) => ({ url: baseUrl + (source === '/' ? '' : source), lastModified: '2026-10-14', changeFrequency: 'monthly', priority: source === '/' ? 1 : 0.8 }))
+  const foreignVictimLanguages = {
+    ko: `${baseUrl}/centers/foreign-victim`,
+    'zh-CN': `${baseUrl}/zh/foreign-victim`,
+    en: `${baseUrl}/en/foreign-victim`,
+    vi: `${baseUrl}/vi/foreign-victim`,
+    fr: `${baseUrl}/fr/foreign-victim`,
+    'x-default': `${baseUrl}/centers/foreign-victim`,
+  }
+  const renewalPages: MetadataRoute.Sitemap = renewalRoutes.map(({ source }) => {
+    const url = baseUrl + (source === '/' ? '' : source)
+    const isForeignVictimHub = Object.values(foreignVictimLanguages).includes(url)
+    return {
+      url,
+      lastModified: isForeignVictimHub ? '2026-10-27' : '2026-10-14',
+      changeFrequency: 'monthly',
+      priority: source === '/' ? 1 : 0.8,
+      ...(isForeignVictimHub ? { alternates: { languages: foreignVictimLanguages } } : {}),
+    }
+  })
   return Array.from(new Map([...staticPages, ...dynamicPages, ...renewalPages].map(page => [page.url, page])).values())
 }
