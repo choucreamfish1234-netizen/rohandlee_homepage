@@ -258,5 +258,21 @@
   {
     "source": "/voice-phishing/job-scam",
     "destination": "/renewal/pages/voice-phishing/job-scam/index.html"
+  },
+  {
+    "source": "/en/foreign-victim",
+    "destination": "/renewal/pages/en/foreign-victim/index.html"
+  },
+  {
+    "source": "/zh/foreign-victim",
+    "destination": "/renewal/pages/zh/foreign-victim/index.html"
+  },
+  {
+    "source": "/vi/foreign-victim",
+    "destination": "/renewal/pages/vi/foreign-victim/index.html"
+  },
+  {
+    "source": "/fr/foreign-victim",
+    "destination": "/renewal/pages/fr/foreign-victim/index.html"
   }
 ]
