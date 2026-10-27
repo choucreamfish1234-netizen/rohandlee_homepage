@@ -242,5 +242,21 @@
   "/lawyers/roh-chaeeun": {
     "title": "노채은 대표변호사 소개·약력 | 법률사무소 로앤이",
     "description": "법률사무소 로앤이 노채은 대표변호사의 약력과 주요 활동을 소개합니다. 사기·횡령·배임·보이스피싱 피해자 대리, 《피해자 감별사회》 공동집필 등 프로필과 상담 안내를 확인하세요."
+  },
+  "/en/foreign-victim": {
+    "title": "Support for foreign victims of crime in Korea | Ro&Lee",
+    "description": "Legal representation for criminal complaints, protective measures and recovery, tailored to your situation."
+  },
+  "/zh/foreign-victim": {
+    "title": "在韩外国人犯罪受害者支援中心 | Ro&Lee",
+    "description": "根据您的具体情况，提供刑事控告代理、保护措施及权益恢复方面的法律咨询。"
+  },
+  "/vi/foreign-victim": {
+    "title": "Hỗ trợ người nước ngoài là nạn nhân tội phạm tại Hàn Quốc | Ro&Lee",
+    "description": "Tư vấn về đại diện tố giác tội phạm, biện pháp bảo vệ và khôi phục quyền lợi phù hợp với từng vụ việc."
+  },
+  "/fr/foreign-victim": {
+    "title": "Accompagnement des victimes étrangères en Corée | Ro&Lee",
+    "description": "Un accompagnement juridique adapté à votre situation : dépôt de plainte, mesures de protection et démarches pour faire valoir vos droits."
   }
 }
