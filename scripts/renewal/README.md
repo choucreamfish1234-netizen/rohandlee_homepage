@@ -25,3 +25,10 @@ sitemap merges these paths with the original static and database-backed URLs.
 Rollback: revert this deployment commit, or set ROHANDLEE_RENEWAL_DISABLED=1
 in Vercel and redeploy to disable the presentation rewrites. The prior source
 is retained in backup/pre-cinematic-renewal-20261014.
+
+AEO structured data: `npm run seo:aeo` (also run during `npm run build`) adds
+FAQPage, BreadcrumbList and Service JSON-LD generated from the visible FAQ,
+breadcrumb and heading of each presentation document, enriches the
+LegalService founders, and appends the extra FAQ items listed in
+`scripts/aeo/faq-additions.json` to the existing `.rich-faq` accordion using
+the same markup. It never changes CSS or existing copy, and is idempotent.
