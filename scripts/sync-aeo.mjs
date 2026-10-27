@@ -8,6 +8,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 
 const BASE = 'https://lawfirmrohandlee.com'
 const LEGAL_ID = `${BASE}/#legalservice`
+const BING_VERIFICATION = 'A0ED0FC2A7C12594BB1D24ED91052900'
 const check = process.argv.includes('--check')
 const routes = JSON.parse(readFileSync('src/data/renewal-routes.json', 'utf8'))
 const additions = JSON.parse(readFileSync('scripts/aeo/faq-additions.json', 'utf8'))
@@ -135,6 +136,10 @@ for (const { source, destination } of routes) {
   const file = `public${destination}`
   const original = readFileSync(file, 'utf8')
   let html = addFaqItems(original, additions[source])
+  // Bing 웹마스터 도구 사이트 인증 (네이버 인증 태그가 있는 문서에 함께 둔다)
+  if (!html.includes('name="msvalidate.01"')) {
+    html = html.replace(/(<meta[^>]*name="naver-site-verification"[^>]*>)/, `$1<meta content="${BING_VERIFICATION}" name="msvalidate.01"/>`)
+  }
   html = html.replace(/<script type="application\/ld\+json" data-aeo="">[\s\S]*?<\/script>/g, '')
   html = enrichLegalService(html)
 
