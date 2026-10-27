@@ -1,6 +1,6 @@
 (() => {
  const cinema=document.querySelector('.cinema');
- if(!cinema)return;
+ if(!cinema||document.body.classList.contains('victim-motion-page'))return;
  const stage=cinema.querySelector('.cinema-stage'),opening=cinema.querySelector('.opening-copy'),closing=cinema.querySelector('.closing-copy'),chapter=cinema.querySelector('.chapter-number'),manifesto=document.querySelector('.manifesto');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const clamp=x=>Math.max(0,Math.min(1,x));
