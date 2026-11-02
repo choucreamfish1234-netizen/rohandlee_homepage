@@ -4,6 +4,7 @@ import { getPageSeo } from '@/lib/seo'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import type { BlogPost } from '@/lib/blog'
 import BlogListClient from './BlogListClient'
+import { cleanPostText } from '@/lib/strip-emphasis'
 
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/blog', {
@@ -41,7 +42,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   // Fetch count even when the current page consists entirely of editorial guides.
   query = query.range(dbFrom, dbFrom + Math.max(1, remaining) - 1)
   const { data: databasePosts, count } = await query
-  const posts = [...localPosts, ...((databasePosts as BlogPost[] | null) || []).slice(0, remaining)]
+  const posts = [...localPosts, ...((databasePosts as BlogPost[] | null) || []).slice(0, remaining).map(cleanPostText)]
   const totalCount = (count || 0) + guides.length
 
   const { data: featured } = await supabaseAdmin
@@ -57,7 +58,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   return (
     <BlogListClient
       posts={(posts as BlogPost[]) || []}
-      featured={(featured as BlogPost[]) || []}
+      featured={((featured as BlogPost[]) || []).map(cleanPostText)}
       currentPage={page}
       totalPages={totalPages}
       totalCount={totalCount}

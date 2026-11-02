@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getAuthorByCategory } from '@/lib/geo-prompt'
 import { requireAdmin } from '@/lib/admin-auth'
+import { stripEmphasis } from '@/lib/strip-emphasis'
 
 export const maxDuration = 60
 
@@ -149,8 +150,9 @@ JSON으로 응답해주세요:
     }
 
     // Post-processing: strip ** bold markers that AI may still generate
-    parsed.content = parsed.content.replace(/\*\*([^*]+)\*\*/g, '$1')
-    parsed.title = parsed.title.replace(/\*\*([^*]+)\*\*/g, '$1')
+    parsed.content = stripEmphasis(parsed.content)
+    parsed.title = stripEmphasis(parsed.title)
+    if (typeof parsed.description === 'string') parsed.description = stripEmphasis(parsed.description)
 
     // Post-processing: remove phone numbers and "무료 상담" phrases
     parsed.content = parsed.content.replace(/무료\s*상담[:\s]*032-207-8788/g, '상담이 필요하시면 아래 상담문의하기 버튼을 눌러주세요')
@@ -198,9 +200,9 @@ export async function PUT(req: NextRequest) {
     const updateData: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
     }
-    if (title) updateData.title = title
-    if (content) updateData.content = content
-    if (description) updateData.meta_description = description
+    if (title) updateData.title = stripEmphasis(title)
+    if (content) updateData.content = stripEmphasis(content)
+    if (description) updateData.meta_description = stripEmphasis(description)
     if (tags) updateData.tags = tags
 
     // Extract new excerpt

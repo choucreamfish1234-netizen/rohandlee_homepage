@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { requireAdmin } from '@/lib/admin-auth'
+import { stripEmphasis } from '@/lib/strip-emphasis'
 
 function markdownToHtml(md: string): string {
   let html = md
@@ -60,7 +61,7 @@ export async function POST(req: NextRequest) {
 
     // Convert markdown to HTML
     const author = getAuthorByCategory(post.category)
-    const naverContent = markdownToHtml(post.content)
+    const naverContent = markdownToHtml(stripEmphasis(post.content))
 
     // Add footer info box
     const footer = `<div style="background:#f5f5f5;padding:20px;border-radius:8px;margin-top:30px;">

@@ -1,5 +1,6 @@
 import { supabase } from './supabase'
 import { getRandomImage, getImagePool } from '@/data/random-images'
+import { cleanPostText } from './strip-emphasis'
 
 export interface BlogPost {
   id: number
@@ -109,7 +110,7 @@ export async function getPublishedPosts({
 
   const { data, count, error } = await query
   return {
-    posts: (data as BlogPost[]) || [],
+    posts: ((data as BlogPost[]) || []).map(cleanPostText),
     totalCount: count || 0,
     totalPages: Math.ceil((count || 0) / POSTS_PER_PAGE),
     error,
@@ -125,7 +126,7 @@ export async function getFeaturedPosts() {
     .order('view_count', { ascending: false })
     .limit(3)
 
-  return (data as BlogPost[]) || []
+  return ((data as BlogPost[]) || []).map(cleanPostText)
 }
 
 export async function getPostBySlug(slug: string) {
@@ -136,7 +137,7 @@ export async function getPostBySlug(slug: string) {
     .eq('status', 'published')
     .maybeSingle()
 
-  return { post: data as BlogPost | null, error }
+  return { post: cleanPostText(data as BlogPost | null), error }
 }
 
 export async function getAdjacentPosts(publishedAt: string) {
@@ -160,8 +161,8 @@ export async function getAdjacentPosts(publishedAt: string) {
   ])
 
   return {
-    prev: prev.data as { title: string; slug: string } | null,
-    next: next.data as { title: string; slug: string } | null,
+    prev: cleanPostText(prev.data as { title: string; slug: string } | null),
+    next: cleanPostText(next.data as { title: string; slug: string } | null),
   }
 }
 
@@ -175,7 +176,7 @@ export async function getRelatedPosts(category: string, excludeId: number) {
     .order('published_at', { ascending: false })
     .limit(3)
 
-  return (data as BlogPost[]) || []
+  return ((data as BlogPost[]) || []).map(cleanPostText)
 }
 
 export async function incrementViewCount(postId: number) {
@@ -202,10 +203,11 @@ export async function getPostById(id: number) {
   return { post: data as BlogPost | null, error }
 }
 
+// 발행·수정·표시 시 마크다운 강조 기호(**, *)가 남지 않도록 cleanPostText를 거친다.
 export async function createPost(post: Partial<BlogPost>) {
   const { data, error } = await supabase
     .from('blog_posts')
-    .insert(post)
+    .insert(cleanPostText(post))
     .select()
     .single()
 
@@ -215,7 +217,7 @@ export async function createPost(post: Partial<BlogPost>) {
 export async function updatePost(id: number, post: Partial<BlogPost>) {
   const { data, error } = await supabase
     .from('blog_posts')
-    .update(post)
+    .update(cleanPostText(post))
     .eq('id', id)
     .select()
     .single()

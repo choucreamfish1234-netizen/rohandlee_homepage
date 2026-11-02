@@ -10,6 +10,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js'
+import { stripEmphasis } from '../src/lib/strip-emphasis'
 
 // ─── 환경변수 ───
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY
@@ -514,8 +515,8 @@ async function generatePost(entry: KeywordEntry, index: number): Promise<boolean
     .insert({
       title: entry.title,
       slug,
-      content,
-      excerpt,
+      content: stripEmphasis(content),
+      excerpt: stripEmphasis(excerpt),
       meta_description: entry.description,
       category: entry.category,
       tags: entry.tags,

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
+import { cleanPostText } from '@/lib/strip-emphasis'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
@@ -22,7 +23,7 @@ export default function BlogHighlights() {
         .lte('published_at', new Date().toISOString())
         .order('view_count', { ascending: false })
         .limit(6)
-      if (data) setPosts(data)
+      if (data) setPosts(data.map(cleanPostText))
     }
     fetchPosts()
   }, [])

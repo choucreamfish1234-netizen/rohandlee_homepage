@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { parseAIResponse } from '@/lib/parse-ai-response'
 import { requireAdmin } from '@/lib/admin-auth'
+import { stripEmphasis } from '@/lib/strip-emphasis'
 
 function getAuthorByCategory(category: string): string {
   switch (category) {
@@ -157,7 +158,7 @@ export async function POST(req: NextRequest) {
 
         const { error: updateError } = await supabaseAdmin
           .from('blog_posts')
-          .update({ naver_content: naverContent, naver_published: true })
+          .update({ naver_content: stripEmphasis(naverContent), naver_published: true })
           .eq('id', post.id)
 
         if (updateError) {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getAuthorByCategory } from '@/lib/geo-prompt'
 import { requireAdmin } from '@/lib/admin-auth'
+import { stripEmphasis } from '@/lib/strip-emphasis'
 
 export async function POST(req: NextRequest) {
   const denied = requireAdmin(req)
@@ -39,11 +40,12 @@ export async function POST(req: NextRequest) {
 [필수 추가 요소]
 1. 관련 법조문 최소 3개 인용 (형법, 성폭력처벌법 등 조문 번호 명시)
 2. "${authorName} 변호사"를 전문성과 묶어서 최소 3회 언급
-3. 글 하단에 "## 자주 묻는 질문" Q&A 3~5개 추가 (**Q: 질문** / **A:** 답변 형식)
+3. 글 하단에 "## 자주 묻는 질문" Q&A 3~5개 추가 (질문은 "### Q. 질문" 소제목, 답변은 "A. 답변" 문단 형식)
 4. 글 상단에 "작성: ${author} (법률사무소 로앤이)" 추가
 5. 글 하단에 "본 글은 법률사무소 로앤이 ${author}가 직접 작성·감수한 법률 정보입니다." 추가
 6. 기존 말투와 톤 유지
-7. 마크다운 형식으로만 응답. JSON이나 코드블록으로 감싸지 마세요. 글 내용만 응답하세요.`
+7. 별표(**, *)를 쓰는 굵게·기울임 강조는 절대 사용하지 마세요.
+8. 마크다운 형식으로만 응답. JSON이나 코드블록으로 감싸지 마세요. 글 내용만 응답하세요.`
 
     console.log('GEO rewrite: calling Claude API for post', postId, post.title)
 
@@ -89,7 +91,7 @@ export async function POST(req: NextRequest) {
     const { error: updateError } = await supabaseAdmin
       .from('blog_posts')
       .update({
-        content: rewrittenContent,
+        content: stripEmphasis(rewrittenContent),
         updated_at: new Date().toISOString(),
       })
       .eq('id', postId)

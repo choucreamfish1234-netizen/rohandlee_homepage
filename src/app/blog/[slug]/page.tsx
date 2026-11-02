@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 import type { BlogPost } from '@/lib/blog'
 import BlogPostContent from './BlogPostContent'
 import ViewCounter from '@/components/ViewCounter'
+import { cleanPostText } from '@/lib/strip-emphasis'
 
 const baseUrl = 'https://lawfirmrohandlee.com'
 
@@ -107,6 +108,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .maybeSingle()
     post = fallback.data
   }
+  post = cleanPostText(post)
 
   if (!post) {
     return {
@@ -177,6 +179,7 @@ export default async function Page({ params }: Props) {
       .maybeSingle()
     post = fallback.data
   }
+  post = cleanPostText(post)
 
   if (!post) {
     notFound()
@@ -220,8 +223,9 @@ export default async function Page({ params }: Props) {
     const lines = content.split('\n')
     let currentQ = ''
     for (const line of lines) {
-      const qMatch = line.match(/\*?\*?Q:\s*(.+?)[\*]*$/)
-      const aMatch = line.match(/\*?\*?A:\*?\*?\s*(.+)$/)
+      // "Q: 질문"·"**Q: 질문**"(이전 형식)과 "### Q. 질문"(현재 형식)을 모두 인식한다.
+      const qMatch = line.match(/^\s*(?:#{1,6}\s*)?\*{0,2}Q[:.]\s*(.+?)\**\s*$/)
+      const aMatch = line.match(/^\s*\*{0,2}A[:.]\*{0,2}\s*(.+)$/)
       if (qMatch) {
         currentQ = qMatch[1].replace(/\*+/g, '').trim()
       } else if (aMatch && currentQ) {

@@ -3,6 +3,7 @@ import { getRandomThumbnail } from '@/lib/blog'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { getAuthorByCategory } from '@/lib/geo-prompt'
 import { requireAdmin } from '@/lib/admin-auth'
+import { stripEmphasis } from '@/lib/strip-emphasis'
 
 export const maxDuration = 60
 
@@ -32,13 +33,13 @@ export async function POST(req: NextRequest) {
 [작성 규칙]
 - 관련 법조문 최소 2개 인용 (조문 번호 명시)
 - "${authorName} 변호사"를 전문성과 묶어서 최소 3회 언급
-- 하단에 "## 자주 묻는 질문" Q&A 3개 추가 (**Q: 질문** / **A:** 답변 형식)
+- 하단에 "## 자주 묻는 질문" Q&A 3개 추가 (질문은 "### Q. 질문" 소제목, 답변은 "A. 답변" 문단 형식)
 - 글 상단에 "작성: ${author} (법률사무소 로앤이)" 추가
 - 하단에 "본 글은 법률사무소 로앤이 ${author}가 직접 작성·감수한 법률 정보입니다." 추가
 - 따뜻하고 부드러운 말투 (~하셨을 거예요, ~하시면 돼요)
 - 피해자 감정 공감으로 시작
 - 소제목은 ## 사용
-- 중요 키워드 **볼드** 처리
+- 별표(**, *)를 쓰는 굵게·기울임 강조는 절대 사용하지 마세요. 강조가 필요하면 소제목(##)이나 인용(>)을 쓰세요
 - 1500~2500자 분량
 - 마크다운 본문만 응답. JSON 금지. 코드블록으로 감싸지 마세요. 글 본문 텍스트만 응답하세요.`
 
@@ -64,7 +65,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json()
-    const content = data.content?.[0]?.text || ''
+    const content = stripEmphasis(data.content?.[0]?.text || '')
 
     if (!content || content.length < 100) {
       return NextResponse.json({ error: 'AI 응답이 비어있습니다.' }, { status: 500 })

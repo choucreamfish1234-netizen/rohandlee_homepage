@@ -8,6 +8,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import { useConsultation } from '@/components/ConsultationProvider'
 import { type SuccessCase } from '@/lib/cases'
 import { fetchLawyerImages, getFallbackImage } from '@/lib/lawyer-image'
+import { cleanPostText } from '@/lib/strip-emphasis'
 
 const PRACTICE_AREAS = [
   '성폭력 피해자 대리',
@@ -81,7 +82,7 @@ export default function LeeYurimProfile() {
           .in('category', ['성범죄', '신체범죄', '학교폭력'])
           .order('published_at', { ascending: false })
           .limit(4)
-        if (data) setBlogPosts(data)
+        if (data) setBlogPosts(data.map(cleanPostText))
       } catch { /* keep empty */ }
     }
     fetchData()
