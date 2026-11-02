@@ -1,4 +1,5 @@
 import { detentionGuides, guideAsPost } from '@/lib/detention-guides'
+import { collectionGuides, collectionGuideAsPost } from '@/lib/collection-guides'
 import type { Metadata } from 'next'
 import { getPageSeo } from '@/lib/seo'
 import { supabaseAdmin } from '@/lib/supabase-admin'
@@ -9,7 +10,7 @@ import { cleanPostText } from '@/lib/strip-emphasis'
 export async function generateMetadata(): Promise<Metadata> {
   return getPageSeo('/blog', {
     title: '법률상식',
-    description: '법률사무소 로앤이 법률상식. 인천·수원·서울동부구치소 접견과 구속 가족 안내, 형사·민사 및 피해 회복에 관한 법률 정보를 전합니다.',
+    description: '법률사무소 로앤이 법률상식. 채권추심·지급명령·가압류·강제집행 안내, 구치소 접견과 구속 가족 안내, 형사·민사 및 피해 회복에 관한 법률 정보를 전합니다.',
     ogTitle: '법률상식',
     ogDescription: '성범죄·재산범죄·학교폭력·부동산·손해배상 등 피해자를 위한 법률 정보.',
   })
@@ -34,7 +35,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
     query = query.eq('category', category)
   }
 
-  const guides = category === '전체' || category === '법률정보' ? detentionGuides.map(guideAsPost) : []
+  const guides = [
+    ...(category === '전체' || category === '채권추심' ? collectionGuides.map(collectionGuideAsPost) : []),
+    ...(category === '전체' || category === '법률정보' ? detentionGuides.map(guideAsPost) : []),
+  ]
   const from = (page - 1) * POSTS_PER_PAGE
   const localPosts = guides.slice(from, from + POSTS_PER_PAGE)
   const remaining = POSTS_PER_PAGE - localPosts.length

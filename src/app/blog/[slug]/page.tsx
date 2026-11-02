@@ -1,5 +1,7 @@
 import { brandedTitle } from '@/lib/page-metadata'
 import DetentionGuideArticle from '@/components/DetentionGuideArticle'
+import CollectionGuideArticle from '@/components/CollectionGuideArticle'
+import { collectionGuides, findCollectionGuide, COLLECTION_DATE } from '@/lib/collection-guides'
 import { detentionGuides, findDetentionGuide, GUIDE_BASE, GUIDE_DATE } from '@/lib/detention-guides'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { notFound } from 'next/navigation'
@@ -74,7 +76,7 @@ export async function generateStaticParams() {
     .select('slug')
     .eq('status', 'published')
 
-  return [...detentionGuides, ...(posts || [])].map((post) => ({
+  return [...collectionGuides, ...detentionGuides, ...(posts || [])].map((post) => ({
     slug: post.slug,
   }))
 }
@@ -82,6 +84,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
+  const collection = findCollectionGuide(decodedSlug)
+  if (collection) {
+    const image = `${GUIDE_BASE}${collection.cover}`
+    return {
+      title: { absolute: brandedTitle(collection.title) }, description: collection.excerpt,
+      keywords: [collection.keyword, '채권추심', '채권추심 변호사', '법률사무소 로앤이'],
+      alternates: { canonical: `${GUIDE_BASE}/blog/${collection.slug}` },
+      openGraph: { type: 'article', title: brandedTitle(collection.title), description: collection.excerpt,
+        url: `${GUIDE_BASE}/blog/${collection.slug}`, publishedTime: COLLECTION_DATE,
+        images: [{ url: image, width: 1200, height: 630, alt: collection.title }] },
+      twitter: { card: 'summary_large_image', title: brandedTitle(collection.title), description: collection.excerpt, images: [image] },
+      robots: { index: true, follow: true },
+    }
+  }
   const guide = findDetentionGuide(decodedSlug)
   if (guide) return {
     title: { absolute: brandedTitle(guide.title) }, description: guide.excerpt,
@@ -162,6 +178,8 @@ export default async function Page({ params }: Props) {
   const decodedSlug = decodeURIComponent(slug)
   const guide = findDetentionGuide(decodedSlug)
   if (guide) return <DetentionGuideArticle guide={guide} />
+  const collection = findCollectionGuide(decodedSlug)
+  if (collection) return <CollectionGuideArticle guide={collection} />
 
 
   let { data: post } = await supabaseAdmin
