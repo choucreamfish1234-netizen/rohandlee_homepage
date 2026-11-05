@@ -1,5 +1,5 @@
 import { detentionGuides, GUIDE_DATE } from '@/lib/detention-guides'
-import { collectionGuides, COLLECTION_DATE } from '@/lib/collection-guides'
+import { publishedGuides } from '@/lib/editorial-guides'
 import renewalRoutes from '@/data/renewal-routes.json'
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
@@ -7,6 +7,9 @@ import { practiceAreas } from '@/data/practice'
 import { practiceCases } from '@/data/practice/cases'
 
 const PRACTICE_LASTMOD = '2026-10-14'
+
+// 예약 공개 글이 반영되도록 1시간마다 다시 만든다.
+export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lawfirmrohandlee.com'
@@ -106,7 +109,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dynamicPages: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/blog/detention-family-guides`, lastModified: GUIDE_DATE, changeFrequency: 'monthly', priority: 0.8 },
     ...detentionGuides.map(g => ({ url: `${baseUrl}/blog/${g.slug}`, lastModified: GUIDE_DATE, changeFrequency: 'monthly' as const, priority: 0.7 })),
-    ...collectionGuides.map(g => ({ url: `${baseUrl}/blog/${g.slug}`, lastModified: COLLECTION_DATE, changeFrequency: 'monthly' as const, priority: 0.7 })),
+    ...publishedGuides().map(g => ({ url: `${baseUrl}/blog/${g.slug}`, lastModified: g.publishedAt, changeFrequency: 'monthly' as const, priority: 0.7 })),
   ]
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL

@@ -1,5 +1,5 @@
 import { detentionGuides, guideAsPost } from '@/lib/detention-guides'
-import { collectionGuides, collectionGuideAsPost } from '@/lib/collection-guides'
+import { categorySeries, guideAsPost as editorialAsPost, publishedGuides } from '@/lib/editorial-guides'
 import type { Metadata } from 'next'
 import { getPageSeo } from '@/lib/seo'
 import { supabaseAdmin } from '@/lib/supabase-admin'
@@ -36,7 +36,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ p
   }
 
   const guides = [
-    ...(category === '전체' || category === '채권추심' ? collectionGuides.map(collectionGuideAsPost) : []),
+    ...(category === '전체' ? publishedGuides() : categorySeries(category) ? publishedGuides(categorySeries(category)) : []).map(editorialAsPost),
     ...(category === '전체' || category === '법률정보' ? detentionGuides.map(guideAsPost) : []),
   ]
   const from = (page - 1) * POSTS_PER_PAGE

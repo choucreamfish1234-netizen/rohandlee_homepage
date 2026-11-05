@@ -97,7 +97,10 @@ export default function AdminConsultationsPage() {
   const statusDropdownRef = useRef<HTMLDivElement>(null)
   const [ipInfo, setIpInfo] = useState<{
     status: 'loading' | 'none' | 'error' | 'ok'
-    log?: { ip: string | null; user_agent: string | null; referer: string | null; country: string | null; city: string | null }
+    log?: {
+      ip: string | null; user_agent: string | null; referer: string | null; country: string | null; city: string | null
+      entry_page?: string | null; entry_referrer?: string | null; first_page?: string | null; first_referrer?: string | null; search_query?: string | null
+    }
     sameIpCount?: number
   } | null>(null)
 
@@ -644,6 +647,22 @@ export default function AdminConsultationsPage() {
                         )}
                       </span>
                     </div>
+                    {ipInfo?.status === 'ok' && ipInfo.log && (ipInfo.log.entry_page || ipInfo.log.first_page) && (
+                      <div className="flex gap-2">
+                        <span className="text-gray-400 w-16 shrink-0">유입</span>
+                        <span className="text-black text-xs space-y-1 break-all">
+                          {ipInfo.log.search_query && <span className="block">검색어: <strong>{ipInfo.log.search_query}</strong></span>}
+                          {ipInfo.log.entry_page && <span className="block">이번 방문 첫 페이지: {ipInfo.log.entry_page}</span>}
+                          {ipInfo.log.entry_referrer && <span className="block text-gray-500">이번 방문 경로: {ipInfo.log.entry_referrer}</span>}
+                          {ipInfo.log.first_page && ipInfo.log.first_page !== ipInfo.log.entry_page && (
+                            <span className="block">최초 방문 페이지(30일): {ipInfo.log.first_page}</span>
+                          )}
+                          {ipInfo.log.first_referrer && ipInfo.log.first_referrer !== ipInfo.log.entry_referrer && (
+                            <span className="block text-gray-500">최초 방문 경로: {ipInfo.log.first_referrer}</span>
+                          )}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
 

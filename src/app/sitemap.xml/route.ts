@@ -1,5 +1,8 @@
 import sitemap from '../sitemap'
 
+// 예약 공개 글이 반영되도록 1시간마다 다시 만든다.
+export const revalidate = 3600
+
 // /sitemap.xml 응답은 sitemap.ts 한 곳에서 관리하는 목록을 그대로 렌더링한다.
 export async function GET() {
   const entries = await sitemap()

@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabaseAdmin
     .from('consultation_ip_logs')
-    .select('ip, user_agent, referer, country, city, created_at')
+    .select('*')
     .eq('consultation_id', id)
     .order('created_at', { ascending: false })
     .limit(1)

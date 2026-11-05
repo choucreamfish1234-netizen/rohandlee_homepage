@@ -3,6 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { requireAdmin } from '@/lib/admin-auth'
 import { fetchAllRows } from '@/lib/fetch-all-rows'
 import { validateConsultation, type ConsultationInput } from '@/lib/consultation-validation'
+import { searchQueryFromReferrer } from '@/lib/attribution'
 
 const RATE_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT = 3
@@ -22,9 +23,33 @@ function clientInfo(req: NextRequest) {
 
 type ClientInfo = ReturnType<typeof clientInfo>
 
-async function logAccess(info: ClientInfo, extra: { consultation_id?: string; blocked?: boolean; reason?: string }) {
+const SOURCE_FIELDS = ['entry_page', 'entry_referrer', 'first_page', 'first_referrer', 'search_query'] as const
+type SourceInfo = Partial<Record<(typeof SOURCE_FIELDS)[number], string | null>>
+
+/** 상담 신청에 함께 온 유입 정보(진입 페이지·리퍼러·검색어)를 정리한다. */
+function sourceInfo(attribution: ConsultationInput['attribution']): SourceInfo {
+  const text = (v: unknown, max: number) => (typeof v === 'string' && v ? v.slice(0, max) : null)
+  const entry = attribution?.entry
+  const first = attribution?.first
+  return {
+    entry_page: text(entry?.page, 300),
+    entry_referrer: text(entry?.referrer, 500),
+    first_page: text(first?.page, 300),
+    first_referrer: text(first?.referrer, 500),
+    search_query: searchQueryFromReferrer(entry?.referrer) || searchQueryFromReferrer(first?.referrer),
+  }
+}
+
+async function logAccess(
+  info: ClientInfo,
+  extra: { consultation_id?: string; blocked?: boolean; reason?: string } & SourceInfo
+) {
   const { error } = await supabaseAdmin.from('consultation_ip_logs').insert({ ...info, ...extra })
-  if (error) console.error('consultation_ip_logs insert error:', error.message)
+  if (!error) return
+  // 유입 정보 컬럼이 아직 없으면(마이그레이션 전) IP 기록만이라도 남긴다.
+  const base = Object.fromEntries(Object.entries(extra).filter(([k]) => !(SOURCE_FIELDS as readonly string[]).includes(k)))
+  const retry = await supabaseAdmin.from('consultation_ip_logs').insert({ ...info, ...base })
+  console.error('consultation_ip_logs insert error:', error.message, retry.error ? `/ retry: ${retry.error.message}` : '/ saved without source fields')
 }
 
 async function recentSubmissions(ip: string) {
@@ -91,7 +116,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: '일시적인 오류가 발생했습니다. 전화(032-207-8788)로 문의해주세요.' }, { status: 500 })
   }
 
-  await logAccess(info, { consultation_id: String(data.id) })
+  await logAccess(info, { consultation_id: String(data.id), ...sourceInfo(body.attribution) })
   return NextResponse.json({ success: true })
 }
 

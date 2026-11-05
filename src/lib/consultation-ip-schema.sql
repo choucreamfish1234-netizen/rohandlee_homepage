@@ -20,3 +20,10 @@ CREATE INDEX IF NOT EXISTS idx_consultation_ip_logs_consultation ON consultation
 
 -- 보유 기간(1년)이 지난 접속 기록 삭제 — 주기적으로 실행하거나 pg_cron에 등록
 -- DELETE FROM consultation_ip_logs WHERE created_at < now() - interval '1 year';
+
+-- 상담 유입 정보 (2026-11 추가): 이번 방문 첫 페이지·경로, 30일 내 최초 방문 페이지·경로, 검색어
+ALTER TABLE consultation_ip_logs ADD COLUMN IF NOT EXISTS entry_page text;
+ALTER TABLE consultation_ip_logs ADD COLUMN IF NOT EXISTS entry_referrer text;
+ALTER TABLE consultation_ip_logs ADD COLUMN IF NOT EXISTS first_page text;
+ALTER TABLE consultation_ip_logs ADD COLUMN IF NOT EXISTS first_referrer text;
+ALTER TABLE consultation_ip_logs ADD COLUMN IF NOT EXISTS search_query text;

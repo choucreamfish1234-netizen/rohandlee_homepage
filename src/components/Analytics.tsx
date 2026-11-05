@@ -3,6 +3,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { recordTouch } from '@/lib/attribution'
 
 // ─── 유틸 함수 ────────────────────────────────────────
 function uuid() {
@@ -228,6 +229,7 @@ export default function Analytics() {
   useEffect(() => {
     if (isBot()) return
     if (pathname.startsWith('/admin')) return
+    recordTouch()
 
     const vid = getVisitorId()
     const sid = getSessionId()

@@ -1,4 +1,5 @@
 import { validateConsultation, type ConsultationInput } from './consultation-validation'
+import { getAttribution } from './attribution'
 
 /** 상담 신청을 서버로 보낸다. 실패하면 사용자에게 보여줄 메시지를 던진다. */
 export async function submitConsultation(input: ConsultationInput) {
@@ -8,7 +9,7 @@ export async function submitConsultation(input: ConsultationInput) {
   const res = await fetch('/api/consultations', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
+    body: JSON.stringify({ ...input, attribution: getAttribution() }),
   })
   if (!res.ok) {
     const data = await res.json().catch(() => null)

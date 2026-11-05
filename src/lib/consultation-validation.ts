@@ -9,6 +9,8 @@ export interface ConsultationInput {
   privacy_consent?: boolean
   /** 봇 차단용 숨김 필드. 사람은 비워 둔다. */
   website?: string
+  /** 상담 유입 정보(진입 페이지·리퍼러) */
+  attribution?: import('./attribution').Attribution
 }
 
 const JAMO_ONLY = /^[ㄱ-ㅎㅏ-ㅣ\s]+$/
