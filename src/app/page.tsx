@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { getPageSeo } from '@/lib/seo'
-import HomePopup from '@/components/HomePopup'
 import HeroSection from '@/components/sections/HeroSection'
 import PracticeAreasSection from '@/components/sections/home/PracticeAreasSection'
 import FeaturedCasesSection, { type FeaturedCase } from '@/components/sections/home/FeaturedCasesSection'
@@ -55,7 +54,6 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
-      <HomePopup />
       <HeroSection />
       <PracticeAreasSection />
       <FeaturedCasesSection cases={featuredCases} disclaimer={CASE_DISCLAIMER} />
