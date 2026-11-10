@@ -150,7 +150,7 @@ const jsonLd = {
     { '@type': 'Person', name: '이유림', jobTitle: '대표변호사' },
     { '@type': 'Person', name: '노채은', jobTitle: '대표변호사' },
   ],
-  knowsAbout: ['형사 변호', '범죄 피해자 대리', '채권추심', '가상자산 법률자문', '코인 상장 자문', '기업 법률자문', '스타트업 법률자문', '성범죄 피해자 변호', '금융사기 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력', '법률 전문가 자문', '언론 인터뷰'],
+  knowsAbout: ['형사 변호', '피의자 변호', '경찰조사 대응', '구속영장 대응', '성범죄 혐의 대응', '사기·횡령 혐의 대응', '보이스피싱 연루 혐의 대응', '음주운전·교통사고 형사', '범죄 피해자 대리', '채권추심', '가상자산 법률자문', '코인 상장 자문', '기업 법률자문', '스타트업 법률자문', '성범죄 피해자 변호', '금융사기 피해자 변호', '신체범죄 피해자 변호', '부동산 피해', '손해배상', '강제집행', '디지털성범죄', '스토킹', '학교폭력', '법률 전문가 자문', '언론 인터뷰'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: '법률사무소 로앤이 업무 분야',
@@ -179,7 +179,7 @@ const jsonLd = {
       name: '이유림',
       jobTitle: '대표변호사',
       url: `${baseUrl}/lawyers/lee-yurim`,
-      knowsAbout: ['성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', '피해자 권리', 'LegalTech'],
+      knowsAbout: ['형사 변호', '성범죄 혐의 대응', '경찰조사·수사 대응', '국선변호', '성폭력 피해자 대리', '스토킹 피해자 대리', '디지털성범죄 피해자 대리', 'LegalTech'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: [
         { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
@@ -193,7 +193,7 @@ const jsonLd = {
       name: '노채은',
       jobTitle: '대표변호사',
       url: `${baseUrl}/lawyers/roh-chaeeun`,
-      knowsAbout: ['재산범죄 피해자 변호', '금융사기 피해자 변호', '보이스피싱', '전세사기', '개인회생', '개인파산', '기업자문'],
+      knowsAbout: ['형사 변호', '사기·횡령 혐의 대응', '보이스피싱 연루 혐의 대응', '국선변호', '채권추심', '금융사기 피해자 변호', '개인회생', '기업자문'],
       affiliation: { '@type': 'Organization', name: '법률사무소 로앤이' },
       author: { '@type': 'Book', name: '피해자 감별사회', publisher: { '@type': 'Organization', name: '박영사' }, url: 'https://product.kyobobook.co.kr/detail/S000220843163' },
     },

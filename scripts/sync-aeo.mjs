@@ -14,7 +14,13 @@ const routes = JSON.parse(readFileSync('src/data/renewal-routes.json', 'utf8'))
 const additions = JSON.parse(readFileSync('scripts/aeo/faq-additions.json', 'utf8'))
 
 const FIRM_DESCRIPTION =
-  '법률사무소 로앤이는 경기도 부천시의 법률사무소로, 형사사건, 민사·가사, 채권추심, 가상자산·코인, 보이스피싱, 기업법무와 범죄 피해자 지원을 수행합니다. 대표변호사 이유림·노채은이 상담부터 사건 수행까지 직접 함께합니다.'
+  '법률사무소 로앤이는 경기도 부천시의 법률사무소로, 경찰조사·압수수색·구속영장 대응 등 수사를 받는 분을 위한 형사사건 변호를 비롯해 민사·가사, 채권추심, 가상자산·코인, 보이스피싱, 기업법무와 범죄 피해자 지원을 수행합니다. 대표변호사 이유림·노채은이 상담부터 사건 수행까지 직접 함께합니다.'
+
+const FIRM_TOPICS = [
+  '형사 변호', '피의자 변호', '경찰조사 대응', '압수수색 대응', '구속영장 대응',
+  '성범죄 혐의 대응', '사기·횡령 혐의 대응', '보이스피싱 연루 혐의 대응', '음주운전·교통사고 형사', '마약 사건',
+  '민사·가사', '채권추심', '가상자산 법률자문', '기업법무', '범죄 피해자 대리',
+]
 
 const FOUNDERS = [
   {
@@ -28,7 +34,7 @@ const FOUNDERS = [
       { '@type': 'CollegeOrUniversity', name: '한국외국어대학교' },
       { '@type': 'CollegeOrUniversity', name: '충북대학교 법학전문대학원' },
     ],
-    knowsAbout: ['성범죄 피해자 대리', '형사사건', '스토킹', '디지털성범죄', '난민 사건'],
+    knowsAbout: ['형사 변호', '성범죄 혐의 대응', '경찰조사·수사 대응', '국선변호', '성범죄 피해자 대리', '스토킹', '디지털성범죄', '난민 사건'],
     sameAs: ['https://www.lawtalk.co.kr/directory/profile/8292-%EC%9D%B4%EC%9C%A0%EB%A6%BC'],
   },
   {
@@ -42,7 +48,7 @@ const FOUNDERS = [
       { '@type': 'CollegeOrUniversity', name: '중앙대학교' },
       { '@type': 'CollegeOrUniversity', name: '경북대학교 법학전문대학원' },
     ],
-    knowsAbout: ['재산범죄', '금융사기', '보이스피싱', '채권추심', '기업자문'],
+    knowsAbout: ['형사 변호', '사기·횡령 혐의 대응', '보이스피싱 연루 혐의 대응', '국선변호', '재산범죄', '채권추심', '기업자문'],
     sameAs: ['https://www.lawtalk.co.kr/directory/profile/7587-%EB%85%B8%EC%B1%84%EC%9D%80'],
   },
 ]
@@ -120,6 +126,7 @@ function enrichLegalService(html) {
       if (!node || typeof node !== 'object') return
       if (node['@type'] === 'LegalService') {
         node.description = FIRM_DESCRIPTION
+        node.knowsAbout = FIRM_TOPICS
         node.founder = FOUNDERS
         changed = true
         return

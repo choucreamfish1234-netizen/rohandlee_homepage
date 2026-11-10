@@ -9,5 +9,11 @@
     "src/app/api/geo-rewrite/route.ts": {
       "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/indexnow",
+      "schedule": "10 7 * * *"
+    }
+  ]
 }
